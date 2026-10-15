@@ -886,6 +886,229 @@ select:hover,input[type=text]:hover{
  .map-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;max-height:48dvh!important;overflow-y:auto!important}
 }
 
+
+/* === CONTROLES MINIMALISTAS SIN UI DE MOVIMIENTO (SMARTPHONE & PC) === */
+.move-panel,
+.aim-panel,
+.keyboard-hint,
+#touchAimHint {
+  display: none !important;
+}
+#controls {
+  position: fixed !important;
+  z-index: 6 !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: max(10px, env(safe-area-inset-bottom)) !important;
+  transform: translateX(-50%) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  width: auto !important;
+  max-width: calc(100vw - 16px) !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
+}
+#controls > .arsenal-panel,
+#controls > #fireButton {
+  pointer-events: auto !important;
+}
+#controls > .arsenal-panel {
+  width: auto !important;
+  min-width: 140px !important;
+  max-width: 215px !important;
+  min-height: 48px !important;
+  padding: 6px 12px !important;
+  border-radius: 999px !important;
+  background: rgba(11, 23, 40, 0.82) !important;
+  border: 1px solid rgba(251, 191, 36, 0.45) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55) !important;
+}
+#controls > .arsenal-panel #weaponIcon {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+}
+#controls > #fireButton {
+  min-width: 156px !important;
+  min-height: 48px !important;
+  padding: 7px 20px !important;
+  border-radius: 999px !important;
+  font-size: 15px !important;
+  line-height: 1.05 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(145deg, #fde047 0%, #f59e0b 55%, #ea580c 100%) !important;
+  color: #08111e !important;
+  border: 1.5px solid #fef08a !important;
+  box-shadow: 0 4px 0 #9a3412, 0 10px 26px rgba(245, 158, 11, 0.45) !important;
+  transition: transform 0.12s ease, background 0.15s ease, box-shadow 0.15s ease !important;
+}
+#controls > #fireButton.aim-active {
+  background: linear-gradient(145deg, #5cebe2 0%, #2dd4bf 55%, #0284c7 100%) !important;
+  color: #041322 !important;
+  border-color: #cffafe !important;
+  box-shadow: 0 4px 0 #0369a1, 0 0 22px rgba(45, 212, 191, 0.55) !important;
+}
+#controls > #fireButton.charging {
+  background: linear-gradient(145deg, #fb7185 0%, #e11d48 55%, #9f1239 100%) !important;
+  color: #ffffff !important;
+  border-color: #fda4af !important;
+  transform: translateY(2px) scale(1.03) !important;
+  box-shadow: 0 2px 0 #881337, 0 0 28px rgba(244, 63, 94, 0.75) !important;
+}
+#controls > #fireButton .fire-circle {
+  font-size: 14px !important;
+  margin-right: 3px !important;
+}
+#controls > #fireButton #fireLabel {
+  margin-top: 3px !important;
+  font-size: 7.5px !important;
+  letter-spacing: 0.6px !important;
+  opacity: 0.92 !important;
+}
+@media (max-width: 760px) {
+  #gameHUD {
+    top: max(6px, env(safe-area-inset-top)) !important;
+    left: max(8px, env(safe-area-inset-left)) !important;
+    right: max(8px, env(safe-area-inset-right)) !important;
+    gap: 6px !important;
+  }
+  .match-info {
+    padding: 5px 10px !important;
+    min-width: 130px !important;
+  }
+  #turnClock {
+    font-size: 18px !important;
+  }
+  #minimapWrap {
+    top: 56px !important;
+    right: 8px !important;
+  }
+  #minimap {
+    width: 96px !important;
+    height: 38px !important;
+  }
+  .minimap-label {
+    display: none !important;
+  }
+  #controls > .arsenal-panel {
+    min-width: 122px !important;
+    min-height: 42px !important;
+    padding: 4px 10px !important;
+  }
+  #controls > .arsenal-panel .weapon-subtitle {
+    display: none !important;
+  }
+  #controls > #fireButton {
+    min-width: 138px !important;
+    min-height: 42px !important;
+    padding: 5px 15px !important;
+    font-size: 13.5px !important;
+  }
+}
+
+
+#minimapWrap {
+  width: 162px !important;
+}
+#minimap {
+  width: 100% !important;
+  height: 58px !important;
+}
+.minimap-tools {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 2px !important;
+  padding: 3px !important;
+}
+.minimap-tools button {
+  font-size: 8px !important;
+  padding: 2px 4px !important;
+  min-height: 20px !important;
+}
+#controls > #fireButton {
+  min-width: 178px !important;
+  min-height: 50px !important;
+  max-height: 54px !important;
+  padding: 5px 16px !important;
+  gap: 3px !important;
+  touch-action: none !important;
+  user-select: none !important;
+}
+#controls > #fireButton * {
+  pointer-events: none !important;
+}
+#controls > #fireButton .fire-top-row {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  font-size: 14px !important;
+  font-weight: 950 !important;
+  width: 100% !important;
+}
+#controls > #fireButton .fire-pwr-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 2px !important;
+  background: rgba(8, 17, 30, 0.78) !important;
+  color: #fde68a !important;
+  padding: 1px 6px !important;
+  border-radius: 999px !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+}
+#controls > #fireButton.charging .fire-pwr-pill {
+  background: rgba(15, 23, 42, 0.9) !important;
+  color: #ffffff !important;
+  border-color: #5cebe2 !important;
+}
+#controls > #fireButton .fire-power-track {
+  width: 100% !important;
+  height: 7px !important;
+  margin: 1px 0 !important;
+  background: rgba(7, 15, 28, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  border-radius: 999px !important;
+  overflow: visible !important;
+  position: relative !important;
+}
+#controls > #fireButton .fire-power-track #powerFill {
+  display: block !important;
+  height: 100% !important;
+  border-radius: 999px !important;
+  background: linear-gradient(90deg, #4cebe0 0%, #fde047 55%, #ff4d4d 100%) !important;
+  box-shadow: 0 0 8px rgba(253, 224, 71, 0.65) !important;
+  transition: width 0.02s linear !important;
+}
+@media (max-width: 760px) {
+  #minimapWrap {
+    width: 128px !important;
+  }
+  #minimap {
+    width: 100% !important;
+    height: 42px !important;
+  }
+  #controls > #fireButton {
+    min-width: 158px !important;
+    min-height: 46px !important;
+    max-height: 50px !important;
+    padding: 4px 13px !important;
+  }
+  #controls > #fireButton .fire-top-row {
+    font-size: 12.5px !important;
+  }
+}
+
 </style>
 </head>
 <body data-phase="menu">
@@ -930,15 +1153,15 @@ select:hover,input[type=text]:hover{
  <div id="musicStatePill" class="music-state-pill" title="Estado del motor de música adaptativa">MÚSICA ADAPTATIVA<b id="musicStateLabel"><span class="music-bars"><i></i><i></i><i></i></span> Exploración</b></div><div class="wind-pill">VIENTO<b id="windValue">→ 0 m/s</b><i id="windArrow"></i></div>
  <div class="hud-buttons"><button id="musicToggle" class="square-button" title="Activar o desactivar música" aria-label="Música" aria-pressed="true">♫</button><button id="fullscreenButton" class="square-button" title="Pantalla completa" aria-label="Pantalla completa">⛶</button><button id="pauseButton" class="square-button" title="Pausa (Esc)" aria-label="Pausar">Ⅱ</button></div>
 </div>
-<div id="minimapWrap" hidden><canvas id="minimap" width="256" height="106" aria-label="Minimapa. Toca para marcar objetivos."></canvas><div class="minimap-label">MINIMAPA · RUEDA O PELLIZCA PARA ZOOM</div><div class="minimap-tools"><button id="camZoomOutBtn" type="button" title="Alejar cámara (Rueda abajo / Pellizcar)">🔍−</button><button id="camZoomResetBtn" type="button" title="Restablecer zoom de cámara">100%</button><button id="camZoomInBtn" type="button" title="Acercar cámara (Rueda arriba / Pellizcar)">🔍＋</button><button id="viewButton" type="button">↔ Vista</button><button id="cycleMobile" type="button" title="Cambiar criatura">↻ Criatura</button></div></div>
+<div id="minimapWrap" hidden><canvas id="minimap" width="256" height="106" aria-label="Minimapa. Toca para marcar objetivos."></canvas><div class="minimap-label">MINIMAPA · RUEDA O PELLIZCA PARA ZOOM</div><div class="minimap-tools"><button id="camZoomOutBtn" type="button" title="Alejar cámara (Rueda abajo / Pellizcar)">🔍−</button><button id="camZoomResetBtn" type="button" title="Restablecer zoom de cámara">100%</button><button id="camZoomInBtn" type="button" title="Acercar cámara (Rueda arriba / Pellizcar)">🔍＋</button><button id="viewButton" type="button">↔ Vista</button><button id="cycleMobile" type="button" title="Cambiar criatura (Tab)">↻ Pug</button><button id="skipMobile" type="button" title="Pasar turno">⏭ Pasar</button></div></div>
 <div id="performanceReadout" hidden></div>
 <div id="targetHelp" hidden>Toca el mapa para marcar el objetivo.</div>
 <div id="turnBanner" role="status"></div><div id="toast" role="status" aria-live="polite"></div>
 <div id="controls" hidden>
  <div class="control-panel move-panel"><button id="moveLeft" class="control-key" aria-label="Mover a la izquierda">‹<small>A / ←</small></button><button id="moveRight" class="control-key" aria-label="Mover a la derecha">›<small>D / →</small></button><button id="jumpButton" class="control-key jump-key" aria-label="Saltar">↥<small>ESPACIO</small></button><div class="move-extra"><button id="cycleButton" class="mini-button" title="Cambiar criatura (Tab)">↻ Criatura</button><button id="skipButton" class="mini-button">Pasar turno</button></div></div>
  <button id="weaponsButton" class="control-panel arsenal-panel"><span id="weaponIcon">🚀</span><span><small class="weapon-subtitle">ARSENAL · Q</small><b id="weaponName">Bazuca</b><span id="weaponAmmo">∞ cargas</span></span><span class="inventory-chevron">⌃</span></button>
- <div class="control-panel aim-panel"><div class="angle-adjust"><button id="aimUp" aria-label="Aumentar ángulo">⌃</button><button id="aimDown" aria-label="Reducir ángulo">⌄</button></div><div class="aim-details"><div class="aim-label">ÁNGULO <b id="angleValue">45°</b></div><input id="angleSlider" type="range" min="0" max="360" step="1" value="45" aria-label="Ángulo de disparo 360 grados"><div class="aim-label">POTENCIA <span><b id="powerValue">65%</b><span id="powerDirBadge" hidden>▲</span></span></div><div class="power-track"><i id="powerFill"></i><span id="lastPowerTick" title="Potencia del disparo anterior" hidden></span></div></div></div>
- <button id="fireButton"><span class="fire-circle">◎</span> ATACAR<span id="fireLabel">MANTÉN Y SUELTA</span></button>
+ <div class="control-panel aim-panel"><div class="angle-adjust"><button id="aimUp" aria-label="Aumentar ángulo">⌃</button><button id="aimDown" aria-label="Reducir ángulo">⌄</button></div><div class="aim-details"><div class="aim-label">ÁNGULO <b id="angleValue">45°</b></div><input id="angleSlider" type="range" min="0" max="360" step="1" value="45" aria-label="Ángulo de disparo 360 grados"></div></div>
+ <button id="fireButton" type="button"><span class="fire-top-row"><span class="fire-circle">🎯</span><span id="fireMainText">ATACAR</span><span class="fire-pwr-pill"><b id="powerValue">65%</b><span id="powerDirBadge" hidden>▲</span></span></span><span class="power-track fire-power-track"><i id="powerFill"></i><span id="lastPowerTick" title="Potencia del disparo anterior" hidden></span></span><span id="fireLabel">PULSA O MANTÉN · POTENCIA</span></button>
  <div id="touchAimHint" hidden>Toca y arrastra en el escenario para apuntar.</div>
  <div class="keyboard-hint">A / D · mover &nbsp; ESPACIO · saltar &nbsp; ↑ / ↓ · ángulo &nbsp; F / ENTER · cargar y disparar &nbsp; TAB · criatura &nbsp; ESC · pausa</div>
 </div>
@@ -957,7 +1180,7 @@ select:hover,input[type=text]:hover{
 <div id="weaponGrid" class="weapon-grid"></div><p id="weaponHint" hidden></p></aside>
 <div id="pause" class="overlay" hidden><section class="modal"><p class="eyebrow">UN RESPIRO ANTES DEL CAOS</p><h2>Batalla en pausa.</h2><p>El tiempo y la física están detenidos.</p><div class="pause-actions"><label class="check"><input id="pauseMusic" type="checkbox" checked>Música</label><label class="check"><input id="pauseSfx" type="checkbox" checked>Efectos</label></div><label>Ambiente musical<select id="pauseMusicMood"><option value="auto">🎵 Dinámico por Escenario</option><option value="adventure">🎹 Aventura por Bioma</option><option value="ambient">🌙 Ambiental por Mapa</option><option value="intense">⚡ Clímax Intenso por Mapa</option></select></label><div class="pause-graphics"><div class="form-row"><label>Gráficos<select id="pauseGraphicsPreset"><option value="auto">Automática</option><option value="low">Económico</option><option value="medium">Equilibrado</option><option value="high">Alto</option><option value="ultra" selected>Ultra</option></select></label><label>Fluidez<select id="pauseFPSLimit"><option value="0">Según el perfil</option><option value="30">30 FPS · ahorro</option><option value="60" selected>60 FPS · fluido</option></select></label></div><div class="form-row"><label>Resolución<select id="pauseResolutionMode"><option value="native" selected>Nativa / QHD+ (Máxima nitidez)</option><option value="uhd">4K / Super-Res (3840p · SSAA)</option><option value="qhd">2K / QHD+ (2560×1440)</option><option value="fhd">Full HD (1920×1080)</option><option value="hd">HD (1280×720 · Ahorro)</option><option value="auto">Automática según calidad</option></select></label><label>Gore<select id="pauseGoreLevel"><option value="none">Ninguno · sin gore</option><option value="low">Bajo</option><option value="medium">Medio</option><option value="high">Alto</option><option value="demonic" selected>Demencial</option></select></label></div><div class="form-row"><label>Tamaño de fragmentos<select id="pauseFragmentSize"><option value="small">Chicos</option><option value="medium" selected>Medianos</option><option value="large">Grandes</option><option value="giant">Gigantescos</option></select></label><label>Intensidad del clima<select id="pauseWeatherLevel"><option value="none">Desactivado</option><option value="normal">Suave</option><option value="intense" selected>Intenso</option><option value="storm">Tormenta</option></select></label></div><p id="pauseGoreInfo" class="graphics-info gore-info"></p><label class="check"><input id="pauseShowFPS" type="checkbox">Mostrar FPS</label><p id="pauseGraphicsInfo" class="graphics-info"></p></div><button id="resumeButton" class="start">CONTINUAR BATALLA</button><div><button id="pauseHelp" class="text-button">Cómo jugar</button> · <button id="pauseMenu" class="text-button">Volver al menú</button></div></section></div>
 <div id="result" class="overlay" hidden><section class="modal"><p id="resultEyebrow" class="eyebrow">VICTORIA</p><h2 id="winnerTitle">Marea</h2><p id="winnerText">¡La última escuadra en pie!</p><div id="battleStats"></div><button id="rematchButton" class="start">JUGAR LA REVANCHA ↗</button><button id="resultMenu" class="text-button">Cambiar escenario o equipos</button></section></div>
-<div id="help" class="overlay" hidden><section class="modal"><button id="closeHelp" class="close" aria-label="Cerrar instrucciones">×</button><p class="eyebrow">MANUAL DE TRAVESURAS</p><h2>Apunta. Dispara. Sobrevive.</h2><p>Cada criatura tiene <b>100 de vida</b>. Los equipos alternan turnos. Gana el último equipo que conserve pugs vivas; caer al agua o a la lava elimina al instante.</p><div class="help-grid"><div><b>1. Encuentra tu posición</b><kbd>A</kbd> / <kbd>D</kbd> o flechas para caminar. <kbd>Espacio</kbd> para saltar. <kbd>Tab</kbd> cambia de criatura antes del ataque.</div><div><b>2. Elige un arma</b>Toca el arsenal o pulsa <kbd>Q</kbd>. La munición pertenece al equipo. La escopeta permite dos tiros.</div><div><b>3. Ajusta el disparo</b><kbd>↑</kbd> / <kbd>↓</kbd> o el deslizador ajustan el ángulo. Mantén <kbd>F</kbd>, <kbd>Enter</kbd> o ATACAR para cargar; suelta para lanzar.</div><div><b>4. Escapa del impacto</b>Después de disparar puedes moverte durante 2,5 segundos. El turno cambia cuando proyectiles y pugs se estabilizan.</div></div><h3>EN EL CELULAR</h3><p>Todos los controles están en pantalla. Usa varios dedos para moverte y saltar. Gira el teléfono; ⛶ amplía la vista. Toca y arrastra un dedo por el escenario para elegir la dirección y el ángulo. El arco alrededor del pug muestra la inclinación. También puedes arrastrar el control ÁNGULO. Mantén ATACAR con otro dedo para cargar, y suéltalo para disparar.</p><h3>NIVELES DE GORE</h3><p>Ninguno elimina sangre y fragmentos. Bajo muestra unas gotas al recibir daño. Medio añade fragmentos temporales al morir. Alto aumenta sangre y restos. Demencial añade sangre abundante que escurre por las paredes y deja fragmentos ensangrentados durante la partida; se limpian al empezar otra batalla. Si destruyes el suelo, los restos caen y las manchas de esa zona se eliminan.</p><h3>RENDIMIENTO Y LUCES</h3><p>En Gráficos, elige Automática, Económico, Equilibrado, Alto o Ultra. Económico reduce la resolución, el detalle y las partículas. Alto y Ultra añaden rayos de luz, hasta cuatro luces de explosión simultáneas, sombras dinámicas y mayor nitidez. Tormenta produce relámpagos y truenos; Puerto Tempestad los incluye de forma natural. El fondo tiene varias capas de pixel art con paralaje. Elige el clima: Suave, Intenso o Tormenta; Económico desactiva el clima para reducir la carga. Puedes limitar el dibujo a 30 o 60 FPS desde el menú o la pausa.</p><h3>ARMAS CON OBJETIVO</h3><p>Teledirigido, ataque aéreo y teletransporte: toca el escenario o el minimapa para marcar el punto y después pulsa ATACAR. Para teletransportarte necesitas una superficie libre. El minimapa permite apuntar lejos.</p><h3>PEQUEÑOS DETALLES, GRANDES EXPLOSIONES</h3><p>La bazuca y las granadas reciben viento. Las granadas rebotan; banana y racimo liberan cargas. Las minas detectan a ambos equipos y pueden explotar en cadena. El bate requiere estar cerca. La supernova destruye una zona enorme.</p><p>Al perder vida, los pugs sueltan salpicones de sangre. Al morir, dejan una mini nube nuclear y fragmentos caricaturescos. La explosión de despedida es un efecto visual. Tras la victoria, cae una bomba nuclear que elimina a los supervivientes como celebración; el ganador y las estadísticas ya están fijados.</p><p class="help-tip">Hay daño a aliados y por caídas fuertes. Usa cuevas como cobertura, vigila el viento y no pongas una mina donde tendrás que pasar después.</p><p>El Taller de pugs muestra un modelo 3D girable con el dedo, variantes clásico/zombi/esqueleto, accesorios y equipo para la espalda. La música original cambia de tema por escenario y evoluciona según la batalla; puedes elegir su ambiente en el menú o la pausa. La música y los efectos se activan al comenzar o tocar sus controles. <kbd>Esc</kbd> pausa la batalla. Todo el juego está incorporado en este archivo.</p></section></div>
+<div id="help" class="overlay" hidden><section class="modal"><button id="closeHelp" class="close" aria-label="Cerrar instrucciones">×</button><p class="eyebrow">MANUAL DE TRAVESURAS</p><h2>Apunta. Dispara. Sobrevive.</h2><p>Cada criatura tiene <b>100 de vida</b>. Los equipos alternan turnos. Gana el último equipo que conserve pugs vivas; caer al agua o a la lava elimina al instante.</p><div class="help-grid"><div><b>1. Encuentra tu posición</b><kbd>A</kbd> / <kbd>D</kbd> o flechas para caminar. <kbd>Espacio</kbd> para saltar. <kbd>Tab</kbd> cambia de criatura antes del ataque.</div><div><b>2. Elige un arma</b>Toca el arsenal o pulsa <kbd>Q</kbd>. La munición pertenece al equipo. La escopeta permite dos tiros.</div><div><b>3. Ajusta el disparo</b><kbd>↑</kbd> / <kbd>↓</kbd> o el deslizador ajustan el ángulo. Mantén <kbd>F</kbd>, <kbd>Enter</kbd> o ATACAR para cargar; suelta para lanzar.</div><div><b>4. Escapa del impacto</b>Después de disparar puedes moverte durante 2,5 segundos. El turno cambia cuando proyectiles y pugs se estabilizan.</div></div><h3>EN EL CELULAR Y PC (PANTALLA LIMPIA SIN FLECHAS)</h3><p>La pantalla está libre de flechas para darte máxima visibilidad: <b>presiona los bordes izquierdo o derecho</b> de la pantalla para que el pug camine en esa dirección, y <b>desliza hacia arriba</b> para saltar. Pulsa o mantén el botón <b>🎯 APUNTAR</b> para que el pug empiece a apuntar (mostrando el dial 360° sobre el pug) y a cargar la potencia del disparo; desliza para ajustar el ángulo y suelta para disparar. En PC también puedes usar <kbd>A</kbd>/<kbd>D</kbd>, <kbd>Espacio</kbd>, <kbd>↑</kbd>/<kbd>↓</kbd> y <kbd>F</kbd>/<kbd>Enter</kbd>.</p><h3>NIVELES DE GORE</h3><p>Ninguno elimina sangre y fragmentos. Bajo muestra unas gotas al recibir daño. Medio añade fragmentos temporales al morir. Alto aumenta sangre y restos. Demencial añade sangre abundante que escurre por las paredes y deja fragmentos ensangrentados durante la partida; se limpian al empezar otra batalla. Si destruyes el suelo, los restos caen y las manchas de esa zona se eliminan.</p><h3>RENDIMIENTO Y LUCES</h3><p>En Gráficos, elige Automática, Económico, Equilibrado, Alto o Ultra. Económico reduce la resolución, el detalle y las partículas. Alto y Ultra añaden rayos de luz, hasta cuatro luces de explosión simultáneas, sombras dinámicas y mayor nitidez. Tormenta produce relámpagos y truenos; Puerto Tempestad los incluye de forma natural. El fondo tiene varias capas de pixel art con paralaje. Elige el clima: Suave, Intenso o Tormenta; Económico desactiva el clima para reducir la carga. Puedes limitar el dibujo a 30 o 60 FPS desde el menú o la pausa.</p><h3>ARMAS CON OBJETIVO</h3><p>Teledirigido, ataque aéreo y teletransporte: toca el escenario o el minimapa para marcar el punto y después pulsa ATACAR. Para teletransportarte necesitas una superficie libre. El minimapa permite apuntar lejos.</p><h3>PEQUEÑOS DETALLES, GRANDES EXPLOSIONES</h3><p>La bazuca y las granadas reciben viento. Las granadas rebotan; banana y racimo liberan cargas. Las minas detectan a ambos equipos y pueden explotar en cadena. El bate requiere estar cerca. La supernova destruye una zona enorme.</p><p>Al perder vida, los pugs sueltan salpicones de sangre. Al morir, dejan una mini nube nuclear y fragmentos caricaturescos. La explosión de despedida es un efecto visual. Tras la victoria, cae una bomba nuclear que elimina a los supervivientes como celebración; el ganador y las estadísticas ya están fijados.</p><p class="help-tip">Hay daño a aliados y por caídas fuertes. Usa cuevas como cobertura, vigila el viento y no pongas una mina donde tendrás que pasar después.</p><p>El Taller de pugs muestra un modelo 3D girable con el dedo, variantes clásico/zombi/esqueleto, accesorios y equipo para la espalda. La música original cambia de tema por escenario y evoluciona según la batalla; puedes elegir su ambiente en el menú o la pausa. La música y los efectos se activan al comenzar o tocar sus controles. <kbd>Esc</kbd> pausa la batalla. Todo el juego está incorporado en este archivo.</p></section></div>
 
 
 
@@ -1188,36 +1411,214 @@ function syncPlayOptions(){
  document.body.dataset.graphics=cfg.id;
  if($('performanceReadout'))$('performanceReadout').hidden=!graphics.showFPS;
 }
-function resetTouchState(){touchPlay.aimPointer=touchPlay.firePointer=touchPlay.sliderPointer=null;touchPlay.mouseShot=false;touchPlay.jumpPointers.clear();input.keys.delete('jump');for(const c of app.chars)c.jumpBuffer=0;input.pointers.clear();app.charging=false;for(const id of ['moveLeft','moveRight','aimUp','aimDown','jumpButton','fireButton'])$(id).classList.remove('pressed');}
+function ensureAimPhase(){
+ if(app.phase==='interlude'&&!app.paused&&app.active?.hp>0&&human()){
+  app.interlude=0;
+  setPhase('aim');
+  $('turnBanner')?.classList.remove('show');
+  updateHUD();
+ }
+}
+function resetTouchState(){
+ touchPlay.aimPointer=touchPlay.firePointer=touchPlay.sliderPointer=null;
+ touchPlay.mouseShot=false;
+ touchPlay.latchedCharge=false;
+ touchPlay.fireOnDown=false;
+ touchPlay.keyShotFired=false;
+ touchPlay.jumpPointers.clear();
+ if(touchPlay.walkPointers)touchPlay.walkPointers.clear();
+ if(touchPlay.sceneTouches)touchPlay.sceneTouches.clear();
+ touchPlay.edgeVisual={left:0,right:0,jump:0};
+ input.keys.delete('jump');
+ for(const c of app.chars)c.jumpBuffer=0;
+ input.pointers.clear();
+ app.charging=false;
+ app.aimMode=true;
+ audio.stopChargeTone?.();
+ for(const id of ['moveLeft','moveRight','aimUp','aimDown','jumpButton','fireButton'])$(id)?.classList.remove('pressed','aim-active','charging');
+}
 function fullscreenActive(){return !!(document.fullscreenElement||document.webkitFullscreenElement);}
 function syncFullscreen(){const active=fullscreenActive();for(const id of ['fullscreenButton','menuFullscreenButton']){$(id).classList.toggle('selected',active);$(id).setAttribute('aria-pressed',String(active));$(id).setAttribute('title',active?'Salir de pantalla completa':'Pantalla completa');}$('fullscreenButton').textContent=active?'⤢':'⛶';resetTouchState();resize();}
 async function toggleFullscreen(forceEnter=false){if(touchPlay.fullscreenBusy)return false;touchPlay.fullscreenBusy=true;try{if(fullscreenActive()&&!forceEnter){const exit=document.exitFullscreen||document.webkitExitFullscreen;if(exit)await exit.call(document);try{screen.orientation?.unlock?.();}catch{}syncFullscreen();return true;}if(!fullscreenActive()){const root=document.documentElement,request=root.requestFullscreen||root.webkitRequestFullscreen;if(!request){toast('Este navegador no permite pantalla completa. Prueba abrir el enlace en Chrome o Samsung Internet.',5);return false;}await request.call(root,{navigationUI:'hide'});}try{if(screen.orientation?.lock)await screen.orientation.lock('landscape');}catch{}syncFullscreen();return fullscreenActive();}catch{toast('El navegador bloqueó la pantalla completa. Pulsa ⛶ para volver a intentarlo.',4);return false;}finally{touchPlay.fullscreenBusy=false;}}
 function beginBattle(){if(touchPlay.autoFullscreen&&!fullscreenActive())void toggleFullscreen(true);newMatch();makeDecorations();}
 function markTouch(e){if(e.pointerType==='touch'||e.pointerType==='pen'){touchPlay.touchSeen=true;document.body.dataset.touch='true';}}
 function wrapAngle360(a){const v=Number(a)||0;return((v%360)+360)%360;}
-function touchSliderAngle(e){if(!canAct()||!human())return;const r=$('angleSlider').getBoundingClientRect();app.angle=Math.round(clamp((e.clientX-r.left)/Math.max(1,r.width),0,1)*360)%360;updateHUD();}
+function touchSliderAngle(e){ensureAimPhase();if(!canAct()||!human())return;const r=$('angleSlider').getBoundingClientRect();app.angle=Math.round(clamp((e.clientX-r.left)/Math.max(1,r.width),0,1)*360)%360;updateHUD();}
+
+function triggerSwipeJump(){
+ ensureAimPhase();
+ if(!canMove()||!human())return false;
+ input.keys.add('jump');
+ if(!touchPlay.edgeVisual)touchPlay.edgeVisual={left:0,right:0,jump:0};
+ touchPlay.edgeVisual.jump=0.38;
+ return true;
+}
+
 function setupTouchPlay(){
- // Hold controls use Pointer Events; cancel native long-press selection and callouts.
- // Keep this scoped so text fields, selects and scrollable menus retain native behavior.
+ touchPlay.walkPointers=new Map();
+ touchPlay.sceneTouches=new Map();
+ touchPlay.edgeVisual={left:0,right:0,jump:0};
  for(const id of ['moveLeft','moveRight','aimUp','aimDown','jumpButton','fireButton','angleSlider','effects','minimap']){
-  const control=$(id),block=e=>{if(e.cancelable!==false)e.preventDefault();};
+  const control=$(id);if(!control)continue;
+  const block=e=>{if(e.cancelable!==false)e.preventDefault();};
   for(const type of ['selectstart','contextmenu','dragstart'])control.addEventListener(type,block);
-  control.addEventListener('touchstart',block,{passive:false});
  }
- for(const [id,key]of [['moveLeft','left'],['moveRight','right'],['aimUp','up'],['aimDown','down']]){const b=$(id),movement=key==='left'||key==='right';b.addEventListener('pointerdown',e=>{e.preventDefault();markTouch(e);if(!(movement?canMove():canAct())||!human())return;b.setPointerCapture(e.pointerId);input.pointers.set(e.pointerId,key);b.classList.add('pressed');});b.addEventListener('pointermove',e=>{if(!movement||!input.pointers.has(e.pointerId)||e.pointerType==='mouse')return;const l=$('moveLeft').getBoundingClientRect(),r=$('moveRight').getBoundingClientRect();if(e.clientX<l.left+l.width)input.pointers.set(e.pointerId,'left');else if(e.clientX>=r.left)input.pointers.set(e.pointerId,'right');$('moveLeft').classList.toggle('pressed',[...input.pointers.values()].includes('left'));$('moveRight').classList.toggle('pressed',[...input.pointers.values()].includes('right'));});const end=e=>{input.pointers.delete(e.pointerId);b.classList.toggle('pressed',[...input.pointers.values()].includes(key));if(movement){$('moveLeft').classList.toggle('pressed',[...input.pointers.values()].includes('left'));$('moveRight').classList.toggle('pressed',[...input.pointers.values()].includes('right'));}};for(const ev of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(ev,end);}
- const jumpButton=$('jumpButton');jumpButton.addEventListener('pointerdown',e=>{e.preventDefault();markTouch(e);if(canMove()&&human()&&!touchPlay.jumpPointers.has(e.pointerId)){touchPlay.jumpPointers.add(e.pointerId);jumpButton.setPointerCapture(e.pointerId);jumpButton.classList.add('pressed');input.keys.add('jump');}});for(const type of ['pointerup','pointercancel','lostpointercapture'])jumpButton.addEventListener(type,e=>{if(!touchPlay.jumpPointers.delete(e.pointerId))return;if(type!=='pointerup'){input.keys.delete('jump');if(app.active)app.active.jumpBuffer=0;}jumpButton.classList.toggle('pressed',touchPlay.jumpPointers.size>0);});
- const fire=$('fireButton');fire.addEventListener('pointerdown',e=>{e.preventDefault();markTouch(e);if(touchPlay.firePointer!==null||!canAct()||!human())return;touchPlay.firePointer=e.pointerId;fire.setPointerCapture(e.pointerId);startCharge();});const endFire=(e,cancel)=>{if(e.pointerId!==touchPlay.firePointer)return;touchPlay.firePointer=null;releaseCharge(cancel);};fire.addEventListener('pointerup',e=>endFire(e,false));for(const ev of ['pointercancel','lostpointercapture'])fire.addEventListener(ev,e=>endFire(e,true));
+ // Keep legacy hidden button listeners intact for compatibility
+ for(const [id,key]of [['moveLeft','left'],['moveRight','right'],['aimUp','up'],['aimDown','down']]){
+  const b=$(id),movement=key==='left'||key==='right';
+  if(!b)continue;
+  b.addEventListener('pointerdown',e=>{e.preventDefault();markTouch(e);ensureAimPhase();if(!(movement?canMove():canAct())||!human())return;b.setPointerCapture(e.pointerId);input.pointers.set(e.pointerId,key);b.classList.add('pressed');});
+  const end=e=>{input.pointers.delete(e.pointerId);b.classList.remove('pressed');};
+  for(const ev of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(ev,end);
+ }
+ const jumpButton=$('jumpButton');
+ if(jumpButton){
+  jumpButton.addEventListener('pointerdown',e=>{e.preventDefault();markTouch(e);triggerSwipeJump();});
+ }
+ $('skipMobile')?.addEventListener('click',()=>{$('skipButton')?.click();});
+
+ // === BOTÓN "🎯 ATACAR" (#fireButton): EJECUTA EL COMANDO DE POTENCIA Y DISPARO EN PC Y SMARTPHONE ===
+ // Soporta ambos modos de forma híbrida:
+ // 1. Mantener presionado ATACAR -> Carga la barra de potencia (15% <-> 100%) y dispara al soltar (>= 240 ms).
+ // 2. Pulsar/Hacer clic en ATACAR (< 240 ms) -> Inicia la barra de potencia oscilante en vivo, y al volver a pulsar ATACAR dispara con esa potencia.
+ const fire=$('fireButton');
+ fire.addEventListener('pointerdown',e=>{
+  if(e.button!==undefined&&e.button!==0)return;
+  e.preventDefault();
+  e.stopPropagation();
+  markTouch(e);
+  ensureAimPhase();
+  touchPlay.lastPointerEventTime=performance.now();
+  if(!canAct()||!human())return;
+
+  const w=weaponOf(),o=app.active;
+  // Si la barra de potencia ya estaba cargando (modo clic-para-cargar / clic-para-disparar), este toque ejecuta el disparo inmediato
+  if(app.charging){
+   touchPlay.fireOnDown=true;
+   touchPlay.firePointer=null;
+   touchPlay.latchedCharge=false;
+   releaseCharge(false);
+   return;
+  }
+
+  touchPlay.fireOnDown=false;
+  touchPlay.firePointer=e.pointerId;
+  touchPlay.fireDownTime=performance.now();
+  touchPlay.fireStartX=e.clientX;
+  touchPlay.fireStartY=e.clientY;
+  touchPlay.fireStartAngle=app.angle;
+  touchPlay.fireDragged=false;
+  touchPlay.latchedCharge=false;
+  try{fire.setPointerCapture(e.pointerId);}catch{}
+  app.aimMode=true;
+
+  if(w.charge){
+   if(w.target&&!app.target&&o){
+    const a=rad(app.angle),dx=o.dir*Math.cos(a),dy=-Math.sin(a);
+    app.target={x:clamp(o.x+dx*240,20,W-20),y:clamp(o.y-18+dy*180,35,WATER-10)};
+   }
+   startCharge();
+  }else{
+   audio.init();
+   updateHUD();
+  }
+ });
+
+ fire.addEventListener('pointermove',e=>{
+  if(e.pointerId!==touchPlay.firePointer||!canAct()||!human())return;
+  e.preventDefault();
+  const dx=e.clientX-touchPlay.fireStartX,dy=e.clientY-touchPlay.fireStartY;
+  if(Math.hypot(dx,dy)>10){
+   touchPlay.fireDragged=true;
+   if(e.clientY<view.height-95){
+    aimPoint(toWorld(e.clientX,e.clientY),weaponOf().target);
+   }else{
+    if(app.active&&Math.abs(dx)>34)app.active.dir=dx<0?-1:1;
+    app.angle=wrapAngle360(touchPlay.fireStartAngle-dy*0.85);
+   }
+   updateHUD();
+  }
+ });
+
+ const endFire=(e,isCancel)=>{
+  if(touchPlay.firePointer===null||e.pointerId!==touchPlay.firePointer)return;
+  touchPlay.firePointer=null;
+  touchPlay.lastPointerEventTime=performance.now();
+  if(touchPlay.fireOnDown){touchPlay.fireOnDown=false;return;}
+  if(!canAct()||!human()){releaseCharge(true);return;}
+
+  const heldMs=performance.now()-(touchPlay.fireDownTime||0);
+  const w=weaponOf();
+  if(w.charge){
+   // Si fue un clic o toque corto (< 240 ms) sin arrastrar, mantiene la barra de potencia cargando (15% <-> 100%) para que el siguiente clic en ATACAR dispare
+   if(heldMs<240&&!touchPlay.fireDragged){
+    touchPlay.latchedCharge=true;
+    app.charging=true;
+    app.aimMode=true;
+    updateHUD();
+    return;
+   }
+   // Si mantuvo presionado ATACAR (>= 240 ms) o arrastró mientras cargaba, dispara al soltar con la potencia actual
+   touchPlay.latchedCharge=false;
+   releaseCharge(false);
+  }else{
+   if(w.target&&!app.target){
+    app.aimMode=true;
+    updateHUD();
+    toast('Toca el escenario o minimapa para marcar el objetivo y pulsa ATACAR.',2.8);
+   }else{
+    shoot();
+   }
+  }
+ };
+ fire.addEventListener('pointerup',e=>endFire(e,false));
+ fire.addEventListener('pointercancel',e=>endFire(e,true));
+ window.addEventListener('pointerup',e=>{if(e.pointerId===touchPlay.firePointer)endFire(e,false);});
+
+ // Fallback click handler para navegadores o dispositivos que disparen click directo sin pointerdown previo
+ fire.addEventListener('click',e=>{
+  if(performance.now()-(touchPlay.lastPointerEventTime||0)<350)return;
+  ensureAimPhase();
+  if(!canAct()||!human())return;
+  const w=weaponOf(),o=app.active;
+  if(w.charge){
+   if(app.charging){
+    touchPlay.latchedCharge=false;
+    releaseCharge(false);
+   }else{
+    if(w.target&&!app.target&&o){
+     const a=rad(app.angle),dx=o.dir*Math.cos(a),dy=-Math.sin(a);
+     app.target={x:clamp(o.x+dx*240,20,W-20),y:clamp(o.y-18+dy*180,35,WATER-10)};
+    }
+    startCharge();
+    touchPlay.latchedCharge=true;
+    updateHUD();
+   }
+  }else{
+   if(w.target&&!app.target){
+    app.aimMode=true;
+    updateHUD();
+    toast('Toca el escenario para marcar el objetivo y pulsa ATACAR.',2.8);
+   }else{
+    shoot();
+   }
+  }
+ });
+
+ // === ESCENARIO (#effects): BORDES PARA CAMINAR, SWIPE ARRIBA PARA SALTAR, APUNTADO Y ZOOM ===
  const scene=$('effects');
- if(!touchPlay.sceneTouches)touchPlay.sceneTouches=new Map();
- const cancelSingleAimForPinch=()=>{
+ const cancelSingleTouchesForPinch=()=>{
   if(touchPlay.aimPointer!==null){
    const wasMouseShot=touchPlay.mouseShot;
    touchPlay.aimPointer=null;
    touchPlay.mouseShot=false;
    if(wasMouseShot)releaseCharge(true);
   }
+  for(const pid of touchPlay.walkPointers.keys()){
+   input.pointers.delete(pid);
+  }
+  touchPlay.walkPointers.clear();
  };
- // PC Mouse Wheel Zoom (Rueda del mouse)
  const onWheelZoom=e=>{
   if(app.phase==='menu')return;
   e.preventDefault();
@@ -1227,12 +1628,12 @@ function setupTouchPlay(){
  };
  scene.addEventListener('wheel',onWheelZoom,{passive:false});
  $('minimapWrap')?.addEventListener('wheel',onWheelZoom,{passive:false});
- // Smartphone Native Two-Finger Pinch-to-Zoom (Touch Events + Pointer Events)
+
  scene.addEventListener('touchstart',e=>{
   if(e.touches.length>=2){
    e.preventDefault();
    markTouch(e);
-   cancelSingleAimForPinch();
+   cancelSingleTouchesForPinch();
    const t0=e.touches[0],t1=e.touches[1];
    touchPlay.pinching=true;
    touchPlay.pinchCooldown=performance.now()+260;
@@ -1268,14 +1669,14 @@ function setupTouchPlay(){
  };
  scene.addEventListener('touchend',endTouchPinch,{passive:false});
  scene.addEventListener('touchcancel',endTouchPinch,{passive:false});
- // Multi-pointer tracking + Single-pointer aim
+
  scene.addEventListener('pointerdown',e=>{
   if(e.pointerType!=='mouse'){
    touchPlay.sceneTouches.set(e.pointerId,{x:e.clientX,y:e.clientY});
-   if(touchPlay.sceneTouches.size>=2){
+   if(touchPlay.sceneTouches.size>=2&&touchPlay.firePointer===null){
     e.preventDefault();
     markTouch(e);
-    cancelSingleAimForPinch();
+    cancelSingleTouchesForPinch();
     const pts=[...touchPlay.sceneTouches.values()];
     touchPlay.pinching=true;
     touchPlay.pinchCooldown=performance.now()+260;
@@ -1289,18 +1690,56 @@ function setupTouchPlay(){
    }
   }
   if(touchPlay.pinching||performance.now()<(touchPlay.pinchCooldown||0))return;
-  if(touchPlay.aimPointer!==null||!canAct()||!human())return;
-  e.preventDefault();markTouch(e);
-  touchPlay.aimPointer=e.pointerId;
-  touchPlay.mouseShot=e.pointerType==='mouse'&&!weaponOf().target;
+  ensureAimPhase();
+  if(!human()||app.paused)return;
+  e.preventDefault();
+  markTouch(e);
   try{scene.setPointerCapture(e.pointerId);}catch{}
-  aimPoint(toWorld(e.clientX,e.clientY),true);updateHUD();
-  if(touchPlay.mouseShot)startCharge();
+
+  const vw=Math.max(320,view.width||window.innerWidth);
+  const w=weaponOf();
+  // En smartphone (touch/pen), presionar los bordes laterales (24% izquierdo o derecho) hace caminar al pug
+  const isTouchInput=e.pointerType==='touch'||e.pointerType==='pen'||touchPlay.touchSeen;
+  const edgeRatio=(app.charging||w?.target)?0.16:0.26;
+  const isLeftEdge=isTouchInput&&e.clientX<=vw*edgeRatio;
+  const isRightEdge=isTouchInput&&e.clientX>=vw*(1-edgeRatio);
+
+  if((isLeftEdge||isRightEdge)&&canMove()&&!app.charging&&!w?.target){
+   const dir=isLeftEdge?'left':'right';
+   input.pointers.set(e.pointerId,dir);
+   touchPlay.walkPointers.set(e.pointerId,{
+    dir,
+    startX:e.clientX,
+    startY:e.clientY,
+    anchorX:e.clientX,
+    anchorY:e.clientY,
+    swipedUp:false
+   });
+   return;
+  }
+
+  // Registro para detectar swipe hacia arriba (salto) o apuntado en el escenario
+  touchPlay.walkPointers.set(e.pointerId,{
+   dir:null,
+   startX:e.clientX,
+   startY:e.clientY,
+   anchorX:e.clientX,
+   anchorY:e.clientY,
+   swipedUp:false
+  });
+
+  if(canAct()){
+   touchPlay.aimPointer=e.pointerId;
+   app.aimMode=true;
+   aimPoint(toWorld(e.clientX,e.clientY),true);
+   updateHUD();
+  }
  });
+
  scene.addEventListener('pointermove',e=>{
   if(touchPlay.sceneTouches.has(e.pointerId)){
    touchPlay.sceneTouches.set(e.pointerId,{x:e.clientX,y:e.clientY});
-   if(touchPlay.sceneTouches.size>=2){
+   if(touchPlay.sceneTouches.size>=2&&touchPlay.firePointer===null){
     e.preventDefault();
     const pts=[...touchPlay.sceneTouches.values()];
     const dist=Math.max(12,Math.hypot(pts[1].x-pts[0].x,pts[1].y-pts[0].y));
@@ -1314,29 +1753,189 @@ function setupTouchPlay(){
     return;
    }
   }
-  if(touchPlay.pinching||e.pointerId!==touchPlay.aimPointer||!canAct()||!human())return;
-  e.preventDefault();aimPoint(toWorld(e.clientX,e.clientY),weaponOf().target);updateHUD();
+  if(touchPlay.pinching||!human()||app.paused)return;
+
+  // 1. Gesto de deslizar hacia arriba (Swipe Up -> Saltar) cuando camina por los bordes
+  const wp=touchPlay.walkPointers.get(e.pointerId);
+  if(wp){
+   const dx=e.clientX-wp.anchorX;
+   const dy=e.clientY-wp.anchorY;
+   if(dy<-34&&Math.abs(dy)>Math.abs(dx)*1.15&&wp.dir!==null&&!app.charging&&canMove()){
+    triggerSwipeJump();
+    wp.anchorX=e.clientX;
+    wp.anchorY=e.clientY;
+    wp.swipedUp=true;
+    return;
+   }
+   if(wp.dir!==null&&canMove()){
+    const vw=Math.max(320,view.width||window.innerWidth);
+    if(e.clientX<=vw*0.36){
+     wp.dir='left';
+     input.pointers.set(e.pointerId,'left');
+    }else if(e.clientX>=vw*0.64){
+     wp.dir='right';
+     input.pointers.set(e.pointerId,'right');
+    }
+    return;
+   }
+  }
+
+  // 2. Arrastrar en el escenario ajusta el ángulo de apuntado 360° (solo cuando el puntero está presionado en el escenario)
+  if(e.pointerId===touchPlay.aimPointer&&canAct()){
+   e.preventDefault();
+   app.aimMode=true;
+   aimPoint(toWorld(e.clientX,e.clientY),weaponOf().target);
+   updateHUD();
+  }
  });
- const endAim=(e,cancel)=>{
+
+ const endScenePointer=(e,cancel)=>{
   touchPlay.sceneTouches.delete(e.pointerId);
   if(touchPlay.sceneTouches.size<2&&touchPlay.pinching){
    touchPlay.pinching=false;
    touchPlay.pinchCooldown=performance.now()+220;
   }
-  if(e.pointerId!==touchPlay.aimPointer)return;
-  const mouseShot=touchPlay.mouseShot;
-  touchPlay.aimPointer=null;touchPlay.mouseShot=false;
-  if(mouseShot)releaseCharge(cancel);
+  if(touchPlay.walkPointers.has(e.pointerId)){
+   touchPlay.walkPointers.delete(e.pointerId);
+   input.pointers.delete(e.pointerId);
+  }
+  if(e.pointerId===touchPlay.aimPointer){
+   touchPlay.aimPointer=null;
+   touchPlay.mouseShot=false;
+  }
  };
- scene.addEventListener('pointerup',e=>endAim(e,false));
- for(const ev of ['pointercancel','lostpointercapture'])scene.addEventListener(ev,e=>endAim(e,true));
+ scene.addEventListener('pointerup',e=>endScenePointer(e,false));
+ for(const ev of ['pointercancel','lostpointercapture'])scene.addEventListener(ev,e=>endScenePointer(e,true));
+
  // Bind HUD Zoom Buttons
  $('camZoomInBtn')?.addEventListener('click',()=>setCameraZoom((app.userZoom||1)*1.22));
  $('camZoomOutBtn')?.addEventListener('click',()=>setCameraZoom((app.userZoom||1)*0.82));
  $('camZoomResetBtn')?.addEventListener('click',()=>{app.cameraWide=false;app.camPanX=0;app.camPanY=0;setCameraZoom(1.0);});
- const slider=$('angleSlider');slider.addEventListener('pointerdown',e=>{if(!canAct()||!human()||touchPlay.sliderPointer!==null)return;e.preventDefault();markTouch(e);touchPlay.sliderPointer=e.pointerId;slider.setPointerCapture(e.pointerId);touchSliderAngle(e);});slider.addEventListener('pointermove',e=>{if(e.pointerId===touchPlay.sliderPointer){e.preventDefault();touchSliderAngle(e);}});for(const ev of ['pointerup','pointercancel','lostpointercapture'])slider.addEventListener(ev,e=>{if(e.pointerId===touchPlay.sliderPointer)touchPlay.sliderPointer=null;});slider.addEventListener('input',e=>{if(canAct()&&human()){app.angle=wrapAngle360(Number(e.target.value));updateHUD();}});
+ const slider=$('angleSlider');
+ if(slider){
+  slider.addEventListener('input',e=>{ensureAimPhase();if(canAct()&&human()){app.aimMode=true;app.angle=wrapAngle360(Number(e.target.value));updateHUD();}});
+ }
 }
-function drawTouchAimDial(c){if(!canAct()||!human()||weaponOf().target)return;const o=app.active,p=toScreen(o.x,o.y-18),radius=clamp(Math.min(view.width,view.height)*.16,42,74),busy=touchPlay.aimPointer!==null||touchPlay.sliderPointer!==null||input.keys.has('arrowup')||input.keys.has('arrowdown')||[...input.pointers.values()].some(v=>v==='up'||v==='down');if(!touchPlay.touchSeen&&!busy)return;const angle=rad(app.angle);c.save();c.globalAlpha=busy?.82:.24;c.strokeStyle=colors[o.team];c.lineWidth=busy?2:1.2;c.beginPath();c.arc(p.x,p.y,radius,0,TAU);c.stroke();for(let d=0;d<360;d+=30){const a=rad(d),dx=o.dir*Math.cos(a),dy=-Math.sin(a),card=(d%90)===0;c.beginPath();c.moveTo(p.x+dx*(radius-(card?6:3.5)),p.y+dy*(radius-(card?6:3.5)));c.lineTo(p.x+dx*(radius+(card?6:3.5)),p.y+dy*(radius+(card?6:3.5)));c.stroke();}const hx=p.x+o.dir*Math.cos(angle)*radius,hy=p.y-Math.sin(angle)*radius;c.globalAlpha=busy?1:.75;ellipse(c,hx,hy,busy?6:4.2,busy?6:4.2,'#ffd389');if(busy){c.fillStyle='#14263eea';roundRect(c,clamp(p.x-25,4,view.width-54),Math.max(4,p.y-radius-31),50,22,6);c.fill();c.fillStyle='#ffdc97';c.font='700 12px system-ui';c.textAlign='center';c.fillText(Math.round(wrapAngle360(app.angle))+'°',clamp(p.x,29,view.width-29),Math.max(4,p.y-radius-31)+15);}c.restore();}
+
+function drawTouchAimDial(c){
+ // 1. Feedback visual sutil y limpio en los bordes cuando se presiona para caminar o se desliza para saltar
+ const leftWalk=human()&&canMove()&&(input.keys.has('a')||input.keys.has('arrowleft')||[...input.pointers.values()].includes('left'));
+ const rightWalk=human()&&canMove()&&(input.keys.has('d')||input.keys.has('arrowright')||[...input.pointers.values()].includes('right'));
+ if(!touchPlay.edgeVisual)touchPlay.edgeVisual={left:0,right:0,jump:0};
+ touchPlay.edgeVisual.left=lerp(touchPlay.edgeVisual.left||0,leftWalk?1:0,0.25);
+ touchPlay.edgeVisual.right=lerp(touchPlay.edgeVisual.right||0,rightWalk?1:0,0.25);
+ touchPlay.edgeVisual.jump=Math.max(0,(touchPlay.edgeVisual.jump||0)-0.025);
+
+ if(touchPlay.edgeVisual.left>0.03){
+  c.save();
+  const a=touchPlay.edgeVisual.left*0.32;
+  const g=c.createLinearGradient(0,0,76,0);
+  g.addColorStop(0,`rgba(92,235,226,${a})`);
+  g.addColorStop(1,'rgba(92,235,226,0)');
+  c.fillStyle=g;
+  c.fillRect(0,0,76,view.height);
+  c.fillStyle=`rgba(248,250,252,${a*1.8})`;
+  c.font='900 26px system-ui';
+  c.textAlign='left';
+  c.fillText('‹',16,view.height*0.52);
+  c.restore();
+ }
+ if(touchPlay.edgeVisual.right>0.03){
+  c.save();
+  const a=touchPlay.edgeVisual.right*0.32;
+  const g=c.createLinearGradient(view.width,0,view.width-76,0);
+  g.addColorStop(0,`rgba(92,235,226,${a})`);
+  g.addColorStop(1,'rgba(92,235,226,0)');
+  c.fillStyle=g;
+  c.fillRect(view.width-76,0,76,view.height);
+  c.fillStyle=`rgba(248,250,252,${a*1.8})`;
+  c.font='900 26px system-ui';
+  c.textAlign='right';
+  c.fillText('›',view.width-16,view.height*0.52);
+  c.restore();
+ }
+
+ // 2. Dial de apuntado 360° + Barra de potencia integrada alrededor y sobre el Pug activo
+ if(!canAct()||!human()||weaponOf().target)return;
+ const o=app.active;if(!o)return;
+ const activeEngage=Boolean(app.charging||touchPlay.aimPointer!==null||touchPlay.firePointer!==null||input.keys.has('arrowup')||input.keys.has('arrowdown')||[...input.pointers.values()].some(v=>v==='up'||v==='down'));
+ const p=toScreen(o.x,o.y-18),radius=clamp(Math.min(view.width,view.height)*.16,44,76);
+ const angle=rad(app.angle),w=weaponOf();
+ const tCol=colors[o.team]||'#5cebe2';
+ c.save();
+ // Anillo táctico de 360°
+ c.globalAlpha=app.charging?0.96:(activeEngage?0.84:0.46);
+ c.strokeStyle=app.charging?'#ff6e54':tCol;
+ c.lineWidth=app.charging?2.5:1.7;
+ c.beginPath();c.arc(p.x,p.y,radius,0,TAU);c.stroke();
+ for(let d=0;d<360;d+=30){
+  const a=rad(d),dx=o.dir*Math.cos(a),dy=-Math.sin(a),card=(d%90)===0;
+  c.beginPath();
+  c.moveTo(p.x+dx*(radius-(card?6:3.5)),p.y+dy*(radius-(card?6:3.5)));
+  c.lineTo(p.x+dx*(radius+(card?6:3.5)),p.y+dy*(radius+(card?6:3.5)));
+  c.stroke();
+ }
+
+ // Arco de Potencia de Disparo en el borde exterior del dial (cuando el arma usa potencia)
+ if(w?.charge){
+  const pRad=radius+8;
+  const startA=-Math.PI*0.85,spanA=Math.PI*1.70;
+  c.strokeStyle='rgba(7, 17, 32, 0.82)';
+  c.lineWidth=6;
+  c.lineCap='round';
+  c.beginPath();c.arc(p.x,p.y,pRad,startA,startA+spanA);c.stroke();
+
+  const pFrac=clamp(app.power/100,0,1);
+  const pCol=app.power>82?'#ff584d':app.power>50?'#ffd479':'#4cebe0';
+  c.strokeStyle=pCol;
+  c.lineWidth=4.8;
+  c.beginPath();c.arc(p.x,p.y,pRad,startA,startA+spanA*pFrac);c.stroke();
+
+  if(app.lastPower!=null){
+   const lastA=startA+spanA*clamp(app.lastPower/100,0,1);
+   c.strokeStyle='#ffffff';
+   c.lineWidth=2.2;
+   c.beginPath();
+   c.moveTo(p.x+Math.cos(lastA)*(pRad-4),p.y+Math.sin(lastA)*(pRad-4));
+   c.lineTo(p.x+Math.cos(lastA)*(pRad+4),p.y+Math.sin(lastA)*(pRad+4));
+   c.stroke();
+  }
+ }
+
+ // Punto guía del ángulo actual
+ const hx=p.x+o.dir*Math.cos(angle)*radius,hy=p.y-Math.sin(angle)*radius;
+ c.globalAlpha=1;
+ ellipse(c,hx,hy,app.charging?7.5:5.5,app.charging?7.5:5.5,app.charging?'#ff584d':'#ffd389');
+
+ // Etiqueta flotante con barra de potencia horizontal en vivo sobre el pug cuando está cargando o apuntando
+ if(app.charging||activeEngage){
+  const degText=Math.round(wrapAngle360(app.angle))+'°';
+  const pwrText=w?.charge?(' · POTENCIA '+Math.round(app.power)+'%'+(app.charging?((app.chargeDir||1)>0?' ▲':' ▼'):'')):'';
+  const badgeText=degText+pwrText;
+  c.font='800 11.5px system-ui';
+  const bw=Math.max(88,c.measureText(badgeText).width+20);
+  const bh=w?.charge?30:22;
+  const bx=clamp(p.x-bw/2,6,view.width-bw-6),by=Math.max(6,p.y-radius-bh-14);
+  c.fillStyle='rgba(8, 18, 32, 0.94)';
+  roundRect(c,bx,by,bw,bh,8);c.fill();
+  c.strokeStyle=app.charging?'#ff7a70':tCol;
+  c.lineWidth=1.4;c.stroke();
+  c.fillStyle=app.charging?'#ffe4e6':'#ffdc97';
+  c.textAlign='center';
+  c.fillText(badgeText,bx+bw/2,by+14);
+  if(w?.charge){
+   const barW=bw-16,barX=bx+8,barY=by+19;
+   c.fillStyle='#060e1a';
+   roundRect(c,barX,barY,barW,6,3);c.fill();
+   const fillW=Math.max(3,barW*clamp(app.power/100,0,1));
+   const gBar=c.createLinearGradient(barX,0,barX+barW,0);
+   gBar.addColorStop(0,'#4cebe0');gBar.addColorStop(0.55,'#fde047');gBar.addColorStop(1,'#ff4d4d');
+   c.fillStyle=gBar;
+   roundRect(c,barX,barY,fillW,6,3);c.fill();
+  }
+ }
+ c.restore();
+}
 function setupPlayOptions(){
  setupTouchPlay();syncPlayOptions();
  for(const id of ['graphicsPreset','pauseGraphicsPreset'])if($(id))$(id).addEventListener('change',e=>applyGraphicsPreset(e.target.value));
@@ -3033,7 +3632,7 @@ function buildPugRig(c,time,size,customYaw=null){
  const walking=speed>12;
  const airborne=pose==='jump'||(!c.grounded&&pose==='auto'&&!c.screenHero);
  const celebrating=pose==='celebrate'||(app.phase==='over'&&app.winner&&c.team===app.winner.id);
- const activeAim=(pose==='aim')||(c===app.active&&app.phase==='aim'&&pose==='auto');
+ const activeAim=(pose==='aim')||(c===app.active&&app.phase==='aim'&&pose==='auto'&&Boolean(app.aimMode||app.charging||!human()));
 
  // Seal-belly bouncy ball galumph animation ("pelota/foca rebotando con la panza")
  const walkPhase=walking?(time*11.5+(c.id||0)*1.3):0;
@@ -6105,7 +6704,7 @@ function newMatch(forcedSeed=null){audio.init();readSettings();menuLoopEngine.st
  $('minimapWrap').hidden=false;$('menu').hidden=true;$('gameHUD').hidden=false;$('controls').hidden=false;$('result').hidden=true;$('pause').hidden=true;$('inventory').hidden=true;app.team=count-1;app.active=null;audio.step=0;if(audio.context)audio.next=audio.context.currentTime+.05;nextTurn();resize();toast('Cada criatura comienza con 100 de vida. ¡A jugar!',3.5);}
 function readSettings(){app.mode=$('modeLAN')?.classList.contains('selected')?'lan':($('modeCPU').classList.contains('selected')?'cpu':'local');app.difficulty=$('difficulty').value;app.turnTime=Number($('turnDuration').value);audio.music=$('musicSetting').checked;audio.sfx=$('sfxSetting').checked;try{localStorage.setItem('pocket-siege-settings',JSON.stringify({map:app.map,mode:app.mode,difficulty:app.difficulty,members:$('memberCount').value,teams:$('teamCount').value,duration:$('turnDuration').value,ammo:$('ammoMode').value,a:$('teamA').value,b:$('teamB').value,music:audio.music,sfx:audio.sfx}));}catch{}updateAudioButtons();}
 function nextTurn(){if(checkWinner(true))return;resetTouchState();app.turn++;if(app.turn>1&&app.team===app.teams.length-1)app.round++;let guard=0;do{app.team=(app.team+1)%app.teams.length;guard++;}while(!app.chars.some(c=>c.hp>0&&c.team===app.team)&&guard<=app.teams.length);
- const team=app.teams[app.team],alive=app.chars.filter(c=>c.team===app.team&&c.hp>0);app.active=alive[team.cursor%alive.length];team.cursor=(team.cursor+1)%Math.max(1,alive.length);app.timer=app.turnTime;app.wind=(random()*2-1)*38;app.angle=45;app.power=65;app.shotCount=0;app.shotSecond=false;app.target=null;app.charging=false;app.actionAge=0;app.stable=0;app.aiAge=0;app.aiFired=false;app.aiPlan=null;app.interlude=1.1;app.weapon='rocket';setPhase('interlude');$('turnBanner').textContent=team.name+' · '+app.active.name+(!team.human?' · CPU':'');$('turnBanner').style.setProperty('--team',colors[app.team]);$('turnBanner').classList.add('show');$('inventory').hidden=true;updateInventory();updateHUD();audio.sound('turn');}
+ const team=app.teams[app.team],alive=app.chars.filter(c=>c.team===app.team&&c.hp>0);app.active=alive[team.cursor%alive.length];team.cursor=(team.cursor+1)%Math.max(1,alive.length);app.timer=app.turnTime;app.wind=(random()*2-1)*38;app.angle=45;app.power=65;app.shotCount=0;app.shotSecond=false;app.target=null;app.charging=false;app.aimMode=true;touchPlay.latchedCharge=false;app.actionAge=0;app.stable=0;app.aiAge=0;app.aiFired=false;app.aiPlan=null;app.interlude=1.1;app.weapon='rocket';setPhase('interlude');$('turnBanner').textContent=team.name+' · '+app.active.name+(!team.human?' · CPU':'');$('turnBanner').style.setProperty('--team',colors[app.team]);$('turnBanner').classList.add('show');$('inventory').hidden=true;updateInventory();updateHUD();audio.sound('turn');}
 function checkWinner(force=false){const teams=app.teams.filter(t=>app.chars.some(c=>c.team===t.id&&c.hp>0));if(teams.length>1||app.phase==='over'||app.phase==='menu')return false;if(!force&&app.projectiles.length)return false;app.winner=teams[0]||null;setPhase('over');app.charging=false;input.keys.clear();input.pointers.clear();$('inventory').hidden=true;$('controls').hidden=true;app.resultDelay=app.deathBeat;$('result').hidden=app.resultDelay>0;const loss=app.mode==='cpu'&&app.winner&&!app.winner.human;$('resultEyebrow').textContent=teams.length===0?'EMPATE':loss?'LA CPU GANA ESTA VEZ':'VICTORIA';$('winnerTitle').textContent=app.winner?app.winner.name:'¡Nadie sobrevivió!';$('winnerTitle').style.color=app.winner?colors[app.winner.id]:'#ffd878';$('winnerText').textContent=loss?'Otra batalla, otra oportunidad. Ajusta el viento y busca cobertura.':teams.length?'¡Victoria! La bomba de celebración elimina a todos, pero el triunfo es tuyo.':'Dos escuadras eliminadas al mismo tiempo.';$('battleStats').textContent=app.turn+' turnos · '+app.totalShots+' ataques · '+Math.round(app.damageDone)+' de daño';audio.sound('victory');for(let i=0;i<65;i++)spawnFX(W/2+(effectsRandom()-.5)*1000,220+effectsRandom()*200,(effectsRandom()-.5)*100,-80-effectsRandom()*150,colors[i%4],3+effectsRandom()*3,2+effectsRandom()*2,'confetti');beginCelebration();return true;}
 function damage(c,amount,x,y){if(c.hp<=0||amount<=0)return;amount=Math.round(amount);if(c.shield>0){const blocked=Math.min(c.shield,amount);c.shield-=blocked;amount-=blocked;app.floats.push({x:c.x,y:c.y-48,life:1,text:'🛡 −'+blocked,color:'#8cecff'});}amount=Math.min(c.hp,amount);if(amount<=0)return;c.hp-=amount;c.hurt=.22;bloodSplash(c,amount,x,y);app.damageDone+=amount;app.floats.push({x:c.x,y:c.y-40,life:1.3,text:'−'+amount,color:'#ffbd94'});audio.sound('hurt');if(c.hp<=0)kill(c);}
 function kill(c,water=false){if(c.hp<0)return;c.hp=-1;c.vx=0;c.walkVX=0;c.vy=0;pugDeath(c,water);if(c===app.active)app.charging=false;}
@@ -6593,9 +7192,9 @@ function step(dt){app.viewTime+=dt;if(app.paused)return;app.simTime+=dt;app.shak
  if(!human()&&canMove()&&app.active){if(app.phase==='aim'&&app.aiAge>.55&&app.aiAge<.98){const next=terrain.surface(app.active.x+app.active.dir*22,app.active.y-12);if(next&&Math.abs(next.y-app.active.y)<12)control=app.active.dir;}else if(app.phase==='action'&&app.actionAge<1.25&&['dynamite','mine'].includes(app.weapon))control=-app.active.dir;}
  for(const c of app.chars)characterPhysics(c,dt,c===app.active?control:0,c===app.active?jump:false);
  for(const p of [...app.projectiles])stepProjectile(p,dt);app.projectiles=app.projectiles.filter(p=>!p.dead);for(const m of app.mines)stepMine(m,dt);app.mines=app.mines.filter(m=>!m.dead);
- if(app.phase==='aim'){app.timer-=dt;if(human()&&canAct()){if(input.keys.has('arrowup')||[...input.pointers.values()].includes('up')){app.angle=wrapAngle360(app.angle+76*dt);updateHUD();}if(input.keys.has('arrowdown')||[...input.pointers.values()].includes('down')){app.angle=wrapAngle360(app.angle-76*dt);updateHUD();}if(app.charging){
+ if(app.phase==='aim'){app.timer-=dt;if(human()&&canAct()){if(input.keys.has('arrowup')||[...input.pointers.values()].includes('up')){app.aimMode=true;app.angle=wrapAngle360(app.angle+76*dt);updateHUD();}if(input.keys.has('arrowdown')||[...input.pointers.values()].includes('down')){app.aimMode=true;app.angle=wrapAngle360(app.angle-76*dt);updateHUD();}if(app.charging){
  app.chargePeakFlash=Math.max(0,(app.chargePeakFlash||0)-dt);
- const dir=app.chargeDir||1,spd=app.chargeSpeed||42;
+ const dir=app.chargeDir||1,spd=app.chargeSpeed||58;
  let nextP=app.power+dir*spd*dt;
  if(nextP>=100){
   nextP=200-nextP;app.chargeDir=-1;app.chargePeakFlash=.22;audio.sound('chargePeak',1);
@@ -6604,7 +7203,8 @@ function step(dt){app.viewTime+=dt;if(app.paused)return;app.simTime+=dt;app.shak
  }
  app.power=clamp(nextP,15,100);
  audio.updateChargeTone?.(app.power);
-}}if(app.timer<=0||app.active.hp<=0){setPhase('action');app.actionAge=3;app.shotSecond=false;app.charging=false;}}
+ updateHUD();
+}}if(app.timer<=0||app.active.hp<=0){if(app.charging&&app.active?.hp>0){releaseCharge(false);}else{setPhase('action');app.actionAge=3;app.shotSecond=false;app.charging=false;}}}
  if(!human()&&app.mode==='cpu'&&(app.phase==='aim'||app.phase==='action'))updateAI(dt);
  if(app.mode==='lan'&&lanNet.connected)lanNet.tick(dt);
  if(app.phase==='action'){app.actionAge+=dt;const unsettled=app.projectiles.length>0||app.chars.some(c=>c.hp>0&&(!c.grounded||Math.abs(c.vx)>16||Math.abs(c.vy)>10));app.stable=unsettled?0:app.stable+dt;
@@ -6795,8 +7395,14 @@ if(f.kind==='flash'){
   else if(f.kind==='confetti'){c.fillStyle=f.color;c.save();c.translate(f.x,f.y);c.rotate(time*2+f.x);c.fillRect(-f.size/2,-2,f.size,4);c.restore();}
   else{ellipse(c,f.x,f.y,f.size*alpha,f.size*alpha,f.color);}}
  c.globalAlpha=1;
- if(app.active&&app.active.hp>0&&['aim','interlude'].includes(app.phase)){const o=app.active,a=rad(app.angle),dx=o.dir*Math.cos(a),dy=-Math.sin(a),w=weaponOf();c.strokeStyle=colors[o.team];c.lineWidth=1.8;c.setLineDash([4,5]);c.beginPath();c.moveTo(o.x+dx*20,o.y-18+dy*15);c.lineTo(o.x+dx*85,o.y-18+dy*70);c.stroke();c.setLineDash([]);if(w.charge&&app.phase==='aim'){let v=170+app.power*6.8,x=o.x+dx*25,y=o.y-18+dy*20,vx=dx*v,vy=dy*v;for(let i=0;i<14;i++){vx+=app.wind*.045;vy+=480*.045;x+=vx*.045;y+=vy*.045;if(terrain.solid(x,y))break;c.globalAlpha=1-i/15;ellipse(c,x,y,2.5,2.5,'#fff1bd');}c.globalAlpha=1;}
-  c.fillStyle=colors[o.team];c.beginPath();c.moveTo(o.x,o.y-62+Math.sin(time*4)*3);c.lineTo(o.x-6,o.y-72+Math.sin(time*4)*3);c.lineTo(o.x+6,o.y-72+Math.sin(time*4)*3);c.fill();}
+ if(app.active&&app.active.hp>0&&['aim','interlude'].includes(app.phase)){
+  const o=app.active,a=rad(app.angle),dx=o.dir*Math.cos(a),dy=-Math.sin(a),w=weaponOf();
+  if(app.aimMode||app.charging||!human()){
+   c.strokeStyle=colors[o.team];c.lineWidth=1.8;c.setLineDash([4,5]);c.beginPath();c.moveTo(o.x+dx*20,o.y-18+dy*15);c.lineTo(o.x+dx*85,o.y-18+dy*70);c.stroke();c.setLineDash([]);
+   if(w.charge&&app.phase==='aim'){let v=170+app.power*6.8,x=o.x+dx*25,y=o.y-18+dy*20,vx=dx*v,vy=dy*v;for(let i=0;i<14;i++){vx+=app.wind*.045;vy+=480*.045;x+=vx*.045;y+=vy*.045;if(terrain.solid(x,y))break;c.globalAlpha=1-i/15;ellipse(c,x,y,2.5,2.5,'#fff1bd');}c.globalAlpha=1;}
+  }
+  c.fillStyle=colors[o.team];c.beginPath();c.moveTo(o.x,o.y-62+Math.sin(time*4)*3);c.lineTo(o.x-6,o.y-72+Math.sin(time*4)*3);c.lineTo(o.x+6,o.y-72+Math.sin(time*4)*3);c.fill();
+ }
  if(app.target&&app.phase!=='menu'){const target=app.target,valid=app.weapon!=='teleport'||!!terrain.spot(target.x,target.y);c.strokeStyle=valid?'#faf2bc':'#ff8d8a';c.lineWidth=2;c.beginPath();c.arc(target.x,target.y,15+Math.sin(time*5)*2,0,TAU);c.moveTo(target.x-22,target.y);c.lineTo(target.x+22,target.y);c.moveTo(target.x,target.y-22);c.lineTo(target.x,target.y+22);c.stroke();}
  c.restore();
  drawWeather(c,app.simTime,true);drawLightning(c,app.simTime,true);drawCelebrationBomb(c);drawLightBloom(c);drawTouchAimDial(c);drawCharacterLabels(c);drawCelebrationPugCanvas(c);
@@ -6881,7 +7487,7 @@ function resize(){
  graphics.lastBgKey='';
  if(renderer)renderer.lastObjectsSig='';
  const unfolded=isFoldableUnfolded();
- const freeHeight=view.height-(app.phase==='menu'?26:view.height<540?130:unfolded?145:175);
+ const freeHeight=view.height-(app.phase==='menu'?26:view.height<540?68:unfolded?84:96);
  view.base=unfolded?Math.min(view.width/(W*0.82),Math.max(180,freeHeight)/(H+10)):Math.min(view.width/(W+90),Math.max(140,freeHeight)/(H+20));
  if(!view.scale)view.scale=view.base;
  $('rotateHint').hidden=!(view.height>view.width&&view.width<800&&!unfolded);
@@ -6939,9 +7545,16 @@ $('powerFill').style.width=app.power+'%';
 if($('lastPowerTick')){
  if(app.lastPower!=null&&w.charge){$('lastPowerTick').hidden=false;$('lastPowerTick').style.left=clamp(app.lastPower,0,100)+'%';}
  else $('lastPowerTick').hidden=true;
-}$('fireButton').classList.toggle('charging',app.charging);$('fireButton').disabled=!canAct()||!human();$('fireLabel').textContent=!human()?(app.mode==='lan'?'TURNO RIVAL EN LAN':'CPU APUNTANDO'):app.phase==='action'?(canMove()?'¡MUÉVETE!':'RESOLVIENDO'):w.charge?(app.charging?'SUELTA PARA DISPARAR':'MANTÉN Y SUELTA'):'CONFIRMAR';
+}$('fireButton').classList.toggle('charging',app.charging);
+$('fireButton').classList.toggle('aim-active',Boolean(app.aimMode&&!app.charging));
+const canPressFire=(canAct()||(app.phase==='interlude'&&!app.paused&&app.active?.hp>0))&&human();
+$('fireButton').disabled=!canPressFire;
+if($('fireMainText')){
+ $('fireMainText').textContent=app.charging?(touchPlay.latchedCharge?'¡DISPARAR!':'CARGANDO'):'ATACAR';
+}
+$('fireLabel').textContent=!human()?(app.mode==='lan'?'TURNO RIVAL EN LAN':'CPU APUNTANDO'):app.phase==='action'?(canMove()?'¡CORRE!':'RESOLVIENDO'):w.charge?(app.charging?(touchPlay.latchedCharge?'PULSA PARA DISPARAR ('+Math.round(app.power)+'%)':'SUELTA PARA DISPARAR ('+Math.round(app.power)+'%)'):'PULSA O MANTÉN · POTENCIA'):(w.target&&!app.target?'MARCA EL OBJETIVO EN EL MAPA':'PULSA PARA ATACAR');
  const ws=app.weapon+team.ammo[w.id]+app.shotCount+app.phase+Boolean(app.target);if(ws!==lastWeapon){$('weaponIcon').innerHTML=getWeaponIconSVG(w.id);$('weaponName').textContent=w.name;$('weaponAmmo').textContent=(team.ammo[w.id]===Infinity?'∞':Math.max(0,team.ammo[w.id]))+' '+(app.shotCount===1&&w.id==='shotgun'?'· 2.º tiro':'cargas');$('weaponHint').textContent=w.short;$('targetHelp').hidden=!(w.target&&app.phase==='aim');$('targetHelp').textContent=app.target?'Objetivo marcado · confirma el ataque':'Toca el mapa o minimapa para marcar el objetivo';lastWeapon=ws;}
- $('phaseLabel').textContent=app.phase==='action'?app.shotSecond?'Primer disparo de escopeta':app.actionAge<2.5?'RETIRADA · aún puedes moverte':'ESPERANDO IMPACTOS':!human()?(app.mode==='lan'?'JUGADOR LAN EN TURNO':'TURNO DE LA CPU'):app.phase==='interlude'?'PREPARADOS':'MOVER · APUNTAR · DISPARAR';$('touchAimHint').hidden=!(touchPlay.touchSeen&&canAct()&&human());$('touchAimHint').textContent=w.target?'Toca y arrastra para marcar el objetivo.':'Toca y arrastra en el escenario para ajustar el ángulo.';$('cycleButton').disabled=!canAct()||!human()||app.shotCount>0;$('cycleMobile').disabled=$('cycleButton').disabled;}
+ $('phaseLabel').textContent=app.phase==='action'?app.shotSecond?'Primer disparo de escopeta':app.actionAge<2.5?'RETIRADA · bordes para correr':'ESPERANDO IMPACTOS':!human()?(app.mode==='lan'?'JUGADOR LAN EN TURNO':'TURNO DE LA CPU'):app.phase==='interlude'?'PREPARADOS':(app.aimMode?'APUNTANDO · mantén APUNTAR para cargar':'BORDES: CAMINAR · ↑: SALTAR · APUNTAR');$('touchAimHint').hidden=!(touchPlay.touchSeen&&canAct()&&human());$('touchAimHint').textContent=w.target?'Toca y arrastra para marcar el objetivo.':'Toca y arrastra en el escenario para ajustar el ángulo.';$('cycleButton').disabled=!canAct()||!human()||app.shotCount>0;$('cycleMobile').disabled=$('cycleButton').disabled;}
 function escapeHTML(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 const weaponCats={
  heavy:['rocket','grenade','dynamite','homing','super','salvo','sticky','holy','orbital'],
@@ -7302,16 +7915,18 @@ function selectMap(index,previewStageMusic=false){
 }
 function cycleCharacter(){if(!canAct()||!human()||app.shotCount>0)return;resetTouchState();const alive=app.chars.filter(c=>c.team===app.team&&c.hp>0);if(alive.length<2)return;app.active=alive[(alive.indexOf(app.active)+1)%alive.length];app.charging=false;app.target=null;audio.sound('menu');updateHUD();}
 function startCharge(){
+ ensureAimPhase();
  if(!canAct()||!human())return;
  audio.init();
+ app.aimMode=true;
  if(weaponOf().charge){
-  app.power=15;app.chargeDir=1;app.chargeSpeed=42;app.chargePeakFlash=0;app.charging=true;
+  app.power=15;app.chargeDir=1;app.chargeSpeed=58;app.chargePeakFlash=0;app.charging=true;
   updateHUD();
  }else shoot();
 }
 function releaseCharge(cancel=false){
  if(!app.charging)return;
- app.charging=false;app.chargePeakFlash=0;
+ app.charging=false;app.chargePeakFlash=0;touchPlay.latchedCharge=false;
  audio.stopChargeTone?.();
  updateHUD();
  if(!cancel&&human())shoot();
@@ -7344,8 +7959,8 @@ renderMapThumbnails();$('maps').addEventListener('click',e=>{const b=e.target.cl
  $('helpButton').addEventListener('click',()=>$('help').hidden=false);$('pauseHelp').addEventListener('click',()=>$('help').hidden=false);$('closeHelp').addEventListener('click',()=>$('help').hidden=true);
  for(const id of ['musicSetting','pauseMusic'])$(id).addEventListener('change',e=>{audio.music=e.target.checked;audio.init();updateAudioButtons();});for(const id of ['sfxSetting','pauseSfx'])$(id).addEventListener('change',e=>{audio.sfx=e.target.checked;audio.init();updateAudioButtons();});$('musicToggle').addEventListener('click',()=>{audio.music=!audio.music;audio.init();updateAudioButtons();});
  $('minimap').addEventListener('pointerdown',e=>{e.preventDefault();if(!canAct()||!human())return;const r=$('minimap').getBoundingClientRect(),p={x:(e.clientX-r.left)/r.width*W,y:(e.clientY-r.top)/r.height*H};if(weaponOf().target){if(app.weapon==='teleport'){const floor=terrain.surface(p.x);if(floor)p.y=floor.y;}aimPoint(p,true);}else{app.cameraWide=!app.cameraWide;}});
- window.addEventListener('keydown',e=>{if(studio.open)return;if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;const k=e.key.toLowerCase();if(['arrowup','arrowdown','arrowleft','arrowright',' ','tab','enter'].includes(k))e.preventDefault();if(k==='escape'||k==='p'){if(!$('help').hidden){$('help').hidden=true;return;}if(!$('inventory').hidden){$('inventory').hidden=true;return;}if(!e.repeat)pauseGame();return;}if(!human()||app.paused)return;input.keys.add(k);if(k===' '&&!e.repeat&&canMove())input.keys.add('jump');if((k==='f'||k==='enter')&&!e.repeat)startCharge();if(k==='tab'&&!e.repeat)cycleCharacter();if(k==='q'&&!e.repeat)$('weaponsButton').click();if(k==='v'&&!e.repeat)$('viewButton').click();});
- window.addEventListener('keyup',e=>{const k=e.key.toLowerCase();input.keys.delete(k);if(k==='f'||k==='enter')releaseCharge();});
+ window.addEventListener('keydown',e=>{if(studio.open)return;if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;const k=e.key.toLowerCase();if(['arrowup','arrowdown','arrowleft','arrowright',' ','tab','enter'].includes(k))e.preventDefault();if(k==='escape'||k==='p'){if(!$('help').hidden){$('help').hidden=true;return;}if(!$('inventory').hidden){$('inventory').hidden=true;return;}if(!e.repeat)pauseGame();return;}ensureAimPhase();if(!human()||app.paused)return;input.keys.add(k);if(k===' '&&!e.repeat){if(app.charging&&touchPlay.latchedCharge){touchPlay.keyShotFired=true;releaseCharge(false);return;}if(canMove())input.keys.add('jump');}if((k==='f'||k==='enter')&&!e.repeat){if(app.charging){touchPlay.keyShotFired=true;releaseCharge(false);}else{touchPlay.keyShotFired=false;touchPlay.keyChargeStart=performance.now();startCharge();}}if(k==='tab'&&!e.repeat)cycleCharacter();if(k==='q'&&!e.repeat)$('weaponsButton').click();if(k==='v'&&!e.repeat)$('viewButton').click();});
+ window.addEventListener('keyup',e=>{const k=e.key.toLowerCase();input.keys.delete(k);if(k==='f'||k==='enter'){if(touchPlay.keyShotFired){touchPlay.keyShotFired=false;return;}if(app.charging){const held=performance.now()-(touchPlay.keyChargeStart||0);if(held<240){touchPlay.latchedCharge=true;updateHUD();}else{releaseCharge(false);}}}});
  document.addEventListener('contextmenu',e=>e.preventDefault());
 }
 function boot(){ctx=$('effects').getContext('2d');bgctx=$('background').getContext('2d',{alpha:false});applyScenePalettes();loadPlayOptions();loadGoreOptions();try{renderer=new DepthRenderer($('depth'));}catch(e){console.warn('WebGL: usando render compatible',e);$('depth').style.display='none';renderer={fallback:true,version:-1,draw(){}};}
