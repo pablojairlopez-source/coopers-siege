@@ -1,0 +1,6 @@
+{
+  "name": "coopers-siege",
+  "private": true,
+  "scripts": { "test": "node tests/lan-coop.cjs" },
+  "devDependencies": { "playwright": "1.62.1" }
+}
