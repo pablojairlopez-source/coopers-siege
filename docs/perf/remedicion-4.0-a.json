@@ -1,0 +1,167 @@
+{
+ "date": "2026-10-17T02:33:44.582Z",
+ "runs": [
+  {
+   "profile": "pc",
+   "map": "tropic",
+   "preset": "ultra",
+   "backend": "WebGL 2.0",
+   "idle": {
+    "frames": 180,
+    "avgMs": 13.33,
+    "p50Ms": 14.5,
+    "p95Ms": 20.4,
+    "maxMs": 22.4,
+    "fpsEquivalent": 75
+   },
+   "explosions": {
+    "frames": 240,
+    "avgMs": 25,
+    "p50Ms": 22.6,
+    "p95Ms": 42.3,
+    "maxMs": 84.6,
+    "fpsEquivalent": 40
+   },
+   "heapMB": 82.4,
+   "heapGrowthMB": 0,
+   "particlesAtEnd": 171,
+   "bloodAtEnd": 699
+  },
+  {
+   "profile": "pc",
+   "map": "volcano",
+   "preset": "ultra",
+   "backend": "WebGL 2.0",
+   "idle": {
+    "frames": 180,
+    "avgMs": 5.68,
+    "p50Ms": 5.6,
+    "p95Ms": 8.1,
+    "maxMs": 11.2,
+    "fpsEquivalent": 176.1
+   },
+   "explosions": {
+    "frames": 240,
+    "avgMs": 25.05,
+    "p50Ms": 22.8,
+    "p95Ms": 41.2,
+    "maxMs": 66.4,
+    "fpsEquivalent": 39.9
+   },
+   "heapMB": 82.4,
+   "heapGrowthMB": 0,
+   "particlesAtEnd": 270,
+   "bloodAtEnd": 1021
+  },
+  {
+   "profile": "pc",
+   "map": "harbor",
+   "preset": "ultra",
+   "backend": "WebGL 2.0",
+   "idle": {
+    "frames": 180,
+    "avgMs": 17.22,
+    "p50Ms": 17,
+    "p95Ms": 21.7,
+    "maxMs": 25.4,
+    "fpsEquivalent": 58.1
+   },
+   "explosions": {
+    "frames": 240,
+    "avgMs": 27.12,
+    "p50Ms": 26.5,
+    "p95Ms": 38,
+    "maxMs": 48.8,
+    "fpsEquivalent": 36.9
+   },
+   "heapMB": 82.4,
+   "heapGrowthMB": 0,
+   "particlesAtEnd": 245,
+   "bloodAtEnd": 945
+  },
+  {
+   "profile": "android",
+   "map": "tropic",
+   "preset": "auto",
+   "backend": "WebGL 2.0",
+   "idle": {
+    "frames": 180,
+    "avgMs": 23.39,
+    "p50Ms": 23.1,
+    "p95Ms": 31.9,
+    "maxMs": 35.3,
+    "fpsEquivalent": 42.7
+   },
+   "explosions": {
+    "frames": 240,
+    "avgMs": 41.42,
+    "p50Ms": 40,
+    "p95Ms": 65.2,
+    "maxMs": 302.7,
+    "fpsEquivalent": 24.1
+   },
+   "heapMB": 57.5,
+   "heapGrowthMB": 0,
+   "particlesAtEnd": 171,
+   "bloodAtEnd": 699
+  },
+  {
+   "profile": "android",
+   "map": "volcano",
+   "preset": "auto",
+   "backend": "WebGL 2.0",
+   "idle": {
+    "frames": 180,
+    "avgMs": 17.34,
+    "p50Ms": 17.4,
+    "p95Ms": 24.2,
+    "maxMs": 29.6,
+    "fpsEquivalent": 57.7
+   },
+   "explosions": {
+    "frames": 240,
+    "avgMs": 35.6,
+    "p50Ms": 33,
+    "p95Ms": 57.8,
+    "maxMs": 97.9,
+    "fpsEquivalent": 28.1
+   },
+   "heapMB": 57.5,
+   "heapGrowthMB": 0,
+   "particlesAtEnd": 270,
+   "bloodAtEnd": 1021
+  },
+  {
+   "profile": "android",
+   "map": "harbor",
+   "preset": "auto",
+   "backend": "WebGL 2.0",
+   "idle": {
+    "frames": 180,
+    "avgMs": 31.69,
+    "p50Ms": 31.9,
+    "p95Ms": 36.8,
+    "maxMs": 43.6,
+    "fpsEquivalent": 31.6
+   },
+   "explosions": {
+    "frames": 240,
+    "avgMs": 45.39,
+    "p50Ms": 42.4,
+    "p95Ms": 71.7,
+    "maxMs": 117.7,
+    "fpsEquivalent": 22
+   },
+   "heapMB": 57.5,
+   "heapGrowthMB": 0,
+   "particlesAtEnd": 245,
+   "bloodAtEnd": 945
+  }
+ ],
+ "gpu": {
+  "webgl": true,
+  "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 Laptop GPU (0x00002C59) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "maxTexture": 16384
+ }
+}
