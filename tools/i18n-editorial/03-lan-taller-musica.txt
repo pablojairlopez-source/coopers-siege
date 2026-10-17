@@ -1,0 +1,236 @@
+MULTIJUGADOR LAN INTEGRADO EN EL JUEGO · CERO ARCHIVOS .BAT|BUILT-IN LAN MULTIPLAYER · NO .BAT FILES
+Centro de Salas LAN & Wi-Fi Directo (PC / Smartphone)|LAN & Direct Wi-Fi rooms (PC / phone)
+⚪ Estado: Listo para conectar con código de 4 dígitos|⚪ Status: Ready to connect with a 4-digit code
+P2P / Sala Directa|P2P / Direct room
+1. Sala Directa por Código de 4 Dígitos (Sin .bat · PC ↔ PC / Smartphone)|1. Direct room with a 4-digit code (no .bat · PC ↔ PC / phone)
+Automático|Automatic
+Conecta dos dispositivos en Wi-Fi o dos ventanas al instante sin instalar nada ni abrir consolas|Connect two devices over Wi-Fi or two windows instantly, without installing anything or opening a terminal
+. El Anfitrión crea la sala y comparte el código de 4 dígitos:|. The host creates a room and shares the 4-digit code:
+👑 Crear Sala con Código|👑 Create room with code
+Código de sala en modal|Room code in connection dialog
+🎮 Unirse al Código|🎮 Join with code
+Generar nuevo código aleatorio|Generate a new random code
+🎲 Nuevo|🎲 New
+Combina automáticamente|Automatically combines
+(misma PC),|(same PC),
+WebRTC DataChannel P2P|WebRTC DataChannel P2P
+(baja latencia Wi-Fi) y|(low-latency Wi-Fi) and
+Relay WebSocket Integrado|Built-in WebSocket relay
+para atravesar cualquier router doméstico.|to help connect through home routers.
+2. Modo Wi-Fi P2P 100% Offline (Rúter sin acceso a Internet)|2. Fully offline Wi-Fi P2P (router without internet access)
+Copiar / Pegar|Copy / Paste
+Si juegas en una red cerrada sin salida a internet, usa el emparejamiento directo WebRTC por portapapeles:|On a closed network without internet access, use direct WebRTC pairing through the clipboard:
+PASO A · ANFITRIÓN (HOST)|STEP A · HOST
+1. Generar Pase P2P|1. Generate P2P offer
+Aquí aparecerá tu pase P2P para copiar...|Your P2P offer will appear here to copy...
+📋 Copiar Pase de Sala|📋 Copy room offer
+3. Pega aquí la respuesta del invitado|3. Paste the guest's answer here
+Conectar|Connect
+PASO B · INVITADO (CLIENTE)|STEP B · GUEST (CLIENT)
+2. Pega el pase del anfitrión aquí|2. Paste the host's offer here
+Responder|Answer
+Aquí aparecerá tu respuesta para el anfitrión...|Your answer for the host will appear here...
+📋 Copiar Respuesta|📋 Copy answer
+Cerrar estudio musical|Close music studio
+BANDA SONORA ORIGINAL · MÚSICA ADAPTATIVA|ORIGINAL SOUNDTRACK · ADAPTIVE MUSIC
+Estudio de banda sonora|Soundtrack studio
+Cooper's Siege 5.2 incluye|Cooper's Siege 5.2 includes
+18 composiciones originales|18 original compositions
+(una por escenario y el tema del menú) generadas en tiempo real con Web Audio: cada pieza tiene su propio género, compás, escala, instrumentación y forma de varios minutos, y se adapta al combate en 8 estados.|(one per map and the menu theme) generated live with Web Audio. Each piece has its own genre, meter, scale, instrumentation, and multi-minute form, adapting to combat across 8 states.
+1. Probar estados musicales|1. Try music states
+Estado: MENU|State: MENU
+🎺 Himno de Cooper (menú)|🎺 Cooper's Anthem (menu)
+A · Exploración|A · Exploration
+B · Combate|B · Combat
+C · Peligro|C · Danger
+D · Clímax|D · Climax
+E · Último aliento|E · Last breath
+F · Victoria|F · Victory
+G · Derrota|G · Defeat
+2. Música de cada escenario|2. Music for each map
+🔊 Escuchar el mapa elegido|🔊 Preview selected map
+3. Pista propia (opcional)|3. Your own track (optional)
+Puedes sustituir la música por un archivo MP3/WAV propio; se reproduce en bucle en el menú y en las batallas. Usa solo música de la que tengas derechos.|You can replace the music with your own MP3/WAV file; it loops in the menu and during battles. Only use music you have the rights to.
+Pista personalizada|Custom track
+📂 Cargar MP3/WAV|📂 Load MP3/WAV
+🎼 Volver a la banda sonora original|🎼 Restore original soundtrack
+COOPER'S SIEGE · TALLER|COOPER'S SIEGE · WORKSHOP
+Crea tu propio caos.|Create your own chaos.
+Escenario|Map
+Pugs|Pugs
+Cerrar taller sin aplicar|Close workshop without applying
+Tu campo de batalla|Your battlefield
+Ambiente|Theme
+Cargar plantilla de este ambiente|Load template for this theme
+＋ Dibujar suelo|＋ Draw ground
+− Borrar suelo|− Erase ground
+Forma del pincel|Brush shape
+● Circular suave|● Smooth circle
+⬢ Roca orgánica|⬢ Natural rock
+■ Bloque arquitectónico|■ Building block
+Tamaño del pincel|Brush size
+↶ Deshacer|↶ Undo
+↷ Rehacer|↷ Redo
+Usar este terreno en la partida|Use this terrain in the match
+Los puntos de color muestran dónde aparecerán los pugs. Dibuja islas, puentes y cuevas; el agua elimina al instante.|Colored dots show where pugs will spawn. Draw islands, bridges, and caves; water is instantly fatal.
+Un pug con personalidad|A pug with personality
+Equipo|Team
+Equipo 1|Team 1
+Equipo 3|Team 3
+Equipo 4|Team 4
+Pug 1|Pug 1
+Pug 2|Pug 2
+Pug 3|Pug 3
+Pug 4|Pug 4
+Nombre|Name
+Pelaje|Fur
+Color del equipo|Team color
+Tamaño|Size
+Accesorio|Accessory
+Al natural|None
+Gorra|Cap
+Corona real|Royal crown
+Aureola angelical|Angel halo
+Cuernos infernales|Infernal horns
+Kabuto samurái|Samurai kabuto
+Casco espacial|Space helmet
+Cresta punk|Punk mohawk
+Gorro de chef|Chef's hat
+Visor Ciber VR|Cyber VR visor
+Bandana táctica|Tactical bandana
+Lentes oscuros|Sunglasses
+Tricornio pirata|Pirate tricorn
+Casco táctico|Tactical helmet
+Casco vikingo|Viking helmet
+Sombrero de mago|Wizard hat
+Sombrero mexicano|Sombrero
+Audífonos DJ|DJ headphones
+Máscara de gas|Gas mask
+Monóculo dorado|Golden monocle
+Corbatín elegante|Elegant bow tie
+Variante de Pug|Pug variant
+Pug clásico|Classic pug
+Pug zombi|Zombie pug
+Pug esqueleto (Calavera)|Skeleton pug (skull)
+Pug ciborg (endoesqueleto cromado)|Cyborg pug (chrome endoskeleton)
+Pug demonio (Infernal)|Demon pug (infernal)
+Pug alienígena (3 ojos)|Alien pug (3 eyes)
+Pug fantasma (espectro risueño)|Ghost pug (grinning spirit)
+Equipo de espalda|Back gear
+Sin accesorio|None
+Capa real|Royal cape
+Alas de ángel|Angel wings
+Alas de dragón/demonio|Dragon/demon wings
+Mochila propulsora|Jetpack
+Patas arácnidas mecha|Mech spider legs
+Katanas samurái cruzadas|Crossed samurai katanas
+Tanque de plasma tóxico|Toxic plasma tank
+Previsualizar daño en combate|Preview battle damage
+Color de cosméticos|Cosmetic color
+Girar modelo|Rotate model
+Giro automático|Auto-rotate
+Restablecer este pug|Reset this pug
+Personaliza hasta 4 pugs por equipo. Arrastra el modelo para girarlo. Los accesorios y variantes se aplican a la batalla; el gore elegido controla las heridas visibles.|Customize up to 4 pugs per team. Drag the model to rotate it. Accessories and variants carry into battle; your gore setting controls visible wounds.
+Editor de terreno. Arrastra para dibujar o borrar suelo.|Terrain editor. Drag to draw or erase ground.
+Alejar vista|Zoom out
+Acercar vista|Zoom in
+Cuadrícula|Grid
+Vista previa del pug personalizado|Custom pug preview
+Modelo 3D del pug. Arrastra para girar.|3D pug model. Drag to rotate.
+Vista Frontal (0°)|Front view (0°)
+Frontal 0°|Front 0°
+Vista Tres Cuartos (35°)|Three-quarter view (35°)
+Perfil Lateral (90°)|Side view (90°)
+Lateral 90°|Side 90°
+Vista Posterior / Espalda (180°)|Rear / back view (180°)
+Espalda 180°|Back 180°
+Alejar|Zoom out
+Acercar|Zoom in
+Mostrar ejes locales, huesos y puntos de anclaje 3D|Show local axes, bones, and 3D attachment points
+🦴 Anclajes 3D|🦴 3D anchors
+🐾 Reposo|🐾 Idle
+🏃 Caminar|🏃 Walk
+↥ Saltar|↥ Jump
+🎯 Apuntar|🎯 Aim
+★ Celebrar|★ Celebrate
+😱 Miedo|😱 Fear
+💥 Dolor|💥 Pain
+💫 Mareo|💫 Dizzy
+😢 Derrota|😢 Defeat
+💤 Sueño|💤 Sleepy
+Dibuja con el dedo o el ratón.|Draw with your finger or mouse.
+Guardar aplica tus cambios a la próxima partida en este navegador.|Saving applies your changes to the next match in this browser.
+Importar|Import
+Exportar|Export
+Guardar y aplicar|Save and apply
+Calipso tropical|Tropical calypso
+Lluvia sobre Neo-Kioto|Rain over Neo-Kyoto
+Synthwave|Synthwave
+Furia de la Caldera|Caldera's Fury
+Épica volcánica|Volcanic epic
+Vals del Hielo Quieto|Still Ice Waltz
+Vals ambiental|Ambient waltz
+Señales de Otro Cielo|Signals from Another Sky
+Electrónica alienígena 7/8|Alien electronica in 7/8
+La Giga del Estandarte|The Banner Jig
+Giga renacentista|Renaissance jig
+Réquiem para un Sol|Requiem for a Sun
+Orquesta cósmica|Cosmic orchestra
+Canción del Ancla Rota|Song of the Broken Anchor
+Saloma marinera|Sea shanty
+El Claro de las Luciérnagas|Firefly Glade
+Folk misterioso 3/4|Mysterious folk in 3/4
+Ceniza y Neumáticos|Ash and Tires
+Trip-hop industrial|Industrial trip-hop
+Pétalos sobre el Templo|Petals over the Temple
+Japonés tradicional estilizado|Stylized traditional Japanese
+Caravana del Escarabajo|Scarab Caravan
+Maqsum del desierto|Desert maqsum
+Catedral de Coral|Coral Cathedral
+Ambient acuático 5/4|Aquatic ambient in 5/4
+Inspección de Engranajes|Gear Inspection
+Groove industrial mecánico|Mechanical industrial groove
+Vigilia de los Colmillos|Vigil of the Fangs
+Rock gótico barroco|Baroque gothic rock
+Desfile de Caramelos|Candy Parade
+Desfile de juguetes|Toy parade
+Bruma entre Zarzas|Mist among Brambles
+Ambient onírico|Dreamlike ambient
+Himno de Cooper|Cooper's Anthem
+Marcha orquestal-pop|Orchestral pop march
+Combate|Combat
+Peligro|Danger
+Clímax|Climax
+Último aliento|Last breath
+Victoria|Victory
+Derrota|Defeat
+Introducción|Introduction
+Tema A|Theme A
+Tema A′|Theme A′
+Tema A″|Theme A″
+Tema B|Theme B
+Tema B′|Theme B′
+Desarrollo|Development
+Desarrollo II|Development II
+Segunda melodía|Countermelody
+Segunda melodía II|Countermelody II
+Modulación|Modulation
+Sorpresa|Surprise
+Puente|Bridge
+Respiro|Breather
+Gran clímax|Grand climax
+Coda|Coda
+Marca el objetivo en el escenario o el minimapa y mantén ATACAR.|Mark a target on the battlefield or minimap, then hold ATTACK.
+Ataque cancelado · sin gastar munición.|Attack canceled · no ammo used.
+Primero marca el objetivo en el escenario o el minimapa.|Mark a target on the battlefield or minimap first.
+CARGANDO|CHARGING
+SUELTA PARA DISPARAR|RELEASE TO FIRE
+SUELTA PARA ATACAR|RELEASE TO ATTACK
+APUNTANDO|AIMING
+MARCA EL OBJETIVO EN EL MAPA|MARK TARGET ON MAP
+MANTÉN PARA CARGAR|HOLD TO CHARGE
+MANTÉN Y SUELTA|HOLD AND RELEASE
+MANTÉN ESPACIO · CARGAR|HOLD SPACE · CHARGE
+ESPACIO · ATACAR|SPACE · ATTACK
+TOCA PARA APUNTAR|TAP TO AIM
+CLIC, F O ENTER · APUNTAR|CLICK, F OR ENTER · AIM

@@ -4,9 +4,10 @@
 
 Base confirmada: `origin/main` `0f8cc74`, PR #3 fusionada. Rama `feature/coopers-siege-i18n-es419-en`, creada con árbol limpio tras `git fetch origin`. Encargo completo leído. Plan A–H y glosario: `docs/LOCALIZACION.md`.
 
-- A en curso: inventario AST/HTML, 3059 candidatas iniciales (incluye identificadores y notación musical que se excluirán editorialmente); 17 capítulos y 307 intervenciones de campaña, además de créditos y frases auxiliares.
+- A–D: inventario AST/HTML y extracción por claves; 1602 recursos por idioma con 106 escenas y 319 intervenciones (conteo completo, incluidas escenas auxiliares), créditos y frases de fase. Catálogos es-419 revisados y en-US adaptados; nombres de armas, mundos, equipos, jefes, habilidades y música localizados. Código técnico excluido.
 - Línea base completa ejecutada: 15/15 suites aprobadas con `node tests/run-all.cjs`, Chrome local y `TEST_BROWSER_PATH`.
-- Servicio i18n inicial y catálogos locales implementados; `node tests/i18n-core.cjs` aprobado (detección, preferencia, parámetros, plurales, respaldo, HTML seguro). Aún no conectado al juego ni declarado localización completa.
+- E–F en validación: selector disponible en pantallas y combate, persistencia separada, actualización en vivo de HUD, campaña, resultados, tarjetas, créditos, diálogos e historial. El diálogo conserva índice y avance proporcional; no repite callbacks ni marca escenas al cambiar idioma.
+- Ejecutadas y aprobadas: `tests/i18n-core.cjs`, `tests/i18n-catalogs.cjs` y `tests/i18n-browser.cjs`: paridad de claves/parámetros, estructura narrativa 5.2 idéntica, 70 importaciones de 35 estados en dos idiomas, 106 escenas y 20 cambios en combate sin mutar estado/terreno/audio/guardado. Pendientes: auditoría final de cobertura, LAN con idiomas distintos, capturas móviles, rendimiento y regresión completa.
 - Sin cambios de mecánicas, guardados, IA, probabilidades, física ni protocolo LAN.
 
 Lo que sigue conserva el registro histórico de 5.2; su estado de publicación queda supersedido por la base confirmada de esta actualización.

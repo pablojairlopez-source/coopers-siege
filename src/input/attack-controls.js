@@ -36,13 +36,13 @@
   if(A.state!=='idle')return true;
   A.state='aiming';note('aim');audio.init();
   const w=weaponOf();
-  if(w.target&&!app.target)toast('Marca el objetivo en el escenario o el minimapa y mantén ATACAR.',2.8);
+  if(w.target&&!app.target)toast(()=>CS5.i18n.t("input.attack-controls.enter.s001"),2.8);
   sync();return true;
  };
  A.cancel=()=>{
   if(A.state==='idle')return false;
   A.state='idle';A.source=null;A.firePointer=null;stopCharge();note('cancel');
-  sync();toast('Ataque cancelado · sin gastar munición.',1.5);return true;
+  sync();toast(()=>CS5.i18n.t("input.attack-controls.cancel.s001"),1.5);return true;
  };
  A.beginCharge=src=>{
   if(!ok()||A.state!=='aiming')return false;
@@ -60,7 +60,7 @@
   A.state='idle';A.source=null;stopCharge();
   if(!ok()){sync();return false;}
   const w=weaponOf();
-  if(w.target&&!app.target){A.state='aiming';sync();toast('Primero marca el objetivo en el escenario o el minimapa.',2.4);return false;}
+  if(w.target&&!app.target){A.state='aiming';sync();toast(()=>CS5.i18n.t("input.attack-controls.release.s001"),2.4);return false;}
   const fired=shoot();note(fired?'shot':'blocked');
   if(!fired&&canAct())A.state='aiming';
   sync();return fired;
@@ -164,12 +164,12 @@
  // Textos del botón ATACAR y del pad según el estado (lo llama updateHUD).
  A.labels=w=>{
   const touch=document.body.dataset.touch==='true',pct=Math.round(app.power)+'%';
-  if(A.state==='charging')return {main:w.charge?'CARGANDO':'¡SUELTA!',sub:w.charge?'SUELTA PARA DISPARAR':'SUELTA PARA ATACAR'};
+  if(A.state==='charging')return {main:w.charge?CS5.i18n.t("input.attack-controls.labels.s001"):'¡SUELTA!',sub:w.charge?CS5.i18n.t("input.attack-controls.labels.s002"):CS5.i18n.t("input.attack-controls.labels.s003")};
   if(A.state==='aiming'){
-   if(w.target&&!app.target)return {main:'APUNTANDO',sub:'MARCA EL OBJETIVO EN EL MAPA'};
-   return {main:'APUNTANDO',sub:touch?(w.charge?'MANTÉN PARA CARGAR':'MANTÉN Y SUELTA'):(w.charge?'MANTÉN ESPACIO · CARGAR':'ESPACIO · ATACAR')};
+   if(w.target&&!app.target)return {main:CS5.i18n.t("input.attack-controls.labels.s004"),sub:CS5.i18n.t("input.attack-controls.labels.s005")};
+   return {main:CS5.i18n.t("input.attack-controls.labels.s006"),sub:touch?(w.charge?CS5.i18n.t("input.attack-controls.labels.s007"):CS5.i18n.t("input.attack-controls.labels.s008")):(w.charge?CS5.i18n.t("input.attack-controls.labels.s009"):CS5.i18n.t("input.attack-controls.labels.s010"))};
   }
-  return {main:'ATACAR',sub:touch?'TOCA PARA APUNTAR':'CLIC, F O ENTER · APUNTAR'};
+  return {main:CS5.i18n.t("input.attack-controls.labels.s011"),sub:touch?CS5.i18n.t("input.attack-controls.labels.s012"):CS5.i18n.t("input.attack-controls.labels.s013")};
  };
  CS5.attack=A;
 })();

@@ -4,7 +4,11 @@
 
 El usuario confirma y Git verifica la fusión de PR #3: `origin/main` `0f8cc74`. Árbol inicialmente limpio; referencias actualizadas sin descartar trabajo. Rama nueva `feature/coopers-siege-i18n-es419-en` creada desde esa base. Claude está sin disponibilidad; Codex trabaja solo en este árbol.
 
-Encargo completo leído del adjunto del usuario. Plan A–H, decisiones y glosario en `docs/LOCALIZACION.md`. Inventario con Acorn/parse5 (solo desarrollo): 3059 candidatas antes de clasificar notación musical/IDs/código. Línea base ejecutada: 15/15 suites aprobadas. Servicio centralizado inicial y catálogos mínimos en `src/i18n/`; `tests/i18n-core.cjs` aprobado. Aún no conectado al motor. Próximo paso: extracción por claves técnicas, revisión es-419 y adaptación íntegra en-US, integración y cambio en vivo sin alterar guardados ni estado. No repetir la línea base salvo cambios que lo justifiquen.
+Encargo completo leído del adjunto del usuario. Plan A–H, decisiones y glosario en `docs/LOCALIZACION.md`. A–D implementadas: 1602 recursos por idioma, 106 escenas/319 intervenciones, créditos y frases de fase; estructura de story.js conserva IDs, expresiones y hablantes de 5.2. Servicio, catálogos y adaptador en `src/i18n/`; extractor/manifiesto y fuentes editoriales en `tools/`. Acorn/parse5 son dependencias de desarrollo, no del navegador.
+
+E–F integradas, pendientes de auditoría final: selector global accesible, preferencia `coopers-siege-language-v1` independiente de campaña v1; datos de presentación con getters, HUD, pantallas de campaña, tarjetas/resultados, créditos, diálogos e historial actualizables. Los avisos conservan su duración y los diálogos conservan índice/avance sin callback ni escena extra. No ejecutar selectMap/newMatch/pausa/audio al traducir. El adaptador no debe alterar física, inventario ni protocolo.
+
+Pruebas ya ejecutadas: línea base 15/15 antes de cambios; nuevas `i18n-core`, `i18n-catalogs`, `i18n-browser` aprobadas (70 importaciones, todos los estados de progreso, 106 escenas y cambios en combate sin mutaciones). Próximo paso: buscar texto visible residual, probar LAN con idiomas distintos, revisar capturas en PC/S23/Fold/tableta/teléfono compacto, medir rendimiento, ejecutar todas las suites, documentar cobertura/glosario/limitaciones y abrir PR. Aún no declarar terminado ni publicar.
 
 No hacer merge ni publicar. El traspaso histórico que sigue describe la auditoría ya integrada en 5.2, no el estado actual de la PR #3.
 

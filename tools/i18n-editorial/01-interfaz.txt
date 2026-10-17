@@ -1,0 +1,303 @@
+Económico|Low
+Geometría optimizada y menos partículas manteniendo 60 FPS fluidos.|Optimized geometry and fewer particles for smooth 60 FPS gameplay.
+Equilibrado|Balanced
+Buena nitidez y luz ambiental con una carga moderada a 60 FPS.|Clear visuals and ambient lighting at a moderate load, targeting 60 FPS.
+Alto|High
+Pugs suaves, luces dinámicas, resplandores y rayos entre el terreno a 60 FPS.|Smooth pug models, dynamic lights, glow, and light shafts across the terrain at 60 FPS.
+Ultra|Ultra
+Máxima nitidez QHD+/4K, rayos volumétricos densos y sombras dinámicas a 60 FPS.|Maximum QHD+/4K clarity, dense volumetric lighting, and dynamic shadows at 60 FPS.
+Ninguno|None
+Sin sangre ni simulación de fluidos.|No blood or fluid simulation.
+Bajo|Low
+Pocas gotas líquidas con escurrimiento breve y pocos fragmentos.|A few short-lived flowing droplets and fragments.
+Medio|Medium
+Sangre líquida física que escurre por pendientes y forma charcos en cráteres.|Simulated liquid blood flows down slopes and pools in craters.
+Abundante sangre líquida PBF, acumulación en cavidades, desbordamiento y manchas.|Abundant PBF liquid blood, pooling in cavities, overflowing, and leaving stains.
+Demencial|Extreme
+Torrentes de sangre líquida con físicas reales, grandes charcos que se desbordan y manchas permanentes.|Torrents of simulated liquid blood, large overflowing pools, and permanent stains.
+Himno de Cooper (Menú)|Cooper's Anthem (Menu)
+Serenidad|Serenity
+Brisa Táctica|Tactical Breeze
+Tensión Armónica|Harmonic Tension
+Clímax Lírico|Lyrical Climax
+Último Aliento|Last Breath
+Himno de Victoria|Victory Anthem
+Paz Crepuscular|Twilight Peace
+El terreno no tiene un formato válido.|The terrain format is invalid.
+El tamaño del terreno no es válido.|The terrain dimensions are invalid.
+El terreno está incompleto.|The terrain data is incomplete.
+Este archivo no es un proyecto de Cooper’s Siege.|This file is not a Cooper’s Siege project.
+Pug|Pug
+Dibuja con el dedo o el ratón. Guarda para aplicar los cambios.|Draw with your finger or mouse. Save to apply your changes.
+{p0}/{p1} posiciones iniciales seguras · Historial: {p2} pasos|{p0}/{p1} safe spawn positions · History: {p2} steps
+Añade más suelo: faltan posiciones seguras para los {p0} pugs.|Add more ground: there are not enough safe positions for all {p0} pugs.
+Taller guardado. Tus cambios se aplicarán a la próxima batalla.|Workshop saved. Your changes will apply to the next battle.
+Aplicado a esta sesión. Exporta el proyecto desde el taller para conservarlo.|Applied for this session. Export the project from the workshop to keep it.
+Proyecto exportado: incluye el escenario y todos los pugs.|Project exported, including the map and all pugs.
+El proyecto supera el máximo de 4 MB.|The project exceeds the 4 MB limit.
+Proyecto importado. Pulsa Guardar y aplicar para usarlo.|Project imported. Select Save and apply to use it.
+No se pudo importar el proyecto.|Could not import the project.
+Plantilla cargada. Puedes deshacer este cambio.|Template loaded. You can undo this change.
+Archipiélago Sol|Sunlit Archipelago
+ISLAS TROPICALES|TROPICAL ISLANDS
+Islas, cuevas y una brisa de verano.|Islands, caves, and a summer breeze.
+Distrito Neón|Neon District
+CIUDAD CYBERPUNK|CYBERPUNK CITY
+Torres, lluvia y luces sobre el canal.|Towers, rain, and lights over the canal.
+Caldera Roja|Red Caldera
+VOLCÁN|VOLCANO
+Dos cumbres y un mar de lava.|Twin peaks and a sea of lava.
+Aurora Polar|Polar Aurora
+PAISAJE NEVADO|SNOWY LANDSCAPE
+Picos de hielo bajo una aurora.|Icy peaks beneath an aurora.
+Órbita Violeta|Violet Orbit
+PLANETA ALIENÍGENA|ALIEN PLANET
+Cristales, hongos y gravedad terrestre.|Crystals, mushrooms, and Earth-like gravity.
+Bastión Dorado|Golden Bastion
+CASTILLO MEDIEVAL|MEDIEVAL CASTLE
+Murallas y túneles al atardecer.|Ramparts and tunnels at sunset.
+Última Estrella|Last Star
+SUPERNOVA · CINTURÓN DE ASTEROIDES|SUPERNOVA · ASTEROID BELT
+Una estrella agonizante ilumina asteroides y bases orbitales.|A dying star lights up asteroids and orbital bases.
+Puerto Tempestad|Storm Harbor
+MUELLES EN TORMENTA|STORMY DOCKS
+Relámpagos, grúas, contenedores y chatarra bajo la lluvia.|Lightning, cranes, containers, and scrap metal in the rain.
+Bosque Umbrío|Gloomwood
+BOSQUE NOCTURNO|NIGHT FOREST
+Árboles gigantes, ruinas cubiertas de musgo y luciérnagas.|Giant trees, moss-covered ruins, and fireflies.
+Kilómetro Cero|Mile Zero
+RUINAS DEL APOCALIPSIS|APOCALYPTIC RUINS
+Autos destruidos, tumbas, ladrillos y escombros.|Wrecked cars, graves, bricks, and rubble.
+Valle Cerezos|Cherryblossom Vale
+JAPÓN FEUDAL · SAKURA|FEUDAL JAPAN · CHERRY BLOSSOMS
+Templos pagoda 3D, el Monte Fuji y pétalos de cerezo al viento.|3D pagodas, Mount Fuji, and cherry petals drifting on the wind.
+Dunas de Anubis|Dunes of Anubis
+EGIPTO ANTIGUO · PIRÁMIDES|ANCIENT EGYPT · PYRAMIDS
+Grandes pirámides 3D, obeliscos dorados y tormentas de arena.|Towering 3D pyramids, golden obelisks, and sandstorms.
+Abismo Atlantis|Atlantis Abyss
+CIUDADela SUBMARINA 3D|3D UNDERWATER CITADEL
+Domos sumergidos, columnas de mármol y corales bioluminiscentes.|Submerged domes, marble columns, and glowing coral.
+Fundición Omega|Omega Foundry
+FÁBRICA CIBERNÉTICA|CYBERNETIC FACTORY
+Hornos de acero fundido, prensas hidráulicas 3D y láseres.|Molten steel furnaces, 3D hydraulic presses, and lasers.
+Catedral Gótica|Gothic Cathedral
+INFIERNO CARMESÍ|CRIMSON INFERNO
+Agujas góticas de obsidiana bajo un eclipse de luna de sangre.|Gothic obsidian spires beneath a blood moon eclipse.
+Dulce Caos|Candy Chaos
+REINO DE AZÚCAR|SUGAR KINGDOM
+Montañas de pastel, paletas gigantes 3D y glaseado explosivo.|Cake mountains, giant 3D lollipops, and explosive icing.
+Jardín de Espinas|Garden of Thorns
+ZARZAS SOBRE LAS NUBES|BRAMBLES ABOVE THE CLOUDS
+Zarzas colosales, puentes de ramas retorcidas y flores gigantes sobre un mar de nubes.|Colossal brambles, twisted branch bridges, and giant flowers above a sea of clouds.
+Bazuca|Bazooka
+Gravedad + viento · cráter medio|Gravity + wind · medium crater
+Misil con viento y gravedad.|A missile affected by wind and gravity.
+Granada|Grenade
+Rebota · mecha de 3 s|Bounces · 3 s fuse
+Rebota y explota tras 3 segundos.|Bounces and explodes after 3 seconds.
+Escopeta|Shotgun
+Dos disparos · alcance directo|Two shots · direct fire
+Dos tiros por turno. El terreno bloquea las balas.|Two shots per turn. Terrain blocks the pellets.
+Dinamita|Dynamite
+Deposita · mecha de 4 s|Place · 4 s fuse
+Se coloca a tus pies. Tienes tiempo de escapar.|Placed at your feet. You have time to escape.
+Teledirigido|Homing Missile
+Marca un objetivo · guía gradual|Mark a target · gradual homing
+Toca el mapa para marcar dónde debe dirigirse.|Tap the map to mark its destination.
+Bomba banana|Banana Bomb
+Explosión + 5 minibombas|Explosion + 5 minibombs
+Rebota, explota y suelta cinco bombas.|Bounces, explodes, and releases five bombs.
+Ataque aéreo|Airstrike
+Marca una zona · 5 bombas|Mark an area · 5 bombs
+Toca el mapa y confirma para bombardear esa zona.|Tap the map and confirm to bomb that area.
+Mina|Mine
+Se arma en 1 s · proximidad|Arms in 1 s · proximity
+Persiste entre turnos. Detecta a cualquier criatura.|Stays between turns. Detects any pug.
+Bate|Bat
+Cuerpo a cuerpo · gran empuje|Melee · heavy knockback
+Golpea hacia donde miras. Alcance de 68 unidades.|Swings in the direction you face. Range: 68 units.
+Racimo|Cluster Bomb
+Se divide en 6 cargas|Splits into 6 bomblets
+Granada que libera seis cargas pequeñas.|A grenade that releases six small bomblets.
+Teletransporte|Teleport
+Marca suelo válido · sin daño|Mark valid ground · no damage
+Toca una superficie libre y confirma la reubicación.|Tap a clear surface and confirm to teleport.
+Supernova|Supernova
+Legendaria · cráter enorme|Legendary · huge crater
+Misil pesado. En el arsenal estándar solo llega dentro de un huesito legendario.|A heavy missile. In the standard arsenal, it only arrives in legendary supply bones.
+Mortero triple|Triple Mortar
+Tres proyectiles en abanico|Three projectiles in a spread
+Tres cargas con trayectorias separadas.|Three shells with separate trajectories.
+Rifle preciso|Sniper Rifle
+Disparo recto · 64 de daño|Straight shot · 64 damage
+Precisión sin viento. El terreno detiene el disparo.|Precision unaffected by wind. Terrain blocks the shot.
+Lanzallamas|Flamethrower
+Cono corto · hasta 40 de daño|Short cone · up to 40 damage
+Nueve chorros de fuego. Las paredes bloquean las llamas.|Nine jets of fire. Walls block the flames.
+Granada polar|Frost Grenade
+Rebota · ralentiza a los rivales|Bounces · slows enemies
+Congela el movimiento durante 8 segundos. Área de 85.|Slows movement for 8 seconds. Area: 85.
+Bomba adhesiva|Sticky Bomb
+Se pega al suelo · mecha de 2 s|Sticks to terrain · 2 s fuse
+La mecha se activa cuando toca el terreno.|The fuse starts when it touches terrain.
+Taladro|Drill
+Perfora 130 unidades de terreno|Drills through 130 terrain units
+Abre un túnel antes de detonar. Apunta hacia la roca.|Tunnels before detonating. Aim into the rock.
+Escudo burbuja|Bubble Shield
+Absorbe 45 puntos de daño|Absorbs 45 damage
+Protege al pug activo hasta absorber 45 de daño.|Protects the active pug, absorbing up to 45 damage.
+Premio curativo|Healing Treat
+Recupera 35 puntos de vida|Restores 35 health
+Una galleta para recuperar fuerzas. Máximo 100 de vida.|A cookie to get your strength back. Maximum health: 100.
+Agujero negro|Black Hole
+Atrae todo · implosión gravitatoria|Pulls everything in · gravitational implosion
+Genera un vórtice que atrae pugs y sangre antes de implosionar.|Creates a vortex that pulls in pugs and blood before imploding.
+Lluvia meteórica|Meteor Shower
+Marca zona · 7 meteoritos ígneos|Mark an area · 7 fiery meteors
+Invoca siete meteoritos incandescentes desde la atmósfera.|Calls down seven blazing meteors from the atmosphere.
+Cañón Tesla|Tesla Cannon
+Arco eléctrico · salta a cercanos|Electric arc · chains to nearby targets
+Dispara plasma eléctrico que encadena rayos a rivales próximos.|Fires electric plasma that chains lightning between nearby enemies.
+Bomba ácida|Acid Bomb
+Corroe la roca · lluvia ácida|Corrodes rock · acid rain
+Disuelve múltiples cavidades en el suelo con ácido corrosivo.|Dissolves multiple pockets of terrain with corrosive acid.
+Sierra circular|Circular Saw
+Rebota a gran velocidad · corta roca|High-speed ricochet · cuts rock
+Disco de acero dentado que rebota y rebana el terreno.|A toothed steel disc that bounces and slices through terrain.
+Láser orbital|Orbital Laser
+Rayo satelital · perfora verticalmente|Satellite beam · vertical penetration
+Haz de energía orbital que vaporiza una columna entera.|An orbital energy beam that vaporizes an entire column.
+Enjambre vampiro|Vampire Swarm
+Drena vida · cura al atacante|Drains health · heals attacker
+Proyectil carmesí que roba vida al enemigo y te regenera.|A crimson projectile that steals enemy health and restores yours.
+Granada sagrada|Holy Grenade
+Rebota · explosión divina colosal|Bounces · colossal holy explosion
+Canta un coro celestial antes de arrasar el escenario.|Sings a heavenly chorus before devastating the battlefield.
+Marea|Tide
+Brasa|Ember
+Órbita|Orbit
+Sol|Sun
+Cosmo|Cosmo
+Nori|Nori
+Luma|Luma
+Tilo|Tilo
+Faye|Faye
+Momo|Momo
+Zuri|Zuri
+Kiro|Kiro
+Uma|Uma
+Nilo|Nilo
+Duna|Duna
+Pogo|Pogo
+Canvas 2D|Canvas 2D
+WebGL 1.0|WebGL 1.0
+{p0} | VS:{p1} | FS:{p2}|{p0} | VS:{p1} | FS:{p2}
+Audio no disponible:|Audio unavailable:
+Abre el editor y añade suelo para todos los pugs.|Open the editor and add enough ground for all pugs.
+Cada criatura comienza con 100 de vida. ¡A jugar!|Every pug starts with 100 health. Let's play!
+ · CPU| · CPU
+ · TU TURNO| · YOUR TURN
+ · ALIADO| · ALLY
+EMPATE|DRAW
+LA CPU GANA ESTA VEZ|THE CPU WINS THIS TIME
+VICTORIA|VICTORY
+¡Nadie sobrevivió!|Nobody survived!
+Otra batalla, otra oportunidad. Ajusta el viento y busca cobertura.|Another battle, another chance. Account for the wind and find cover.
+¡Victoria! La bomba de celebración elimina a todos, pero el triunfo es tuyo.|Victory! The celebration bomb wipes everyone out, but the win is yours.
+Dos escuadras eliminadas al mismo tiempo.|Two squads wiped out at the same time.
+{p0} turnos · {p1} ataques · {p2} de daño|{p0} turns · {p1} attacks · {p2} damage
+Sin munición. Elige otra arma.|Out of ammo. Choose another weapon.
+Este pug ya está lleno de energía.|This pug is already at full health.
+El escudo ya está completo.|The shield is already full.
+Primero toca el mapa para marcar tu objetivo.|Tap the map to mark your target first.
+Ese punto no tiene suelo libre. Marca otra superficie.|That spot has no clear ground. Mark another surface.
+⚾ ¡HOME RUN!|⚾ HOME RUN!
+¡Al aire! Acércate al rival para batearlo.|Swing and a miss! Get closer to hit the enemy.
+❄ CONGELADO|❄ FROZEN
+🧪 ÁCIDO CORROSIVO|🧪 CORROSIVE ACID
+⚡ ELECTROCUCIÓN|⚡ ELECTROCUTION
+🦇 +{p0} HP|🦇 +{p0} HP
+✝ BENDICIÓN +15|✝ BLESSING +15
+Escopeta: te queda el segundo disparo.|Shotgun: you still have your second shot.
+{p0} FPS · {p1} ms CPU · {p2} · {p3} draws ({p4}k tris) · Fluido PBF: {p5} gotas · {p6}|{p0} FPS · {p1} ms CPU · {p2} · {p3} draws ({p4}k tris) · PBF fluid: {p5} drops · {p6}
+{p0}: {p1} HP ({p2} pugs vivos)|{p0}: {p1} HP ({p2} pugs alive)
+ · TÚ| · YOU
+{p0} {p1} m/s|{p0} {p1} m/s
+▲ SUBE|▲ UP
+▼ BAJA|▼ DOWN
+ATACAR|ATTACK
+CPU APUNTANDO|CPU AIMING
+TURNO DE TU ALIADO|YOUR ALLY'S TURN
+TURNO RIVAL EN LAN|LAN OPPONENT'S TURN
+RESOLVIENDO|RESOLVING
+· 2.º tiro|· 2nd shot
+Objetivo marcado · confirma el ataque|Target marked · confirm attack
+Toca el mapa o minimapa para marcar el objetivo|Tap the map or minimap to mark a target
+Primer disparo de escopeta|First shotgun blast
+RETIRADA · bordes para correr|RETREAT · use edges to run
+ESPERANDO IMPACTOS|WAITING FOR IMPACTS
+TURNO DE LA CPU|CPU'S TURN
+JUGADOR LAN EN TURNO|LAN PLAYER'S TURN
+PREPARADOS|READY
+CARGANDO · suelta para disparar|CHARGING · release to fire
+APUNTANDO · ajusta el ángulo y mantén para cargar|AIMING · adjust angle and hold to charge
+MOVER · SALTAR · ATACAR|MOVE · JUMP · ATTACK
+Toca y arrastra para marcar el objetivo.|Tap and drag to mark a target.
+Toca y arrastra en el escenario para ajustar el ángulo.|Tap and drag on the battlefield to adjust your angle.
++35 HP|+35 HP
+Directo|Direct
+Daño|Damage
+Radio|Radius
+Completa el segundo disparo de escopeta.|Take your second shotgun shot first.
+Marca tu objetivo en el escenario o en el minimapa.|Mark your target on the battlefield or minimap.
+TU ESCENARIO|YOUR MAP
+Terreno personalizado · edítalo desde el Taller.|Custom terrain · edit it in the Workshop.
+♫ Vista previa: «{p0}»|♫ Preview: “{p0}”
+Equipo CPU|CPU team
+Equipo 2|Team 2
+🌿 Reproduciendo música del menú («Sinfonía de las Zarzas»).|🌿 Playing menu music (“Symphony of Brambles”).
+WebGL: usando render compatible|WebGL: using compatibility renderer
+♫ ACTIVAR MÚSICA|♫ ENABLE MUSIC
+ETAPA: {p0}|STAGE: {p0}
+MÚSICA MENÚ: ON|MENU MUSIC: ON
+{p0} · Sala #{p1}|{p0} · Room #{p1}
+Anfitrión · Equipo 1|Host · Team 1
+Invitado · Equipo 2|Guest · Team 2
+COMENZAR BATALLA|START BATTLE
+ESPERANDO JUGADOR LAN…|WAITING FOR LAN PLAYER…
+ESPERA AL ANFITRIÓN…|WAITING FOR HOST…
+Sin respuesta del {p0} · reintentando…|No response from {p0} · retrying…
+anfitrión|host
+Sala #{p0} activa · Esperando jugador...|Room #{p0} active · Waiting for player...
+Sala LAN #{p0} creada (Sin .bat). Comparte el código #{p1}.|LAN room #{p0} created (no .bat). Share code #{p1}.
+Buscando Sala #{p0}...|Looking for room #{p0}...
+Conectando a la Sala LAN #{p0}...|Connecting to LAN room #{p0}...
+Pase P2P generado · Envíalo al invitado|P2P offer generated · Send it to the guest
+Respuesta P2P generada · Envíala al anfitrión|P2P answer generated · Send it to the host
+Pase P2P inválido.|Invalid P2P offer.
+Código de respuesta inválido.|Invalid answer code.
+CONECTADO EN SALA #{p0} (Wi-Fi P2P Directo)|CONNECTED TO ROOM #{p0} (Direct Wi-Fi P2P)
+¡Sala #{p0} conectada por Wi-Fi P2P Directo!|Room #{p0} connected via Direct Wi-Fi P2P!
+CONECTADO EN SALA #{p0} · Invitado listo|CONNECTED TO ROOM #{p0} · Guest ready
+¡Jugador Invitado unido a la Sala #{p0}!|Guest player joined room #{p0}!
+CONECTADO EN SALA #{p0} · Anfitrión listo|CONNECTED TO ROOM #{p0} · Host ready
+¡Conectado a la Sala #{p0} del Anfitrión! Espera a que inicie la batalla.|Connected to the host's room #{p0}! Wait for the battle to start.
+CONECTADO EN SALA #{p0} · {p1}|CONNECTED TO ROOM #{p0} · {p1}
+Invitado listo|Guest ready
+Anfitrión listo|Host ready
+Pugs por jugador|Pugs per player
+Pugs por equipo|Pugs per team
+Equipo 2 (LAN)|Team 2 (LAN)
+Link de GitHub Pages copiado: {p0}|GitHub Pages link copied: {p0}
+<!DOCTYPE html>\n{p0}|<!DOCTYPE html>\n{p0}
+Cooper's Siege 5.2 HTML|Cooper's Siege 5.2 HTML
+Descargando {p0}...|Downloading {p0}...
+Pase de sala copiado.|Room offer copied.
+Código de respuesta copiado.|Answer code copied.
+Reproduciendo pista personalizada en loop continuo (Menú y Etapas): {p0}|Playing custom track on repeat (menu and stages): {p0}
+Activa: banda sonora original de Cooper's Siege.|Active: Cooper's Siege original soundtrack.
+Escuchando: «{p0}» ({p1}).|Now playing: “{p0}” ({p1}).
+{p0} · {p1} · {p2} BPM · {p3}/{p4}|{p0} · {p1} · {p2} BPM · {p3}/{p4}
+🛡 ESCUDO +45|🛡 SHIELD +45
+🦴 VIDA +35|🦴 HEALTH +35
+⌖ ¡PERFORACIÓN!|⌖ DRILLED THROUGH!

@@ -61,7 +61,7 @@ const bosses={
   b.pending={id,x:self?c.x:t.x,y:self?pugCY(c):pugCY(t),targetId:t.id,dmg:0,ready:false,r:ZONE[id]||0,self};
   const a=D().abilities[id];
   app.floats.push({x:c.x,y:c.y-90,life:2.6,text:'⚠ '+a.icon+' '+a.name.toUpperCase(),color:'#ffb35c'});
-  toast('⚠ '+b.name+' prepara «'+a.name+'»: '+a.desc+' Sal de la zona o causa '+D().boss.breakDamage+' de daño para interrumpirla.',4.2);
+  toast(()=>CS5.i18n.t("campaign.bosses.announce.s001",{p0:b.name,p1:a.name,p2:a.desc,p3:D().boss.breakDamage}),4.2);
   audio.sound('bossCharge',1,{x:c.x,y:c.y});
   return b.pending;
  },
@@ -90,8 +90,8 @@ const bosses={
    b.pending.dmg+=amount;
    if(b.pending.dmg>=D().boss.breakDamage){
     const a=D().abilities[b.pending.id];b.cd[b.pending.id]=Math.max(1,a.cd-b.cdBonus);b.pending=null;b.interrupts++;
-    app.floats.push({x:c.x,y:c.y-96,life:2,text:'✋ ¡INTERRUMPIDA!',color:'#9bffd3'});
-    toast('✋ ¡Habilidad interrumpida! '+b.name+' pierde la concentración.',3);
+    app.floats.push({x:c.x,y:c.y-96,life:2,get text(){return CS5.i18n.t("campaign.bosses.onDamage.s001")},color:'#9bffd3'});
+    toast(()=>CS5.i18n.t("campaign.bosses.onDamage.s002",{p0:b.name}),3);
    }
   }
   this.checkPhase(c);
@@ -104,7 +104,7 @@ const bosses={
   b.phase=ph;const f=def.phases[ph];
   for(const id of f.abilities)if(!b.abilities.includes(id)){b.abilities.push(id);b.cd[id]=0;}
   b.aimError=f.aimError*(b.difficulty==='easy'?1.6:b.difficulty==='hard'?.7:1);b.cdBonus=f.cdBonus||0;
-  app.floats.push({x:c.x,y:c.y-100,life:2.6,text:'✦ FASE '+(ph+1),color:'#9fe8ff'});
+  app.floats.push({x:c.x,y:c.y-100,life:2.6,get text(){return CS5.i18n.t("campaign.bosses.checkPhase.s001",{p0:ph+1})},color:'#9fe8ff'});
   audio.sound('bossRoar',1.2,{x:c.x,y:c.y});app.shake=Math.max(app.shake,16);
   for(let i=0;i<40;i++)spawnFX(c.x,c.y-30,(effectsRandom()-.5)*260,(effectsRandom()-.5)*260,'#9fe8ff',3,1.1,'spark');
   CS5.campaign?.onBossPhase?.(c,ph);
@@ -117,7 +117,7 @@ const bosses={
   const s=this.safePlace(c.boss.home.x,c.boss.home.y,c);if(!s)return false;
   c.hp-=loss;c.x=s.x;c.y=s.y;c.boss.home={...s};c.vx=c.vy=c.walkVX=0;c.grounded=true;
   app.floats.push({x:c.x,y:c.y-80,life:2,text:'🌊 −'+loss,color:'#8cecff'});
-  toast(c.boss.name+' trepa de vuelta a su plataforma (−'+loss+' de vida).',3);
+  toast(()=>CS5.i18n.t("campaign.bosses.rescue.s001",{p0:CS5.i18n.characterName(c),p1:loss}),3);
   this.onDamage(c,loss);
   return true;
  },
@@ -150,9 +150,9 @@ const bosses={
     c2.globalAlpha=.85*ready;c2.setLineDash([10,7]);c2.lineDashOffset=-time*30;c2.strokeStyle='#ffb35c';c2.lineWidth=3;c2.beginPath();c2.arc(p.x,p.y,p.r,0,Math.PI*2);c2.stroke();c2.setLineDash([]);
    }
    c2.globalAlpha=1;c2.font='bold 15px system-ui,sans-serif';c2.textAlign='center';c2.fillStyle='#ffe0b0';c2.strokeStyle='#2a0f0f';c2.lineWidth=4;
-   const label=a.icon+' '+a.name+(p.ready?' · ¡AHORA!':' · próximo turno');
+   const label=a.icon+' '+a.name+(p.ready?CS5.i18n.t("campaign.bosses.draw.s001"):CS5.i18n.t("campaign.bosses.draw.s002"));
    c2.strokeText(label,p.x,p.y-(p.r||40)-10);c2.fillText(label,p.x,p.y-(p.r||40)-10);
-   if(!p.self){const left=Math.max(0,D().boss.breakDamage-p.dmg);c2.font='bold 12px system-ui,sans-serif';const t2='✋ interrumpe con '+left+' de daño';c2.strokeText(t2,c.x,c.y-104);c2.fillText(t2,c.x,c.y-104);}
+   if(!p.self){const left=Math.max(0,D().boss.breakDamage-p.dmg);c2.font='bold 12px system-ui,sans-serif';const t2=CS5.i18n.t("campaign.bosses.draw.s003",{p0:left});c2.strokeText(t2,c.x,c.y-104);c2.fillText(t2,c.x,c.y-104);}
    c2.restore();
   }
  },
@@ -161,13 +161,13 @@ const bosses={
   gale(c,p){const dir=Math.sign(p.x-c.x)||1;app.wind=dir*58;for(const e of near(p.x,p.y,ZONE.gale,c)){damage(e,12,c.x,c.y);e.vx+=dir*420/(e.mass||1);e.vy-=220/(e.mass||1);e.grounded=false;}for(let i=0;i<50;i++)spawnFX(p.x-dir*200+effectsRandom()*400*dir,p.y-60+effectsRandom()*120,dir*(300+effectsRandom()*200),(effectsRandom()-.5)*40,'#e8fbff',2,.8,'spark');},
   broadside(c,p){for(let i=0;i<3;i++)app.projectiles.push({id:'airbomb',x:Math.max(20,Math.min(W-20,p.x+(i-1)*42)),y:-60-i*55,vx:0,vy:220,age:-i*.15,team:c.team,owner:c.id,fuse:0,radius:48,damage:36,trail:[]});},
   regrow(c){c.hp=Math.min(c.maxHp,c.hp+40);app.floats.push({x:c.x,y:c.y-70,life:1.8,text:'🌿 +40',color:'#9be37a'});for(let i=0;i<30;i++)spawnFX(c.x+(effectsRandom()-.5)*60,c.y,(effectsRandom()-.5)*40,-60-effectsRandom()*90,'#9be37a',3,1);},
-  spores(c,p){app.fx.push({kind:'acidPool',x:p.x,y:groundY(p.x),vx:0,vy:0,size:40,life:2.2,max:2.2,nextMelt:9,team:c.team});for(const e of near(p.x,p.y,ZONE.spores,c)){damage(e,10,p.x,p.y);e.poisoned=6;app.floats.push({x:e.x,y:e.y-50,life:1.4,text:'🍄 ESPORAS',color:'#9be37a'});}},
+  spores(c,p){app.fx.push({kind:'acidPool',x:p.x,y:groundY(p.x),vx:0,vy:0,size:40,life:2.2,max:2.2,nextMelt:9,team:c.team});for(const e of near(p.x,p.y,ZONE.spores,c)){damage(e,10,p.x,p.y);e.poisoned=6;app.floats.push({x:e.x,y:e.y-50,life:1.4,get text(){return CS5.i18n.t("campaign.bosses.spores.s001")},color:'#9be37a'});}},
   petals(c,p){for(let k=1;k<=5;k++){const x=c.x+(p.x-c.x)*k/5,y=Math.min(groundY(x),c.y+(p.y-c.y)*k/5+30);app.projectiles.push({id:'chain',x,y,vx:0,vy:0,age:-k*.12,fuse:.05,team:c.team,owner:c.id,radius:30,damage:24});}},
   sandTrap(c){const foes=enemiesOf(c).sort((a,b)=>Math.hypot(a.x-c.x,a.y-c.y)-Math.hypot(b.x-c.x,b.y-c.y)).slice(0,2);for(const e of foes){const side=e.x>c.x?1:-1;app.mines.push({x:Math.max(10,Math.min(W-10,e.x+side*34)),y:e.y-8,vx:0,vy:0,age:0,team:c.team,dead:false});}},
-  boneWall(c){c.shield=70;app.floats.push({x:c.x,y:c.y-70,life:1.8,text:'🦴 ESCUDO 70',color:'#efe3c4'});},
+  boneWall(c){c.shield=70;app.floats.push({x:c.x,y:c.y-70,life:1.8,get text(){return CS5.i18n.t("campaign.bosses.boneWall.s001")},color:'#efe3c4'});},
   torpedo(c,p){const dir=Math.sign(p.x-c.x)||1;for(let i=0;i<2;i++)app.projectiles.push({id:'homing',x:c.x+dir*30,y:c.y-56,vx:dir*190,vy:-260-i*70,age:-i*.2,team:c.team,owner:c.id,fuse:0,radius:50,damage:38,target:{x:p.x,y:p.y},trail:[],bounces:0});},
   decree(c,p){for(let i=0;i<5;i++)app.projectiles.push({id:'airbomb',x:Math.max(20,Math.min(W-20,p.x+(i-2)*42)),y:-45-i*52,vx:app.wind*.2,vy:165,age:-i*.12,team:c.team,owner:c.id,fuse:0,radius:42,damage:30,trail:[]});},
-  frost(c,p){app.fx.push({kind:'cryoNova',x:p.x,y:p.y,size:ZONE.frost,life:.85,max:.85,color:'#8cf5ff'});audio.sound('splash');for(const e of near(p.x,p.y,ZONE.frost,c)){e.chilled=8.5;damage(e,22,p.x,p.y);app.floats.push({x:e.x,y:e.y-52,life:1.5,text:'❄ CONGELADO',color:'#8cf5ff'});}},
+  frost(c,p){app.fx.push({kind:'cryoNova',x:p.x,y:p.y,size:ZONE.frost,life:.85,max:.85,color:'#8cf5ff'});audio.sound('splash');for(const e of near(p.x,p.y,ZONE.frost,c)){e.chilled=8.5;damage(e,22,p.x,p.y);app.floats.push({x:e.x,y:e.y-52,life:1.5,get text(){return CS5.i18n.t("campaign.bosses.frost.s001")},color:'#8cf5ff'});}},
   phase(c){
    const foes=enemiesOf(c);let best=null,score=-1;
    for(let k=0;k<14;k++){const x=60+random()*(W-120),s=terrain.spot(x,groundY(x),pugScale(c),c);if(!s||s.y>WATER-40)continue;const d=Math.min(...foes.map(e=>Math.abs(e.x-s.x)));const sc=Math.min(d,700)-Math.abs(d-480)*.3;if(sc>score){score=sc;best=s;}}
@@ -186,7 +186,7 @@ const bosses={
   press(c,p){const tx=Math.max(25,Math.min(W-25,p.x));app.fx.push({x:tx,y:0,end:{x:tx,y:WATER},life:1.15,max:1.15,kind:'orbitalBeam',color:'#ff4d4d',radius:46});for(let yy=110;yy<WATER-8;yy+=40){if(terrain.solid(tx,yy)||yy>terrain.topSurface[tx|0]-30)explode(tx,yy,40,20,c.team,'super');if(yy>terrain.topSurface[tx|0]+60)break;}},
   glaze(c,p){for(let i=0;i<3;i++)app.projectiles.push({id:'sticky',x:Math.max(20,Math.min(W-20,p.x+(i-1)*38)),y:-60-i*40,vx:0,vy:180,age:-i*.15,team:c.team,owner:c.id,fuse:0,radius:50,damage:32,trail:[]});},
   bite(c,p){let healed=0;for(const e of near(p.x,p.y,ZONE.bite,c)){damage(e,22,p.x,p.y);healed+=18;app.fx.push({kind:'siphonStream',x:e.x,y:pugCY(e),end:{x:c.x,y:pugCY(c)},life:.6,max:.6});}if(healed){c.hp=Math.min(c.maxHp,c.hp+healed);app.floats.push({x:c.x,y:c.y-70,life:1.8,text:'🦇 +'+healed,color:'#ff5c8a'});}},
-  thornCage(c,p){for(let i=0;i<34;i++)spawnFX(p.x+(effectsRandom()-.5)*ZONE.thornCage*2,groundY(p.x),(effectsRandom()-.5)*30,-140-effectsRandom()*120,'#5f8f3a',3.4,.9,'debris');for(const e of near(p.x,p.y,ZONE.thornCage,c)){damage(e,20,p.x,p.y);e.chilled=8.5;app.floats.push({x:e.x,y:e.y-52,life:1.5,text:'🥀 ENREDADO',color:'#c8ff9b'});}},
+  thornCage(c,p){for(let i=0;i<34;i++)spawnFX(p.x+(effectsRandom()-.5)*ZONE.thornCage*2,groundY(p.x),(effectsRandom()-.5)*30,-140-effectsRandom()*120,'#5f8f3a',3.4,.9,'debris');for(const e of near(p.x,p.y,ZONE.thornCage,c)){damage(e,20,p.x,p.y);e.chilled=8.5;app.floats.push({x:e.x,y:e.y-52,life:1.5,get text(){return CS5.i18n.t("campaign.bosses.thornCage.s001")},color:'#c8ff9b'});}},
   starOrb(c,p){app.fx.push({x:c.x,y:pugCY(c)-20,end:{x:p.x,y:p.y},life:.45,max:.45,kind:'beam',color:'#9fe8ff'});app.projectiles.push({id:'chain',x:p.x,y:p.y,vx:0,vy:0,age:0,fuse:.35,team:c.team,owner:c.id,radius:58,damage:40});for(let i=0;i<24;i++)spawnFX(p.x,p.y,(effectsRandom()-.5)*90,(effectsRandom()-.5)*90,'#cfe9ff',3.5,.5,'spark');},
   nova(c,p){const tx=Math.max(25,Math.min(W-25,p.x));app.fx.push({x:tx,y:0,end:{x:tx,y:WATER},life:1.3,max:1.3,kind:'orbitalBeam',color:'#ffe9a8',radius:60});const gy=groundY(tx);app.projectiles.push({id:'chain',x:tx,y:gy,vx:0,vy:0,age:0,fuse:.25,team:c.team,owner:c.id,radius:66,damage:42});for(const e of near(tx,gy,ZONE.nova,c)){const dir=Math.sign(e.x-tx)||1;e.vx+=dir*300;e.vy-=200;e.grounded=false;}}
  }

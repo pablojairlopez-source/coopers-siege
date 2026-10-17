@@ -51,7 +51,7 @@ const supply={
   const s={id,x,y:-46,vx:0,vy:cfg().fallSpeed,state:'fall',chute:true,age:0,landRound:-1,fade:0,sway:R()*6.28};
   app.supplies.push(s);st.spawned++;
   audio.sound('supplyDrop',1,{x:s.x,y:120});
-  if(app.phase!=='menu')toast('🦴 ¡Un huesito cae del cielo! Recógelo con cualquier pug.',2.6);
+  if(app.phase!=='menu')toast(()=>CS5.i18n.t("gameplay.supply-drops.spawn.s001"),2.6);
   return s;
  },
  // Física de todos los huesitos (paso fijo de la simulación).
@@ -138,11 +138,11 @@ const supply={
    team.fresh=[...new Set([...(team.fresh||[]),msg.weapon])];
    const w=weaponOf(msg.weapon);
    app.floats.push({x:px,y:py-58,life:2.4,text:w.icon+' '+w.name+' ×'+msg.qty,color:cat.color});
-   toast('🦴 '+team.name+' abre un huesito '+cat.name.toLowerCase()+': '+w.icon+' '+w.name+' ×'+msg.qty+'.',3.2);
+   toast(()=>CS5.i18n.t("gameplay.supply-drops.apply.s001",{p0:CS5.i18n.teamName(team),p1:cat.name.toLowerCase(),p2:w.icon,p3:w.name,p4:msg.qty}),3.2);
   }else if(ch&&msg.heal){
    ch.hp=Math.min(ch.maxHp||100,ch.hp+msg.heal);
-   app.floats.push({x:px,y:py-58,life:2.2,text:'🦴 +'+msg.heal+' HP',color:'#9bffd3'});
-   toast('🦴 Arsenal lleno: el huesito era una galleta curativa (+'+msg.heal+').',3);
+   app.floats.push({x:px,y:py-58,life:2.2,get text(){return CS5.i18n.t("gameplay.supply-drops.apply.s002",{p0:msg.heal})},color:'#9bffd3'});
+   toast(()=>CS5.i18n.t("gameplay.supply-drops.apply.s003",{p0:msg.heal}),3);
   }
   audio.sound('pickup',cat.id==='legendary'?3:cat.id==='power'?2:1,{x:px,y:py});
   const R=effectsRandom;

@@ -33,7 +33,7 @@ function finish(song){
 const SONGS=[];
 
 // 0 · Archipiélago Sol — «Brisa de Manglar»: calipso luminoso con steel drums, marimba y ukelele.
-SONGS[0]=finish({id:'tropic',name:'Brisa de Manglar',genre:'Calipso tropical',tempo:112,meter:4,sub:4,swing:.12,root:62,scale:SC.mixolydian,
+SONGS[0]=finish({id:'tropic',get name(){return CS5.i18n.t("audio.songs.tropic.name")},get genre(){return CS5.i18n.t("audio.songs.tropic.genre")},tempo:112,meter:4,sub:4,swing:.12,root:62,scale:SC.mixolydian,
  inst:{pad:'warmPad',chords:'uke',arp:'marimba',bass:'pluckBass',lead:'steel',lead2:'marimba',counter:'ocarina',fill:'conga'},
  patterns:{drums:{soca:{kick:'x---x---x---x---',rim:'----x-------x--x',shaker:'xoxoxoxoxoxoxoxo',conga:'--x--x----x--x-x',congaLo:'x------x--x-----'},lite:{shaker:'x-o-x-o-x-o-x-o-',conga:'---x-----x--x---'}},
   bass:{calypso:'R--5--R-R--5--8-',half:'R-------5-------'},arp:{up:'0-1-2-1-3-2-1-2-'},chords:{strum:'--x-x--x--x-x--x'}},
@@ -50,7 +50,7 @@ SONGS[0]=finish({id:'tropic',name:'Brisa de Manglar',genre:'Calipso tropical',te
  fx:{reverb:1.8,wet:.24,delayBeats:.75,delayWet:.2},seq:2,arpOct:12,leadOct:12,bassOct:-24});
 
 // 1 · Distrito Neón — «Lluvia sobre Neo-Kioto»: synthwave oscuro con caja gated, bajo en semicorcheas y lead con portamento.
-SONGS[1]=finish({id:'neon',name:'Lluvia sobre Neo-Kioto',genre:'Synthwave',tempo:100,meter:4,sub:4,swing:0,root:57,scale:SC.aeolian,glide:true,
+SONGS[1]=finish({id:'neon',get name(){return CS5.i18n.t("audio.songs.neon.name")},get genre(){return CS5.i18n.t("audio.songs.neon.genre")},tempo:100,meter:4,sub:4,swing:0,root:57,scale:SC.aeolian,glide:true,
  inst:{pad:'pad',chords:'supersaw',arp:'square',bass:'synthBass',lead:'sawLead',lead2:'theremin',counter:'glassPad',fill:'gated'},
  patterns:{drums:{drive:{kick:'x-------x-------',gated:'----x-------x---',hat:'--x---x---x---xx',openhat:'------------x---'},city:{hat:'x-x-x-x-x-x-x-x-',clap:'----x-------x---'},pulse:{kick:'x---x---x---x---',gated:'----x-------x---',hat:'xxxxxxxxxxxxxxxx'}},
   bass:{sixteen:'R8R8R8R8R8R8R858',octave:'R-8-R-8-R-8-R-85'},arp:{run:'0123012301230123',slow:'0-2-1-3-0-2-1-3-'},chords:{stab:'x-----x-----x---'}},
@@ -70,7 +70,7 @@ SONGS[1]=finish({id:'neon',name:'Lluvia sobre Neo-Kioto',genre:'Synthwave',tempo
 // Taikos profundos, metales graves y coro oscuro; cinco ideas melódicas distintas
 // (llamada de guerra, respuesta, himno coral, ostinato rápido y tema del clímax),
 // un puente sombrío, desarrollo modulante y una segunda erupción medio tono arriba.
-SONGS[2]=finish({id:'volcano',name:'Furia de la Caldera',genre:'Épica volcánica',tempo:138,meter:4,sub:4,swing:0,root:52,scale:SC.phrygDom,
+SONGS[2]=finish({id:'volcano',get name(){return CS5.i18n.t("audio.songs.volcano.name")},get genre(){return CS5.i18n.t("audio.songs.volcano.genre")},tempo:138,meter:4,sub:4,swing:0,root:52,scale:SC.phrygDom,
  inst:{pad:'darkPad',chords:'lowBrass',arp:'pizz',bass:'distBass',lead:'lowBrass',lead2:'choirDark',counter:'cello',fill:'taikoBig'},
  patterns:{drums:{
    war:{taikoBig:'x-----x-x-------',taiko:'----x-------x-x-',frame:'--x---x---x---x-'},
@@ -104,7 +104,7 @@ SONGS[2]=finish({id:'volcano',name:'Furia de la Caldera',genre:'Épica volcánic
  fx:{reverb:3.4,wet:.3,drive:.3,delayBeats:1.5,delayWet:.1},seq:1,arpOct:0,leadOct:12,bassOct:-24,counterOct:0,levels:{lead:1.2,counter:.85}});
 
 // 3 · Aurora Polar — «Vals del Hielo Quieto»: vals en 3/4 con piano, celesta y cristal (lidio).
-SONGS[3]=finish({id:'snow',name:'Vals del Hielo Quieto',genre:'Vals ambiental',tempo:76,meter:3,sub:4,swing:0,root:62,scale:SC.lydian,
+SONGS[3]=finish({id:'snow',get name(){return CS5.i18n.t("audio.songs.snow.name")},get genre(){return CS5.i18n.t("audio.songs.snow.genre")},tempo:76,meter:3,sub:4,swing:0,root:62,scale:SC.lydian,
  inst:{pad:'glassPad',chords:'piano',arp:'celesta',bass:'upright',lead:'piano',lead2:'musicbox',counter:'strings',fill:'sleigh'},
  patterns:{drums:{waltz:{brush:'x---o---o---',sleigh:'----x-------',triangle:'x-----------'},still:{triangle:'x-----------'}},
   bass:{waltz:'R-------5---',hold:'R~~~~~~~~~~~'},arp:{flow:'0-1-2-3-2-1-',sparkle:'4---3---2---'},chords:{oompah:'----x---x---'}},
@@ -121,7 +121,7 @@ SONGS[3]=finish({id:'snow',name:'Vals del Hielo Quieto',genre:'Vals ambiental',t
  fx:{reverb:4.2,wet:.4,delayBeats:1,delayWet:.25,feedback:.4},seq:2,arpOct:24,leadOct:12,bassOct:-24,padOct:12});
 
 // 4 · Órbita Violeta — «Señales de Otro Cielo»: electrónica alienígena en 7/8, theremin y campanas FM (tonos enteros).
-SONGS[4]=finish({id:'alien',name:'Señales de Otro Cielo',genre:'Electrónica alienígena 7/8',tempo:118,meter:7,sub:2,swing:0,root:53,scale:SC.wholeTone,
+SONGS[4]=finish({id:'alien',get name(){return CS5.i18n.t("audio.songs.alien.name")},get genre(){return CS5.i18n.t("audio.songs.alien.genre")},tempo:118,meter:7,sub:2,swing:0,root:53,scale:SC.wholeTone,
  inst:{pad:'glassPad',chords:'bell',arp:'celesta',bass:'sub',lead:'theremin',lead2:'bell',counter:'choir',fill:'woodblock'},
  patterns:{drums:{seven:{kick:'x-----x---x---',tek:'---x-----x--x-',woodblock:'--x-------x---',shaker:'xxxxxxxxxxxxxx'},blip:{woodblock:'x---x---x-----',triangle:'x-------------'}},
   bass:{seven:'R---5-R---R-8-',pulse:'R-----R-----5-'},arp:{orbit:'0-2-4-1-3-5-2-',drift:'0---2---4---1-'},chords:{chime:'x------x------'}},
@@ -138,7 +138,7 @@ SONGS[4]=finish({id:'alien',name:'Señales de Otro Cielo',genre:'Electrónica al
  fx:{reverb:3.6,wet:.38,delayBeats:.5,feedback:.5,delayWet:.32},seq:1,arpOct:12,leadOct:12,bassOct:-24,glide:true});
 
 // 5 · Bastión Dorado — «La Giga del Estandarte»: giga renacentista en 6/8 con flauta dulce, laúd y zanfona (dórico).
-SONGS[5]=finish({id:'castle',name:'La Giga del Estandarte',genre:'Giga renacentista',tempo:126,meter:6,sub:2,swing:0,root:62,scale:SC.dorian,
+SONGS[5]=finish({id:'castle',get name(){return CS5.i18n.t("audio.songs.castle.name")},get genre(){return CS5.i18n.t("audio.songs.castle.genre")},tempo:126,meter:6,sub:2,swing:0,root:62,scale:SC.dorian,
  inst:{pad:'organ',chords:'lute',arp:'harp',bass:'upright',lead:'recorder',lead2:'fiddle',counter:'sitar',fill:'frame'},
  patterns:{drums:{jig:{frame:'x--x-ox--x-o',tamb:'---x-----x--'},march:{frame:'x-----x-----',tamb:'x--x--x--x--'}},
   bass:{jig:'R--5--R--8--',drone:'R~~~~~~~~~~~'},arp:{lute:'0-2-1-0-2-1-'},chords:{strum:'x--x--x--x-x'}},
@@ -158,7 +158,7 @@ SONGS[5]=finish({id:'castle',name:'La Giga del Estandarte',genre:'Giga renacenti
 // caja de música, y lo desarrolla con una respuesta nueva, una segunda melodía de
 // sintetizador más rítmica, una tercera melodía amplia para el clímax, contracantos
 // de chelo y de sintetizador, arpegios espaciales y una reexposición en otra tonalidad.
-SONGS[6]=finish({id:'supernova',name:'Réquiem para un Sol',genre:'Orquesta cósmica',tempo:64,meter:4,sub:4,swing:0,root:53,scale:SC.aeolian,
+SONGS[6]=finish({id:'supernova',get name(){return CS5.i18n.t("audio.songs.supernova.name")},get genre(){return CS5.i18n.t("audio.songs.supernova.genre")},tempo:64,meter:4,sub:4,swing:0,root:53,scale:SC.aeolian,
  inst:{pad:'darkPad',chords:'strings',arp:'musicbox',bass:'sub',lead:'choir',lead2:'horn',counter:'cello',fill:'timpani'},
  patterns:{drums:{swell:{timpani:'x-----------x---',gong:'x'+'-'.repeat(31)},pulse:{timpani:'x-------x-------',triangle:'--------x-------'},
    orbit:{softKick:'x-------x-------',shaker:'--x---x---x---x-',triangle:'x'+'-'.repeat(31)},
@@ -192,7 +192,7 @@ SONGS[6]=finish({id:'supernova',name:'Réquiem para un Sol',genre:'Orquesta cós
  fx:{reverb:5.5,wet:.48,delayBeats:1,delayWet:.22},seq:2,arpOct:24,leadOct:12,bassOct:-24,counterOct:0});
 
 // 7 · Puerto Tempestad — «Canción del Ancla Rota»: saloma marinera con acordeón, violín y pisotones.
-SONGS[7]=finish({id:'harbor',name:'Canción del Ancla Rota',genre:'Saloma marinera',tempo:138,meter:4,sub:2,swing:.08,root:50,scale:SC.dorian,
+SONGS[7]=finish({id:'harbor',get name(){return CS5.i18n.t("audio.songs.harbor.name")},get genre(){return CS5.i18n.t("audio.songs.harbor.genre")},tempo:138,meter:4,sub:2,swing:.08,root:50,scale:SC.dorian,
  inst:{pad:'organ',chords:'reed',arp:'pluck',bass:'tuba',lead:'reed',lead2:'fiddle',counter:'fiddle',fill:'snare'},
  patterns:{drums:{stomp:{kick:'x---x---',clap:'--x---x-',tamb:'x-x-x-x-'},storm:{kick:'x--xx---',clap:'--x---x-',snare:'------xx'}},
   bass:{oom:'R-5-R-5-',walk:'R-3-5-b-'},arp:{pick:'0-1-2-1-'},chords:{pah:'-x-x-x-x'}},
@@ -209,7 +209,7 @@ SONGS[7]=finish({id:'harbor',name:'Canción del Ancla Rota',genre:'Saloma marine
  fx:{reverb:2,wet:.22,delayWet:.08},seq:2,arpOct:12,leadOct:12,bassOct:-24});
 
 // 8 · Bosque Umbrío — «El Claro de las Luciérnagas»: folk misterioso en 3/4 con arpa, whistle, chelo y bodhrán.
-SONGS[8]=finish({id:'forest',name:'El Claro de las Luciérnagas',genre:'Folk misterioso 3/4',tempo:92,meter:3,sub:4,swing:0,root:52,scale:SC.aeolian,
+SONGS[8]=finish({id:'forest',get name(){return CS5.i18n.t("audio.songs.forest.name")},get genre(){return CS5.i18n.t("audio.songs.forest.genre")},tempo:92,meter:3,sub:4,swing:0,root:52,scale:SC.aeolian,
  inst:{pad:'darkPad',chords:'harp',arp:'harp',bass:'upright',lead:'whistle',lead2:'flute',counter:'cello',fill:'frame'},
  patterns:{drums:{bodhran:{frame:'x--o--x--o-o',woodblock:'------x-----'},night:{triangle:'x-----------',shaker:'--x-----x---'}},
   bass:{drone:'R~~~~~5~~~~~',step:'R---5---8---'},arp:{rain:'0-2-4-2-1-3-',slow:'0---2---4---'},chords:{roll:'x-----------'}},
@@ -226,7 +226,7 @@ SONGS[8]=finish({id:'forest',name:'El Claro de las Luciérnagas',genre:'Folk mis
  fx:{reverb:4,wet:.4,delayBeats:.75,delayWet:.22},seq:1,arpOct:12,leadOct:12,bassOct:-24});
 
 // 9 · Kilómetro Cero — «Ceniza y Neumáticos»: trip-hop postapocalíptico, breakbeat lento, piano desafinado y bajo saturado.
-SONGS[9]=finish({id:'ruins',name:'Ceniza y Neumáticos',genre:'Trip-hop industrial',tempo:84,meter:4,sub:4,swing:.16,root:48,scale:SC.phrygian,
+SONGS[9]=finish({id:'ruins',get name(){return CS5.i18n.t("audio.songs.ruins.name")},get genre(){return CS5.i18n.t("audio.songs.ruins.genre")},tempo:84,meter:4,sub:4,swing:.16,root:48,scale:SC.phrygian,
  inst:{pad:'darkPad',chords:'detunedPiano',arp:'pluck',bass:'distBass',lead:'detunedPiano',lead2:'fiddle',counter:'brass',fill:'snare'},
  patterns:{drums:{break:{kick:'x-----x-x-------',snare:'----x--o----x---',hat:'x-x-x-xxx-x-x-xx',anvil:'---------------x'},dust:{hat:'x---x---x---x---',rim:'------x-------x-'}},
   bass:{crawl:'R~~-----5~~-R---',stab:'R---R-------b---'},arp:{rust:'0---1---2---1---'},chords:{hit:'x-------x--x----'}},
@@ -243,7 +243,7 @@ SONGS[9]=finish({id:'ruins',name:'Ceniza y Neumáticos',genre:'Trip-hop industri
  fx:{reverb:3,wet:.3,drive:.25,delayBeats:.75,delayWet:.2,cutoff:9000},seq:1,arpOct:12,leadOct:12,bassOct:-24});
 
 // 10 · Valle Cerezos — «Pétalos sobre el Templo»: koto, shakuhachi y taiko ligero en escala hirajoshi.
-SONGS[10]=finish({id:'sakura',name:'Pétalos sobre el Templo',genre:'Japonés tradicional estilizado',tempo:96,meter:4,sub:4,swing:0,root:57,scale:SC.hirajoshi,
+SONGS[10]=finish({id:'sakura',get name(){return CS5.i18n.t("audio.songs.sakura.name")},get genre(){return CS5.i18n.t("audio.songs.sakura.genre")},tempo:96,meter:4,sub:4,swing:0,root:57,scale:SC.hirajoshi,
  inst:{pad:'glassPad',chords:'koto',arp:'koto',bass:'sub',lead:'shakuhachi',lead2:'koto',counter:'strings',fill:'taiko'},
  patterns:{drums:{temple:{taiko:'x-------x--x----',woodblock:'----x-------x---',shaker:'--x---x---x---x-'},calm:{woodblock:'x-------x-------'}},
   bass:{root:'R-------5-------',move:'R---5---8---5---'},arp:{koto:'0-1-2-3-4-3-2-1-',sparse:'0-----2-----4---'},chords:{pluck:'x-----x---x-----'}},
@@ -260,7 +260,7 @@ SONGS[10]=finish({id:'sakura',name:'Pétalos sobre el Templo',genre:'Japonés tr
  fx:{reverb:3.8,wet:.4,delayBeats:.75,delayWet:.25},seq:1,arpOct:12,leadOct:12,bassOct:-24,padNotes:3});
 
 // 11 · Dunas de Anubis — «Caravana del Escarabajo»: oud, ney y darbuka (maqsum) en modo hijaz.
-SONGS[11]=finish({id:'desert',name:'Caravana del Escarabajo',genre:'Maqsum del desierto',tempo:104,meter:4,sub:4,swing:.05,root:50,scale:SC.phrygDom,
+SONGS[11]=finish({id:'desert',get name(){return CS5.i18n.t("audio.songs.desert.name")},get genre(){return CS5.i18n.t("audio.songs.desert.genre")},tempo:104,meter:4,sub:4,swing:.05,root:50,scale:SC.phrygDom,
  inst:{pad:'warmPad',chords:'oud',arp:'oud',bass:'upright',lead:'ney',lead2:'oud',counter:'sitar',fill:'doum'},
  patterns:{drums:{maqsum:{doum:'x-----x---x-----',tek:'---x----x--x-x-x',tamb:'--x---x---x---x-'},sand:{tek:'x---x---x---x---',shaker:'xoxoxoxoxoxoxoxo'}},
   bass:{doum:'R-----R---5-----',walk:'R---1---3---b---'},arp:{oud:'0-1-2-1-0-1-2-3-',trill:'0101210101210123'},chords:{strum:'x--x--x---x--x--'}},
@@ -277,7 +277,7 @@ SONGS[11]=finish({id:'desert',name:'Caravana del Escarabajo',genre:'Maqsum del d
  fx:{reverb:2.8,wet:.3,delayBeats:.75,delayWet:.18},seq:1,arpOct:12,leadOct:12,bassOct:-24,levels:{counter:.55}});
 
 // 12 · Abismo Atlantis — «Catedral de Coral»: ambient acuático en 5/4, rhodes, arpegios de cristal y graves profundos.
-SONGS[12]=finish({id:'atlantis',name:'Catedral de Coral',genre:'Ambient acuático 5/4',tempo:84,meter:5,sub:4,swing:0,root:53,scale:SC.dorian,
+SONGS[12]=finish({id:'atlantis',get name(){return CS5.i18n.t("audio.songs.atlantis.name")},get genre(){return CS5.i18n.t("audio.songs.atlantis.genre")},tempo:84,meter:5,sub:4,swing:0,root:53,scale:SC.dorian,
  inst:{pad:'glassPad',chords:'rhodes',arp:'celesta',bass:'sub',lead:'rhodes',lead2:'flute',counter:'choir',fill:'brush'},
  patterns:{drums:{current:{softKick:'x-------x-----x-----',brush:'----x---------x-----',shaker:'x-x-x-x-x-x-x-x-x-x-'},deep:{softKick:'x-------------------'}},
   bass:{tide:'R~~~~~~~5~~~~~R~~~~~',pulse:'R---R-----5---R-----'},arp:{ripple:'0-1-2-3-4-3-2-1-0-2-',drop:'4---3---2---1---0---'},chords:{bloom:'x---------x---------'}},
@@ -298,7 +298,7 @@ SONGS[12]=finish({id:'atlantis',name:'Catedral de Coral',genre:'Ambient acuátic
 // contundente, metales en llamada y respuesta y un lead de sierra en el clímax.
 // Dirección pedida a partir de una referencia de la que solo se pudo consultar el título
 // («Kirby 64 – Factory Inspection»): la pieza es una composición original.
-SONGS[13]=finish({id:'factory',name:'Inspección de Engranajes',genre:'Groove industrial mecánico',tempo:124,meter:4,sub:4,swing:0,root:48,scale:SC.dorian,
+SONGS[13]=finish({id:'factory',get name(){return CS5.i18n.t("audio.songs.factory.name")},get genre(){return CS5.i18n.t("audio.songs.factory.genre")},tempo:124,meter:4,sub:4,swing:0,root:48,scale:SC.dorian,
  inst:{pad:'darkPad',chords:'brass',arp:'marimba',bass:'synthBass',lead:'square',lead2:'sawLead',counter:'brass',fill:'piston'},
  patterns:{drums:{
    press:{kick:'x---x---x---x---',clap:'----x-------x---',gear:'-x-x-x-x-x-x-x-x',metalHit:'------x-------x-'},
@@ -335,7 +335,7 @@ SONGS[13]=finish({id:'factory',name:'Inspección de Engranajes',genre:'Groove in
 // eléctrico y batería rápida; coral de órgano en el puente y solo de guitarra en el clímax.
 // Inspirada en la energía del rock gótico de los juegos de vampiros: melodías,
 // progresiones (i–iv–V, bII napolitano, VI–V) y arreglos propios.
-SONGS[14]=finish({id:'inferno',name:'Vigilia de los Colmillos',genre:'Rock gótico barroco',tempo:144,meter:4,sub:4,swing:0,root:50,scale:SC.harmMinor,
+SONGS[14]=finish({id:'inferno',get name(){return CS5.i18n.t("audio.songs.inferno.name")},get genre(){return CS5.i18n.t("audio.songs.inferno.genre")},tempo:144,meter:4,sub:4,swing:0,root:50,scale:SC.harmMinor,
  inst:{pad:'darkPad',chords:'organ',arp:'harpsichord',bass:'electricBass',lead:'overdrive',lead2:'organ',counter:'organ',fill:'rockSnare'},
  patterns:{drums:{
    rock:{rockKick:'x-----x-x-x-----',rockSnare:'----x-------x---',hat:'x-x-x-x-x-x-x-x-',crash:'x'+'-'.repeat(63)},
@@ -377,7 +377,7 @@ SONGS[14]=finish({id:'inferno',name:'Vigilia de los Colmillos',genre:'Rock góti
 // juguete; cambios de tonalidad bruscos, paradas sorpresa y secciones muy distintas.
 // Dirección pedida a partir de una referencia de la que solo se pudo consultar el título
 // («Kirby 64 – File Select»): la pieza es una composición original.
-SONGS[15]=finish({id:'candy',name:'Desfile de Caramelos',genre:'Desfile de juguetes',tempo:136,meter:4,sub:4,swing:.1,root:60,scale:SC.ionian,
+SONGS[15]=finish({id:'candy',get name(){return CS5.i18n.t("audio.songs.candy.name")},get genre(){return CS5.i18n.t("audio.songs.candy.genre")},tempo:136,meter:4,sub:4,swing:.1,root:60,scale:SC.ionian,
  inst:{pad:'warmPad',chords:'pizz',arp:'vibes',bass:'pluckBass',lead:'toyPiano',lead2:'xylophone',counter:'kalimba',fill:'toyDrum'},
  patterns:{drums:{
    bounce:{toyDrum:'x-----x-x-------',slap:'----x-------x---',hat:'x-x-x-x-x-x-x-x-',boing:'-'.repeat(63)+'x'},
@@ -416,7 +416,7 @@ SONGS[15]=finish({id:'candy',name:'Desfile de Caramelos',genre:'Desfile de jugue
 // envuelven, bajo ambiental y percusión delicada; las capas entran y salen con suavidad.
 // Evoca la atmósfera de los niveles de zarzas sin tomar melodía, armonía ni arreglo de
 // ninguna obra existente: todos los temas son originales.
-SONGS[16]=finish({id:'thorns',name:'Bruma entre Zarzas',genre:'Ambient onírico',tempo:92,meter:4,sub:4,swing:0,root:52,scale:SC.dorian,
+SONGS[16]=finish({id:'thorns',get name(){return CS5.i18n.t("audio.songs.thorns.name")},get genre(){return CS5.i18n.t("audio.songs.thorns.genre")},tempo:92,meter:4,sub:4,swing:0,root:52,scale:SC.dorian,
  inst:{pad:'glassPad',chords:'vibes',arp:'celesta',bass:'sub',lead:'softLead',lead2:'vibes',counter:'choirSoft',fill:'chimes'},
  patterns:{drums:{
    soft:{softKick:'x-------x-------',brush:'----x-------x---',shaker:'--x---x---x---x-'},
@@ -446,7 +446,7 @@ SONGS[16]=finish({id:'thorns',name:'Bruma entre Zarzas',genre:'Ambient onírico'
  fx:{reverb:5.2,wet:.46,delayBeats:.75,feedback:.45,delayWet:.3},seq:1,arpOct:12,leadOct:12,bassOct:-24,counterOct:0,padOct:0});
 
 // Menú · «Himno de Cooper»: tema original heroico y juguetón (marcha orquestal-pop en Si bemol).
-const MENU=finish({id:'menu',name:'Himno de Cooper',genre:'Marcha orquestal-pop',tempo:118,meter:4,sub:4,swing:0,root:58,scale:SC.ionian,gain:1.9,
+const MENU=finish({id:'menu',get name(){return CS5.i18n.t("audio.songs.menu.name")},get genre(){return CS5.i18n.t("audio.songs.menu.genre")},tempo:118,meter:4,sub:4,swing:0,root:58,scale:SC.ionian,gain:1.9,
  inst:{pad:'strings',chords:'piano',arp:'harp',bass:'pluckBass',lead:'brass',lead2:'strings',counter:'horn',fill:'timpani'},
  patterns:{drums:{march:{kick:'x-------x-------',snare:'----x--o----x-oo',timpani:'x---------------',tamb:'--x---x---x---x-'},lite:{tamb:'x---x---x---x---'}},
   bass:{march:'R---5---R---5-b-',half:'R-------5-------'},arp:{harp:'0-1-2-3-4-3-2-1-'},chords:{pump:'x-x-x-x-x-x-x-x-'}},
