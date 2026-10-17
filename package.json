@@ -1,6 +1,10 @@
 {
   "name": "coopers-siege",
   "private": true,
-  "scripts": { "test": "node tests/lan-coop.cjs" },
+  "scripts": {
+    "test": "node tests/lan-coop.cjs",
+    "test:visual": "node tests/visual.cjs test-results/screens desktop,s23ultra",
+    "test:perf": "node tests/perf.cjs test-results/perf.json"
+  },
   "devDependencies": { "playwright": "1.62.1" }
 }
