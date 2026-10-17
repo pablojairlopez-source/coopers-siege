@@ -1186,7 +1186,7 @@ body[data-phase="menu"] #turnBanner{display:none!important}
    </div>
    <div class="form-row"><label>Escuadras<select id="teamCount"><option value="2">2 equipos</option><option value="3">3 equipos</option><option value="4">4 equipos</option></select></label><label><span id="memberCountLabel">Pugs por equipo</span><select id="memberCount"><option value="1">1 pug</option><option value="2">2 pugs</option><option value="3" selected>3 pugs</option><option value="4">4 pugs</option></select></label></div>
    <div class="form-row"><label id="difficultyWrap">Dificultad CPU<select id="difficulty"><option value="easy">Fácil</option><option value="normal" selected>Normal</option><option value="hard">Difícil</option></select></label><label>Tiempo por turno<select id="turnDuration"><option value="30">30 segundos</option><option value="45" selected>45 segundos</option><option value="60">60 segundos</option><option value="90">90 segundos</option></select></label></div>
-   <details><summary>Personalizar nombres y arsenal</summary><div class="form-row"><label>Tu equipo<input id="teamA" type="text" value="Marea" maxlength="18" autocomplete="off"></label><label><span id="teamBLabel">Equipo CPU</span><input id="teamB" type="text" value="Brasa" maxlength="18" autocomplete="off"></label></div><label>Munición<select id="ammoMode"><option value="standard">Estándar · armas especiales limitadas</option><option value="abundant">Abundante · el doble de munición</option><option value="infinite">Infinita · caos total</option></select></label></details>
+   <details><summary>Personalizar nombres y arsenal</summary><div class="form-row"><label>Tu equipo<input id="teamA" type="text" value="Marea" maxlength="18" autocomplete="off"></label><label><span id="teamBLabel">Equipo CPU</span><input id="teamB" type="text" value="Brasa" maxlength="18" autocomplete="off"></label></div><label>Munición<select id="ammoMode"><option value="standard">Estándar · bazuca y granada ∞, el resto llega en huesitos</option><option value="abundant">Abundante · arsenal clásico ×2</option><option value="infinite">Infinita · caos total</option></select></label></details>
    <details class="graphics-settings"><summary>Gráficos, resolución y pantalla completa</summary><div class="form-row"><label>Calidad gráfica<select id="graphicsPreset"><option value="auto">Automática</option><option value="low">Económico</option><option value="medium">Equilibrado</option><option value="high">Alto</option><option value="ultra" selected>Ultra</option></select></label><label>Fluidez<select id="fpsLimit"><option value="0">Según el perfil</option><option value="30">30 FPS · ahorro</option><option value="60" selected>60 FPS · fluido</option></select></label></div><div class="form-row"><label>Resolución<select id="resolutionMode"><option value="native" selected>Nativa / QHD+ (Máxima nitidez)</option><option value="uhd">4K / Super-Res (3840p · SSAA)</option><option value="qhd">2K / QHD+ (2560×1440)</option><option value="fhd">Full HD (1920×1080)</option><option value="hd">HD (1280×720 · Ahorro)</option><option value="auto">Automática según calidad</option></select></label><label>Gore<select id="goreLevel"><option value="none">Ninguno · sin gore</option><option value="low">Bajo</option><option value="medium">Medio</option><option value="high">Alto</option><option value="demonic" selected>Demencial</option></select></label></div><div class="form-row"><label>Tamaño de fragmentos<select id="fragmentSize"><option value="small">Chicos</option><option value="medium" selected>Medianos</option><option value="large">Grandes</option><option value="giant">Gigantescos</option></select></label><label>Intensidad del clima<select id="weatherLevel"><option value="none">Desactivado</option><option value="normal">Suave</option><option value="intense" selected>Intenso</option><option value="storm">Tormenta</option></select></label></div><p id="goreInfo" class="graphics-info gore-info"></p><div class="play-checks"><label class="check"><input id="autoFullscreen" type="checkbox">Pantalla completa al comenzar</label><label class="check"><input id="showFPS" type="checkbox">Mostrar FPS</label></div><p id="graphicsInfo" class="graphics-info"></p></details>
    <details><summary>Música adaptativa y volúmenes</summary><label>Modo musical<select id="musicMood"><option value="auto">🎵 Dinámico (cambia con el combate)</option><option value="adventure">🎹 Combate constante</option><option value="ambient">🌙 Exploración tranquila</option><option value="intense">⚡ Clímax permanente</option></select></label><div class="audio-sliders"><label>Maestro <b id="volMasterVal">80%</b><input id="volMaster" type="range" min="0" max="100" value="80"></label><label>Música <b id="volMusicVal">85%</b><input id="volMusic" type="range" min="0" max="100" value="85"></label><label>Efectos <b id="volSfxVal">90%</b><input id="volSfx" type="range" min="0" max="100" value="90"></label></div><div class="audio-settings"><label class="check"><input id="musicSetting" type="checkbox" checked>Música activa</label><label class="check"><input id="sfxSetting" type="checkbox" checked>Efectos</label></div><button type="button" id="openLyriaButton" class="lyria-btn">🎼 Banda sonora original (18 piezas)</button></details>
   </div>
@@ -1345,7 +1345,7 @@ body[data-phase="menu"] #turnBanner{display:none!important}
 <script src="src/audio/songs.js"></script>
 <script src="src/audio/loudness.js"></script>
 <script src="src/audio/sfx.js"></script>
-<script src="src/input/attack-controls.js"></script>
+<script src="src/input/attack-controls.js"></script><script src="src/gameplay/inventory-balance.js"></script>
 <script>
 
 'use strict';
@@ -5446,7 +5446,7 @@ const weapons=[
 {id:'bat',name:'Bate',icon:'🏏',ammo:Infinity,radius:68,damage:26,charge:false,desc:'Cuerpo a cuerpo · gran empuje',short:'Golpea hacia donde miras. Alcance de 68 unidades.'},
 {id:'cluster',name:'Racimo',icon:'✹',ammo:3,radius:45,damage:30,charge:true,fuse:2.4,desc:'Se divide en 6 cargas',short:'Granada que libera seis cargas pequeñas.'},
 {id:'teleport',name:'Teletransporte',icon:'🌀',ammo:2,radius:0,damage:0,charge:false,target:true,desc:'Marca suelo válido · sin daño',short:'Toca una superficie libre y confirma la reubicación.'},
-{id:'super',name:'Supernova',icon:'☢',ammo:1,radius:123,damage:91,charge:true,desc:'Una por equipo · cráter enorme',short:'Misil pesado. Una carga por equipo en arsenal estándar.'}
+{id:'super',name:'Supernova',icon:'☢',ammo:1,radius:123,damage:91,charge:true,desc:'Legendaria · cráter enorme',short:'Misil pesado. En el arsenal estándar solo llega dentro de un huesito legendario.'}
 ];
 weapons.push(
 {id:'salvo',name:'Mortero triple',icon:'♨',ammo:3,radius:33,damage:28,charge:true,desc:'Tres proyectiles en abanico',short:'Tres cargas con trayectorias separadas.'},
@@ -5478,6 +5478,10 @@ const cpuTurn=()=>isLanCoop()?app.team===1:app.mode==='cpu'&&!human();
 const cycleCandidates=()=>app.chars.filter(c=>c.team===app.team&&c.hp>0&&(!isLanCoop()||c.controller===app.active?.controller));
 const canMove=()=>!app.paused&&app.active?.hp>0&&(app.phase==='aim'||(app.phase==='action'&&app.actionAge<2.5&&!app.shotSecond));
 const weaponOf=id=>weapons.find(w=>w.id===(id||app.weapon));
+// 5.2: los jefes gigantes escalan su caja de impacto (hitScale) y resisten el empuje (mass); el resto vale 1.
+const pugScale=c=>c?.hitScale||1;
+const pugHit=(c,x,y,top=28)=>{const s=c.hitScale||1;return Math.abs(c.x-x)<13*s&&y>c.y-top*s&&y<c.y+2;};
+const pugCY=c=>c.y-15*(c.hitScale||1);
 const CHUNK_COUNT=48,CHUNK_W=W/CHUNK_COUNT;
 class Terrain{
  constructor(mapIndex,worldSeed){
@@ -6351,7 +6355,7 @@ const coop=isLanCoop(),count=coop?2:Number($('teamCount').value),members=coop?6:
  terrain=matchTerrain;graphics.rayCache=null;renderer.version=-1;
  lastHUD='';lastWeapon='';lastInventory='';app.teams=[];app.chars=[];app.projectiles=[];app.mines=[];app.fx=[];app.decals=[];resetGoreScene();resetCelebration();app.floats=[];app.deathBeat=0;app.resultDelay=0;app.winner=null;app.turn=0;app.round=0;app.shotCount=0;app.damageDone=0;app.totalShots=0;app.simTime=0;app.paused=false;app.cameraWide=false;app.target=null;app.charging=false;input.keys.clear();input.pointers.clear();
  const ammoMode=$('ammoMode').value;
- for(let t=0;t<count;t++){const isHuman=coop?t===0:app.mode==='local'?true:(app.mode==='lan'?(lanNet.role==='client'?t===1:t===0):t===0);const team={id:t,name:(t===0?$('teamA').value:t===1?$('teamB').value:teamDefaults[t]).trim().slice(0,18)||teamDefaults[t],human:isHuman,cursor:0,ammo:{}};for(const w of weapons)team.ammo[w.id]=ammoMode==='infinite'?Infinity:(w.ammo===Infinity?Infinity:w.ammo*(ammoMode==='abundant'?2:1));app.teams.push(team);}
+ for(let t=0;t<count;t++){const isHuman=coop?t===0:app.mode==='local'?true:(app.mode==='lan'?(lanNet.role==='client'?t===1:t===0):t===0);const team={id:t,name:(t===0?$('teamA').value:t===1?$('teamB').value:teamDefaults[t]).trim().slice(0,18)||teamDefaults[t],human:isHuman,cursor:0,ammo:CS5.arsenal.initial(weapons,ammoMode)};app.teams.push(team);}
  // 5.0: posiciones iniciales seguras sobre superficie firme, repartidas por todo el mapa ampliado.
  const spots=CS5.safeSpawns(terrain,total,W,WATER);
  if(studio.enabled&&studio.savedMask&&studio.map===app.map)spots.splice(0,spots.length,...studioSpawnPoints(terrain,total));
@@ -6416,7 +6420,7 @@ function explode(x,y,r,amount,sourceTeam=-1,kind='normal'){
   const f=spawnFX(x,y,Math.cos(a)*v,Math.sin(a)*v-(fxKind==='debris'?65:20),col,fxKind==='debris'?3+R()*4.5:2+R()*4.5,.55+R()*.95,fxKind);
   if(f&&fxKind==='debris'){f.rot=R()*TAU;f.spin=(R()-.5)*14;}
  }
- for(const c of app.chars){if(c.hp<=0)continue;let dx=c.x-x,dy=c.y-15-y,d=Math.hypot(dx,dy),reach=r+28;if(d<reach){let f=1-d/reach;damage(c,amount*(.22+.78*f),x,y);if(c.hp>0){let len=Math.max(12,d);c.vx+=dx/len*(180+260*f);c.vy+=Math.min(-75,dy/len*(150+270*f))-105;c.grounded=false;}}}
+ for(const c of app.chars){if(c.hp<=0)continue;let dx=c.x-x,dy=pugCY(c)-y,d=Math.hypot(dx,dy),reach=r+28*pugScale(c);if(d<reach){let f=1-d/reach;damage(c,amount*(.22+.78*f),x,y);if(c.hp>0){let len=Math.max(12,d),kb=1/(c.mass||1);c.vx+=dx/len*(180+260*f)*kb;c.vy+=(Math.min(-75,dy/len*(150+270*f))-105)*kb;c.grounded=false;}}}
  for(const mine of app.mines)if(!mine.dead&&Math.hypot(mine.x-x,mine.y-y)<r+12){mine.dead=true;app.projectiles.push({id:'chain',x:mine.x,y:mine.y,vx:0,vy:0,age:0,fuse:.12+random()*.10,team:mine.team,radius:61,damage:54});}
 }
 function characterPhysics(c,dt,control=0,jump=false){if(c.hp<=0)return;c.hurt=Math.max(0,c.hurt-dt);c.landTimer=Math.max(0,(c.landTimer||0)-dt);c.recoilTimer=Math.max(0,(c.recoilTimer||0)-dt);c.chilled=Math.max(0,(c.chilled||0)-dt);
@@ -6451,7 +6455,7 @@ function previewTrajectory(c,angle,power,id){
  // Mirror launch position, gravity, wind and homing at the simulation's fixed
  // timestep, stopping at the first collision without changing the live match.
  const a=rad(angle),dx=c.dir*Math.cos(a),dy=-Math.sin(a),v=170+power*6.8;
- let x=c.x+dx*24,y=c.y-18+dy*(dy>0?13:20),vx=dx*v,vy=dy*v;
+ const s=pugScale(c);let x=c.x+dx*24*s,y=c.y-18*s+dy*(dy>0?13:20)*s,vx=dx*v,vy=dy*v;
  const points=[],windIds=['rocket','super','grenade','banana','miniBanana','cluster','mini','salvo','ice','sticky','drill','acid','holy'];
  for(let frame=1;frame<=42;frame++){
   const age=frame*STEP;
@@ -6465,18 +6469,18 @@ function previewTrajectory(c,angle,power,id){
   const n=Math.max(1,Math.ceil(Math.hypot(vx,vy)*STEP/3.5));
   for(let i=0;i<n;i++){
    x+=vx*STEP/n;y+=vy*STEP/n;
-   if(x<-120||x>W+120||y>WATER+25||terrain.solid(x,y)||app.chars.some(e=>e.hp>0&&(e.id!==c.id||age>.45)&&Math.abs(e.x-x)<13&&y>e.y-28&&y<e.y+2))return points;
+   if(x<-120||x>W+120||y>WATER+25||terrain.solid(x,y)||app.chars.some(e=>e.hp>0&&(e.id!==c.id||age>.45)&&pugHit(e,x,y)))return points;
   }
   if(frame%3===0)points.push({x,y});
  }
  return points;
 }
-function addProjectile(id,c,angle,power){const w=weaponOf(id),a=rad(angle),dx=c.dir*Math.cos(a),dy=-Math.sin(a),v=170+power*6.8;let x=c.x+dx*24,y=c.y-18+dy*(dy>0?13:20);const p={id,x,y,vx:dx*v,vy:dy*v,age:0,team:c.team,owner:c.id,fuse:w.fuse||0,radius:w.radius,damage:w.damage,target:app.target?{...app.target}:null,trail:[],bounces:0};app.projectiles.push(p);return p;}
+function addProjectile(id,c,angle,power){const w=weaponOf(id),a=rad(angle),dx=c.dir*Math.cos(a),dy=-Math.sin(a),v=170+power*6.8;const s=pugScale(c);let x=c.x+dx*24*s,y=c.y-18*s+dy*(dy>0?13:20)*s;const p={id,x,y,vx:dx*v,vy:dy*v,age:0,team:c.team,owner:c.id,fuse:w.fuse||0,radius:w.radius,damage:w.damage,target:app.target?{...app.target}:null,trail:[],bounces:0};app.projectiles.push(p);return p;}
 function shoot(fromLan=false){
  if(!canAct())return false;
  const c=app.active,w=weaponOf(),team=app.teams[app.team];
- if(team.ammo[w.id]<=0){toast('Sin munición. Elige otra arma.');return false;}
- if(w.id==='medkit'&&c.hp>=100){toast('Este pug ya está lleno de energía.');return false;}
+ if(!CS5.arsenal.canFire(team,w.id)){toast('Sin munición. Elige otra arma.');return false;}
+ if(w.id==='medkit'&&c.hp>=(c.maxHp||100)){toast('Este pug ya está lleno de energía.');return false;}
  if(w.id==='shield'&&c.shield>=45){toast('El escudo ya está completo.');return false;}
  if(w.target&&!app.target){toast('Primero toca el mapa para marcar tu objetivo.');return false;}
  if(w.id==='teleport'){
@@ -6493,7 +6497,7 @@ function shoot(fromLan=false){
   lanNet.send({type:'shoot',x:c.x,y:c.y,dir:c.dir,angle:app.angle,power:app.power,weapon:app.weapon,target:app.target});
  }
  app.charging=false;
- if(!(w.id==='shotgun'&&app.shotCount===1))team.ammo[w.id]-=1;
+ if(!(w.id==='shotgun'&&app.shotCount===1))CS5.arsenal.consume(team,w.id);
  c.recoilTimer=.28;app.lastPower=app.power;app.totalShots++;app.actionAge=0;app.stable=0;
  app.shotSecond=w.id==='shotgun'&&app.shotCount===0;app.shotCount++;
  setPhase('action');$('inventory').hidden=true;audio.sound('shot',1,{x:c.x,y:c.y});
@@ -6509,7 +6513,7 @@ function shoot(fromLan=false){
    for(let t=22;t<950;t+=3){
     const x=c.x+dx*t,y=c.y-18+dy*t;
     if(x<0||x>=W||y<0||y>WATER){end={x,y};break;}
-    const victim=app.chars.find(o=>o!==c&&o.hp>0&&Math.abs(o.x-x)<13&&y>o.y-29&&y<o.y+2);
+    const victim=app.chars.find(o=>o!==c&&o.hp>0&&pugHit(o,x,y,29));
     if(victim){damage(victim,5,x,y);victim.vx+=dx*26;victim.vy-=12;victim.grounded=false;end={x,y};break;}
     if(terrain.solid(x,y)){terrain.destroy(x,y,9);end={x,y};break;}
    }
@@ -6526,10 +6530,10 @@ function shoot(fromLan=false){
   const a=rad(app.angle),bx=c.dir*Math.cos(a),by=-Math.sin(a),aDir=bx<-0.01?-1:1;
   let hit=0;
   for(const e of app.chars){
-   const dx=e.x-c.x,dy=(e.y-15)-(c.y-18),dist=Math.hypot(dx,dy);
-   if(e!==c&&e.hp>0&&dist<76&&(dx*bx+dy*by)>-12){
+   const dx=e.x-c.x,dy=pugCY(e)-(c.y-18*pugScale(c)),dist=Math.hypot(dx,dy);
+   if(e!==c&&e.hp>0&&dist<76+20*(pugScale(e)-1)&&(dx*bx+dy*by)>-12){
     damage(e,30,e.x,e.y);
-    if(e.hp>0){e.vx=bx*560;e.vy=by*460-140;e.grounded=false;}
+    if(e.hp>0){const kb=1/(e.mass||1);e.vx=bx*560*kb;e.vy=(by*460-140)*kb;e.grounded=false;}
     app.floats.push({x:e.x,y:e.y-56,life:1.6,text:'⚾ ¡HOME RUN!',color:'#ffd479'});
     hit++;
    }
@@ -6640,7 +6644,7 @@ function detonate(p){
   audio.sound('splash');
   app.fx.push({kind:'cryoNova',x:p.x,y:p.y,size:98,life:.85,max:.85,color:'#8cf5ff'});
   for(const c of app.chars){
-   const d=Math.hypot(c.x-p.x,c.y-15-p.y);
+   const d=Math.hypot(c.x-p.x,pugCY(c)-p.y);
    if(c.hp>0&&d<98){
     c.chilled=8.5;
     damage(c,Math.round(26*(1-d/110)),p.x,p.y);
@@ -6681,7 +6685,7 @@ function detonate(p){
    app.projectiles.push({id:'acidGlob',x:p.x,y:p.y-6,vx:Math.cos(a)*spd,vy:Math.sin(a)*spd-40,age:0,team:p.team,owner:p.owner,fuse:1.4,radius:18,damage:12,trail:[]});
   }
   for(const c of app.chars){
-   const d=Math.hypot(c.x-p.x,c.y-15-p.y);
+   const d=Math.hypot(c.x-p.x,pugCY(c)-p.y);
    if(c.hp>0&&d<85){
     damage(c,Math.round(32*(1-d/95)),p.x,p.y);
     c.poisoned=5.2;
@@ -6695,7 +6699,7 @@ function detonate(p){
   audio.sound('thunder',.9);
   app.fx.push({kind:'teslaWeb',x:p.x,y:p.y,size:175,life:.55,max:.55});
   for(const c of app.chars){
-   const d=Math.hypot(c.x-p.x,c.y-15-p.y);
+   const d=Math.hypot(c.x-p.x,pugCY(c)-p.y);
    if(c.hp>0&&d<185){
     damage(c,Math.round(38*(1-d/200)),p.x,p.y);
     c.shocked=1.3;c.vy=-185;c.grounded=false;
@@ -6712,7 +6716,7 @@ function detonate(p){
   const ownerChar=app.chars.find(o=>o.id===p.owner&&o.hp>0);
   let healed=0;
   for(const c of app.chars){
-   const d=Math.hypot(c.x-p.x,c.y-15-p.y);
+   const d=Math.hypot(c.x-p.x,pugCY(c)-p.y);
    if(c.hp>0&&c.id!==p.owner&&d<56){
     damage(c,18,p.x,p.y);
     healed+=16;
@@ -6723,7 +6727,7 @@ function detonate(p){
   }
   terrain.destroy(p.x,p.y,22);
   if(ownerChar&&healed>0){
-   ownerChar.hp=Math.min(100,ownerChar.hp+healed);
+   ownerChar.hp=Math.min(ownerChar.maxHp||100,ownerChar.hp+healed);
    app.floats.push({x:ownerChar.x,y:ownerChar.y-52,life:1.5,text:'🦇 +'+healed+' HP',color:'#ff5c8a'});
   }
   return;
@@ -6733,8 +6737,8 @@ function detonate(p){
   audio.sound('victory');
   app.fx.push({kind:'holyCross',x:p.x,y:p.y,size:150,life:.85,max:.85});
   for(const c of app.chars){
-   if(c.hp>0&&c.team===p.team&&Math.hypot(c.x-p.x,c.y-15-p.y)<145){
-    c.hp=Math.min(100,c.hp+15);
+   if(c.hp>0&&c.team===p.team&&Math.hypot(c.x-p.x,pugCY(c)-p.y)<145){
+    c.hp=Math.min(c.maxHp||100,c.hp+15);
     app.floats.push({x:c.x,y:c.y-52,life:1.5,text:'✝ BENDICIÓN +15',color:'#ffe885'});
    }
   }
@@ -6807,7 +6811,7 @@ function stepProjectile(p,dt){
  // 3. Tesla Orb In-Flight Arc Zapping!
  if(p.id==='tesla'&&Math.floor(p.age*20)!==Math.floor((p.age-dt)*20)){
   for(const c of app.chars){
-   if(c.hp>0&&c.id!==p.owner&&Math.hypot(c.x-p.x,c.y-15-p.y)<82){
+   if(c.hp>0&&c.id!==p.owner&&Math.hypot(c.x-p.x,pugCY(c)-p.y)<82){
     damage(c,6,p.x,p.y);
     app.fx.push({x:p.x,y:p.y,end:{x:c.x,y:c.y-15},life:.18,max:.18,kind:'teslaArc',color:'#5cebe2'});
    }
@@ -6819,7 +6823,7 @@ function stepProjectile(p,dt){
   const enemies=app.chars.filter(c=>c.hp>0&&c.team!==p.team);
   if(enemies.length&&p.age>.12){
    const near=enemies.reduce((a,b)=>dist(p,a)<dist(p,b)?a:b);
-   const desired=Math.atan2(near.y-15-p.y,near.x-p.x)+Math.sin(p.age*16+(p.batPhase||0))*.25;
+   const desired=Math.atan2(pugCY(near)-p.y,near.x-p.x)+Math.sin(p.age*16+(p.batPhase||0))*.25;
    const spd=Math.hypot(p.vx,p.vy),cur=Math.atan2(p.vy,p.vx);
    const diff=Math.atan2(Math.sin(desired-cur),Math.cos(desired-cur));
    const nextA=cur+clamp(diff,-2.4*dt,2.4*dt);
@@ -6853,7 +6857,7 @@ function stepProjectile(p,dt){
    }
    break;
   }
-  const victim=app.chars.find(c=>c.hp>0&&(c.id!==p.owner||p.age>.45)&&Math.abs(c.x-nx)<13&&ny>c.y-28&&ny<c.y+2);
+  const victim=app.chars.find(c=>c.hp>0&&(c.id!==p.owner||p.age>.45)&&pugHit(c,nx,ny));
   if(victim){
    if(p.id==='saw'){
     // Saw slices right through the Pug and keeps rolling!
@@ -6872,17 +6876,51 @@ function stepProjectile(p,dt){
  if(p.trail){p.trail.push({x:p.x,y:p.y,age:p.age});while(p.trail.length>1&&(p.age-p.trail[0].age>.24||p.trail.length>48))p.trail.shift();}
 }
 function stepMine(m,dt){if(m.dead)return;m.age+=dt;m.vy=clamp(m.vy+480*dt,-300,400);let ny=m.y+m.vy*dt,nx=clamp(m.x+m.vx*dt,4,W-4);if(terrain.solid(nx,ny)){m.vx*=.7;m.vy=0;}else{m.x=nx;m.y=ny;}if(m.y>WATER+6){m.dead=true;return;}if(m.age>1&&app.chars.some(c=>c.hp>0&&Math.hypot(c.x-m.x,c.y-13-m.y)<29)){m.dead=true;app.projectiles.push({id:'chain',x:m.x,y:m.y,vx:0,vy:0,age:0,team:m.team,fuse:.40,radius:61,damage:54});audio.sound('bounce');}}
-function simulateRocket(c,angle,power,id='rocket'){let a=rad(angle),dx=c.dir*Math.cos(a),dy=-Math.sin(a),v=170+power*6.8,x=c.x+dx*25,y=c.y-18+dy*20,vx=dx*v,vy=dy*v,dt=1/30;let age=0;for(let i=0;i<330;i++){age+=dt;vy+=480*dt;vx+=app.wind*dt;const n=Math.max(1,Math.ceil(Math.hypot(vx,vy)*dt/5));for(let j=0;j<n;j++){x+=vx*dt/n;y+=vy*dt/n;if(x<0||x>W||y>WATER)return {x,y,hit:false};if(terrain.solid(x,y)||app.chars.some(e=>e.hp>0&&(e.id!==c.id||age>.5)&&Math.abs(e.x-x)<12&&y>e.y-28&&y<e.y+2))return{x,y,hit:true};}}return{x,y,hit:false};}
-function planAI(){const c=app.active,enemies=app.chars.filter(e=>e.hp>0&&e.team!==c.team);if(!enemies.length)return;const target=enemies.reduce((a,b)=>dist(c,a)<dist(c,b)?a:b),team=app.teams[c.team],level=app.difficulty;c.dir=target.x>=c.x?1:-1;
- let weapon='rocket';if(dist(c,target)<62)weapon='bat';else if(level!=='easy'&&app.turn>6&&team.ammo.super>0&&random()<.28)weapon='super';else if(team.ammo.airstrike>0&&level==='hard'&&random()<.25)weapon='airstrike';else if(team.ammo.homing>0&&random()<(level==='easy'?.05:.18))weapon='homing';else if(team.ammo.cluster>0&&dist(c,target)<180&&random()<.20)weapon='cluster';
- const increments=level==='hard'?4:level==='normal'?7:11,pstep=level==='hard'?5:9;let best={angle:45,power:65,score:-1e9};const r=weaponOf(weapon).radius||53;
- for(let angle=12;angle<=84;angle+=increments)for(let power=24;power<=100;power+=pstep){const p=simulateRocket(c,angle,power);let score=0;for(const e of app.chars){if(e.hp<=0)continue;const d=Math.hypot(e.x-p.x,e.y-15-p.y),f=p.hit?Math.max(0,1-d/(r+25)):0;score+=f*(e.team===c.team?-150:100);}score-=Math.hypot(target.x-p.x,target.y-15-p.y)*.045;if(!p.hit)score-=40;if(score>best.score)best={angle,power,score};}
- if(best.score<0&&team.ammo.airstrike>0&&level!=='easy')weapon='airstrike';if(best.score<0&&team.ammo.homing>0&&weapon==='rocket')weapon='homing';let error=level==='easy'?10:level==='normal'?4.5:1.2;const aimError=(random()-.5)*error*2,powerError=(random()-.5)*error*2;if(c.hp<60&&team.ammo.medkit>0)weapon='medkit';else if(c.hp<75&&!c.shield&&team.ammo.shield>0&&level!=='easy')weapon='shield';else if(weapon==='rocket'&&level!=='easy'){const pick=random();if(pick<.22&&team.ammo.salvo>0)weapon='salvo';else if(pick<.35&&dist(c,target)<240&&team.ammo.ice>0)weapon='ice';}app.aiPlan={target:{x:target.x+(random()-.5)*error*2,y:target.y-15},weapon,angle:clamp(best.angle+aimError,8,85),power:clamp(best.power+powerError,20,100),enemy:target.id};}
-function updateAI(dt){if(!app.active||app.active.hp<=0)return;app.aiAge+=dt;if(!app.aiPlan&&app.aiAge>.45)planAI();if(!app.aiPlan)return;const c=app.active,plan=app.aiPlan;if(app.phase==='aim'){
- if(app.aiAge>=1.0&&!plan.replanned){planAI();app.aiPlan.replanned=true;return;}
- if(app.aiAge>1.15){app.weapon=app.shotCount===1?'shotgun':plan.weapon;app.target=plan.target;app.angle=lerp(app.angle,plan.angle,dt*5);app.power=plan.power;updateHUD();}
- if(app.aiAge>2.05){app.angle=plan.angle;shoot();app.aiFired=true;}}
- 
+function simulateRocket(c,angle,power,id='rocket'){let a=rad(angle),dx=c.dir*Math.cos(a),dy=-Math.sin(a),v=170+power*6.8,x=c.x+dx*25*pugScale(c),y=c.y-18*pugScale(c)+dy*20,vx=dx*v,vy=dy*v,dt=1/30;let age=0;for(let i=0;i<330;i++){age+=dt;vy+=480*dt;vx+=app.wind*dt;const n=Math.max(1,Math.ceil(Math.hypot(vx,vy)*dt/5));for(let j=0;j<n;j++){x+=vx*dt/n;y+=vy*dt/n;if(x<0||x>W||y>WATER)return {x,y,hit:false};if(terrain.solid(x,y)||app.chars.some(e=>e.hp>0&&(e.id!==c.id||age>.5)&&pugHit(e,x,y)))return{x,y,hit:true};}}return{x,y,hit:false};}
+// 5.2: la IA elige solo entre las armas que su equipo tiene de verdad (mismo inventario, misma
+// comprobación y mismo consumo que un humano), usa lo que obtiene de los huesitos y puede
+// desviarse a recoger uno cercano y seguro antes de atacar. No conoce el contenido de los huesitos.
+function aiLineOfSight(c,t){const x0=c.x,y0=c.y-18*pugScale(c),x1=t.x,y1=pugCY(t),n=Math.ceil(Math.hypot(x1-x0,y1-y0)/6);for(let i=2;i<n-1;i++){const k=i/n;if(terrain.solid(x0+(x1-x0)*k,y0+(y1-y0)*k))return false;}return true;}
+function aiDirectAngle(c,t){const dx=Math.abs(t.x-c.x),dy=(c.y-18*pugScale(c))-pugCY(t);return wrapAngle360(Math.atan2(dy,Math.max(1,dx))*180/Math.PI);}
+function aiChooseWeapon(c,target,team,level,best){
+ const has=id=>CS5.arsenal.canFire(team,id),d=dist(c,target),los=aiLineOfSight(c,target),hpMax=c.maxHp||100,easy=level==='easy',special=easy?.45:level==='hard'?1.25:1,list=[];
+ const add=(id,weight)=>{if(weight>0&&has(id))list.push([id,weight]);};
+ if(c.hp<hpMax*.6)add('medkit',7);
+ if(!easy&&c.hp<hpMax*.75&&!(c.shield>0))add('shield',3);
+ if(d<62+20*(pugScale(target)-1))add('bat',9);
+ if(d<70){add('dynamite',3*special);add('mine',2*special);}
+ if(los&&d<140)add('flame',2.6*special);
+ if(los&&d<300)add('shotgun',1.6);
+ if(los&&d>90&&d<1100)add('sniper',2.4*special);
+ add('rocket',best.score>0?2.2:1);
+ if(d<340)add('grenade',best.score>0?.9:.5);
+ if(d>150){for(const id of ['super','holy','blackhole'])add(id,2.6*special);for(const id of ['airstrike','meteor','orbital'])add(id,2.2*special);add('banana',1.6*special);}
+ for(const id of ['cluster','salvo','tesla','acid','vampire','sticky','saw','drill'])add(id,(best.score>0?1.1:.6)*special);
+ if(d<260)add('ice',1.2*special);
+ add('homing',(best.score<0?2.2:.8)*special);
+ if(!los&&best.score<0&&d>260)add('teleport',1.4*special);
+ if(c.boss&&CS5.bosses)CS5.bosses.weighWeapons(c,list,{d,los,best,has});
+ let total=0;for(const e of list)total+=e[1];
+ let roll=random()*total;for(const [id,weight] of list){roll-=weight;if(roll<=0)return id;}
+ return 'rocket';
+}
+function planAI(noDetour=false){const c=app.active,enemies=app.chars.filter(e=>e.hp>0&&e.team!==c.team);if(!enemies.length)return;const target=enemies.reduce((a,b)=>dist(c,a)<dist(c,b)?a:b),team=app.teams[c.team],level=app.difficulty;c.dir=target.x>=c.x?1:-1;
+ const increments=level==='hard'?4:level==='normal'?7:11,pstep=level==='hard'?5:9;let best={angle:45,power:65,score:-1e9};const r=53;
+ for(let angle=12;angle<=84;angle+=increments)for(let power=24;power<=100;power+=pstep){const p=simulateRocket(c,angle,power);let score=0;for(const e of app.chars){if(e.hp<=0)continue;const d=Math.hypot(e.x-p.x,pugCY(e)-p.y),f=p.hit?Math.max(0,1-d/(r+25*pugScale(e))):0;score+=f*(e.team===c.team?-150:100);}score-=Math.hypot(target.x-p.x,pugCY(target)-p.y)*.045;if(!p.hit)score-=40;if(score>best.score)best={angle,power,score};}
+ let weapon=aiChooseWeapon(c,target,team,level,best);
+ const error=(level==='easy'?10:level==='normal'?4.5:1.2)*(c.boss?.aimError??1),aimError=(random()-.5)*error*2,powerError=(random()-.5)*error*2;
+ let angle=clamp(best.angle+aimError,8,85),tgt={x:target.x+(random()-.5)*error*2,y:pugCY(target)};
+ if(['sniper','shotgun','flame'].includes(weapon))angle=wrapAngle360(aiDirectAngle(c,target)+aimError*.3);
+ if(weapon==='teleport'){const s=terrain.spot(clamp(target.x-c.dir*220,30,W-30),target.y);if(s)tgt=s;else weapon='rocket';}
+ if(!CS5.arsenal.canFire(team,weapon))weapon='rocket';
+ app.aiPlan={target:tgt,weapon,angle,power:clamp(best.power+powerError,20,100),enemy:target.id};
+ if(!noDetour){const detour=CS5.supply?.botDetour(c);if(detour){app.aiPlan.walkTo=detour.x;app.aiPlan.walkTime=detour.time;app.aiPlan.supplyId=detour.id;}}
+ if(c.boss&&CS5.bosses)CS5.bosses.adjustPlan(c,app.aiPlan,target,noDetour);}
+function updateAI(dt){if(!app.active||app.active.hp<=0)return;app.aiAge+=dt;if(!app.aiPlan&&app.aiAge>.45)planAI();if(!app.aiPlan)return;const c=app.active,plan=app.aiPlan,delay=plan.walkTime||0;if(app.phase==='aim'){
+ if(c.boss&&CS5.bosses?.aiTurn(c,dt))return;
+ if(app.aiAge>=1.0+delay&&!plan.replanned){planAI(true);app.aiPlan.replanned=true;app.aiPlan.walkTime=delay;return;}
+ if(app.aiAge>1.15+delay){app.weapon=app.shotCount===1?'shotgun':plan.weapon;if(!CS5.arsenal.canFire(app.teams[app.team],app.weapon))app.weapon=plan.weapon='rocket';app.target=plan.target;const da=((plan.angle-app.angle+540)%360)-180;app.angle=wrapAngle360(app.angle+da*Math.min(1,dt*5));app.power=plan.power;updateHUD();}
+ if(app.aiAge>2.05+delay){app.angle=plan.angle;if(!shoot()){app.weapon=plan.weapon='rocket';shoot();}app.aiFired=true;}}
 }
 function step(dt){app.viewTime+=dt;
  if(isLanCoop()&&app.phase!=='menu'){
@@ -6896,7 +6934,7 @@ function step(dt){app.viewTime+=dt;
  if(app.phase==='menu'||app.phase==='over')return;
  if(app.phase==='interlude'){app.interlude-=dt;if(app.interlude<=0){setPhase('aim');$('turnBanner').classList.remove('show');updateHUD();}}
  let control=0,jump=false;if(human()&&canMove()){control=(input.keys.has('d')||input.keys.has('arrowright')||[...input.pointers.values()].includes('right')?1:0)-(input.keys.has('a')||input.keys.has('arrowleft')||[...input.pointers.values()].includes('left')?1:0);jump=input.keys.has('jump');input.keys.delete('jump');}
- if(cpuTurn()&&canMove()&&app.active){if(app.phase==='aim'&&app.aiAge>.55&&app.aiAge<.98){const next=terrain.surface(app.active.x+app.active.dir*22,app.active.y-12);if(next&&Math.abs(next.y-app.active.y)<12)control=app.active.dir;}else if(app.phase==='action'&&app.actionAge<1.25&&['dynamite','mine'].includes(app.weapon))control=-app.active.dir;}
+ if(cpuTurn()&&canMove()&&app.active){const plan=app.aiPlan,bot=app.active;if(app.phase==='aim'&&plan?.walkTo!=null&&app.aiAge>.5&&app.aiAge<.5+(plan.walkTime||0)&&Math.abs(plan.walkTo-bot.x)>4){control=plan.walkTo>bot.x?1:-1;if(bot.grounded&&Math.abs(bot.vx)<1&&app.aiAge>.62)jump=true;}else if(app.phase==='aim'&&plan?.walkTo==null&&app.aiAge>.55&&app.aiAge<.98){const next=terrain.surface(app.active.x+app.active.dir*22,app.active.y-12);if(next&&Math.abs(next.y-app.active.y)<12)control=app.active.dir;}else if(app.phase==='action'&&app.actionAge<1.25&&['dynamite','mine'].includes(app.weapon))control=-app.active.dir;}
  if(isLanCoop()&&app.active?.controller==='client'){
   const remote=lanNet.remoteControl;
   if(canMove()&&remote&&remote.turn===app.turn&&Date.now()-remote.at<400){control=remote.move;jump=remote.jump;remote.jump=false;}
@@ -7623,7 +7661,7 @@ function updateInventory(){
   return `<button class="weapon-card ${w.id===app.weapon?'selected':''}" data-weapon="${w.id}" ${disabled?'disabled':''} title="${w.desc}"><span class="weapon-emoji">${getWeaponIconSVG(w.id)}</span><b>${w.name}</b><small>${w.desc}</small><div class="weapon-stats" aria-hidden="true"><div class="w-stat dmg" title="Daño"><span style="width:${dmgPct}%"></span></div><div class="w-stat rad" title="Radio"><span style="width:${radPct}%"></span></div></div><i>${n===Infinity?'∞':Math.max(0,n)}</i></button>`;
  }).join('');
 }
-function selectWeapon(id){if(!canAct()||!human())return;if(app.shotCount>0&&id!=='shotgun'){toast('Completa el segundo disparo de escopeta.');return;}if(app.teams[app.team].ammo[id]<=0)return;app.weapon=id;app.target=null;app.charging=false;updateInventory();updateHUD();$('inventory').hidden=true;audio.sound('menu');if(weaponOf().target)toast('Marca tu objetivo en el escenario o en el minimapa.',3.5);}
+function selectWeapon(id){if(!canAct()||!human())return;if(app.shotCount>0&&id!=='shotgun'){toast('Completa el segundo disparo de escopeta.');return;}if(!CS5.arsenal.canFire(app.teams[app.team],id))return;app.weapon=id;app.target=null;app.charging=false;updateInventory();updateHUD();$('inventory').hidden=true;audio.sound('menu');if(weaponOf().target)toast('Marca tu objetivo en el escenario o en el minimapa.',3.5);}
 function selectMap(index,previewStageMusic=false){
  app.map=index;terrain=studioTerrain(index,731);graphics.rayCache=null;seed=731;renderer.version=-1;makeDecorations();
  for(const c of menuChars)applyStudioProfile(c,0);
@@ -7821,7 +7859,7 @@ const lanNet={
    const aim=keepAim?{angle:app.angle,power:app.power,weapon:app.weapon,target:app.target,charging:app.charging,chargeDir:app.chargeDir}:null;
    const wasOver=app.phase==='over';
    Object.assign(app,msg.state);app.chars=msg.chars;app.teams=msg.teams;
-   for(const t of app.teams)for(const w of weapons)if(t.ammo[w.id]===null)t.ammo[w.id]=Infinity;
+   for(const t of app.teams)CS5.arsenal.normalize(t,weapons);
    app.active=app.chars.find(c=>c.id===msg.active)||null;
    app.projectiles=msg.projectiles;app.mines=msg.mines;app.fx=msg.fx;app.floats=msg.floats;app.decals=msg.decals;
    app.winner=app.teams.find(t=>t.id===msg.winner)||null;
@@ -8482,7 +8520,7 @@ setupNextGenUI();
 
 function extraShot(w,c){
  if(w.id==='shield'||w.id==='medkit'){
-  if(w.id==='shield')c.shield=45;else c.hp=Math.min(100,c.hp+35);
+  if(w.id==='shield')c.shield=45;else c.hp=Math.min(c.maxHp||100,c.hp+35);
   app.floats.push({x:c.x,y:c.y-45,life:1.5,text:w.id==='shield'?'🛡 ESCUDO +45':'🦴 VIDA +35',color:'#9bffd3'});
   for(let i=0;i<25;i++)spawnFX(c.x,c.y-15,(effectsRandom()-.5)*65,-effectsRandom()*100,'#8cffe0',3,.8);
   return true;
@@ -8522,7 +8560,7 @@ function extraShot(w,c){
    if(rockPierced>42)break;
   }
   for(const o of app.chars){
-   if(o!==c&&o.hp>0&&!hitVictims.has(o)&&Math.abs(o.x-x)<13&&y>o.y-29&&y<o.y+2){
+   if(o!==c&&o.hp>0&&!hitVictims.has(o)&&pugHit(o,x,y,29)){
     hitVictims.add(o);
     damage(o,64,x,y);
     o.vx+=dx*210;o.vy-=95;o.grounded=false;
@@ -8779,7 +8817,7 @@ function drawCharacterLabels(c){
   const barX=x+2,barY=y+height-1.5,barW=width-4,barH=2.8;
   c.fillStyle='#060d18';c.fillRect(barX,barY,barW,barH);
   c.fillStyle=o.hp<30?'#ff4d4d':tCol;
-  c.fillRect(barX,barY,barW*clamp(o.hp/100,0,1),barH);
+  c.fillRect(barX,barY,barW*clamp(o.hp/(o.maxHp||100),0,1),barH);
  }
 }
 

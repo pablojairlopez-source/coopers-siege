@@ -7,9 +7,9 @@
 - **Fecha:** 17-10-2026
 - **Agente:** Claude Code (Opus)
 - **Rama:** `feature/coopers-siege-5-2-torneo` (desde `origin/main` `16c8bf4`, 5.1 publicada), publicada en `origin`.
-- **Último commit confirmado:** «Fase 5.2-A» (ver `git log -1`).
+- **Último commit confirmado:** «Fase 5.2-B» (ver `git log -1`).
 - **Cambios sin commit:** ninguno.
-- **Subfase actual:** 5.2-A completada (preparación).
+- **Subfase actual:** 5.2-B completada (arsenal). `npm test` 9/9 (nueva suite `tests/weapons.cjs`).
 
 ## Cambios de esta subfase
 
@@ -30,7 +30,7 @@ Subfases 5.2-B a 5.2-H y entrega (ver `docs/CAMPANA-5.2.md`).
 
 ## Próxima tarea exacta
 
-5.2-B: crear `src/gameplay/inventory-balance.js` (`CS5.arsenal`), cargarlo antes del script principal, usarlo en `newMatch` (arsenal por modo), `shoot()` (comprobación y consumo) y `planAI` (elección solo entre armas con munición); adaptar `tests/controls.cjs` y añadir la línea de preparación en `tests/lan-coop.cjs` sin tocar aserciones; nueva prueba `tests/weapons.cjs`.
+5.2-C: integrar `src/gameplay/supply-config.js` y `src/gameplay/supply-drops.js` (`CS5.supply`) en `index.html`: `reset` en `newMatch`, `onTurn` al final de `nextTurn`, `step` en `step()`, `onExplosion` en `explode()`, `draw` en `overlay()`, `supplies` en la instantánea cooperativa, mensaje `supply_pick` en versus; sonidos nuevos en `sfx.js`; selector «Huesitos» en el menú; prueba `tests/supplies.cjs`.
 
 ## Comandos para retomar
 

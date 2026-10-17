@@ -145,7 +145,8 @@ const LAYOUT=()=>{
     assert.ok(j.vy<0&&j.jumps===1,'ESPACIO salta fuera del ataque');
     await ev(()=>run(90));
     // Elegir un arma con carga y munición limitada para comprobar que cancelar no gasta.
-    const wid=await ev(()=>{const t=app.teams[app.team],w=weapons.find(w=>w.charge&&!w.target&&t.ammo[w.id]>0&&t.ammo[w.id]<Infinity);PocketSiege.selectWeapon(w.id);return w.id;});
+    // 5.2: el arsenal estándar no trae armas cargables limitadas: se concede una granada polar (como un huesito).
+    const wid=await ev(()=>{const t=app.teams[app.team];CS5.arsenal.grant(t,'ice',2);const w=weapons.find(w=>w.charge&&!w.target&&t.ammo[w.id]>0&&t.ammo[w.id]<Infinity);PocketSiege.selectWeapon(w.id);return w.id;});
     const ammo0=await ev(()=>app.teams[app.team].ammo[app.weapon]);
     await k.press('f');assert.equal(await ev(()=>CS5.attack.state),'aiming','F entra en apuntado');
     await ev(()=>{app.angle=20;});await k.down('w');await ev(()=>run(30));await k.up('w');

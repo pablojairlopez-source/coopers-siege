@@ -9,6 +9,7 @@ const suites=[
  ['Daño, gore y destrucción','effects.cjs'],
  ['HUD responsivo','ui.cjs'],
  ['Controles 5.1 (táctil y teclado)','controls.cjs'],
+ ['Arsenal 5.2 e igualdad humano/bot','weapons.cjs'],
  ['Banda sonora y efectos','music.cjs',['10']],
  ['Mezcla de audio 5.1','audio-mix.cjs']
 ];

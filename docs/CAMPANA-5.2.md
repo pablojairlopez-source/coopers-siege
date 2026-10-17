@@ -11,7 +11,7 @@ Documento de diseño y seguimiento de la versión 5.2. Rama: `feature/coopers-si
 | Fase | Contenido | Estado |
 |---|---|---|
 | 5.2-A | Rama, línea base, este documento, continuidad | ✅ |
-| 5.2-B | Arsenal: bazuca y granada común infinitas; arsenal inicial estándar; igualdad humano/bot | pendiente |
+| 5.2-B | Arsenal: bazuca y granada común infinitas; arsenal inicial estándar; igualdad humano/bot | ✅ |
 | 5.2-C | Huesitos: suministros que caen del cielo, recompensas por categoría, IA y LAN | pendiente |
 | 5.2-D | Campaña: 17 capítulos × 2 batallas, guardado, derrota/reintento | pendiente |
 | 5.2-E | Jefes gigantes: escala 2×, 250–400 HP, habilidades con enfriamiento, IA temática | pendiente |
@@ -76,3 +76,4 @@ Documento de diseño y seguimiento de la versión 5.2. Rama: `feature/coopers-si
 ## Registro
 
 - 17-10-2026 · Claude Code (Opus) · 5.2-A: rama creada, línea base 8/8, documento creado.
+- 17-10-2026 · Claude Code (Opus) · 5.2-B: `CS5.arsenal`; IA que elige solo entre armas con munición (`aiChooseWeapon`), cajas de impacto escalables (`pugHit`, `pugCY`, `pugScale`) y resistencia al empuje (`mass`) para los jefes; `tests/weapons.cjs`. `npm test` 9/9.
