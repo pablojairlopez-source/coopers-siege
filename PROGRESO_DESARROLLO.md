@@ -14,13 +14,13 @@ Rama: `feature/coopers-siege-5-nextgen` · PR en borrador: #1 · Base: `origin/m
 | F · Optimización móvil y UI | ⏳ | — | Ver abajo |
 | G · Pruebas e integración | ⏳ | — | Ver abajo |
 
-## Fase E — tareas
-- [ ] Motor de composición propio (`src/audio/`): forma larga por secciones, compases y grooves propios, instrumentos sintetizados por mapa, reverb.
-- [ ] 16 composiciones distintas (una por mapa) + tema de menú original.
-- [ ] Eliminar el MP3 embebido derivado de *Stickerbush Symphony* (≈ 640 KB en `index.html`).
-- [ ] 8 estados adaptativos: menú, inicio, exploración, combate, peligro, últimos pugs, victoria, derrota.
-- [ ] Efectos de sonido por familia de armas, explosiones según distancia, voces de pugs, ambientes por mapa.
-- [ ] Conservar `scheduleAdventureMusic`, `#volMusic` y la compensación menú/escenario que comprueba `npm test`.
+## Fase E — hecho (`b2c6768`, `eb89302`)
+- [x] `src/audio/instruments.js`, `composer.js`, `songs.js`, `sfx.js`.
+- [x] 16 piezas por mapa + «Himno de Cooper»; MP3 derivado de *Stickerbush Symphony* y sus textos eliminados (index.html 1,25 MB → 580 KB).
+- [x] 8 estados adaptativos; la batalla empieza por la introducción de la pieza.
+- [x] Efectos por familia de armas (19), explosiones por material (16) y distancia, voces de pugs, ambientes por mapa.
+- [x] Se conservan `scheduleAdventureMusic`, `#volMusic` y la compensación menú/escenario (`npm test` pasa).
+- [x] `tests/music.cjs` (render, distinción, repetición ≥ 2,5 min, 43 efectos) y `tests/export-music.cjs` (WAV).
 
 ## Fase F — tareas
 - [ ] Investigar el pico aislado de ~158 ms en Android emulado (explosiones en tropic).
