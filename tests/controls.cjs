@@ -105,6 +105,27 @@ const LAYOUT=()=>{
     assert.equal(t.multi.ghostShot,0,'un tercer dedo no dispara');
     assert.equal(t.final.shots,1,'soltar ATACAR dispara una vez');assert.equal(t.final.phase,'action');
     assert.equal(t.final.shotsAfterRepeat,1,'un pointerup repetido no vuelve a disparar');
+    // Multitáctil real por CDP (auditoría 5.1): un dedo en un botón y otro en el escenario
+    // no es un pellizco; no debe hacer zoom ni interrumpir la carga.
+    {
+     await page.evaluate(PREP);const cdp=await ctx.newCDPSession(page);
+     const at=async s=>{const b=await page.locator(s).boundingBox();return {x:b.x+b.width/2,y:b.y+b.height/2};};
+     const touch=(type,pts)=>cdp.send('Input.dispatchTouchEvent',{type,touchPoints:pts.map(p=>({x:p.x,y:p.y,id:p.id,radiusX:6,radiusY:6,force:1}))});
+     const mr=await at('#touchMoveRight'),sc={x:470,y:150};
+     const z0=await page.evaluate(()=>({zoom:app.userZoom||1,x:app.active.x}));
+     await touch('touchStart',[{...mr,id:1}]);await page.evaluate(()=>run(8));
+     await touch('touchStart',[{...mr,id:1},{...sc,id:2}]);await touch('touchMove',[{...mr,id:1},{x:sc.x+60,y:sc.y-90,id:2}]);await page.evaluate(()=>run(8));
+     const walk=await page.evaluate(z0=>({zoomed:Math.abs((app.userZoom||1)-z0.zoom)>1e-3,walked:app.active.x>z0.x+1}),z0);
+     await touch('touchEnd',[]);await page.evaluate(()=>run(40));
+     assert.deepEqual(walk,{zoomed:false,walked:true},'caminar con un dedo y apuntar con otro no hace zoom');
+     await page.evaluate(()=>CS5.attack.enter());const fb=await at('#fireButton');const n0=await page.evaluate(()=>app.totalShots);
+     await touch('touchStart',[{...fb,id:3}]);await touch('touchStart',[{...fb,id:3},{x:300,y:200,id:4}]);await touch('touchMove',[{...fb,id:3},{x:360,y:140,id:4}]);
+     const mid=await page.evaluate(z=>({state:CS5.attack.state,zoomed:Math.abs((app.userZoom||1)-z)>1e-3}),z0.zoom);
+     await touch('touchEnd',[{...fb,id:3}]);await touch('touchEnd',[]);
+     assert.deepEqual(mid,{state:'charging',zoomed:false},'cargar con un pulgar y tocar el escenario con el otro');
+     assert.equal(await page.evaluate(n=>app.totalShots-n,n0),1,'soltar dispara una vez');
+     await cdp.detach();
+    }
     // Toques reales del navegador (no sintéticos) en un turno nuevo.
     await page.evaluate(PREP);
     const fb=await page.locator('#fireButton').boundingBox();

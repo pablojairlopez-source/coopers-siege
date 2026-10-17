@@ -152,6 +152,8 @@ const sfx={
   if(kind==='death'){const d=spatial(ac,voiceBus,opts.pos,.7);const len=voice(ac,d,t+.04,'death',rnd(.9,1.1));tone(ac,d,t+.04+len,140,60,.18,.25,'triangle');return true;}
   if(kind==='jump'){tone(ac,base,t,rnd(280,340),rnd(600,720),.12,.16,'triangle');return true;}
   if(kind==='bounce'){tone(ac,base,t,rnd(220,300),rnd(110,140),.1,.18,'sine');return true;}
+  // Jardín de Espinas: caer al abismo de nubes suena a soplo, no a agua.
+  if(kind==='splash'&&MATERIAL[app?.map??0]==='wood'){noise(ac,base,t,.7,.4,'lowpass',900,.6,180);noise(ac,base,t+.05,.5,.12,'bandpass',2400,.7);return true;}
   if(kind==='splash'){noise(ac,base,t,.5,.4,'bandpass',1800,.8,600);for(let k=0;k<4;k++)tone(ac,base,t+.05+k*.06,rnd(400,700),rnd(900,1400),.08,.07);return true;}
   if(kind==='turn'){CS5.instruments.I.bell(ac,base,79,t,.1,.1,{ratio:3,index:.8,len:.6});CS5.instruments.I.bell(ac,base,86,t+.09,.1,.1,{ratio:3,index:.8,len:.8});return true;}
   if(kind==='victory'){const I=CS5.instruments.I;[[0,67],[.14,72],[.28,76],[.42,79],[.62,84]].forEach(([k,m])=>I.brass(ac,base,m,t+k,k>.5?.8:.16,.5));I.timpani?.(ac,base,43,t,1,.4);return true;}

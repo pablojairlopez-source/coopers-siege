@@ -16,7 +16,7 @@ function wav(samples,sr){const b=Buffer.alloc(44+samples.length*2);b.write('RIFF
   const r=await page.evaluate(async({i,seconds,state})=>{
    const C=CS5.composer,song=i<CS5.songs.list.length?CS5.songs.list[i]:CS5.songs.menu,sr=22050,oc=new OfflineAudioContext(2,sr*seconds,sr);
    C.ac=null;C.init(oc,oc.destination);C.song=null;C.next=0;C.play(song,true);C.setState(i<CS5.songs.list.length?state:'MENU',true);
-   while(C.next<seconds)C.schedule(seconds);
+   {const st=window.setTimeout;window.setTimeout=(fn,ms,...a)=>ms>1500?0:st(fn,ms,...a);while(C.next<seconds)C.schedule(seconds);window.setTimeout=st;}
    const b=await oc.startRendering(),L=b.getChannelData(0),R=b.getChannelData(1),m=new Float32Array(L.length);let peak=0;for(let k=0;k<L.length;k++){m[k]=(L[k]+R[k])/2;peak=Math.max(peak,Math.abs(m[k]));}
    const norm=peak>.9?.9/peak:1;return {id:song.id,name:song.name,sr,data:Array.from(m,v=>v*norm)};
   },{i,seconds,state});

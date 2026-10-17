@@ -66,6 +66,19 @@ const {serve,launch}=require('./lib/harness.cjs');
   await client.waitForFunction(()=>PocketSiege.state.map===16);
   await host.waitForTimeout(300);
   assert.equal(await checksum(host),await checksum(client),'versus: terreno idéntico en el mapa 17');
+  // Versus: quien tiene el turno dispara con F → mantener ESPACIO → soltar; el otro ve un solo disparo.
+  const stepBoth=async n=>{for(const p of [host,client])await p.evaluate(n=>{for(let i=0;i<n;i++)PocketSiege.step(1/60);},n);};
+  let shooter=null,watcher=null;
+  for(let k=0;k<40&&!shooter;k++){await stepBoth(10);for(const [a,b] of [[host,client],[client,host]])if(!shooter&&await a.evaluate(()=>human()&&canAct()))[shooter,watcher]=[a,b];}
+  assert.ok(shooter,'versus: hay un jugador con turno');
+  await shooter.evaluate(()=>{PocketSiege.state.timer=999;});
+  const w0=await watcher.evaluate(()=>PocketSiege.state.totalShots);
+  await shooter.keyboard.press('f');await shooter.keyboard.down(' ');await shooter.evaluate(()=>{for(let i=0;i<30;i++)PocketSiege.step(1/60);});
+  assert.equal(await shooter.evaluate(()=>CS5.attack.state),'charging');
+  await shooter.keyboard.up(' ');await shooter.keyboard.down(' ');await shooter.keyboard.up(' ');
+  await watcher.waitForFunction(n=>PocketSiege.state.totalShots===n+1,w0);await stepBoth(30);
+  assert.equal(await watcher.evaluate(()=>PocketSiege.state.totalShots),w0+1,'versus: el rival ve exactamente un disparo');
+  assert.equal(await shooter.evaluate(()=>PocketSiege.state.totalShots),w0+1,'versus: un disparo local');
   console.log('PASS lan-51: coop 6v6 y versus en Jardín de Espinas, disparo único del invitado con ESPACIO, cancelar sin disparo, quejido y lamento replicados una vez.');
   assert.deepEqual(errors,[]);
  }finally{await browser.close();await srv.close();}

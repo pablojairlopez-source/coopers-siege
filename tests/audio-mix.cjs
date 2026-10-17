@@ -67,7 +67,11 @@ const db=v=>20*Math.log10(Math.max(1e-9,v));
    const P=PocketSiege,app=P.state,calls=[];P.mainMenu();P.newMatch(5);
    const orig=audio.sound.bind(audio);audio.sound=(k,s,w)=>{calls.push([k,+(s??1).toFixed(2)]);};
    const [a,b]=app.chars;b.shield=0;damage(b,8,b.x,b.y);damage(b,22,b.x,b.y);damage(b,45,b.x,b.y);a.shield=0;damage(a,200,a.x,a.y);
+   // El veneno resta vida sin pasar por damage(): también debe quejarse.
+   const before=calls.length,p=app.chars.find(c=>c.hp>0&&c!==b);p.poisoned=2.05;for(let i=0;i<70;i++)characterPhysics(p,1/60,0,false);
+   const poison=calls.slice(before).filter(c=>c[0]==='hurt').length;
    audio.sound=orig;
+   calls.push(['poison',poison]);
    const tiers=calls.filter(c=>c[0]==='hurt').map(c=>CS5.sfx.painKind(c[1]*20));
    // Volúmenes: con el deslizador de efectos a 0 los buses de efectos y voces van a 0.
    audio.init();const targets={};
@@ -78,7 +82,20 @@ const db=v=>20*Math.log10(Math.max(1e-9,v));
    return {calls,tiers,muted,restored:{...targets}};
   });
   console.log('  eventos:',JSON.stringify(game.calls));
-  assert.deepEqual(game.tiers,['light','medium','heavy'],'tres niveles de quejido según el daño');
+  assert.deepEqual(game.tiers.slice(0,3),['light','medium','heavy'],'tres niveles de quejido según el daño');
+  assert.equal(game.calls.find(c=>c[0]==='poison')[1],2,'cada tic de veneno suena');
+  // 4) Saturación en un caso extremo: todos los volúmenes al 100 %, clímax de Caldera Roja,
+  //    varias supernovas, dos nubes nucleares y cinco gritos a la vez.
+  const stress=await page.evaluate(async()=>{const sr=22050,len=6,oc=new OfflineAudioContext(2,sr*len,sr),A=Object.create(audio);A.context=oc;A.buildMix(oc);A.sfx=true;
+   A.musicGain.gain.value=.44;A.effectsGain.gain.value=.74;A.voiceGain.gain.value=.45;A.ambienceGain.gain.value=.36;
+   const C=CS5.composer,app=PocketSiege.state;app.map=2;C.ac=null;C.init(oc,A.musicGain);C.song=null;C.next=0;C.play(CS5.songs.forMap(2),false);C.setState('D',true);while(C.next<len)C.schedule(len);
+   oc.suspend(2).then(()=>{app.weapon='super';for(let k=0;k<8;k++)CS5.sfx.play(A,'explosion',2.4,{});CS5.sfx.play(A,'nuclear',2,{});CS5.sfx.play(A,'nuclear',2,{});for(let k=0;k<5;k++)CS5.sfx.play(A,'hurt',3,{immediate:true});CS5.sfx.play(A,'death',1,{});oc.resume();});
+   const b=await oc.startRendering();let peak=0;for(const ch of [0,1])for(const v of b.getChannelData(ch))peak=Math.max(peak,Math.abs(v));
+   // Mapa 17: caer al abismo de nubes no suena a agua.
+   app.map=16;const before=CS5.sfx.stats.splash||0;const oc2=new OfflineAudioContext(1,2205,22050);CS5.sfx.play({context:oc2,effectsGain:oc2.destination},'splash',1,{});
+   return {peak,cloud:(CS5.sfx.stats.splash||0)===before+1};});
+  console.log(`  estrés: pico ${stress.peak.toFixed(3)} (recorte suave de seguridad ≤ 0,96)`);
+  assert.ok(stress.peak<=.97,`sin saturación en el caso extremo (pico ${stress.peak})`);
   assert.ok(game.calls.some(c=>c[0]==='death'),'la muerte dispara su lamento');
   assert.ok(game.calls.findIndex(c=>c[0]==='death')<game.calls.findIndex(c=>c[0]==='nuclear'),'lamento antes de la nube nuclear');
   if(Object.keys(game.muted).length){

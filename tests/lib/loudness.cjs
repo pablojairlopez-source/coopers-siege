@@ -10,7 +10,7 @@ module.exports.measureSongs=async(page,{seconds=24,state='B',trim=true}={})=>pag
   const hs=oc.createBiquadFilter();hs.type='highshelf';hs.frequency.value=1500;hs.gain.value=4;
   hp.connect(hs);hs.connect(oc.destination);
   C.ac=null;C.init(oc,hp);C.song=null;C.next=0;C.play(song,false);C.setState(state,true);
-  while(C.next<seconds)C.schedule(seconds);
+  {const st=window.setTimeout;window.setTimeout=(fn,ms,...a)=>ms>1500?0:st(fn,ms,...a);while(C.next<seconds)C.schedule(seconds);window.setTimeout=st;}
   const buf=await oc.startRendering(),L=buf.getChannelData(0),R=buf.getChannelData(1);
   // Bloques de 400 ms con umbral relativo (como BS.1770) para no premiar silencios.
   const blk=Math.floor(sr*.4),ms=[];let peak=0;

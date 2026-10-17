@@ -13,6 +13,7 @@
 | 3 · Revisión musical | ✅ | Caldera Roja, Última Estrella, Catedral Gótica, Dulce Caos, Fundición Omega |
 | 4 · Mapa 17 Jardín de Espinas | ✅ | Trazado, corteza y espinas, escenografía, decorados 3D, ambiente y música propia |
 | 6 · Pruebas | ✅ | `npm test` 8/8: + controles, mezcla, LAN 5.1; smoke con 17 mapas; capturas y rendimiento |
+| 9 · Auditoría independiente | ✅ | 5 defectos comprobados y corregidos (`docs/AUDITORIA-5.1.md`); vista previa y música escuchable en `preview/` |
 | 8 · Entrega | ✅ | README, CHANGELOG, `docs/NOTAS-5.1.md`, capturas en `docs/screenshots/5.1/`, PR (sin merge) |
 
 ## Pendiente
@@ -26,3 +27,4 @@
 - Sesión 2: documentos de continuidad; fases E, F y G (5.0).
 - Sesión 3: ronda de pendientes; merge a main y publicación (autorizados).
 - Sesión 4 (Claude Code, 17-10-2026): 5.1 completa y PR abierta.
+- Sesión 5 (Claude Code, 17-10-2026): auditoría independiente, correcciones, vista previa y audio publicado en la rama.

@@ -5,9 +5,9 @@
 ## Último traspaso
 
 - **Fecha:** 17-10-2026
-- **Agente:** Claude Code (Opus)
+- **Agente:** Claude Code (Opus) — auditoría independiente previa a la publicación
 - **Rama:** `feature/coopers-siege-5-1-controls-audio-thorns` (desde `origin/main` `e5466e5`), publicada en `origin`.
-- **Último commit confirmado:** el de «Fase 5.1-6/8» (ver `git log -1`). Commits de la 5.1: 5.1-0 `d7b695f`, 5.1-1/2 `4999b2a`, 5.1-5 `d5e9238`, 5.1-3 `5a61408`, 5.1-4 `532f1f9`, 5.1-6/8 (entrega).
+- **Último commit confirmado:** el de «Auditoría 5.1» (ver `git log -1`); antes «Fase 5.1-6/8» `697c7d7`. Commits de la 5.1: 5.1-0 `d7b695f`, 5.1-1/2 `4999b2a`, 5.1-5 `d5e9238`, 5.1-3 `5a61408`, 5.1-4 `532f1f9`, 5.1-6/8 (entrega).
 - **Cambios sin commit:** ninguno.
 - **PR:** abierta hacia `main`. **No fusionar sin autorización del usuario.**
 
@@ -18,6 +18,10 @@ Subfases 0–6 y 8 completas. `npm test`: 8/8 suites en verde (LAN original, LAN
 ## Línea base (antes de 5.1)
 
 `npm test` en `e5466e5`: 5/5 suites en verde.
+
+## Auditoría 5.1
+
+Informe en `docs/AUDITORIA-5.1.md`. Corregido: pellizco falso con un dedo en un botón (`e.targetTouches`), quejido por veneno, recorte suave de seguridad tras el limitador (pico extremo 1,09 → 0,959), sonido de caída en las nubes del mapa 17 y etiqueta de versión 5.1. Vista previa sin publicar: `preview/index.html` servido por raw.githack desde la rama (ver README). Música en `preview/audio/*.webm` (`node tests/export-preview-audio.cjs 180`, luego `node tests/check-preview-audio.cjs 180`). Ojo: en renders sin conexión hay que omitir las limpiezas por `setTimeout` de los instrumentos (ver auditoría, defecto 6).
 
 ## Próxima tarea exacta
 

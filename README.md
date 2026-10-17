@@ -6,6 +6,16 @@ Juego de artillería por turnos protagonizado por pugs, para navegador en PC y c
 
 https://pablojairlopez-source.github.io/coopers-siege/
 
+## Vista previa de 5.1 (sin publicar)
+
+Mientras la 5.1 no se fusione en `main`, se puede probar desde la rama de desarrollo sin tocar la 5.0 publicada:
+
+- **Página de vista previa** (juego + música): https://raw.githack.com/pablojairlopez-source/coopers-siege/feature/coopers-siege-5-1-controls-audio-thorns/preview/index.html
+- Juego directo: https://raw.githack.com/pablojairlopez-source/coopers-siege/feature/coopers-siege-5-1-controls-audio-thorns/index.html
+- Música: https://raw.githack.com/pablojairlopez-source/coopers-siege/feature/coopers-siege-5-1-controls-audio-thorns/preview/musica.html (archivos en [`preview/audio/`](preview/audio/))
+
+raw.githack sirve los archivos de la rama tal cual por HTTPS; la primera vez muestra un aviso de contenido externo: pulsa «Open the page». Siempre refleja el último commit de la rama (con unos minutos de caché). Para LAN, ambos dispositivos deben abrir la misma vista previa.
+
 ## Controles (5.1)
 
 **Smartphone** (horizontal): a la izquierda, el **arsenal** en la esquina inferior y las flechas **‹ ›** encima; a la derecha, **ATACAR** en la esquina inferior y **SALTAR** encima.
