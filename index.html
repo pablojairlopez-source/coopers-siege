@@ -1306,6 +1306,7 @@ Prompt:
 <script src="src/rendering/post.js"></script>
 <script src="src/rendering/props3d.js"></script>
 <script src="src/characters/pug-anim.js"></script>
+<script src="src/effects/destruction.js"></script>
 <script>
 
 'use strict';
@@ -2184,20 +2185,20 @@ const atmosphere={cache:new Map(),sprites:new Map(),weather:'intense',lastThunde
 function getSmokeSprite(kind){
  const key='fxSprite:'+kind;
  if(atmosphere.sprites.has(key))return atmosphere.sprites.get(key);
- const cv=document.createElement('canvas');cv.width=cv.height=64;
- const sc=cv.getContext('2d'),g=sc.createRadialGradient(23,22,3,32,32,30);
- if(kind==='warm'){
-  g.addColorStop(0,'#ffdf96');g.addColorStop(.38,'#d96b43');g.addColorStop(.78,'#4d4958');g.addColorStop(1,'#23253300');
- }else if(kind==='bloodMist'){
-  g.addColorStop(0,'#d41736');g.addColorStop(.55,'#7a0b2088');g.addColorStop(1,'#3d041000');
- }else{
-  g.addColorStop(0,'#9aa6b8');g.addColorStop(.55,'#576072');g.addColorStop(.88,'#2c3342');g.addColorStop(1,'#1e233000');
+ // 5.0: volutas de humo difuminadas (varias bocanadas) en lugar de una esfera con brillo.
+ const cv=document.createElement('canvas');cv.width=cv.height=96;
+ const sc=cv.getContext('2d'),R=rng(kind.length*977+13);
+ const pal=kind==='warm'?['#ffcf80','#d8693e','#5a4a52']:kind==='bloodMist'?['#d41736','#8a0c22','#4a0614']:['#a4adbd','#6a7284','#3a4252'];
+ sc.filter='blur(6px)';
+ for(let i=0;i<9;i++){
+  const x=30+R()*36,y=30+R()*36,r=14+R()*16,g=sc.createRadialGradient(x,y,1,x,y,r);
+  g.addColorStop(0,pal[i<3?0:1]+'cc');g.addColorStop(.6,pal[1]+'88');g.addColorStop(1,pal[2]+'00');
+  sc.fillStyle=g;sc.beginPath();sc.arc(x,y,r,0,Math.PI*2);sc.fill();
  }
- sc.fillStyle=g;sc.beginPath();sc.arc(32,32,30,0,Math.PI*2);sc.fill();
+ sc.filter='none';
  atmosphere.sprites.set(key,cv);
  return cv;
 }
-
 const scenePalettes=[
  {sky:['#102947','#ac5578','#ffb566'],soil:['#bd884b','#342743'],rim:'#6edf86',water:'#068fae',fog:'#d59cb5',faces:['#2c4163','#50777e','#89b395','#172f4b']},
  {sky:['#060d26','#292043','#933b82'],soil:['#3d527a','#121b37'],rim:'#46efdb',water:'#604fe5',fog:'#987cca',faces:['#172044','#29376c','#5387a7','#0b142f']},
@@ -3118,7 +3119,9 @@ function syncGoreTerrain(){
  if(terrain.dirty)terrain.paint();
  if(!goreConfig().blood||gore.surfaceVersion===terrain.version)return;
  const blood=gore.bloodCanvas.getContext('2d');
- blood.save();blood.globalCompositeOperation='destination-in';blood.drawImage(terrain.canvas,0,0);blood.restore();
+ // 5.0: solo se recorta la zona dañada (antes, el lienzo completo de 3072×768).
+ const gr=terrain.goreRect||{x1:0,y1:0,x2:W-1,y2:H-1};terrain.goreRect=null;
+ blood.save();blood.beginPath();blood.rect(gr.x1-4,gr.y1-4,gr.x2-gr.x1+8,gr.y2-gr.y1+8);blood.clip();blood.globalCompositeOperation='destination-in';blood.drawImage(terrain.canvas,0,0);blood.restore();
  if(goreConfig().persistent){
   const remaining=[];let changed=false;
   for(const body of gore.bodies){
@@ -3187,6 +3190,7 @@ function updateCombatFX(dt){
  app.decals=app.decals.filter(d=>d.life>0&&terrain.solid(d.x,d.y+1));
  for(const f of app.fx){
   if(!f.persistent)f.life-=dt;
+  if(CS5.fx.update(f,dt,terrain))continue;
   if(f.kind==='acidPool'){
    f.nextMelt=(f.nextMelt||0)-dt;
    if(f.nextMelt<=0){
@@ -3341,7 +3345,9 @@ function visiblePugFur(o){
  if(o.variant==='robo')return '#75899e';
  if(o.variant==='ghost')return '#8cf5ff';
  if(o.variant==='cyber')return '#b8c4d0';
- return base;
+ // 5.0: hollín caricaturesco tras recibir explosiones cercanas.
+ const soot=o._anim?.soot||0;
+ return soot>.02?mixColor(base,'#2a201c',soot):base;
 }
 
 // === HIERARCHICAL 3D TRANSFORMATION ENGINE (Mat4 + PugRig) ===
@@ -4071,7 +4077,7 @@ function drawPug(r,out,c,time,size,customYaw=null){
  if(useCache){
   const activeMove=Math.abs(c.vx||0)>1||Math.abs(c.vy||0)>1||!c.grounded||(c.hurt||0)>0||(c.recoilTimer||0)>0||(c.landTimer||0)>0;
   const qTime=activeMove?Math.floor(time*30):Math.floor(time*4+(c.id||0)*1.7);
-  cacheKey=qTime+':'+Math.round(c.x*2)+':'+Math.round(c.y*2)+':'+(c.dir||1)+':'+(c.hurt>0?1:0)+':'+(c.shield||0)+':'+baseSize.toFixed(2)+':'+(c===app.active?Math.round(app.angle)+':'+app.weapon:'0')+':'+(c.variant||'normal')+':'+(c.accessory||'none')+':'+(c.backgear||'none')+':'+(c.fur||'')+':'+(c.cosmeticColor||'')+':'+terrain.version+':'+(c._anim?.sig||'');
+  cacheKey=qTime+':'+Math.round(c.x*2)+':'+Math.round(c.y*2)+':'+(c.dir||1)+':'+(c.hurt>0?1:0)+':'+(c.shield||0)+':'+baseSize.toFixed(2)+':'+(c===app.active?Math.round(app.angle)+':'+app.weapon:'0')+':'+(c.variant||'normal')+':'+(c.accessory||'none')+':'+(c.backgear||'none')+':'+(c.fur||'')+':'+(c.cosmeticColor||'')+':'+(c._anim?.sig||'');
   if(c._meshKey===cacheKey&&c._meshData){
    out.appendSlice(c._meshData);
    return;
@@ -6032,10 +6038,14 @@ class Terrain{
  spot(x,y){x=clamp(x,18,W-18);let best=null,dd=Infinity;for(let iy=Math.max(50,Math.round(y)-95);iy<Math.min(WATER-12,Math.round(y)+120);iy++){if(this.support(x,iy)&&this.bodyClear(x,iy)){const d=Math.abs(iy-y);if(d<dd){best={x,y:iy};dd=d;}}}if(best&&app.chars.some(c=>c.hp>0&&c!==app.active&&Math.abs(c.x-best.x)<25&&Math.abs(c.y-best.y)<30))return null;return best;}
  destroy(x,y,r){
   let changed=0;
-  const x1=clamp(Math.floor(x-r),0,W-1),x2=clamp(Math.ceil(x+r),0,W-1),y1=clamp(Math.floor(y-r),0,H-1),y2=clamp(Math.ceil(y+r),0,H-1);
-  for(let iy=y1;iy<=y2;iy++){const dy=iy-y;for(let ix=x1;ix<=x2;ix++)if((ix-x)**2+dy*dy<=r*r&&this.mask[iy*W+ix]){this.mask[iy*W+ix]=0;changed++;}}
+  const x1=clamp(Math.floor(x-r*1.14),0,W-1),x2=clamp(Math.ceil(x+r*1.14),0,W-1),y1=clamp(Math.floor(y-r*1.14),0,H-1),y2=clamp(Math.ceil(y+r*1.14),0,H-1);
+  // 5.0: borde irregular determinista (depende solo de x, y, r: idéntico en ambos clientes LAN).
+  const ph=((x*12.9898+y*78.233)%TAU+TAU)%TAU,jag=r>=10?1:0,rMax=r*1.14;
+  const x1j=clamp(Math.floor(x-rMax),0,W-1),x2j=clamp(Math.ceil(x+rMax),0,W-1),y1j=clamp(Math.floor(y-rMax),0,H-1),y2j=clamp(Math.ceil(y+rMax),0,H-1);
+  for(let iy=y1j;iy<=y2j;iy++){const dy=iy-y;for(let ix=x1j;ix<=x2j;ix++){const i=iy*W+ix;if(!this.mask[i])continue;const dx=ix-x,d2=dx*dx+dy*dy;if(d2>rMax*rMax)continue;let rr=r;if(jag&&d2>r*r*.7){const a=Math.atan2(dy,dx);rr=r*(1+.08*Math.sin(a*5+ph)+.05*Math.sin(a*11+ph*2.3));}if(d2<=rr*rr){this.mask[i]=0;changed++;}}}
   if(changed){
    this.dirty=true;this.version++;this.markDirtyRect(x1-8,y1-8,x2+8,y2+8);
+   const g=this.goreRect;this.goreRect=g?{x1:Math.min(g.x1,x1),y1:Math.min(g.y1,y1),x2:Math.max(g.x2,x2),y2:Math.max(g.y2,y2)}:{x1,y1,x2,y2};
    if(typeof bloodFluid!=='undefined')bloodFluid.onTerrainDestroyed(x,y,r);
   }
   return changed;
@@ -6607,12 +6617,14 @@ void main(){if(material>.5){gl_FragColor=vec4(waterSurface(vPos,normalize(vNorma
   }else{
    for(const c of terrain.dirtyChunks)if(c>=0&&c<CHUNK_COUNT)this.buildSideChunk(c,step);
   }
+  // 5.0: un búfer por chunk (antes se fusionaban y subían todos tras cada cráter).
+  const changed=fullRebuild?Array.from({length:CHUNK_COUNT},(_,i)=>i):[...terrain.dirtyChunks].filter(c=>c>=0&&c<CHUNK_COUNT);
+  for(const c of changed)this.upload('side'+c,new Float32Array(this.sideChunks[c]),g.DYNAMIC_DRAW);
+  // Los decorados solo se reconstruyen si un cráter les quitó (o dio) apoyo.
+  let propsDirty=fullRebuild;
+  if(!propsDirty)for(const d of decorations){const c=Math.floor(d.x/CHUNK_W);if(changed.includes(c)&&(d._solid!==terrain.solid(d.x,d.y+3))){propsDirty=true;break;}}
   terrain.dirtyChunks.clear();
-  let totalLen=0;for(let c=0;c<CHUNK_COUNT;c++)totalLen+=this.sideChunks[c].length;
-  const merged=new Float32Array(totalLen);
-  let offset=0;for(let c=0;c<CHUNK_COUNT;c++){merged.set(this.sideChunks[c],offset);offset+=this.sideChunks[c].length;}
-  this.upload('sides',merged,g.DYNAMIC_DRAW);
-  this.buildProps3D();
+  if(propsDirty){for(const d of decorations)d._solid=terrain.solid(d.x,d.y+3);this.buildProps3D();}
   this.version=terrain.version;
  }
  drawBuffer(name,textured,material=0){
@@ -6655,7 +6667,7 @@ void main(){if(material>.5){gl_FragColor=vec4(waterSurface(vPos,normalize(vNorma
   g.uniform4f(this.uniforms.lightningInfo,storm.x,storm.y,1000,storm.pulse);
   const sun=sunLightWorld();
   g.uniform4f(this.uniforms.sceneLight,sun.x,sun.y,1.15,stormPulse(app.simTime));
-  this.drawBuffer('sides',false);
+  for(let c=0;c<CHUNK_COUNT;c++)this.drawBuffer('side'+c,false);
   this.drawBuffer('props3d',false,-1);
   this.drawBuffer('front',true);
   if(this.waterLevel!==graphics.level){this.upload('water',waterGeometry(this));this.waterLevel=graphics.level;}
@@ -6836,6 +6848,8 @@ function addWaterRipple(x,strength=1){
  }
 }
 function explode(x,y,r,amount,sourceTeam=-1,kind='normal'){
+ // 5.0: onda expansiva, escombros del material real, brasas y chamuscado por arma (visual).
+ CS5.fx.beforeExplosion(x,y,r,kind,app._fxWeapon);
  terrain.destroy(x,y,r);
  for(const c of app.chars)if(c.hp>0)CS5.pugAnim.nearExplosion(c,Math.hypot(c.x-x,c.y-14-y),r);
  if(typeof bloodFluid!=='undefined')bloodFluid.applyImpulse(x,y,r*1.68,amount||45);
@@ -7076,7 +7090,7 @@ function projectileHit(p,x,y){
 }
 
 function detonate(p){
- if(p.dead)return;p.dead=true;
+ if(p.dead)return;p.dead=true;app._fxWeapon=p.id;
  const R=effectsRandom;
  if(p.id==='ice'){
   // Cryo-Freeze Nova: Does NOT destroy rock! Encases Pugs in 3D Ice Blocks, freezes liquid blood solid & builds an ice rim!
@@ -7545,7 +7559,7 @@ if(f.kind==='flash'){
    c.save();c.translate(f.x,f.y);c.rotate(Math.atan2(f.vy,f.vx));
    ellipse(c,0,0,f.size*1.5*alpha,f.size*.65*alpha,f.color);c.restore();
   }
-  else if(f.kind==='smoke'){ellipse(c,f.x,f.y,f.size*(2-alpha),f.size*(2-alpha),'#6d7180');}
+  else if(f.kind==='smoke'){const rs=f.size*(2.6-alpha*1.2);const pa=c.globalAlpha;c.globalAlpha=pa*.7;c.drawImage(getSmokeSprite('cool'),f.x-rs,f.y-rs,rs*2,rs*2);c.globalAlpha=pa;}
   else if(f.kind==='confetti'){c.fillStyle=f.color;c.save();c.translate(f.x,f.y);c.rotate(time*2+f.x);c.fillRect(-f.size/2,-2,f.size,4);c.restore();}
   else{ellipse(c,f.x,f.y,f.size*alpha,f.size*alpha,f.color);}}
  c.globalAlpha=1;
@@ -8973,6 +8987,7 @@ function extraShot(w,c){
 
 // Cartoon hit and death effects: cosmetic only, with bounded particles and lifetimes.
 function drawCombatFX(c,f){
+ if(CS5.fx.draw(c,f))return true;
  if(f.kind==='bloodMist'){
   if(gore.level==='none')return true;
   const alpha=clamp(f.life/f.max,0,1),radM=f.size*(1.8-alpha*.7);

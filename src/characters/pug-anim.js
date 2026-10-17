@@ -39,7 +39,7 @@ function anim(c){return c._anim||(c._anim={jig:0,jigV:0,roll:0,rollV:0,lookX:0,l
 CS5.pugAnim={
  EXPRESSIONS,
  hit(c,amount,x,y){const a=anim(c),dir=Math.sign((c.x||0)-(x??c.x))||(Math.random()<.5?-1:1);a.jigV+=Math.min(9,2+amount*.12);a.rollV+=dir*Math.min(7,1.5+amount*.09);a.hitAt=performance.now()/1000;a.heavy=amount>=28;},
- nearExplosion(c,dist,radius){if(c.hp<=0)return;const a=anim(c);if(dist<radius*3.2){a.surpriseAt=performance.now()/1000;a.jigV+=1.4*(1-dist/(radius*3.2));}},
+ nearExplosion(c,dist,radius){if(c.hp<=0)return;const a=anim(c);if(dist<radius*3.2){a.surpriseAt=performance.now()/1000;a.jigV+=1.4*(1-dist/(radius*3.2));}if(dist<radius*1.6)a.soot=Math.min(.5,(a.soot||0)+.22*(1-dist/(radius*1.6)));},
  recoil(c){const a=anim(c);a.jigV-=2.2;a.rollV-=(c.dir||1)*1.2;},
  // Un compañero cae: tristeza breve en los aliados que siguen vivos.
  grief(list,dead){for(const c of list)if(c!==dead&&c.hp>0&&c.team===dead.team)anim(c).griefAt=performance.now()/1000;},
@@ -96,7 +96,7 @@ CS5.pugAnim={
    else{if(time>a.saccade){a.saccade=time+.8+hash(Math.floor(time*2)+(c.id||0)*31)*2.4;a.sx=(hash(Math.floor(time*5)+(c.id||0))-.5)*1.2;a.sy=(hash(Math.floor(time*7)+(c.id||0)*3)-.5)*.6;}tx=a.sx||0;ty=a.sy||0;}
    a.lookX=lerp(a.lookX,clamp(tx,-1,1),1-Math.pow(.0001,dt));a.lookY=lerp(a.lookY,clamp(ty,-1,1),1-Math.pow(.0001,dt));
    // Firma compacta para las cachés de malla (solo cambia cuando cambia la cara).
-   a.sig=expr+(Math.round(a.lid*5))+','+Math.round(a.lookX*4)+','+Math.round(a.lookY*3)+','+Math.round(a.jig*20)+','+Math.round(a.roll*20)+','+Math.round(a.mix.mouth*4);
+   a.sig=expr+(Math.round(a.lid*5))+','+Math.round(a.lookX*4)+','+Math.round(a.lookY*3)+','+Math.round(a.jig*20)+','+Math.round(a.roll*20)+','+Math.round(a.mix.mouth*4)+','+Math.round((a.soot||0)*10);
   }
  },
  get:anim

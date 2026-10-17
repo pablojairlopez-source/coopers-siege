@@ -88,7 +88,10 @@ CS5.paintTerrain=function(t,rect,W,H,WATER,mapIndex){
  const ys=Math.max(0,rect.y1-96),ye=Math.min(H-1,rect.y2+28);
  const dTop=new Int16Array(H),dBot=new Int16Array(H),aDist=new Int16Array(H);
  const sprites=['pebbles','shells','sprinkles','gems','fossils','bones','barnacles','embers','crystals'].filter(k=>acc[k]).map(k=>({k,...acc[k],rgb:rgb(acc[k].color),glow:acc[k].glow?rgb(acc[k].glow):null}));
- const topBase=M.top.depth,subD=M.sub.depth;
+ const topBase=M.top.depth,subD=M.sub.depth,nSprites=sprites.length;
+ // Chamuscados de cráteres que tocan este rectángulo (src/effects/destruction.js).
+ const scorches=(t.scorches||[]).filter(s=>s.x+s.r*1.6>=rect.x1&&s.x-s.r*1.6<=rect.x2&&s.y+s.r*1.6>=rect.y1&&s.y-s.r*1.6<=rect.y2).map(s=>({...s,st:(CS5.fx&&CS5.fx.SCORCH[s.style])||{color:[22,16,14],strength:.7}}));
+ const nScorch=scorches.length;
  const out=[0,0,0];
  for(let x=rect.x1;x<=rect.x2;x++){
   // Pasada descendente: profundidad desde el aire superior.
@@ -109,7 +112,9 @@ CS5.paintTerrain=function(t,rect,W,H,WATER,mapIndex){
    if(!mask[i]){
     // Decoración que sobresale de la superficie (solo visual).
     const a=aDist[y];let painted=false;
-    if(a<=12&&a>0){
+    // Sin hierba/nieve/coral dentro de un cráter chamuscado.
+    let burnt=false;for(let si=0;si<nScorch;si++){const s=scorches[si];if((x-s.x)**2+(y-s.y)**2<(s.r*1.3)**2){burnt=true;break;}}
+    if(a<=12&&a>0&&!burnt){
      if(bladeOn&&a<=bladeH){
       const k=a/Math.max(1,bladeH);
       if(deco==='snow'){const s=1-.18*k;out[0]=245*s;out[1]=250*s;out[2]=255;}
@@ -159,9 +164,9 @@ CS5.paintTerrain=function(t,rect,W,H,WATER,mapIndex){
    // Placas metálicas sueltas.
    if(acc.plates&&dt>8){const k=(((y>>1)&255)<<8)|((x>>1)&255);if(T.vorBig.id[k]%11<2){const c=rgb(acc.plates.color),e=T.vorBig.edge[k];const s=e<.08?.55:1+.08*(T.b[((y&255)<<8)|(x&255)]-.5);r=c[0]*s;g=c[1]*s;b=c[2]*s;}}
    // Vetas incandescentes / cristalinas (lava, hielo, plasma).
-   if(vein&&dt>=topD){const v=1-Math.abs(2*bl(T.b,x*.33+y*.11+bl(T.a,x*.05,y*.05)*30,y*.33)-1);if(v>vein.density){const k=(v-vein.density)/(1-vein.density);const core=k>.55;r=core?veinGlow[0]:veinCol[0];g=core?veinGlow[1]:veinCol[1];b=core?veinGlow[2]:veinCol[2];}}
+   if(vein&&dt>=topD){const v=1-Math.abs(2*bl(T.b,x*.33+y*.11+T.a[(((y>>4)&255)<<8)|((x>>4)&255)]*30,y*.33)-1);if(v>vein.density){const k=(v-vein.density)/(1-vein.density);const core=k>.55;r=core?veinGlow[0]:veinCol[0];g=core?veinGlow[1]:veinCol[1];b=core?veinGlow[2]:veinCol[2];}}
    // Detalles incrustados: guijarros, conchas, fósiles, cristales, virutas…
-   if(dt>=topD-1)for(const s of sprites){
+   if(dt>=topD-1&&nSprites)for(let si=0;si<nSprites;si++){const s=sprites[si];
     const cx=x>>3,cy=y>>3,h=hash2(cx*3+s.k.length,cy*5+s.k.charCodeAt(0));
     if((h%100000)/100000<s.density*22){
      const ox=(cx<<3)+2+((h>>8)&3),oy=(cy<<3)+2+((h>>12)&3),rad=s.k==='sprinkles'?1.6:s.k==='crystals'?2.6+((h>>16)&3):s.k==='fossils'?3.4:1.2+((h>>16)&3)*.5;
@@ -176,11 +181,12 @@ CS5.paintTerrain=function(t,rect,W,H,WATER,mapIndex){
    }
    // Varillas de acero en el hormigón.
    if(acc.rebar&&dt>20){const h=hash2(x>>5,y>>6);if(h%9===0&&Math.abs(((x+((y*(h&1?1:-1))>>2))&31)-16)<1){const c=rgb(acc.rebar.color);r=c[0];g=c[1];b=c[2];}}
+   // Borde del cráter chamuscado (carbón, escarcha, ácido, plasma, oro…), con borde ruidoso.
+   for(let si=0;si<nScorch;si++){const s=scorches[si],dx=x-s.x,dy=y-s.y,d=Math.sqrt(dx*dx+dy*dy);if(d>s.r*1.55)continue;const n=T.a[((y&255)<<8)|(x&255)];let k=1.25-(d-s.r*.95)/(s.r*.55)+(n-.5)*.7;if(k<=0)continue;k=Math.min(1,k)*s.st.strength;const sc=s.st.color;r+=(sc[0]-r)*k;g+=(sc[1]-g)*k;b+=(sc[2]-b)*k;if(s.st.glow&&d<s.r*1.05&&n>.62){const gl=s.st.glow;r=gl[0];g=gl[1];b=gl[2];}}
    // Oclusión ambiental: techos de cuevas, bordes laterales y profundidad.
    let ao=1;
    if(db<16)ao*=.5+.5*(db/16);
-   let side=9;
-   for(const k of [2,4,7]){if((x>=k&&!mask[i-k])||(x<W-k&&!mask[i+k])){side=k;break;}}
+   const side=((x>=2&&!mask[i-2])||(x<W-2&&!mask[i+2]))?2:((x>=4&&!mask[i-4])||(x<W-4&&!mask[i+4]))?4:((x>=7&&!mask[i-7])||(x<W-7&&!mask[i+7]))?7:9;
    ao*=.74+.26*Math.min(1,side/8);
    ao*=1-.28*sstep(60,300,dt);
    if(dt<2&&deco!=='neon'&&deco!=='hazard')ao*=1.14;
