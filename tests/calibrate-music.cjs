@@ -10,9 +10,11 @@ const TARGET=-15;// dB (ponderación K aproximada), estado de combate B
  try{
   const page=await (await browser.newContext(VIEWPORTS.desktop)).newPage();
   await page.goto(srv.url);await page.waitForFunction(()=>window.CS5&&CS5.composer&&CS5.songs);
-  const r=await measureSongs(page,{seconds:Number(process.argv[2]||30),trim:false});
+  // Iterativo: se mide con los factores actuales y se corrigen (la saturación no es lineal).
+  const prev=await page.evaluate(()=>CS5.musicTrim||{});
+  const r=await measureSongs(page,{seconds:Number(process.argv[2]||30),trim:true});
   const trims={};
-  for(const s of r){trims[s.id]=+Math.pow(10,(TARGET-s.lk)/20).toFixed(3);console.log(s.id.padEnd(10),String(s.lk).padStart(7),'dB → ×'+trims[s.id]);}
+  for(const s of r){trims[s.id]=+((prev[s.id]??1)*Math.pow(10,(TARGET-s.lk)/20)).toFixed(3);console.log(s.id.padEnd(10),String(s.lk).padStart(7),'dB → ×'+trims[s.id]);}
   const body=`// Generado por tests/calibrate-music.cjs (objetivo ${TARGET} dB, ponderación K aproximada).\n// Factor de ganancia por canción para igualar la sonoridad percibida. No editar a mano:\n// recalibrar con «node tests/calibrate-music.cjs» tras cambiar una composición.\n(function(){const CS5=window.CS5=window.CS5||{};CS5.musicTrim=${JSON.stringify(trims)};})();\n`;
   fs.writeFileSync(path.join(ROOT,'src','audio','loudness.js'),body);
   console.log('Escrito src/audio/loudness.js');

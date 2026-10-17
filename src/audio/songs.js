@@ -1,4 +1,4 @@
-// Cooper's Siege 5.0 — Banda sonora original (17 composiciones procedurales).
+// Cooper's Siege 5.1 — Banda sonora original (18 composiciones procedurales).
 // Una por escenario más el tema del menú. Todas son composiciones originales para
 // este juego: motivos, progresiones, ritmos y forma propios. No reproducen ni
 // derivan de música existente.
@@ -16,9 +16,14 @@ const SC={
  lydianDom:[0,2,4,6,7,9,10]
 };
 const S=(bars,prog,o={})=>({bars,prog,...o});
+// 5.1: notación compacta de melodías, un símbolo por paso: grado de la escala (con «!»
+// acento o «?» suave), «.» prolonga la nota anterior, «-» silencio, «|» separa compases.
+function mel(str){const out=[];let step=0,cur=null;for(const tok of str.trim().split(/\s+/)){if(tok==='|')continue;if(tok==='.'){if(cur)cur[1]++;step++;continue;}if(tok==='-'){cur=null;step++;continue;}const v=tok.endsWith('!')?1.2:tok.endsWith('?')?.6:1;cur=[step,1,parseInt(tok,10),v];out.push(cur);step++;}return out;}
 // Las secciones de victoria y derrota se derivan de cada canción si no se definen.
 function finish(song){
- const sec=song.sections;
+ const sec=song.sections,mo=song.motifs;
+ // 5.1: las piezas con varias melodías (A1, A2…) exponen A y B para victoria y derrota.
+ mo.A=mo.A||mo.A1;mo.B=mo.B||mo.B1||mo.A;
  sec.victory=sec.victory||S(4,song.victoryProg||[0,3,4,0],{melody:'A',energy:1,key:sec.climax?.key||0,layers:{...(sec.climax||sec.A).layers,counter:true}});
  sec.defeat=sec.defeat||S(4,song.defeatProg||[5,3,1,4],{melody:'B',energy:.2,var:1,layers:{pad:true,arp:Object.keys(song.patterns.arp||{})[0]}});
  sec.breakdown=sec.breakdown||S(4,sec.A.prog.slice(0,4),{energy:.3,layers:{pad:true,arp:Object.keys(song.patterns.arp||{})[0]}});
@@ -61,22 +66,42 @@ SONGS[1]=finish({id:'neon',name:'Lluvia sobre Neo-Kioto',genre:'Synthwave',tempo
  form:['intro','A','B','A2','bridge','B','climax','breakdown','A','A2','B','climax'],
  fx:{reverb:3.2,wet:.32,delayBeats:.75,feedback:.42,delayWet:.3},seq:-1,arpOct:12,leadOct:12,bassOct:-24});
 
-// 2 · Caldera Roja — «Corazón de Magma»: épica de percusión en 6/8 con taikos, metales graves y coro (frigio dominante).
-SONGS[2]=finish({id:'volcano',name:'Corazón de Magma',genre:'Épica de percusión',tempo:132,meter:6,sub:2,swing:0,root:52,scale:SC.phrygDom,
- inst:{pad:'darkPad',chords:'brass',arp:'pluck',bass:'distBass',lead:'choir',lead2:'horn',counter:'cello',fill:'taiko'},
- patterns:{drums:{war:{taiko:'x--x--x-x-x-',frame:'--x--x--x--x',anvil:'-----------x'},rumble:{taiko:'x-----x-----',timpani:'x-----------'}},
-  bass:{gallop:'R-RR-RR-RR-5',drone:'R~~~~~R~~~~~'},arp:{ost:'0-1-2-0-1-2-'},chords:{hits:'x-----x--x--'}},
- motifs:{A:[[0,3,0],[3,3,1],[6,3,2],[9,3,1],[12,6,0],[18,3,-1],[21,3,0]],
-  B:[[0,2,4],[2,2,5],[4,2,4],[6,6,2],[12,2,4],[14,2,5],[16,2,7],[18,6,4]],
-  C:[[0,6,7],[6,6,6],[12,6,4],[18,6,1]]},
+// 2 · Caldera Roja — «Furia de la Caldera» (5.1): épica volcánica en frigio dominante.
+// Taikos profundos, metales graves y coro oscuro; cinco ideas melódicas distintas
+// (llamada de guerra, respuesta, himno coral, ostinato rápido y tema del clímax),
+// un puente sombrío, desarrollo modulante y una segunda erupción medio tono arriba.
+SONGS[2]=finish({id:'volcano',name:'Furia de la Caldera',genre:'Épica volcánica',tempo:138,meter:4,sub:4,swing:0,root:52,scale:SC.phrygDom,
+ inst:{pad:'darkPad',chords:'lowBrass',arp:'pizz',bass:'distBass',lead:'lowBrass',lead2:'choirDark',counter:'cello',fill:'taikoBig'},
+ patterns:{drums:{
+   war:{taikoBig:'x-----x-x-------',taiko:'----x-------x-x-',frame:'--x---x---x---x-'},
+   gallop:{taikoBig:'x--x--x-x--x--x-',taiko:'----x-------x---',snare:'oo--x-oo--o-x-oo',crash:'x'+'-'.repeat(63)},
+   rumble:{timpani:'x-----------x---',taiko:'--------x-------'},
+   heart:{taikoBig:'x--x------------',frame:'--------x-------'}},
+  bass:{ostinato:'R-RR-RR-R-RR-R5-',drone:'R~~~~~~~R~~~~~~~',run:'R-R-8-R-5-R-8-R-',throb:'R---R---R---R-R-'},
+  arp:{ost:'0-1-2-1-0-1-2-3-',fury:'0120012001200123'},chords:{hits:'x-----x-----x---',stabs:'x--x--x---x-x---'}},
+ motifs:{
+  A1:mel('0! . . . 0 . 1 . 2! . . . 1 . 0 . | -1 . . . . . . . 0 . 1 . 2 . 3 . | 4! . . . 3 . 2 . 3 . . . 1 . . . | 0 . . . . . . . . . . . - - - -'),
+  A2:mel('4! . . . 4 . 5 . 4 . 3 . 2 . . . | 3 . 2 . 1 . 2 . 0 . . . . . . . | 6 . . . 5 . 4 . 5 . 6 . 7! . . . | 4 . . . . . . . 2 . 1 . 0 . . .'),
+  B1:mel('7 . . . . . . . 6 . . . 5 . . . | 4 . . . . . . . . . . . 3 . . . | 5 . . . 6 . . . 7 . . . 8 . . . | 7 . . . . . . . . . . . . . . .'),
+  B2:mel('8 . . . . . . . 7 . . . 6 . 5 . | 4 . . . . . . . 5 . . . 3 . . . | 2 . . . 3 . . . 4 . . . 1 . . . | 0 . . . . . . . . . . . . . . .'),
+  C1:mel('0 1 2 1 0 1 2 3 4 3 2 1 2 3 4 5 | 4 . 2 . 4 . 2 . 1 . . . 0 . . . | 0 1 2 1 0 1 2 3 5 4 3 2 3 4 5 6 | 7! . . . 6 . 5 . 4 . . . - . . .'),
+  C2:mel('7 6 5 4 5 4 3 2 3 2 1 0 1 2 3 4 | 5 . 4 . 3 . 4 . 2 . . . . . . . | 1 2 3 2 1 2 3 4 5 4 3 2 1 0 -1 0 | 0! . . . . . . . -1 . . . 0 . . .'),
+  D:mel('2 . . . . . . . 1 . . . . . . . | 0 . . . . . . . . . . . . . . . | 3 . . . . . . . 2 . . . . . . . | 1 . . . . . . . . . . . . . . .'),
+  E1:mel('0! . . 2 4 . . . 7! . . . 6 . 5 . | 6 . . . 5 . 4 . 5 . . . . . . . | 3 . . 4 5 . . . 8! . . . 7 . 6 . | 7 . . . . . . . 4 . . . . . . .'),
+  E2:mel('8! . . 7 6 . . . 5 . . . 6 . 7 . | 8 . . . 7 . 6 . 5 . . . . . . . | 4 . . 5 6 . . . 7 . . . 6 . 5 . | 0! . . . . . . . . . . . - . . .'),
+  K1:mel('-7 . . . . . . . -8 . . . . . . . | -10 . . . . . . . -9 . . . . . . . | -8 . . . . . . . -7 . . . . . . . | -10 . . . . . . . -8 . . . . . . .'),
+  K2:mel('4 . . . 3 . . . 2 . . . 1 . . . | 2 . . . 3 . . . 4 . . . . . . . | 5 . . . 4 . . . 3 . . . 2 . . . | 1 . . . 0 . . . -1 . . . . . . .')},
  sections:{intro:S(4,[0,0,1,0],{layers:{perc:'rumble',pad:true,bass:'drone'},energy:.4}),
-  A:S(8,[0,0,1,0,5,5,1,0],{melody:'A',layers:{drums:'war',bass:'gallop',arp:'ost'}}),
-  B:S(8,[3,3,1,1,5,6,1,0],{melody:'B',layers:{drums:'war',bass:'gallop',chords:'hits',arp:'ost'}}),
-  A2:S(8,[0,0,1,0,5,5,1,0],{melody:'A',var:2,layers:{drums:'war',bass:'gallop',arp:'ost',harmony:true}}),
-  bridge:S(4,[5,3,1,1],{melody:'C',layers:{perc:'rumble',pad:true,bass:'drone'},energy:.5}),
-  climax:S(8,[0,1,0,1,5,6,1,0],{melody:'B',var:3,key:1,layers:{drums:'war',bass:'gallop',chords:'hits',arp:'ost',counter:true},energy:1})},
- form:['intro','A','B','A2','bridge','climax','breakdown','A','B','A2','climax'],
- fx:{reverb:3.4,wet:.3,drive:.35,delayBeats:1.5,delayWet:.12},seq:1,arpOct:0,leadOct:12,bassOct:-24,levels:{lead:1.25}});
+  A:S(8,[0,0,1,0,3,1,0,0],{melody:['A1','A2'],literal:true,layers:{drums:'war',bass:'ostinato',arp:'ost'}}),
+  A2:S(8,[3,1,0,0,0,0,1,0],{melody:['A2','A1'],literal:true,inst:{lead:'horn'},counterMelody:'K1',layers:{drums:'war',bass:'ostinato',chords:'hits'}}),
+  B:S(8,[3,3,1,0,5,6,1,0],{melody:['B1','B2'],literal:true,inst:{lead:'choirDark'},layers:{drums:'heart',bass:'drone',chords:'hits',arp:'ost'},energy:.65}),
+  C:S(8,[0,1,0,1,3,1,0,0],{melody:['C1','C2'],literal:true,inst:{lead:'fiddle',arp:'pizz'},layers:{drums:'gallop',bass:'run',arp:'fury',chords:'stabs'},energy:.95}),
+  bridge:S(8,[0,1,0,6,3,1,6,0],{melody:'D',literal:true,inst:{lead:'choirDark'},layers:{perc:'rumble',pad:true,bass:'drone'},energy:.35}),
+  climax:S(8,[0,3,3,0,1,6,3,0],{melody:['E1','E2'],literal:true,counterMelody:'K2',layers:{drums:'gallop',bass:'ostinato',chords:'stabs',arp:'fury'},energy:1}),
+  dev:S(8,[0,0,1,0,3,1,0,0],{melody:['A1','C1'],literal:true,key:1,inst:{lead:'horn',counter:'choirDark'},counterMelody:'K1',layers:{drums:'war',bass:'throb',chords:'hits',arp:'ost'},energy:.85}),
+  climax2:S(8,[1,6,3,0,0,3,3,0],{melody:['E2','E1'],literal:true,key:1,inst:{counter:'choirDark'},counterMelody:'K2',layers:{drums:'gallop',bass:'run',chords:'stabs',arp:'fury'},energy:1})},
+ form:['intro','A','A2','B','C','A','bridge','B','climax','dev','C','breakdown','A2','B','climax2','C'],
+ fx:{reverb:3.4,wet:.3,drive:.3,delayBeats:1.5,delayWet:.1},seq:1,arpOct:0,leadOct:12,bassOct:-24,counterOct:0,levels:{lead:1.2,counter:.85}});
 
 // 3 · Aurora Polar — «Vals del Hielo Quieto»: vals en 3/4 con piano, celesta y cristal (lidio).
 SONGS[3]=finish({id:'snow',name:'Vals del Hielo Quieto',genre:'Vals ambiental',tempo:76,meter:3,sub:4,swing:0,root:62,scale:SC.lydian,
@@ -129,22 +154,42 @@ SONGS[5]=finish({id:'castle',name:'La Giga del Estandarte',genre:'Giga renacenti
  form:['intro','A','A2','B','A','bridge','B','climax','breakdown','A','B','climax'],
  fx:{reverb:2.6,wet:.3,delayWet:.08},seq:-1,arpOct:12,leadOct:12,bassOct:-24,levels:{counter:.6}});
 
-// 6 · Última Estrella — «Réquiem para un Sol»: orquesta cósmica lenta, coro, caja de música y timbales.
+// 6 · Última Estrella — «Réquiem para un Sol» (5.1): conserva el tema coral original y la
+// caja de música, y lo desarrolla con una respuesta nueva, una segunda melodía de
+// sintetizador más rítmica, una tercera melodía amplia para el clímax, contracantos
+// de chelo y de sintetizador, arpegios espaciales y una reexposición en otra tonalidad.
 SONGS[6]=finish({id:'supernova',name:'Réquiem para un Sol',genre:'Orquesta cósmica',tempo:64,meter:4,sub:4,swing:0,root:53,scale:SC.aeolian,
  inst:{pad:'darkPad',chords:'strings',arp:'musicbox',bass:'sub',lead:'choir',lead2:'horn',counter:'cello',fill:'timpani'},
- patterns:{drums:{swell:{timpani:'x-----------x---',gong:'x---------------'},pulse:{timpani:'x-------x-------',triangle:'--------x-------'}},
-  bass:{long:'R~~~~~~~5~~~~~~~'},arp:{box:'0-1-2-3-4-3-2-1-'},chords:{sustain:'x---------------'}},
- motifs:{A:[[0,8,4],[8,4,3],[12,4,2],[16,12,0],[28,4,-1]],
-  B:[[0,4,7],[4,4,6],[8,8,4],[16,4,5],[20,4,4],[24,8,2]],
-  C:[[0,16,9],[16,16,7]]},
+ patterns:{drums:{swell:{timpani:'x-----------x---',gong:'x'+'-'.repeat(31)},pulse:{timpani:'x-------x-------',triangle:'--------x-------'},
+   orbit:{softKick:'x-------x-------',shaker:'--x---x---x---x-',triangle:'x'+'-'.repeat(31)},
+   comet:{softKick:'x-----x---x-----',brush:'----x-------x---',shaker:'xoxoxoxoxoxoxoxo'}},
+  bass:{long:'R~~~~~~~5~~~~~~~',move:'R~~~~~5~R~~~8~~~',breath:'R~~~~~~~~~~~~~~~'},
+  arp:{box:'0-1-2-3-4-3-2-1-',stars:'4-2-0-2-5-3-1-3-',pulse16:'0123456701234567',drift:'0---4---2---6---'},chords:{sustain:'x---------------',swell:'x-------x-------'}},
+ motifs:{
+  // Tema original (dos primeros compases) con su continuación nueva.
+  A1:mel('4 . . . . . . . 3 . . . 2 . . . | 0 . . . . . . . . . . . -1 . . . | 2 . . . . . . . 3 . . . 4 . . . | 5 . . . . . . . 4 . . . . . . .'),
+  A2:mel('7 . . . . . . . 6 . . . 4 . . . | 5 . . . . . . . 4 . . . 2 . . . | 3 . . . . . . . 2 . . . 1 . . . | 0 . . . . . . . . . . . . . . .'),
+  B1:mel('7 . . . 6 . . . 4 . . . . . . . | 5 . . . 4 . . . 2 . . . . . . . | 3 . . . 4 . . . 5 . . . 7 . . . | 6 . . . . . . . . . . . . . . .'),
+  B2:mel('9 . . . 8 . . . 7 . . . . . . . | 6 . . . 7 . . . 4 . . . . . . . | 5 . . . 4 . . . 3 . . . 2 . . . | 1 . . . . . . . 4 . . . . . . .'),
+  // Segunda melodía (sintetizador): más rítmica, se abre hacia el relativo mayor.
+  D1:mel('2 . . 4 7 . . . 6 . 4 . 2 . . . | 3 . . 5 9 . . . 7 . . . . . . . | 6 . . 5 4 . . . 2 . 4 . 3 . . . | 2 . . . . . . . . . . . - . . .'),
+  D2:mel('2 . . 4 7 . . . 9 . 7 . 6 . . . | 5 . . 4 3 . . . 4 . . . 5 . . . | 6 . . 7 9 . . . 11 . . . 9 . . . | 7 . . . . . . . . . . . . . . .'),
+  // Tercera melodía: intervalos amplios para el clímax.
+  E1:mel('0 . . . 4 . . . 7 . . . . . . . | 8 . . . 7 . . . 6 . . . 4 . . . | 3 . . . 7 . . . 10 . . . . . . . | 9 . . . 8 . . . 7 . . . . . . .'),
+  E2:mel('11 . . . 10 . . . 9 . . . 7 . . . | 8 . . . 7 . . . 6 . . . 4 . . . | 5 . . . 4 . . . 3 . . . 2 . . . | 0 . . . . . . . . . . . . . . .'),
+  C:mel('9 . . . . . . . . . . . . . . . | 7 . . . . . . . . . . . . . . . | 6 . . . . . . . . . . . . . . . | 4 . . . . . . . . . . . . . . .'),
+  K1:mel('-7 . . . . . . . . . . . . . . . | -9 . . . . . . . . . . . . . . . | -10 . . . . . . . . . . . . . . . | -8 . . . . . . . . . . . . . . .'),
+  K2:mel('- - - - 2 . . . 4 . . . 3 . . . | 2 . . . . . . . 0 . . . 1 . . . | - - - - 0 . . . 2 . . . 4 . . . | 3 . . . . . . . 1 . . . . . . .')},
  sections:{intro:S(4,[0,5,0,5],{layers:{pad:true,arp:'box'},energy:.2}),
-  A:S(8,[0,5,3,4,0,5,'2b',4].map(x=>typeof x==='string'?2:x),{melody:'A',layers:{pad:true,bass:'long',arp:'box',perc:'pulse'}}),
-  B:S(8,[5,3,0,4,5,3,6,4],{melody:'B',layers:{bass:'long',chords:'sustain',arp:'box',perc:'pulse',counter:true}}),
-  A2:S(8,[0,5,3,4,0,5,2,4],{melody:'A',var:1,layers:{bass:'long',chords:'sustain',arp:'box',harmony:true}}),
-  bridge:S(4,[2,6,5,4],{melody:'C',layers:{pad:true,perc:'swell'},energy:.5}),
-  climax:S(8,[0,5,3,4,5,6,4,0],{melody:'B',var:2,layers:{bass:'long',chords:'sustain',arp:'box',perc:'swell',counter:true},energy:1})},
- form:['intro','A','B','A2','bridge','climax','breakdown','A','B','climax'],
- fx:{reverb:5.5,wet:.48,delayBeats:1,delayWet:.2},seq:2,arpOct:24,leadOct:12,bassOct:-24});
+  A:S(8,[0,5,2,5,0,5,6,0],{melody:['A1','A2'],literal:true,counterMelody:'K1',layers:{pad:true,bass:'long',arp:'box',perc:'pulse'}}),
+  B:S(8,[0,5,3,6,2,0,5,4],{melody:['B1','B2'],literal:true,inst:{lead:'horn',counter:'softLead'},counterMelody:'K2',layers:{bass:'long',chords:'sustain',arp:'stars',perc:'pulse'}}),
+  D:S(8,[0,3,2,2,0,5,2,0],{melody:['D1','D2'],literal:true,inst:{lead:'softLead',arp:'celesta'},layers:{pad:true,bass:'move',arp:'pulse16',drums:'orbit'},energy:.75}),
+  bridge:S(8,[2,0,6,4,2,0,6,4],{melody:'C',literal:true,inst:{arp:'glassPad'},layers:{pad:true,arp:'drift',perc:'swell',bass:'breath'},energy:.4}),
+  A3:S(8,[0,5,2,5,0,5,6,0],{melody:['A2','A1'],literal:true,key:3,inst:{lead:'softLead',counter:'strings'},counterMelody:'K2',layers:{bass:'move',chords:'swell',arp:'stars',drums:'orbit'},energy:.7}),
+  climax:S(8,[0,4,3,0,0,4,3,0],{melody:['E1','E2'],literal:true,inst:{counter:'strings'},counterMelody:'K2',layers:{bass:'long',chords:'sustain',arp:'pulse16',drums:'comet',perc:'swell'},energy:1}),
+  D2:S(8,[0,3,2,2,0,5,2,0],{melody:['D2','D1'],literal:true,key:-2,inst:{lead:'softLead',counter:'cello'},counterMelody:'K1',layers:{bass:'move',arp:'stars',drums:'comet'},energy:.85})},
+ form:['intro','A','B','D','bridge','A3','climax','breakdown','D2','B','climax','A'],
+ fx:{reverb:5.5,wet:.48,delayBeats:1,delayWet:.22},seq:2,arpOct:24,leadOct:12,bassOct:-24,counterOct:0});
 
 // 7 · Puerto Tempestad — «Canción del Ancla Rota»: saloma marinera con acordeón, violín y pisotones.
 SONGS[7]=finish({id:'harbor',name:'Canción del Ancla Rota',genre:'Saloma marinera',tempo:138,meter:4,sub:2,swing:.08,root:50,scale:SC.dorian,
@@ -248,56 +293,157 @@ SONGS[12]=finish({id:'atlantis',name:'Catedral de Coral',genre:'Ambient acuátic
  form:['intro','A','B','A2','bridge','climax','breakdown','A','B','A2','climax'],
  fx:{reverb:5,wet:.5,delayBeats:.75,feedback:.5,delayWet:.34,cutoff:5200},seq:2,arpOct:12,leadOct:12,bassOct:-24});
 
-// 13 · Fundición Omega — «Martillo Hidráulico»: techno industrial a 128, bajo ácido y yunques.
-SONGS[13]=finish({id:'factory',name:'Martillo Hidráulico',genre:'Techno industrial',tempo:128,meter:4,sub:4,swing:0,root:48,scale:SC.aeolian,
- inst:{pad:'darkPad',chords:'brass',arp:'acid',bass:'acid',lead:'sawLead',lead2:'square',counter:'pad',fill:'clap'},
- patterns:{drums:{press:{kick:'x---x---x---x---',clap:'----x-------x---',hat:'--x---x---x---x-',anvil:'-------x-------x'},furnace:{hat:'xxxxxxxxxxxxxxxx',anvil:'x-------x-------'}},
-  bass:{acid:'RR8RR5R8RR8RR57R',hold:'R~~~R~~~R~~~R~~~'},arp:{squelch:'0-0-1-0-2-0-1-3-'},chords:{alarm:'x--x--x---------'}},
- motifs:{A:[[0,2,0],[2,2,0],[4,2,3],[6,2,0],[8,4,6],[12,4,4],[16,2,0],[18,2,0],[20,2,3],[22,2,4],[24,8,3]],
-  B:[[0,8,7],[8,4,6],[12,4,4],[16,8,3],[24,8,2]],
-  C:[[0,16,0],[16,16,-1]]},
- sections:{intro:S(4,[0,0,0,0],{layers:{perc:'furnace',bass:'hold'},energy:.5}),
-  A:S(8,[0,0,5,5,3,3,6,6],{melody:'A',layers:{drums:'press',bass:'acid'}}),
-  B:S(8,[0,0,5,5,3,3,4,4],{melody:'B',layers:{drums:'press',bass:'acid',arp:'squelch',chords:'alarm'}}),
-  A2:S(8,[0,0,5,5,3,3,6,6],{melody:'A',var:3,layers:{drums:'press',perc:'furnace',bass:'acid',counter:true}}),
-  bridge:S(8,[5,5,6,6,0,0,4,4],{melody:'C',layers:{perc:'furnace',bass:'hold',pad:true},energy:.5}),
-  climax:S(8,[0,5,3,6,0,5,4,0],{melody:'B',var:2,layers:{drums:'press',perc:'furnace',bass:'acid',arp:'squelch',chords:'alarm',counter:true},energy:1})},
- form:['intro','A','B','A2','bridge','climax','breakdown','A','B','A2','climax'],
- fx:{reverb:2,wet:.2,drive:.45,delayBeats:.75,delayWet:.18},seq:0,arpOct:0,leadOct:12,bassOct:-24,levels:{arp:.7}});
+// 13 · Fundición Omega — «Inspección de Engranajes» (5.1): groove industrial y mecánico en
+// dórico. Ostinato de marimba como engranajes, pistones, golpes metálicos y vapor; bajo
+// contundente, metales en llamada y respuesta y un lead de sierra en el clímax.
+// Dirección pedida a partir de una referencia de la que solo se pudo consultar el título
+// («Kirby 64 – Factory Inspection»): la pieza es una composición original.
+SONGS[13]=finish({id:'factory',name:'Inspección de Engranajes',genre:'Groove industrial mecánico',tempo:124,meter:4,sub:4,swing:0,root:48,scale:SC.dorian,
+ inst:{pad:'darkPad',chords:'brass',arp:'marimba',bass:'synthBass',lead:'square',lead2:'sawLead',counter:'brass',fill:'piston'},
+ patterns:{drums:{
+   press:{kick:'x---x---x---x---',clap:'----x-------x---',gear:'-x-x-x-x-x-x-x-x',metalHit:'------x-------x-'},
+   machine:{kick:'x--x--x---x--x--',piston:'----x-------x---',metalHit:'x-----x---x-----',steam:'-'.repeat(30)+'x-',hat:'x-x-x-x-x-x-x-x-'},
+   idle:{gear:'x---x---x---x---',steam:'x'+'-'.repeat(31),cowbell:'--------------x-'},
+   furnace:{kick:'x---x---x---x---',hat:'xxxxxxxxxxxxxxxx',anvil:'x-------x-------',piston:'--x---x---x---x-'}},
+  bass:{stomp:'R---R---R-R-R---',pump:'R-R8R-R8R-R8R-58',acid:'RR8RR5R8RR8RR57R',hold:'R~~~R~~~R~~~R~~~'},
+  arp:{cog:'0-2-1-3-0-2-1-3-',squelch:'0-0-1-0-2-0-1-3-'},chords:{alarm:'x--x--x---------',stab:'x--x--x---x-----'}},
+ motifs:{
+  A1:mel('0 . 0 . - 0 2 . 4 . - 4 3 . 2 . | 0 . 0 . - 0 2 . 4 . 6 . 5 . 4 . | 3 . 3 . - 3 5 . 7 . - 7 6 . 5 . | 4 . . . 2 . . . - . . . . . . .'),
+  A2:mel('7 . 7 . - 7 6 . 4 . - 4 5 . 6 . | 7 . . . 4 . . . 2 . . . . . . . | 6 . 6 . - 6 5 . 3 . - 3 4 . 5 . | 6 . . . 8 . . . 7! . . . . . . .'),
+  B1:mel('4! . . . . . 4 . 6 . . . 4 . . . | 3 . . . 2 . . . 0 . . . . . . . | 4! . . . . . 4 . 7 . . . 6 . . . | 5 . . . 4 . . . 3 . . . . . . .'),
+  B2:mel('9 . . . 8 . 7 . 6 . . . 4 . . . | 5 . . . 6 . . . 7 . . . . . . . | 9 . . . 8 . 7 . 6 . . . 7 . 8 . | 9! . . . . . . . 7 . . . . . . .'),
+  C1:mel('0 2 4 2 0 2 4 7 6 4 2 4 6 4 2 1 | 0 2 4 2 0 2 4 7 8 7 6 4 3 2 1 0 | 3 5 7 5 3 5 7 9 8 7 5 7 8 7 5 4 | 3 . 1 . 2 . 0 . -1 . . . 0 . . .'),
+  C2:mel('7 6 4 6 7 6 4 2 4 2 0 2 4 . . . | 6 5 3 5 6 5 3 1 3 1 -1 1 3 . . . | 2 4 6 4 2 4 6 8 7 6 4 6 7 . . . | 6 . 4 . 2 . 1 . 0! . . . . . . .'),
+  D1:mel('7! . . 7 . . 9 . 8 . . 7 . . 6 . | 4 . . . . . 6 . 7 . . . . . . . | 8! . . 8 . . 10 . 9 . . 8 . . 7 . | 6 . . . 4 . . . 2 . . . . . . .'),
+  D2:mel('11! . . 11 . . 10 . 9 . . 8 . . 7 . | 8 . . . . . 7 . 6 . . . . . . . | 5 . . 6 . . 7 . 8 . . 9 . . 10 . | 11! . . . . . . . 7 . . . . . . .'),
+  Z:mel('0 . . . . . . . . . . . . . . . | -1 . . . . . . . . . . . . . . . | -2 . . . . . . . . . . . . . . . | -3 . . . . . . . -1 . . . . . . .'),
+  K1:mel('- . . . . . . . 2 . . . . . . . | 1 . . . . . . . -1 . . . . . . . | 0 . . . . . . . 3 . . . . . . . | 1 . . . . . . . 2 . . . . . . .')},
+ sections:{intro:S(4,[0,0,6,6],{layers:{perc:'idle',bass:'hold',arp:'cog'},energy:.45}),
+  A:S(8,[0,[0,4],3,[4,0],[0,6],0,[6,3],[6,0]],{melody:['A1','A2'],literal:true,layers:{drums:'press',bass:'stomp',arp:'cog'}}),
+  B:S(8,[4,[6,0],[0,6],3,2,[3,0],[2,6],[2,0]],{melody:['B1','B2'],literal:true,inst:{lead:'brass',bass:'acid'},layers:{drums:'machine',bass:'acid',chords:'stab'}}),
+  C:S(8,[0,[0,6],3,[6,0],0,6,[2,0],[4,0]],{melody:['C1','C2'],literal:true,inst:{lead:'marimba'},layers:{drums:'furnace',bass:'stomp',counter:true},energy:.9}),
+  bridge:S(8,[0,6,3,4,0,6,3,4],{melody:'Z',literal:true,inst:{lead:'sawLead'},layers:{perc:'idle',pad:true,bass:'hold',arp:'squelch'},energy:.4}),
+  A2:S(8,[0,[0,4],3,[4,0],[0,6],0,[6,3],[6,0]],{melody:['A2','A1'],literal:true,key:5,inst:{lead:'sawLead'},counterMelody:'K1',layers:{drums:'press',bass:'pump',arp:'cog'}}),
+  climax:S(8,[[0,6],[4,0],6,2,[4,6],6,[3,6],[4,0]],{melody:['D1','D2'],literal:true,inst:{lead:'sawLead',bass:'acid'},layers:{drums:'machine',perc:'furnace',bass:'acid',chords:'alarm',arp:'squelch',counter:true},energy:1}),
+  C2:S(8,[0,[0,6],3,[6,0],0,6,[2,0],[4,0]],{melody:['C2','C1'],literal:true,key:-2,inst:{lead:'xylophone'},layers:{drums:'press',bass:'pump',counter:true},energy:.85}),
+  B2:S(8,[4,[6,0],[0,6],3,2,[3,0],[2,6],[2,0]],{melody:['B2','B1'],literal:true,key:2,inst:{lead:'brass',bass:'acid'},counterMelody:'K1',layers:{drums:'machine',bass:'acid',chords:'stab',arp:'cog'}})},
+ form:['intro','A','B','A','C','bridge','A2','climax','breakdown','C2','B2','climax','A'],
+ fx:{reverb:2,wet:.2,drive:.35,delayBeats:.75,delayWet:.16},seq:0,arpOct:12,leadOct:12,bassOct:-24,counterOct:0,levels:{arp:.75}});
 
-// 14 · Catedral Gótica — «Misa de la Luna de Sangre»: órgano, coro y campanas tubulares en 3/4 (menor armónica).
-SONGS[14]=finish({id:'inferno',name:'Misa de la Luna de Sangre',genre:'Barroco gótico 3/4',tempo:108,meter:3,sub:4,swing:0,root:50,scale:SC.harmMinor,
- inst:{pad:'organ',chords:'harpsichord',arp:'harpsichord',bass:'tuba',lead:'choir',lead2:'organ',counter:'tubular',fill:'timpani'},
- patterns:{drums:{mass:{timpani:'x-------x---',gong:'x-----------',tubular:'------------'},toll:{timpani:'x-----------'}},
-  bass:{walk:'R---5---8---',toll:'R~~~~~~~~~~~'},arp:{toccata:'0123432101234321'.slice(0,12),broken:'0-2-4-2-1-3-'},chords:{stab:'x---x---x---'}},
- motifs:{A:[[0,4,4],[4,4,3],[8,4,2],[12,6,0],[18,2,6],[20,4,4]],
-  B:[[0,2,7],[2,2,6],[4,4,4],[8,4,5],[12,8,4],[20,4,2]],
-  C:[[0,12,0],[12,12,-3]]},
- sections:{intro:S(4,[0,0,4,4],{layers:{pad:true,perc:'toll',bass:'toll'},energy:.35}),
-  A:S(8,[0,3,4,0,5,3,4,4],{melody:'A',layers:{bass:'walk',arp:'toccata',perc:'mass'}}),
-  B:S(8,[5,1,4,0,5,1,4,4],{melody:'B',layers:{bass:'walk',chords:'stab',arp:'broken',counter:true}}),
-  A2:S(8,[0,3,4,0,5,3,4,4],{melody:'A',var:2,layers:{bass:'walk',arp:'toccata',perc:'mass',harmony:true}}),
-  bridge:S(4,[3,6,2,4],{melody:'C',layers:{pad:true,perc:'toll'},energy:.4}),
-  climax:S(8,[0,3,4,0,5,1,4,0],{melody:'B',var:3,layers:{bass:'walk',chords:'stab',arp:'toccata',perc:'mass',counter:true},energy:1})},
- form:['intro','A','B','A2','bridge','climax','breakdown','A','B','A2','climax'],
- fx:{reverb:5.2,wet:.45,delayWet:.08},seq:-1,arpOct:12,leadOct:12,bassOct:-24,levels:{pad:.8}});
+// 14 · Catedral Gótica — «Vigilia de los Colmillos» (5.1): rock gótico en re menor armónica.
+// Guitarra saturada, órgano, clavecín con figuraciones barrocas de nota pedal, bajo
+// eléctrico y batería rápida; coral de órgano en el puente y solo de guitarra en el clímax.
+// Inspirada en la energía del rock gótico de los juegos de vampiros: melodías,
+// progresiones (i–iv–V, bII napolitano, VI–V) y arreglos propios.
+SONGS[14]=finish({id:'inferno',name:'Vigilia de los Colmillos',genre:'Rock gótico barroco',tempo:144,meter:4,sub:4,swing:0,root:50,scale:SC.harmMinor,
+ inst:{pad:'darkPad',chords:'organ',arp:'harpsichord',bass:'electricBass',lead:'overdrive',lead2:'organ',counter:'organ',fill:'rockSnare'},
+ patterns:{drums:{
+   rock:{rockKick:'x-----x-x-x-----',rockSnare:'----x-------x---',hat:'x-x-x-x-x-x-x-x-',crash:'x'+'-'.repeat(63)},
+   gallop:{rockKick:'x-xx-xx-x-xx-xx-',rockSnare:'----x-------x---',ride:'x-x-x-x-x-x-x-x-'},
+   blast:{rockKick:'x-x-x-x-x-x-x-x-',rockSnare:'----x-------x-x-',ride:'xxxxxxxxxxxxxxxx',crash:'x'+'-'.repeat(31)},
+   toll:{timpani:'x-------x-------',gong:'x'+'-'.repeat(63)}},
+  bass:{drive:'R-R-R-R-R-R-R-R-',gallop:'R-RRR-RRR-RRR-RR',walk:'R-8-R-8-5-8-R-b-',toll:'R~~~~~~~R~~~~~~~'},
+  arp:{toccata:'0123432101234321',broken:'0-2-1-3-2-4-3-1-'},chords:{stab:'x-------x-------',pulse:'x-x-x-x-x-x-x-x-'}},
+ motifs:{
+  A1:mel('0! . 2 . 4 . 7 . 6 . 7 . 4 . 2 . | 3! . 5 . 7 . 5 . 4 . . . . . 6 . | 7! . 6 . 5 . 4 . 3 . 4 . 5 . 3 . | 4 . . . 6 . . . 7! . . . . . . .'),
+  A2:mel('7! . 9 . 8 . 7 . 6 . 7 . 9 . 11 . | 10! . 9 . 8 . 9 . 7 . . . . . . . | 5 . 4 . 5 . 7 . 8 . 7 . 5 . 4 . | 6 . . . 4 . . . 1 . . . 0 . . .'),
+  A3:mel('0! . 2 . 4 . 7 . 9 . 7 . 4 . 2 . | 3 . 5 . 8 . 10 . 9 . . . 8 . . . | 7 . 6 . 7 . 4 . 5 . 4 . 3 . 1 . | 0 . . . . . . . . . . . - . . .'),
+  B1:mel('4 3 4 2 4 1 4 0 5 4 5 3 5 2 5 1 | 6 5 6 4 6 3 6 2 7 6 7 5 7 4 7 3 | 8 7 8 6 8 5 8 4 9 8 9 7 9 6 9 5 | 8 . 6 . 4 . 2 . 1 . . . 0 . . .'),
+  B2:mel('7 . . . 9 . . . 8 . 7 . 6 . 7 . | 5 . . . 7 . . . 6 . 5 . 4 . 5 . | 3 . . . 5 . . . 4 . 3 . 2 . 3 . | 4 . . . . . . . 6 . . . . . . .'),
+  B3:mel('4 3 4 2 4 1 4 0 5 4 5 3 5 2 5 1 | 6 5 6 4 6 3 6 2 7 6 7 5 7 4 7 3 | 9 8 7 6 5 4 3 2 3 4 5 6 7 8 9 10 | 11! . . . 7 . . . 4 . . . 0 . . .'),
+  C:mel('0 . . . . . . . 1 . . . . . . . | 2 . . . . . . . 1 . . . . . . . | 5 . . . . . . . 4 . . . . . . . | 6 . . . . . . . 4 . . . . . . .'),
+  D1:mel('7! . . 4 7 . 9 . 10! . . . 9 . 7 . | 8 . . 6 8 . 9 . 11! . . . 10 . 8 . | 9 . . 7 9 . 10 . 12 . . . 11 . 9 . | 8 . 9 . 8 . 6 . 7! . . . . . . .'),
+  D2:mel('14! . . . 13 . 12 . 11 . . . 10 . 9 . | 10 . . . 9 . 8 . 7 . . . 6 . 5 . | 4 . 5 . 6 . 7 . 8 . 9 . 10 . 11 . | 14! . . . . . . . 7 . . . . . . .'),
+  D3:mel('7! . . 4 7 . 9 . 10! . . . 9 . 7 . | 8 . . 6 8 . 9 . 11! . . . 10 . 8 . | 12 . 11 . 10 . 9 . 8 . 7 . 6 . 5 . | 4 . . . 6 . . . 7! . . . . . . .'),
+  F1:mel('0 . . . 0 . 1 . 2 . . . 0 . . . | 3 . . . 2 . 1 . 2 . . . . . . . | 4 . . . 4 . 5 . 6 . . . 4 . . . | 7 . . . 6 . 5 . 4 . . . . . . .'),
+  F2:mel('7 . . . 7 . 6 . 5 . . . 7 . . . | 3 . . . 4 . 5 . 4 . . . . . . . | 2 . . . 2 . 1 . 0 . . . 2 . . . | 1 . . . -1 . . . 0 . . . . . . .'),
+  K1:mel('-7 . . . . . . . -4 . . . . . . . | -4 . . . . . . . -3 . . . . . . . | -2 . . . . . . . -3 . . . . . . . | -3 . . . . . . . -7 . . . . . . .'),
+  K2:mel('2 . . . . . . . 3 . . . . . . . | 1 . . . . . . . 6 . . . . . . . | 5 . . . . . . . 2 . . . . . . . | 1 . . . . . . . 2 . . . . . . .')},
+ sections:{intro:S(4,[0,0,4,4],{layers:{pad:true,perc:'toll',bass:'toll',arp:'broken'},energy:.4}),
+  A:S(16,[0,[3,4],5,[4,0],0,[3,0],5,[4,0],0,[3,4],5,[4,0],0,[3,4],[5,4],0],{melody:['A1','A2','A1','A3'],literal:true,layers:{drums:'rock',bass:'drive',chords:'stab'}}),
+  B:S(16,[[0,3],[4,0],[4,5],[4,0],0,5,3,4,[0,3],[4,0],[4,5],[4,0],[0,3],[4,0],[5,3],[4,0]],{melody:['B1','B2','B1','B3'],literal:true,inst:{lead:'harpsichord'},layers:{drums:'gallop',bass:'gallop',chords:'pulse'},energy:.9}),
+  A2:S(8,[0,[3,4],5,[4,0],0,[3,0],5,[4,0]],{melody:['A1','A2'],literal:true,inst:{lead:'organ'},counterMelody:'K1',layers:{drums:'rock',bass:'walk',arp:'toccata'}}),
+  bridge:S(8,[[0,4],[5,4],[5,4],4,[0,4],[5,4],[5,4],4],{melody:'C',literal:true,inst:{lead:'choir'},layers:{pad:true,perc:'toll',bass:'toll',arp:'broken'},energy:.4}),
+  climax:S(16,[[0,3],4,5,[4,0],[0,5],[3,4],4,0,[0,3],4,5,[4,0],[0,3],4,[5,3],[4,0]],{melody:['D1','D2','D1','D3'],literal:true,counterMelody:'K2',inst:{counter:'strings'},layers:{drums:'blast',bass:'gallop',chords:'pulse',arp:'toccata'},energy:1}),
+  B2:S(8,[[0,3],[4,0],[4,5],[4,0],0,5,3,4],{melody:['B1','B2'],literal:true,key:5,inst:{lead:'harpsichord'},counterMelody:'K1',layers:{drums:'gallop',bass:'drive',chords:'stab'},energy:.85}),
+  dev:S(8,[0,[3,0],4,[0,4],5,3,0,[4,0]],{melody:['F1','F2'],literal:true,key:7,inst:{lead:'organ'},layers:{drums:'rock',bass:'walk',arp:'toccata',chords:'stab'},energy:.8}),
+  A3:S(8,[0,[3,4],5,[4,0],0,[3,4],[5,4],0],{melody:['A2','A3'],literal:true,inst:{lead:'overdrive',counter:'harpsichord'},counterMelody:'K2',layers:{drums:'rock',bass:'drive',arp:'broken'}}),
+  climax2:S(16,[[0,3],4,5,[4,0],[0,5],[3,4],4,0,[0,3],4,5,[4,0],[0,3],4,[5,3],[4,0]],{melody:['D3','D2','D1','D3'],literal:true,key:2,counterMelody:'K2',inst:{counter:'strings'},layers:{drums:'blast',bass:'gallop',chords:'pulse',arp:'toccata'},energy:1})},
+ form:['intro','A','B','A2','bridge','climax','B2','dev','A3','breakdown','climax2','A'],
+ fx:{reverb:4.4,wet:.34,delayWet:.08},seq:-1,arpOct:12,leadOct:12,bassOct:-24,counterOct:0,levels:{pad:.7,arp:.8}});
 
-// 15 · Dulce Caos — «Fiebre de Azúcar»: chiptune-pop a 150 con pulsos, arpegios rápidos y modulación final.
-SONGS[15]=finish({id:'candy',name:'Fiebre de Azúcar',genre:'Chiptune pop',tempo:150,meter:4,sub:4,swing:0,root:60,scale:SC.ionian,
- inst:{pad:'warmPad',chords:'chipPulse',arp:'chipPulse',bass:'chipBass',lead:'square',lead2:'bell',counter:'chipPulse',fill:'chipNoise'},
- patterns:{drums:{bounce:{chipKick:'x-----x-x-------',chipNoise:'----x-------x---',hat:'x-x-x-x-x-x-x-x-'},sprinkle:{hat:'x-x-x-x-x-x-x-x-',triangle:'x---------------'}},
-  bass:{bounce:'R-8-R-8-5-8-5-8-',half:'R-------5-------'},arp:{fast:'0123012301230123',up:'0-1-2-4-'.repeat(2)},chords:{skank:'--x---x---x---x-'}},
- motifs:{A:[[0,2,4],[2,2,4],[4,2,5],[6,2,7],[8,4,7],[12,2,5],[14,2,4],[16,2,2],[18,2,4],[20,4,5],[24,6,4],[30,2,2]],
-  B:[[0,3,0],[3,1,2],[4,4,4],[8,3,5],[11,1,4],[12,4,2],[16,3,7],[19,1,6],[20,4,5],[24,8,4]],
-  C:[[0,4,9],[4,4,7],[8,4,8],[12,4,6],[16,8,7],[24,8,4]]},
- sections:{intro:S(4,[0,4,5,3],{layers:{arp:'up',perc:'sprinkle'},energy:.5}),
-  A:S(8,[0,4,5,3,0,4,3,4],{melody:'A',layers:{drums:'bounce',bass:'bounce',chords:'skank'}}),
-  B:S(8,[3,4,2,5,3,4,1,4],{melody:'B',layers:{drums:'bounce',bass:'bounce',arp:'fast',counter:true}}),
-  A2:S(8,[0,4,5,3,0,4,3,4],{melody:'A',var:2,layers:{drums:'bounce',bass:'bounce',chords:'skank',arp:'up',harmony:true}}),
-  bridge:S(4,[5,3,1,4],{melody:'C',layers:{perc:'sprinkle',bass:'half',arp:'up'},energy:.5}),
-  climax:S(8,[0,4,5,3,0,4,3,0],{melody:'A',var:1,key:2,layers:{drums:'bounce',bass:'bounce',chords:'skank',arp:'fast',counter:true},energy:1})},
- form:['intro','A','B','A2','bridge','B','climax','breakdown','A','B','climax'],
- fx:{reverb:1.6,wet:.18,delayBeats:.5,delayWet:.15},seq:2,arpOct:12,leadOct:12,bassOct:-24,levels:{counter:.6,arp:.75}});
+// 15 · Dulce Caos — «Desfile de Caramelos» (5.1): pieza juguetona y extravagante con piano de
+// juguete, kazoo, xilófono, vibráfono, silbato de émbolo, tuba en oom-pah y percusión de
+// juguete; cambios de tonalidad bruscos, paradas sorpresa y secciones muy distintas.
+// Dirección pedida a partir de una referencia de la que solo se pudo consultar el título
+// («Kirby 64 – File Select»): la pieza es una composición original.
+SONGS[15]=finish({id:'candy',name:'Desfile de Caramelos',genre:'Desfile de juguetes',tempo:136,meter:4,sub:4,swing:.1,root:60,scale:SC.ionian,
+ inst:{pad:'warmPad',chords:'pizz',arp:'vibes',bass:'pluckBass',lead:'toyPiano',lead2:'xylophone',counter:'kalimba',fill:'toyDrum'},
+ patterns:{drums:{
+   bounce:{toyDrum:'x-----x-x-------',slap:'----x-------x---',hat:'x-x-x-x-x-x-x-x-',boing:'-'.repeat(63)+'x'},
+   toy:{chipKick:'x-------x-------',cowbell:'--x---x---x---x-',woodblock:'------x-------x-'},
+   march:{toyDrum:'x---x---x---x---',slap:'--x---x---x---x-',triangle:'x'+'-'.repeat(15)},
+   stop:{slap:'x'+'-'.repeat(15),boing:'-'.repeat(31)+'x'}},
+  bass:{bounce:'R-8-R-8-5-8-5-8-',tuba:'R---5---R---5---',walk:'R-3-5-8-R-3-5-b-',half:'R-------5-------'},
+  arp:{fast:'0123012301230123',up:'0-1-2-4-0-1-2-4-',twinkle:'4---6---5---7---'},chords:{skank:'--x---x---x---x-',pump:'x-x-x-x-x-x-x-x-'}},
+ motifs:{
+  A1:mel('4 . 2 . 4 . 7 . - . 6 . 4 . . . | 5 . 3 . 5 . 8 . - . 7 . 5 . . . | 4 . 7 . 9 . 7 . 4 . 2 . 4 . 5 . | 4 . . . 1 . . . 2 . . . - . . .'),
+  A2:mel('7 . 9 . 7 . 4 . 5 . 7 . 5 . 2 . | 4 . 5 . 4 . 0 . 1 . . . - . . . | 3 . 5 . 8 . 7 . 6 . 5 . 4 . 3 . | 2 . . . 4 . . . 7! . . . - . . .'),
+  B1:mel('0 . . 1 2 . . 3 4 . . . 2 . . . | 3 . . 2 1 . . 0 -1 . . . 1 . . . | 2 . . 3 4 . . 5 6 . . . 4 . . . | 5 . 4 . 3 . 2 . 1 . . . . . . .'),
+  B2:mel('7 . . 6 5 . . 4 3 . . . 5 . . . | 4 . . 3 2 . . 1 0 . . . 2 . . . | 1 . . 2 3 . . 4 5 . . . 8 . . . | 7 . . . . . . . - . . . . . . .'),
+  C1:mel('4 5 4 3 4 7 4 3 4 5 4 3 2 . . . | 5 6 5 4 5 8 5 4 5 6 5 4 3 . . . | 7 8 7 6 7 9 7 6 5 6 5 4 3 4 3 2 | 1 . . . 4 . . . 0! . . . - . . .'),
+  C2:mel('2 . . . . . . . 4 . . . 3 . . . | 1 . . . . . . . 0 . . . . . . . | 5 . . . . . . . 4 . . . 2 . . . | 3 . . . . . . . . . . . . . . .'),
+  D1:mel('7! . 7 . 9 . 7 . 4 . 7 . 11 . 9 . | 8 . 8 . 10 . 8 . 5 . 8 . 12 . 10 . | 9 . 7 . 8 . 6 . 7 . 5 . 6 . 4 . | 5 . 4 . 2 . 1 . 0! . . . - . . .'),
+  D2:mel('11 . 9 . 7 . 9 . 11 . 12 . 14! . . . | 13 . 11 . 9 . 11 . 13 . 12 . 11 . . . | 10 . 8 . 6 . 8 . 10 . 11 . 12 . 10 . | 7! . . . . . . . - . 4 . 7 . . .'),
+  S:mel('7 . . . . . . . 4 . . . . . . . | 9 . . . . . . . 2 . . . . . . . | 11 . . . . . . . 5 . . . . . . . | 7! . . . . . . . - . . . . . . .'),
+  K1:mel('- - 9 . - - 9 . - - 8 . - - 8 . | - - 8 . - - 8 . - - 7 . - - 7 . | - - 9 . - - 9 . - - 10 . - - 10 . | - - 11 . - - 8 . - - 9 . - . . .'),
+  K2:mel('4 . . . 5 . . . 4 . . . 2 . . . | 3 . . . 5 . . . 8 . . . 5 . . . | 4 . . . 2 . . . 4 . . . 6 . . . | 4 . . . 2 . . . 0 . . . . . . .')},
+ sections:{intro:S(4,[0,1,4,0],{layers:{arp:'twinkle',perc:'toy',pad:true},energy:.45}),
+  A:S(8,[0,1,0,[4,0],[0,5],[0,4],[1,4],0],{melody:['A1','A2'],literal:true,layers:{drums:'bounce',bass:'bounce',chords:'skank'}}),
+  B:S(8,[0,4,[0,4],[3,4],[0,3],[4,0],1,0],{melody:['B1','B2'],literal:true,inst:{lead:'kazoo',bass:'tuba'},counterMelody:'K1',layers:{drums:'march',bass:'tuba'}}),
+  C:S(8,[0,3,[0,5],[4,0],[0,3],[4,0],[5,0],3],{melody:['C1','C2'],literal:true,key:5,inst:{lead:'xylophone'},layers:{drums:'toy',bass:'walk',arp:'up'},energy:.8}),
+  stop:S(4,[0,4,5,4],{melody:'S',literal:true,inst:{lead:'slideWhistle'},layers:{perc:'stop',pad:true},energy:.3,fill:false}),
+  A2:S(8,[0,1,0,[4,0],[0,5],[0,4],[1,4],0],{melody:['A2','A1'],literal:true,key:-2,inst:{lead:'chipPulse',counter:'kazoo'},counterMelody:'K2',layers:{drums:'bounce',bass:'bounce',arp:'fast'}}),
+  climax:S(8,[0,1,[0,4],[4,0],0,2,4,0],{melody:['D1','D2'],literal:true,key:2,inst:{lead:'chipPulse',counter:'kazoo'},counterMelody:'K2',layers:{drums:'bounce',perc:'toy',bass:'bounce',chords:'pump',arp:'fast'},energy:1}),
+  B2:S(8,[0,4,[0,4],[3,4],[0,3],[4,0],1,0],{melody:['B2','B1'],literal:true,key:-5,inst:{lead:'square',bass:'tuba',counter:'xylophone'},counterMelody:'K1',layers:{drums:'march',bass:'tuba',chords:'skank'}}),
+  C2:S(8,[[0,3],[4,0],[5,0],3,0,3,[0,5],[4,0]],{melody:['C2','C1'],literal:true,key:-3,inst:{lead:'vibes'},layers:{pad:true,bass:'half',arp:'twinkle',perc:'toy'},energy:.55}),
+  climax2:S(8,[0,1,[0,4],[4,0],0,2,4,0],{melody:['D2','D1'],literal:true,key:3,inst:{lead:'toyPiano',counter:'kazoo'},counterMelody:'K2',layers:{drums:'bounce',perc:'toy',bass:'bounce',chords:'pump',arp:'fast'},energy:1})},
+ form:['intro','A','B','A','C','stop','A2','climax','breakdown','B2','C2','stop','climax2','B','A'],
+ fx:{reverb:1.6,wet:.18,delayBeats:.5,delayWet:.14},seq:2,arpOct:12,leadOct:12,bassOct:-24,counterOct:0,levels:{counter:.8,arp:.7}});
+
+// 16 · Jardín de Espinas — «Bruma entre Zarzas» (5.1): pieza contemplativa, etérea y
+// aventurera en mi dórico. Colchones de cristal, kalimba y vibráfono, arpegios que
+// envuelven, bajo ambiental y percusión delicada; las capas entran y salen con suavidad.
+// Evoca la atmósfera de los niveles de zarzas sin tomar melodía, armonía ni arreglo de
+// ninguna obra existente: todos los temas son originales.
+SONGS[16]=finish({id:'thorns',name:'Bruma entre Zarzas',genre:'Ambient onírico',tempo:92,meter:4,sub:4,swing:0,root:52,scale:SC.dorian,
+ inst:{pad:'glassPad',chords:'vibes',arp:'celesta',bass:'sub',lead:'softLead',lead2:'vibes',counter:'choirSoft',fill:'chimes'},
+ patterns:{drums:{
+   soft:{softKick:'x-------x-------',brush:'----x-------x---',shaker:'--x---x---x---x-'},
+   drift:{triangle:'x'+'-'.repeat(31),chimes:'x'+'-'.repeat(63)},
+   walk:{softKick:'x-----x---x-----',brush:'----x-------x---',shaker:'x-x-x-x-x-x-x-x-',rim:'------------x---'}},
+  bass:{drone:'R~~~~~~~R~~~~~~~',pulse:'R-----R-R-----5-',glide:'R~~~5~~~8~~~5~~~'},
+  arp:{ripple:'0-1-2-3-4-3-2-1-',cascade:'7-5-4-2-3-1-0-1-',sixteen:'0123210123456543'},chords:{bloom:'x-------x-------',breath:'x---------------'}},
+ motifs:{
+  A1:mel('4 . . . . . 3 . 4 . . . 7 . . . | 6 . . . . . . . 3 . . . . . . . | 2 . . . . . 1 . 2 . . . 4 . . . | 3 . . . . . . . . . . . . . . .'),
+  A2:mel('4 . . . . . 3 . 4 . . . 9 . . . | 8 . . . . . 7 . 6 . . . . . . . | 5 . . . . . 4 . 3 . . . 6 . . . | 4 . . . . . . . . . . . . . . .'),
+  B1:mel('0 . 2 . 4 . 7 . . . 6 . 4 . . . | 2 . 4 . 6 . 9 . . . 8 . 6 . . . | 3 . 5 . 7 . 10 . . . 9 . 7 . . . | 6 . . . . . . . 3 . . . . . . .'),
+  B2:mel('0 . 2 . 4 . 7 . . . 6 . 4 . . . | 1 . 3 . 5 . 8 . . . 7 . 5 . . . | 2 . 4 . 6 . 9 . . . 8 . 6 . . . | 4 . . . . . . . . . . . - . . .'),
+  C1:mel('7 . . . 6 . . . 4 . . . 2 . . . | 3 . . . . . . . 1 . . . . . . . | 6 . . . 4 . . . 3 . . . 1 . . . | 2 . . . . . . . 0 . . . . . . .'),
+  C2:mel('9 . . . 8 . . . 7 . . . 4 . . . | 5 . . . . . . . 3 . . . . . . . | 8 . . . 7 . . . 6 . . . 3 . . . | 4 . . . . . . . . . . . . . . .'),
+  Z:mel('4 . . . . . . . . . . . . . . . | 3 . . . . . . . . . . . . . . . | 2 . . . . . . . . . . . . . . . | 1 . . . . . . . . . . . . . . .'),
+  K1:mel('2 . . . . . . . . . . . . . . . | 1 . . . . . . . . . . . . . . . | -1 . . . . . . . . . . . . . . . | 0 . . . . . . . -1 . . . . . . .'),
+  K2:mel('- - 7 . - - 7 . - - 6 . - - 6 . | - - 9 . - - 9 . - - 8 . - - 8 . | - - 10 . - - 10 . - - 9 . - - 9 . | - - 8 . - - 8 . - - 6 . - - 6 .')},
+ sections:{intro:S(4,[0,6,2,3],{layers:{pad:true,arp:'ripple',perc:'drift'},energy:.2}),
+  A:S(8,[0,6,2,3,0,6,[3,6],4],{melody:['A1','A2'],literal:true,counterMelody:'K1',layers:{pad:true,bass:'drone',arp:'ripple',perc:'soft'},energy:.5}),
+  B:S(8,[0,2,3,6,0,1,2,4],{melody:['B1','B2'],literal:true,inst:{lead:'kalimba',counter:'celesta'},counterMelody:'K2',layers:{bass:'pulse',chords:'bloom',drums:'walk'},energy:.75}),
+  C:S(8,[0,6,6,[2,0],0,3,6,4],{melody:['C1','C2'],literal:true,inst:{lead:'vibes'},layers:{pad:true,bass:'glide',perc:'drift',arp:'cascade'},energy:.45}),
+  A2:S(8,[0,6,2,3,0,6,[3,6],4],{melody:['A2','A1'],literal:true,key:5,inst:{lead:'flute'},counterMelody:'K1',layers:{pad:true,bass:'pulse',arp:'ripple',perc:'soft',chords:'breath'},energy:.6}),
+  bridge:S(8,[0,6,2,1,0,6,2,1],{melody:'Z',literal:true,inst:{lead:'choirSoft',arp:'glassPad'},layers:{pad:true,bass:'drone',arp:'sixteen',perc:'drift'},energy:.3}),
+  climax:S(8,[0,2,3,6,0,1,2,4],{melody:['B1','B2'],literal:true,key:2,inst:{counter:'kalimba'},counterMelody:'K2',layers:{pad:true,bass:'pulse',chords:'bloom',arp:'sixteen',drums:'walk'},energy:1}),
+  B2:S(8,[0,2,3,6,0,1,2,4],{melody:['B2','B1'],literal:true,key:-2,inst:{lead:'vibes',counter:'celesta'},counterMelody:'K2',layers:{bass:'glide',arp:'cascade',drums:'soft'},energy:.65})},
+ form:['intro','A','B','C','A2','bridge','climax','breakdown','C','A','B2','climax'],
+ fx:{reverb:5.2,wet:.46,delayBeats:.75,feedback:.45,delayWet:.3},seq:1,arpOct:12,leadOct:12,bassOct:-24,counterOct:0,padOct:0});
 
 // Menú · «Himno de Cooper»: tema original heroico y juguetón (marcha orquestal-pop en Si bemol).
 const MENU=finish({id:'menu',name:'Himno de Cooper',genre:'Marcha orquestal-pop',tempo:118,meter:4,sub:4,swing:0,root:58,scale:SC.ionian,gain:1.9,

@@ -123,12 +123,24 @@ const composer={
  chordAt(sec,barInSec,half){const p=sec.prog[barInSec%sec.prog.length];return Array.isArray(p)?p[Math.min(p.length-1,half)]:p;},
  chordTones(deg,n=4){const out=[];for(let k=0;k<n;k++)out.push(deg+k*2);return out;},
  // Melodía del compás: motivo + transformaciones según posición en la frase y ciclo.
+ // 5.1: `sec.melody` puede ser una lista de motivos (uno por frase de 4 compases) y
+ // `sec.literal` respeta la melodía escrita la primera vez (sin secuencia ni cadencia
+ // automáticas); en las reapariciones se aplican las variaciones.
+ motifName(sec,barInSec,key='melody'){const m=sec[key];if(!Array.isArray(m))return m;return m[Math.floor(barInSec/4)%m.length];},
+ literalBar(motif,barInSec,spb){const mBars=Math.max(1,Math.ceil(Math.max(...motif.map(n=>n[0]+1))/spb)),src=(barInSec%4)%mBars;return motif.filter(n=>Math.floor(n[0]/spb)===src).map(n=>[n[0]%spb,n[1],n[2],n[3]??1]);},
  melodyBar(sec,barInSec){
-  const s=this.song,motif=s.motifs[sec.melody];if(!motif)return [];
+  const s=this.song,motif=s.motifs[this.motifName(sec,barInSec)];if(!motif)return [];
   const spb=this.stepsPerBar(),mBars=Math.max(1,Math.ceil(Math.max(...motif.map(n=>n[0]+1))/spb));
   const phrasePos=barInSec%4,src=phrasePos%mBars;
   let notes=motif.filter(n=>Math.floor(n[0]/spb)===src).map(n=>[n[0]%spb,n[1],n[2],n[3]??1]);
   const variant=this.variantFor(sec,barInSec);
+  if(sec.literal){
+   // Primera aparición: tal cual. Reapariciones: ornamentos o desplazamiento rítmico alternos.
+   const v=(this.cycle+(this.occ||0))%3;
+   if(v===1){const out=[];for(let i=0;i<notes.length;i++){const n=notes[i],nx=notes[i+1];out.push(n);if(nx&&nx[0]-n[0]>=4&&Math.abs(nx[2]-n[2])>=2){out[out.length-1]=[n[0],Math.floor((nx[0]-n[0])/2),n[2],n[3]];out.push([n[0]+Math.floor((nx[0]-n[0])/2),Math.ceil((nx[0]-n[0])/2),n[2]+Math.sign(nx[2]-n[2]),.75]);}}notes=out;}
+   if(v===2)notes=notes.map((n,i)=>i%3===1&&n[0]+1<spb&&n[1]>1?[n[0]+1,n[1]-1,n[2],n[3]]:n);
+   return notes;
+  }
   // Secuencia: el tercer compás de cada frase repite el motivo desplazado.
   if(phrasePos===2)notes=notes.map(n=>[n[0],n[1],n[2]+(s.seq??2),n[3]]);
   // Cadencia: el último compás de la frase termina en nota larga del acorde.
@@ -147,12 +159,13 @@ const composer={
   let guard=0;
   while(this.next<until&&guard++<64){
    const t=this.next,sec=this.section(),spb=this.stepsPerBar(),st=this.step;
-   const stepDur=60/(s.tempo*this.tempoMul())/s.sub;
+   const stepDur=60/(s.tempo*this.tempoMul()*(sec.tempo||1))/s.sub;
    const swing=(st%2===1)?stepDur*(s.swing||0):0,tt=t+swing;
    const barInSec=this.sectionBar,half=st>=spb/2?1:0;
    const chord=this.chordAt(sec,barInSec,half),root=s.root+(sec.key||0);
    const note=d=>root+semi(s.scale,d);
-   const L=sec.layers||{},inst=s.inst,energy=sec.energy??.7;
+   // 5.1: `sec.inst` cambia la instrumentación de una sección.
+   const L=sec.layers||{},inst=sec.inst?{...s.inst,...sec.inst}:s.inst,energy=sec.energy??.7;
    const variant=this.variantFor(sec,barInSec);
    // Colchón: acorde sostenido por medio compás o compás.
    if(L.pad!==false&&inst.pad&&(st===0||(st===spb/2&&Array.isArray(sec.prog[barInSec%sec.prog.length])))){
@@ -182,14 +195,19 @@ const composer={
     for(const n of this.barMelody||[]){if(n[0]!==st)continue;const m=note(n[2])+(s.leadOct??12)+(variant===2&&sec.melody!=='B'?12:0);I[leadInst](ac,this.layers.lead,m,tt,stepDur*n[1]*.96,.34*(n[3]??1),{from:this.lastLead});this.lastLead=m;
      if(L.harmony&&inst.counter)I[inst.counter](ac,this.layers.counter,m-semi(s.scale,n[2])+semi(s.scale,n[2]-2),tt,stepDur*n[1]*.96,.2*(n[3]??1));}
    }
-   if(L.counter&&inst.counter&&(st===0||st===spb/2)){const d=chord+(st===0?2:6);I[inst.counter](ac,this.layers.counter,note(d)+(s.counterOct??0),tt,stepDur*spb/2*.95,.2);}
+   // 5.1: contracanto escrito (`sec.counterMelody`), independiente de la melodía.
+   if(sec.counterMelody&&inst.counter){
+    if(st===0){const cm=s.motifs[this.motifName(sec,barInSec,'counterMelody')];this.barCounter=cm?this.literalBar(cm,barInSec,spb):[];}
+    for(const n of this.barCounter||[]){if(n[0]!==st)continue;I[inst.counter](ac,this.layers.counter,note(n[2])+(s.counterOct??0),tt,stepDur*n[1]*.96,.22*(n[3]??1));}
+   }
+   else if(L.counter&&inst.counter&&(st===0||st===spb/2)){const d=chord+(st===0?2:6);I[inst.counter](ac,this.layers.counter,note(d)+(s.counterOct??0),tt,stepDur*spb/2*.95,.2);}
    // Latido en «último aliento».
    if(this.state==='E'&&st%(s.sub*2)===0)D.heartbeat(ac,this.layers.drums,tt,.6);
    this.next+=stepDur;this.step++;
    if(this.step>=spb){this.step=0;this.bar++;this.advanceBar();}
   }
  },
- describe(){if(!this.song)return '';const sec=this.sectionName,names={intro:'Introducción',A:'Tema A',A2:'Tema A′',B:'Tema B',C:'Desarrollo',bridge:'Puente',breakdown:'Respiro',climax:'Clímax',victory:'Victoria',defeat:'Derrota',outro:'Coda'};return names[sec]||sec;},
+ describe(){if(!this.song)return '';const sec=this.sectionName,names={intro:'Introducción',A:'Tema A',A2:'Tema A′',A3:'Tema A″',B:'Tema B',B2:'Tema B′',C:'Desarrollo',C2:'Desarrollo II',D:'Segunda melodía',D2:'Segunda melodía II',dev:'Modulación',stop:'Sorpresa',bridge:'Puente',breakdown:'Respiro',climax:'Clímax',climax2:'Gran clímax',victory:'Victoria',defeat:'Derrota',outro:'Coda'};return names[sec]||sec;},
  STATE_MIX,LAYERS
 };
 CS5.composer=composer;

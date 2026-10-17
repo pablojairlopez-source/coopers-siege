@@ -20,7 +20,7 @@ Ver checklist en `PROGRESO_DESARROLLO.md`.
 
 ## Próxima tarea exacta
 
-Fase 5.1-3: ampliar el compositor (varias melodías por sección, contracanto propio, cambio de instrumentación por sección) y reescribir Caldera Roja, Última Estrella, Catedral Gótica, Dulce Caos y Fundición Omega en `src/audio/songs.js`. Después recalibrar: `node tests/calibrate-music.cjs 30`.
+Fase 5.1-4: mapa 17 «Jardín de Espinas» (índice 16, id `thorns`). La música ya existe (`SONGS[16]` en `src/audio/songs.js`, ambiente `thorns` y material `wood` en `sfx.js`). Falta: entrada en `maps` (`index.html`), trazado en `src/levels/terrain-gen.js`, dirección de arte (`art-direction.js`), materiales (`terrain-materials.js`), fondo (`scenery.js`), decorados 3D (`props3d.js`), miniatura, editor y pruebas (smoke con 17 mapas).
 
 ## Comandos para retomar
 
@@ -35,6 +35,8 @@ npm test
 - **Controles (5.1-1/2):** máquina de estados `CS5.attack` en `src/input/attack-controls.js` (`idle → aiming → charging`), común a teclado, ratón y táctil. Solo toca `app.angle`, `app.power`, `app.charging` y llama a `shoot()`: la autoridad LAN no cambia. `setPhase` y `resetTouchState` llaman a `CS5.attack.reset()`. Disposición en `src/ui/controls.css` (selectores con `body` delante para ganar a los `!important` de 5.0). W/S/↑/↓ ajustan la *elevación* en [-85°, 90°] sin cruzar la vertical (no cambian `c.dir`, que no se sincroniza en LAN coop). El salto por deslizamiento se eliminó; el salto táctil es `#touchJump` (máx. uno cada 180 ms). Prueba: `tests/controls.cjs` (en `npm test`).
 
 - **Audio (5.1-5):** `audio.buildMix(c)` crea los buses (música con paso alto + estante grave −3 dB + `musicDuck`; efectos; voces; ambiente) → compresor de bus suave (−12 dB, 2,5:1) → limitador (−3 dB, 20:1). Niveles en `scheduleAdventureMusic`: música 0,44 (antes 0,70; menú 0,21), efectos 0,74, voces 0,45, ambiente 0,36, todos × deslizadores. `audio.duck(depth,hold)` lo pide `sfx.js` en explosiones grandes. Sonoridad por canción igualada con `CS5.musicTrim` (`src/audio/loudness.js`, generado por `tests/calibrate-music.cjs`). Quejidos: `damage()` llama `sound('hurt', daño/20)`; `sfx.painKind` → ligero <15, medio <35, fuerte ≥35; `pugDeath` llama `sound('death')` antes de `nuclear`. Las voces tenían pico 0,22 tras un paso banda y sonaban en el mismo instante que la explosión (enmascaradas) y la muerte no tenía voz. Límite de voces por tipo en `sfx.js` (`LIMITS`). Prueba: `tests/audio-mix.cjs`.
+
+- **Música (5.1-3):** el compositor admite `melody` como lista (una melodía por frase de 4 compases), `literal:true` (melodía escrita sin secuencia/cadencia automáticas; variaciones solo en reapariciones), `counterMelody` (contracanto escrito), `inst` por sección y `tempo` por sección. `mel('…')` en `songs.js` es la notación compacta. Reescritas: Caldera Roja, Última Estrella (conserva su tema), Fundición Omega, Catedral Gótica, Dulce Caos; nueva: Jardín de Espinas. Referencias de YouTube: solo se pudo leer el título (Kirby 64 «File Select» y «Factory Inspection»); no se escuchó el audio. `tests/music.cjs` informa frases escritas distintas en 3 min (revisadas 9–14, antiguas 3). Exportar WAV: `node tests/export-music.cjs 180 B test-results/music-5.1 volcano,thorns`.
 
 ## Bloqueadores conocidos
 

@@ -94,7 +94,29 @@ const I={
  upright(ac,dest,m,t,dur,v){const f=hz(m),stop=t+dur+.3,s=osc(ac,'sine',f,t,stop),s2=osc(ac,'triangle',f*2,t,stop),g2=gain(ac,.2),g=gain(ac);s.connect(g);s2.connect(g2);g2.connect(g);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(v*.3,t+.3);g.gain.setTargetAtTime(.0001,t+dur,.08);g.connect(dest);cleanup([s,s2,g2,g],stop,ac);},
  distBass(ac,dest,m,t,dur,v){const f=hz(m),stop=t+dur+.15,s=osc(ac,'sawtooth',f,t,stop),ws=ac.createWaveShaper(),lp=ac.createBiquadFilter(),g=gain(ac);const c=new Float32Array(256);for(let i=0;i<256;i++){const x=i/128-1;c[i]=Math.tanh(x*4);}ws.curve=c;lp.type='lowpass';lp.frequency.value=1100;s.connect(ws);ws.connect(lp);lp.connect(g);adsr(g.gain,t,dur,v*.45,.005,.1,.8,.08);g.connect(dest);cleanup([s,ws,lp,g],stop,ac);},
  tuba(ac,dest,m,t,dur,v){I.brass(ac,dest,m,t,dur,v*1.2,{cut:700});},
- chipBass(ac,dest,m,t,dur,v){const f=hz(m),stop=t+dur+.05,s=osc(ac,'triangle',f,t,stop),g=gain(ac);s.connect(g);adsr(g.gain,t,dur,v,.002,.05,.9,.03);g.connect(dest);cleanup([s,g],stop,ac);}
+ chipBass(ac,dest,m,t,dur,v){const f=hz(m),stop=t+dur+.05,s=osc(ac,'triangle',f,t,stop),g=gain(ac);s.connect(g);adsr(g.gain,t,dur,v,.002,.05,.9,.03);g.connect(dest);cleanup([s,g],stop,ac);},
+ // --- 5.1 ---
+ // Coro oscuro (vocal «o», una octava abajo) y coro de cámara suave.
+ choirDark(ac,dest,m,t,dur,v){I.choir(ac,dest,m-12,t,dur,v*1.1,{vowel:'o'});},
+ choirSoft(ac,dest,m,t,dur,v){I.choir(ac,dest,m,t,dur,v*.6,{vowel:'o'});},
+ // Metales graves: trombones con suboctava.
+ lowBrass(ac,dest,m,t,dur,v){I.brass(ac,dest,m,t,dur,v,{cut:1100});I.brass(ac,dest,m-12,t,dur,v*.6,{cut:600});},
+ // Bajo eléctrico de rock: púa con algo de saturación.
+ electricBass(ac,dest,m,t,dur,v){const f=hz(m),stop=t+dur+.12,s=osc(ac,'sawtooth',f,t,stop),q=osc(ac,'square',f,t,stop),ws=ac.createWaveShaper(),lp=ac.createBiquadFilter(),g=gain(ac),qg=gain(ac,.4);const c=new Float32Array(256);for(let i=0;i<256;i++){const x=i/128-1;c[i]=Math.tanh(x*2.2);}ws.curve=c;lp.type='lowpass';lp.Q.value=1.4;lp.frequency.setValueAtTime(2200,t);lp.frequency.exponentialRampToValueAtTime(520,t+.18);s.connect(ws);q.connect(qg);qg.connect(ws);ws.connect(lp);lp.connect(g);adsr(g.gain,t,dur,v*.6,.003,.12,.7,.06);g.connect(dest);cleanup([s,q,ws,lp,g,qg],stop,ac);},
+ // Guitarra saturada para el rock gótico (dos sierras por un tanh y un paso bajo).
+ overdrive(ac,dest,m,t,dur,v,o={}){const f=hz(m),stop=t+dur+.2,ws=ac.createWaveShaper(),lp=ac.createBiquadFilter(),g=gain(ac),out=[ws,lp,g];const c=new Float32Array(512);for(let i=0;i<512;i++){const x=i/256-1;c[i]=Math.tanh(x*6)*.8;}ws.curve=c;for(const d of [-8,8]){const s=osc(ac,'sawtooth',o.from?hz(o.from):f,t,stop,d);if(o.from)s.frequency.setTargetAtTime(f,t,.03);const [l,lg]=vib(ac,s.frequency,t,stop,5.8,f*.012,.25);s.connect(ws);out.push(s,l,lg);}lp.type='lowpass';lp.frequency.value=2800;lp.Q.value=1.2;ws.connect(lp);lp.connect(g);adsr(g.gain,t,dur,v*.32,.006,.2,.8,.12);g.connect(dest);cleanup(out,stop,ac);},
+ // Piano de juguete, xilófono, vibráfono, kalimba y pizzicato.
+ toyPiano(ac,dest,m,t,dur,v){I.bell(ac,dest,m,t,dur,v*.8,{ratio:4,index:1.1,len:.9});},
+ xylophone(ac,dest,m,t,dur,v){const f=hz(m),stop=t+.5,o1=osc(ac,'sine',f,t,stop),o2=osc(ac,'sine',f*3,t,stop),g=gain(ac),g2=gain(ac);g.gain.setValueAtTime(v*.9,t);g.gain.exponentialRampToValueAtTime(.0005,t+.4);g2.gain.setValueAtTime(v*.3,t);g2.gain.exponentialRampToValueAtTime(.0005,t+.06);o1.connect(g);o2.connect(g2);g.connect(dest);g2.connect(dest);cleanup([o1,o2,g,g2],stop,ac);},
+ vibes(ac,dest,m,t,dur,v){const f=hz(m),stop=t+dur+1.8,car=osc(ac,'sine',f,t,stop),mod=osc(ac,'sine',f*4,t,stop),mg=gain(ac),g=gain(ac),trem=ac.createOscillator(),tg=gain(ac,v*.25);mg.gain.setValueAtTime(f*.6,t);mg.gain.exponentialRampToValueAtTime(f*.02,t+.4);mod.connect(mg);mg.connect(car.frequency);car.connect(g);trem.frequency.value=5.2;trem.connect(tg);tg.connect(g.gain);trem.start(t);trem.stop(stop);g.gain.setValueAtTime(v*.8,t);g.gain.setTargetAtTime(.0001,t+Math.max(.3,dur),.6);g.connect(dest);cleanup([car,mod,mg,g,trem,tg],stop,ac);},
+ kalimba(ac,dest,m,t,dur,v){I.bell(ac,dest,m,t,dur,v*.85,{ratio:5.9,index:.8,len:1.1});},
+ pizz(ac,dest,m,t,dur,v){I.pluck(ac,dest,m,t,dur,v*.8,{wave:'triangle',bright:2000,dark:300,len:.35,q:1});},
+ // Lead espacial suave: triángulo + seno con portamento y paso bajo.
+ softLead(ac,dest,m,t,dur,v,o={}){const f=hz(m),stop=t+dur+.6,lp=ac.createBiquadFilter(),g=gain(ac),out=[lp,g];lp.type='lowpass';lp.frequency.value=2400;for(const [w,d,a] of [['triangle',0,1],['sine',7,.6]]){const s=osc(ac,w,o.from?hz(o.from):f,t,stop,d);if(o.from)s.frequency.setTargetAtTime(f,t,.07);const [l,lg]=vib(ac,s.frequency,t,stop,5,f*.01,.35);const sg=gain(ac,a);s.connect(sg);sg.connect(lp);out.push(s,l,lg,sg);}lp.connect(g);adsr(g.gain,t,dur,v*.7,.05,.3,.85,.5);g.connect(dest);cleanup(out,stop,ac);},
+ // Silbato de émbolo (cómico): seno que resbala hacia la nota.
+ slideWhistle(ac,dest,m,t,dur,v,o={}){const f=hz(m),stop=t+dur+.2,s=osc(ac,'sine',f*(o.from?hz(o.from)/f:.7),t,stop),g=gain(ac);s.frequency.exponentialRampToValueAtTime(f,t+Math.min(.12,dur*.5));const [l,lg]=vib(ac,s.frequency,t,stop,7,f*.02,.05);s.connect(g);adsr(g.gain,t,dur,v*.6,.02,.1,.9,.08);g.connect(dest);cleanup([s,g,l,lg],stop,ac);},
+ // Kazoo: cuadrada por un formante nasal.
+ kazoo(ac,dest,m,t,dur,v){const f=hz(m),stop=t+dur+.12,s=osc(ac,'sawtooth',f,t,stop),bp=ac.createBiquadFilter(),bp2=ac.createBiquadFilter(),g=gain(ac);bp.type='bandpass';bp.frequency.value=1100;bp.Q.value=3;bp2.type='peaking';bp2.frequency.value=2600;bp2.gain.value=8;const [l,lg]=vib(ac,s.frequency,t,stop,6.5,f*.018,.08);s.connect(bp);bp.connect(bp2);bp2.connect(g);adsr(g.gain,t,dur,v*1.3,.02,.1,.85,.06);g.connect(dest);cleanup([s,bp,bp2,g,l,lg],stop,ac);}
 };
 
 // --- Percusión -------------------------------------------------------------------
@@ -129,6 +151,24 @@ const D={
  chipNoise:(ac,d,t,v)=>drumNoise(ac,d,t,.07,v*.35,'highpass',3000),
  chipKick:(ac,d,t,v)=>drumTone(ac,d,t,220,50,.12,v,'square'),
  heartbeat:(ac,d,t,v)=>{drumTone(ac,d,t,70,40,.18,v);drumTone(ac,d,t+.18,65,38,.2,v*.7);},
+ // --- 5.1 ---
+ rockKick:(ac,d,t,v)=>{drumTone(ac,d,t,170,48,.28,v*1.2);drumNoise(ac,d,t,.015,v*.4,'highpass',2500);},
+ rockSnare:(ac,d,t,v)=>{drumNoise(ac,d,t,.22,v*.75,'bandpass',2600,.7);drumTone(ac,d,t,240,170,.12,v*.5,'triangle');},
+ ride:(ac,d,t,v)=>{drumNoise(ac,d,t,.35,v*.16,'highpass',8500);I.bell(ac,d,100,t,.1,v*.04,{ratio:2.7,index:2,len:.5});},
+ crash:(ac,d,t,v)=>drumNoise(ac,d,t,1.6,v*.32,'highpass',5200),
+ taikoBig:(ac,d,t,v)=>{drumTone(ac,d,t,75,38,1.3,v*1.3);drumNoise(ac,d,t,.18,v*.4,'lowpass',600);},
+ // Fábrica: golpe metálico, pistón (soplo + golpe), engranaje (tic) y vapor.
+ metalHit:(ac,d,t,v)=>{I.bell(ac,d,62,t,.1,v*.45,{ratio:2.92,index:6,len:.5});drumNoise(ac,d,t,.05,v*.35,'bandpass',3200,2);},
+ piston:(ac,d,t,v)=>{drumTone(ac,d,t,120,60,.14,v*.8);drumNoise(ac,d,t+.02,.14,v*.3,'bandpass',1600,1.4);},
+ gear:(ac,d,t,v)=>{drumTone(ac,d,t,2600,2400,.02,v*.3,'square');drumTone(ac,d,t+.025,1900,1800,.02,v*.2,'square');},
+ steam:(ac,d,t,v)=>drumNoise(ac,d,t,.4,v*.18,'highpass',5000),
+ cowbell:(ac,d,t,v)=>{drumTone(ac,d,t,800,780,.12,v*.3,'square');drumTone(ac,d,t,540,530,.12,v*.25,'square');},
+ // Juguetones: tambor de juguete, «boing» de muelle y claqueta.
+ toyDrum:(ac,d,t,v)=>{drumTone(ac,d,t,420,300,.09,v*.6,'triangle');drumNoise(ac,d,t,.05,v*.2,'bandpass',2500,2);},
+ boing:(ac,d,t,v)=>{const o=osc(ac,'sine',180,t,t+.4),g=gain(ac),l=ac.createOscillator(),lg=gain(ac,60);l.frequency.value=18;l.connect(lg);lg.connect(o.frequency);l.start(t);l.stop(t+.4);o.frequency.exponentialRampToValueAtTime(520,t+.35);g.gain.setValueAtTime(v*.35,t);g.gain.exponentialRampToValueAtTime(.0005,t+.38);o.connect(g);g.connect(d);cleanup([o,g,l,lg],t+.4,ac);},
+ slap:(ac,d,t,v)=>drumNoise(ac,d,t,.03,v*.5,'bandpass',1800,3),
+ // Campanillas de viento para el jardín.
+ chimes:(ac,d,t,v)=>{for(let k=0;k<3;k++)I.bell(ac,d,88+[0,3,7][k],t+k*.07,.1,v*.05,{ratio:5.4,index:.9,len:1.8});},
  riser:(ac,d,t,v,len=2)=>{const s=noiseSrc(ac,t,t+len+.1),f=ac.createBiquadFilter(),g=gain(ac);f.type='bandpass';f.Q.value=3;f.frequency.setValueAtTime(300,t);f.frequency.exponentialRampToValueAtTime(7000,t+len);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v*.3,t+len);g.gain.exponentialRampToValueAtTime(.0001,t+len+.1);s.connect(f);f.connect(g);g.connect(d);cleanup([s,f,g],t+len+.1,ac);}
 };
 
