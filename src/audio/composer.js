@@ -95,7 +95,9 @@ const composer={
   if(!this.ac||!this.song)return;
   const changed=st!==this.state;this.state=st;
   const now=this.ac.currentTime,mix=(STATE_MIX[st]||STATE_MIX.B).mix,lv=this.song.levels||{};
-  for(const n of LAYERS){const target=(mix[n]??1)*(lv[n]??1)*(this.song.gain||1);this.layers[n].gain.setTargetAtTime(target,now,force?.05:1.1);}
+  // 5.1: `CS5.musicTrim` (src/audio/loudness.js) iguala la sonoridad percibida entre canciones.
+  const trim=CS5.musicTrim?.[this.song.id]??1;
+  for(const n of LAYERS){const target=(mix[n]??1)*(lv[n]??1)*(this.song.gain||1)*trim;this.layers[n].gain.setTargetAtTime(target,now,force?.05:1.1);}
   this.filter.frequency.setTargetAtTime(st==='G'?Math.min(this.baseCut,1400):st==='E'?Math.min(this.baseCut,3200):this.baseCut,now,.8);
   if(changed){const want=STATE_SECTION[st];if(want&&this.song.sections[want]&&this.sectionName!==want)this.pending=want;else if(!want&&STATE_SECTION[this.prevState])this.pending='__resume';}
   this.prevState=st;

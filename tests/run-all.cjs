@@ -8,7 +8,8 @@ const suites=[
  ['Daño, gore y destrucción','effects.cjs'],
  ['HUD responsivo','ui.cjs'],
  ['Controles 5.1 (táctil y teclado)','controls.cjs'],
- ['Banda sonora y efectos','music.cjs',['10']]
+ ['Banda sonora y efectos','music.cjs',['10']],
+ ['Mezcla de audio 5.1','audio-mix.cjs']
 ];
 const results=[];
 for(const [name,file,args=[]] of suites){

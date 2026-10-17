@@ -1342,6 +1342,7 @@ body[data-phase="menu"] #turnBanner{display:none!important}
 <script src="src/audio/instruments.js"></script>
 <script src="src/audio/composer.js"></script>
 <script src="src/audio/songs.js"></script>
+<script src="src/audio/loudness.js"></script>
 <script src="src/audio/sfx.js"></script>
 <script src="src/input/attack-controls.js"></script>
 <script>
@@ -3085,7 +3086,8 @@ function pugDeath(c,water){
  }
  for(let i=0;i<18*app.quality;i++)spawnFX(x,y,(R()-.5)*230,-R()*200,'#ffc880',2+R()*3,.45+R()*.6,'spark');
  app.floats.push({x,y:y-50,life:2,text:water?'PUG SUBATÓMICO':'¡PUGMAGEDÓN!',color:'#ffd58d'});
- audio.sound('nuclear');
+ // 5.1: lamento de muerte (bus de voces) antes de la mini nube nuclear.
+ audio.sound('death',1,{x,y});audio.sound('nuclear',.8,{x,y});
  if(water){addWaterRipple(x,1.6);audio.sound('splash');}
 }
 // Generador determinista por efecto con consecuencias de juego (charcos de ácido, fuego):
@@ -5137,14 +5139,18 @@ function scheduleAdventureMusic(){
  if(!audio.context||audio.context.state!=='running')return;
  const c=audio.context;
  // 5.0: ambiente sonoro continuo del mapa durante la batalla.
- CS5.ambience.update(c,audio.effectsGain,app.map,audio.sfx&&!app.paused&&app.phase!=='menu');
+ CS5.ambience.update(c,audio.ambienceGain||audio.effectsGain,app.map,audio.sfx&&!app.paused&&app.phase!=='menu');
  const mp3Active=menuLoopEngine.shouldPlay();
  // Compensación de nivel: el menú suena más bajo que las etapas (lo comprueba npm test).
+ // 5.1: música −4 dB respecto a 5.0 (0.70 → 0.44) y efectos +5,8 dB (0.38 → 0.74); voces y ambiente con bus propio.
  const menuPhase=app.phase==='menu'&&!menuLoopEngine.stagePreviewActive;
- const baseGain=menuPhase?0.30:0.70;
+ const baseGain=menuPhase?0.21:0.44;
  const masterTarget=(audio.music&&!app.paused)?(baseGain*adaptiveMusic.volMusic*adaptiveMusic.volMaster):0;
  audio.musicGain.gain.setTargetAtTime(masterTarget,c.currentTime,.10);
- if(audio.effectsGain)audio.effectsGain.gain.setTargetAtTime(.38*adaptiveMusic.volSfx*adaptiveMusic.volMaster,c.currentTime,.08);
+ const sfxLevel=adaptiveMusic.volSfx*adaptiveMusic.volMaster;
+ if(audio.effectsGain)audio.effectsGain.gain.setTargetAtTime(.74*sfxLevel,c.currentTime,.08);
+ if(audio.voiceGain)audio.voiceGain.gain.setTargetAtTime(.45*sfxLevel,c.currentTime,.08);
+ if(audio.ambienceGain)audio.ambienceGain.gain.setTargetAtTime(.36*sfxLevel,c.currentTime,.08);
  adaptiveMusic.updateStemMix(c.currentTime);
  menuLoopEngine.syncWithGameState();
  // 5.0: compositor procedural con una pieza original por mapa (src/audio/).
@@ -6261,10 +6267,23 @@ void main(){if(material>.5){gl_FragColor=vec4(waterSurface(vPos,normalize(vNorma
 }
 let menuChars=[{x:900+(W-VIEW_W)/2,y:430,team:0,id:0,dir:1,hp:100,grounded:true},{x:1140+(W-VIEW_W)/2,y:390,team:1,id:1,dir:-1,hp:100,grounded:true}];
 const audio={context:null,music:true,sfx:true,next:0,step:0,master:null,musicGain:null,effectsGain:null,noise:null,loop:null,
- init(){if(this.context){this.context.resume?.();return;}try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;const c=this.context=new AC();this.master=c.createGain();this.master.gain.value=.65;const comp=c.createDynamicsCompressor();this.master.connect(comp);comp.connect(c.destination);this.musicGain=c.createGain();this.musicGain.gain.value=0;this.musicGain.connect(this.master);this.synthBus=c.createGain();this.synthBus.gain.value=1.0;this.synthBus.connect(this.musicGain);if(c.createDelay){const dL=c.createDelay(1.5),dR=c.createDelay(1.5),fb=c.createGain(),wet=c.createGain(),ef=c.createBiquadFilter();ef.type='lowpass';ef.frequency.value=1950;dL.delayTime.value=.375;dR.delayTime.value=.525;fb.gain.value=.36;wet.gain.value=.32;this.synthBus.connect(dL);dL.connect(ef);ef.connect(dR);dR.connect(fb);fb.connect(dL);ef.connect(wet);dR.connect(wet);wet.connect(this.musicGain);}this.effectsGain=c.createGain();this.effectsGain.gain.value=.32;this.effectsGain.connect(this.master);let b=c.createBuffer(1,c.sampleRate*.5,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;this.noise=b;this.next=c.currentTime+.05;this.loop=setInterval(()=>this.schedule(),100);c.resume?.();}catch(e){console.warn('Audio no disponible:',e.message);}},
+ // 5.1: buses independientes (música, efectos, voces, ambiente) → compresor de bus suave → limitador.
+ // Antes un compresor por defecto (−24 dB, 12:1) aplastaba toda la mezcla y la música tapaba los efectos.
+ // También lo usan las pruebas con un OfflineAudioContext (tests/audio-mix.cjs).
+ buildMix(c){
+   this.master=c.createGain();this.master.gain.value=.72;const comp=this.busComp=c.createDynamicsCompressor();comp.threshold.value=-12;comp.knee.value=10;comp.ratio.value=2.5;comp.attack.value=.008;comp.release.value=.25;const lim=this.limiter=c.createDynamicsCompressor();lim.threshold.value=-3;lim.knee.value=0;lim.ratio.value=20;lim.attack.value=.001;lim.release.value=.1;this.master.connect(comp);comp.connect(lim);lim.connect(c.destination);
+   // Música: paso alto y estante grave (controla la acumulación de graves) + nodo de ducking.
+   this.musicGain=c.createGain();this.musicGain.gain.value=0;const mhp=c.createBiquadFilter();mhp.type='highpass';mhp.frequency.value=32;mhp.Q.value=.6;const mls=c.createBiquadFilter();mls.type='lowshelf';mls.frequency.value=150;mls.gain.value=-3;this.musicDuck=c.createGain();this.musicDuck.gain.value=1;this.musicGain.connect(mhp);mhp.connect(mls);mls.connect(this.musicDuck);this.musicDuck.connect(this.master);
+   this.voiceGain=c.createGain();this.voiceGain.gain.value=.5;this.voiceGain.connect(this.master);
+   this.ambienceGain=c.createGain();this.ambienceGain.gain.value=.3;this.ambienceGain.connect(this.master);
+  this.effectsGain=c.createGain();this.effectsGain.gain.value=.32;this.effectsGain.connect(this.master);
+ },
+ init(){if(this.context){this.context.resume?.();return;}try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;const c=this.context=new AC();this.buildMix(c);this.synthBus=c.createGain();this.synthBus.gain.value=1.0;this.synthBus.connect(this.musicGain);if(c.createDelay){const dL=c.createDelay(1.5),dR=c.createDelay(1.5),fb=c.createGain(),wet=c.createGain(),ef=c.createBiquadFilter();ef.type='lowpass';ef.frequency.value=1950;dL.delayTime.value=.375;dR.delayTime.value=.525;fb.gain.value=.36;wet.gain.value=.32;this.synthBus.connect(dL);dL.connect(ef);ef.connect(dR);dR.connect(fb);fb.connect(dL);ef.connect(wet);dR.connect(wet);wet.connect(this.musicGain);}let b=c.createBuffer(1,c.sampleRate*.5,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;this.noise=b;this.next=c.currentTime+.05;this.loop=setInterval(()=>this.schedule(),100);c.resume?.();}catch(e){console.warn('Audio no disponible:',e.message);}},
  tone(freq,start,length,type='triangle',volume=.3,dest=this.musicGain,slide){if(!this.context||!dest)return;const c=this.context,o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.setValueAtTime(Math.max(20,freq),start);if(slide)o.frequency.exponentialRampToValueAtTime(slide,start+length);g.gain.setValueAtTime(.001,start);g.gain.exponentialRampToValueAtTime(Math.max(.002,volume),start+.008);g.gain.exponentialRampToValueAtTime(.001,start+length);o.connect(g);g.connect(dest);o.start(start);o.stop(start+length+.01);o.onended=()=>{o.disconnect();g.disconnect();};},
  hiss(start,length,vol=.3,cutoff=1200,dest=this.effectsGain){if(!this.context||!this.noise)return;const c=this.context,s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();s.buffer=this.noise;s.loop=length>.45;f.type='lowpass';f.frequency.value=cutoff;g.gain.setValueAtTime(vol,start);g.gain.exponentialRampToValueAtTime(.001,start+length);s.connect(f);f.connect(g);g.connect(dest);s.start(start);s.stop(start+length);s.onended=()=>{s.disconnect();f.disconnect();g.disconnect();};},
  schedule(){scheduleAdventureMusic();},
+ // Ducking discreto: baja la música a `depth` (lineal) y la recupera en `hold` segundos.
+ duck(depth=.6,hold=1){if(!this.musicDuck||!this.context)return;const g=this.musicDuck.gain,t=this.context.currentTime,cur=Math.min(1,g.value||1);if(depth>=cur)return;g.cancelScheduledValues(t);g.setValueAtTime(cur,t);g.linearRampToValueAtTime(depth,t+.03);g.setTargetAtTime(1,t+.03+hold*.35,hold*.4);},
  sound(kind,strength=1,where=null){if(isLanCoop()&&lanNet.role==='host'&&lanNet.soundQueue&&lanNet.soundQueue.length<32)lanNet.soundQueue.push({kind,strength});if(!this.sfx||!this.context)return;
   // 5.0: diseño sonoro por arma, material y distancia (src/audio/sfx.js); lo no cubierto usa los tonos de 4.0.
   if(CS5.sfx.play(this,kind,strength,{pos:where?CS5.sfx.positional(where.x,where.y):null}))return;
@@ -6347,7 +6366,7 @@ function nextTurn(){if(checkWinner(true))return;resetTouchState();app.turn++;if(
  }else{app.active=alive[team.cursor%alive.length];team.cursor=(team.cursor+1)%Math.max(1,alive.length);}app.timer=app.turnTime;app.wind=(random()*2-1)*38;app.angle=45;app.power=65;app.shotCount=0;app.shotSecond=false;app.target=null;app.charging=false;app.aimMode=true;touchPlay.latchedCharge=false;app.actionAge=0;app.stable=0;app.aiAge=0;app.aiFired=false;app.aiPlan=null;app.interlude=1.1;app.weapon='rocket';setPhase('interlude');$('turnBanner').textContent=team.name+' · '+app.active.name+(cpuTurn()?' · CPU':isLanCoop()?(human()?' · TU TURNO':' · ALIADO'):'');$('turnBanner').style.setProperty('--team',colors[app.team]);$('turnBanner').classList.add('show');$('inventory').hidden=true;updateInventory();updateHUD();audio.sound('turn');}
 function checkWinner(force=false){const teams=app.teams.filter(t=>app.chars.some(c=>c.team===t.id&&c.hp>0));if(teams.length>1||app.phase==='over'||app.phase==='menu')return false;if(!force&&app.projectiles.length)return false;app.winner=teams[0]||null;showMatchResult();return true;}
 function showMatchResult(){setPhase('over');app.charging=false;input.keys.clear();input.pointers.clear();$('inventory').hidden=true;$('controls').hidden=true;app.resultDelay=app.deathBeat;$('result').hidden=app.resultDelay>0;const loss=(app.mode==='cpu'||isLanCoop())&&app.winner&&!app.winner.human;$('resultEyebrow').textContent=!app.winner?'EMPATE':loss?'LA CPU GANA ESTA VEZ':'VICTORIA';$('winnerTitle').textContent=app.winner?app.winner.name:'¡Nadie sobrevivió!';$('winnerTitle').style.color=app.winner?colors[app.winner.id]:'#ffd878';$('winnerText').textContent=loss?'Otra batalla, otra oportunidad. Ajusta el viento y busca cobertura.':app.winner?'¡Victoria! La bomba de celebración elimina a todos, pero el triunfo es tuyo.':'Dos escuadras eliminadas al mismo tiempo.';$('battleStats').textContent=app.turn+' turnos · '+app.totalShots+' ataques · '+Math.round(app.damageDone)+' de daño';audio.sound('victory');for(let i=0;i<65;i++)spawnFX(view.x+(effectsRandom()-.5)*1000,220+effectsRandom()*200,(effectsRandom()-.5)*100,-80-effectsRandom()*150,colors[i%4],3+effectsRandom()*3,2+effectsRandom()*2,'confetti');beginCelebration();return true;}
-function damage(c,amount,x,y){if(c.hp<=0||amount<=0)return;amount=Math.round(amount);CS5.pugAnim.hit(c,amount,x,y);if(c.shield>0){const blocked=Math.min(c.shield,amount);c.shield-=blocked;amount-=blocked;app.floats.push({x:c.x,y:c.y-48,life:1,text:'🛡 −'+blocked,color:'#8cecff'});}amount=Math.min(c.hp,amount);if(amount<=0)return;c.hp-=amount;c.hurt=.22;bloodSplash(c,amount,x,y);app.damageDone+=amount;app.floats.push({x:c.x,y:c.y-40,life:1.3,text:'−'+amount,color:'#ffbd94'});audio.sound('hurt',amount>=28?1.6:1);if(c.hp<=0)kill(c);}
+function damage(c,amount,x,y){if(c.hp<=0||amount<=0)return;amount=Math.round(amount);CS5.pugAnim.hit(c,amount,x,y);if(c.shield>0){const blocked=Math.min(c.shield,amount);c.shield-=blocked;amount-=blocked;app.floats.push({x:c.x,y:c.y-48,life:1,text:'🛡 −'+blocked,color:'#8cecff'});}amount=Math.min(c.hp,amount);if(amount<=0)return;c.hp-=amount;c.hurt=.22;bloodSplash(c,amount,x,y);app.damageDone+=amount;app.floats.push({x:c.x,y:c.y-40,life:1.3,text:'−'+amount,color:'#ffbd94'});if(c.hp>0)audio.sound('hurt',amount/20,{x:c.x,y:c.y});else kill(c);}
 function kill(c,water=false){if(c.hp<0)return;c.hp=-1;CS5.pugAnim.grief(app.chars,c);c.vx=0;c.walkVX=0;c.vy=0;pugDeath(c,water);if(c===app.active)app.charging=false;}
 
 function spawnFX(x,y,vx,vy,color,size,life,kind='spark'){if(app.fx.length>=Math.floor(600*app.quality))return null;const f={x,y,vx,vy,color,size,life,max:life,kind};app.fx.push(f);return f;}
