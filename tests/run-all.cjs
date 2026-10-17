@@ -11,6 +11,8 @@ const suites=[
  ['Controles 5.1 (táctil y teclado)','controls.cjs'],
  ['Arsenal 5.2 e igualdad humano/bot','weapons.cjs'],
  ['Huesitos 5.2 (suministros, IA y LAN)','supplies.cjs'],
+ ['Campaña 5.2 (34 estados, jefes, guardado, final)','campaign.cjs'],
+ ['Narrativa y diálogo 5.2','narrative.cjs'],
  ['Banda sonora y efectos','music.cjs',['10']],
  ['Mezcla de audio 5.1','audio-mix.cjs']
 ];

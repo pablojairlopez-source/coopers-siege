@@ -3,3 +3,118 @@
 /* Arma recién obtenida en un huesito: insignia «NUEVO» hasta que se elige. */
 #weaponGrid .weapon-card.fresh{box-shadow:0 0 0 2px #ffe28a,0 0 18px #ffd36a88;position:relative}
 #weaponGrid .weapon-card.fresh::after{content:'NUEVO';position:absolute;top:4px;right:6px;font:900 9px/1 system-ui,sans-serif;letter-spacing:.08em;color:#2a1a05;background:#ffe28a;border-radius:6px;padding:2px 5px}
+
+/* ---------- Botón de campaña en el menú principal ---------- */
+#campaignButton.campaign-start{background:linear-gradient(135deg,#ffd36a,#f39a3c 60%,#ff6b8a);color:#2a1205;margin-bottom:8px;font-size:clamp(12px,1.5vw,17px);letter-spacing:.03em;box-shadow:0 8px 24px #f39a3c55}
+@media (max-height:500px) and (orientation:landscape){#campaignButton.campaign-start{padding:6px 10px!important;min-height:34px!important;margin-bottom:5px;font-size:12px}}
+
+/* ---------- Recorrido de campaña ---------- */
+.cmp{position:fixed;inset:0;z-index:70;color:#f2efe8}
+.cmp[hidden]{display:none!important}
+.cmp-bg{position:absolute;inset:0;background:radial-gradient(1200px 600px at 20% 0%,#2a2f6b 0%,#0b1022 55%),#0b1022}
+.cmp-shell{position:relative;height:100%;display:flex;flex-direction:column;padding:max(10px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));box-sizing:border-box;gap:10px}
+.cmp-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cmp-title small{font:900 11px/1 inherit;letter-spacing:.28em;color:#ffd36a}
+.cmp-title h2{margin:2px 0 0;font-size:clamp(18px,2.6vw,30px);line-height:1.05}
+.cmp-stats{display:flex;gap:8px;flex-wrap:wrap;font-size:12px}
+.cmp-stats span{background:#ffffff10;border:1px solid #ffffff1c;border-radius:999px;padding:4px 10px}
+.cmp-stats b{color:#ffd36a}
+.cmp-tools{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.cmp-tools button{min-height:38px;padding:6px 12px;border-radius:12px;border:1px solid #ffffff22;background:#ffffff0f;color:#f2efe8;font:800 13px/1 inherit;cursor:pointer}
+.cmp-tools button.selected{background:#ffd36a;color:#2a1a05;border-color:#ffd36a}
+.cmp-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,360px);gap:12px}
+.cmp-route{overflow:auto;display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;padding:4px 4px 14px}
+.cmp-act{flex:1 0 100%;font:900 11px/1 inherit;letter-spacing:.2em;color:#9fb0d8;padding:8px 2px 2px;border-bottom:1px solid #ffffff14}
+.cmp-node{position:relative;width:118px;min-height:88px;display:grid;grid-template-rows:auto auto 1fr auto;justify-items:center;gap:2px;padding:8px 6px;border-radius:14px;border:1px solid #ffffff1f;background:#ffffff0c;color:inherit;cursor:pointer;font:inherit}
+.cmp-node .cmp-num{position:absolute;top:6px;left:8px;font:900 12px/1 inherit;color:#ffd36a}
+.cmp-node .cmp-icon{font-size:26px}
+.cmp-node .cmp-map{font-size:11px;font-weight:800;text-align:center;line-height:1.15}
+.cmp-pips{display:flex;gap:4px}.cmp-pips i{width:10px;height:10px;border-radius:50%;background:#ffffff22;border:1px solid #ffffff33}.cmp-pips i.on{background:#9be37a;border-color:#9be37a}
+.cmp-node.locked{opacity:.42;cursor:not-allowed;filter:grayscale(1)}
+.cmp-node.done{border-color:#9be37a88;background:#9be37a14}
+.cmp-node.half{border-color:#ffd36a88}
+.cmp-node.selected{outline:3px solid #ffd36a;outline-offset:1px;background:#ffd36a1c}
+.cmp-panel{overflow:auto;border-radius:18px;border:1px solid color-mix(in srgb,var(--accent) 60%,#fff0);background:linear-gradient(180deg,#151c38,#0e1428);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.cmp-panel-head small{font:900 10px/1 inherit;letter-spacing:.18em;color:var(--accent)}
+.cmp-panel-head h3{margin:3px 0 0;font-size:20px}
+.cmp-vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;text-align:center}
+.cmp-vs figure{margin:0}.cmp-vs canvas{width:min(120px,100%);height:auto;aspect-ratio:1}
+.cmp-vs figcaption{font-size:11px;font-weight:800}
+.cmp-vs-x{font:900 22px/1 inherit;color:var(--accent)}
+.cmp-battles{margin:0;padding:0;list-style:none;display:grid;gap:4px;font-size:12px}
+.cmp-battles li{padding:6px 8px;border-radius:10px;background:#ffffff0c}.cmp-battles li.on{background:#9be37a22}
+.cmp-battles b{display:block;color:#ffd36a;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.cmp-abil{margin:0;padding:0;list-style:none;display:grid;gap:4px;font-size:12px}
+.cmp-abil small{display:block;color:#b9c3dd}
+.cmp-actions{display:grid;gap:6px;margin-top:auto}
+.cmp-actions .start{margin:0}
+.cmp-lock,.cmp-done{margin:0;font-weight:800;color:#b9c3dd}.cmp-done{color:#9be37a}
+.cmp-gallery{grid-column:1/-1;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;align-content:start}
+.cmp-card{margin:0;border-radius:16px;padding:8px;text-align:center;background:#ffffff0b;border:1px solid #ffffff1a}
+.cmp-card.won{border-color:color-mix(in srgb,var(--accent) 70%,#fff0);background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 18%,#0000),#ffffff08)}
+.cmp-card canvas{width:100%;max-width:150px;height:auto;aspect-ratio:1}
+.cmp-card b{display:block}.cmp-card small{display:block;color:#b9c3dd;font-size:11px}.cmp-card span{font-size:11px}
+.cmp-trophy{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;overflow:auto}
+.cmp-trophy canvas{width:min(420px,60vh,80vw);height:auto;aspect-ratio:1}
+.cmp-settings{grid-column:1/-1;overflow:auto;display:grid;gap:14px;align-content:start}
+.cmp-settings section{background:#ffffff0a;border:1px solid #ffffff18;border-radius:16px;padding:10px 14px}
+.cmp-settings h3{margin:0 0 8px;font-size:15px}
+.cmp-squads{display:flex;gap:10px;flex-wrap:wrap}
+.cmp-squad{display:grid;grid-template-columns:96px auto;grid-template-rows:auto auto;gap:4px 8px;align-items:center;background:#ffffff08;border-radius:12px;padding:6px}
+.cmp-squad canvas{grid-row:1/3;width:96px;height:96px}
+.cmp-row{display:flex;gap:8px;flex-wrap:wrap}
+.mini-button.danger,.start.danger{background:#ff5f6d;color:#fff;border-color:#ff5f6d}
+.cmp-modal{position:absolute;inset:0;display:grid;place-items:center;background:#050813b3;z-index:3}
+.cmp-modal[hidden]{display:none}
+.cmp-complete canvas,.cmp-result-portrait{display:block;margin:4px auto;width:150px;height:150px}
+/* Resultado y presentación del jefe. */
+.cmp-result{z-index:75}
+.cmp-result.win .eyebrow{color:#9be37a}.cmp-result.lose .eyebrow{color:#ff797d}
+.cmp-result.boss-card .modal{border:2px solid var(--accent);background:radial-gradient(500px 260px at 50% 0%,color-mix(in srgb,var(--accent) 30%,#0000),#0e1428 70%);max-height:calc(100vh - 20px);overflow:auto}
+.cmp-boss-portrait{display:block;margin:0 auto;width:min(240px,38vh);height:auto;aspect-ratio:1;filter:drop-shadow(0 0 22px color-mix(in srgb,var(--accent) 70%,#0000))}
+.cmp-boss-title{margin:0;color:var(--accent);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:12px}
+.cmp-boss-stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:8px 0;font-size:12px}
+.cmp-boss-stats span{padding:3px 10px;border-radius:999px;background:#ffffff14}
+.cmp-result .cmp-abil{text-align:left;max-width:420px;margin:0 auto 10px}
+/* Celebración y créditos. */
+.cmp-celebrate{z-index:95;overflow:hidden}
+.cmp-celebrate .modal{position:relative;z-index:2;text-align:center;background:radial-gradient(500px 300px at 50% 30%,#ffd36a33,#0e1428 70%);border:2px solid #ffd36a}
+.cmp-celebrate canvas{width:min(360px,52vh,80vw);height:auto;aspect-ratio:1}
+.cmp-confetti{position:absolute;inset:0;pointer-events:none;z-index:1}
+.cmp-confetti i{position:absolute;top:-20px;width:9px;height:14px;border-radius:2px;animation:cmpFall 3.4s linear infinite}
+@keyframes cmpFall{to{transform:translateY(110vh) rotate(720deg)}}
+.cmp-credits{z-index:96;background:#050813;overflow:hidden}
+.cmp-roll{position:absolute;left:50%;top:100%;transform:translateX(-50%);width:min(640px,90vw);text-align:center;animation:cmpRoll 24s linear forwards}
+.cmp-roll p{margin:0 0 34px}.cmp-roll small{display:block;color:#9fb0d8;letter-spacing:.2em;text-transform:uppercase;font-size:12px}.cmp-roll b{font-size:clamp(16px,2.4vw,26px);color:#ffd36a}
+@keyframes cmpRoll{to{transform:translate(-50%,calc(-100% - 100vh))}}
+.cmp-credits-skip{position:absolute;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));min-height:40px}
+/* Fichas en partida: capítulo y barra de vida del jefe. */
+#campaignChip{position:fixed;left:50%;transform:translateX(-50%);top:calc(max(6px,env(safe-area-inset-top)) + 64px);z-index:30;padding:3px 12px;border-radius:999px;background:#0b1022d9;border:1px solid #ffd36a66;color:#ffd36a;font:900 11px/1.4 system-ui,sans-serif;letter-spacing:.14em;pointer-events:none}
+#campaignChip[hidden],#bossBar[hidden]{display:none!important}
+body[data-phase="menu"] #campaignChip,body[data-phase="menu"] #bossBar{display:none!important}
+#bossBar{position:fixed;left:50%;transform:translateX(-50%);top:calc(max(6px,env(safe-area-inset-top)) + 88px);z-index:30;width:min(480px,46vw);padding:6px 10px 7px;border-radius:14px;background:#0b1022e0;border:1px solid color-mix(in srgb,var(--accent) 70%,#fff0);pointer-events:none;color:#f2efe8;font-family:system-ui,sans-serif}
+#bossBar .bb-name{display:flex;align-items:baseline;gap:8px}
+#bossBar .bb-name b{font-size:14px;color:var(--accent)}#bossBar .bb-name small{font-size:10px;color:#b9c3dd;letter-spacing:.1em;text-transform:uppercase}
+#bossBar .bb-track{position:relative;height:10px;margin-top:4px;border-radius:6px;background:#ffffff1a;overflow:hidden}
+#bossBar .bb-fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#ff4d4d,var(--accent));transition:width .3s}
+#bossBar .bb-mark{position:absolute;top:0;bottom:0;width:2px;background:#0b1022}
+#bossBar .bb-meta{display:flex;justify-content:space-between;gap:8px;font-size:11px;margin-top:3px}
+#bossBar .bb-ability{color:#ffb35c;font-weight:800}
+#bossBar.warn{box-shadow:0 0 0 2px #ffb35c66,0 0 22px #ff6b3555}
+@media (max-height:500px) and (orientation:landscape){
+ .cmp-shell{gap:6px}.cmp-top{gap:8px}.cmp-title h2{font-size:18px}.cmp-tools button{min-height:32px;padding:4px 8px;font-size:11px}.cmp-stats{font-size:10px}
+ .cmp-body{grid-template-columns:minmax(0,1fr) 290px;gap:8px}
+ .cmp-node{width:96px;min-height:72px;padding:5px}.cmp-node .cmp-icon{font-size:20px}.cmp-node .cmp-map{font-size:10px}
+ .cmp-panel{padding:8px 10px;gap:5px}.cmp-panel-head h3{font-size:16px}.cmp-vs canvas{width:84px}
+ .cmp-abil,.cmp-battles{font-size:11px}
+ #campaignChip{top:calc(max(4px,env(safe-area-inset-top)) + 44px);font-size:9px}
+ #bossBar{top:calc(max(4px,env(safe-area-inset-top)) + 62px);width:min(380px,40vw);padding:4px 8px}
+ #bossBar .bb-name b{font-size:12px}#bossBar .bb-track{height:7px}#bossBar .bb-meta{font-size:9px}
+ .cmp-result .modal{max-height:calc(100vh - 16px);overflow:auto;padding:12px 16px}
+ .cmp-result-portrait,.cmp-complete canvas{width:96px;height:96px}
+}
+@media (max-width:760px) and (orientation:portrait){.cmp-body{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto}.cmp-panel{max-height:48vh}}
+
+/* Acceso compacto a la campaña en la fila superior del menú: solo en pantallas bajas (móvil apaisado). */
+#campaignBadge{display:none;border-color:#ffd36a!important;color:#ffd36a!important}
+@media (max-height:500px) and (orientation:landscape){#campaignBadge{display:inline-flex}}

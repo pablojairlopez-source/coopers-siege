@@ -7,9 +7,9 @@
 - **Fecha:** 17-10-2026
 - **Agente:** Claude Code (Opus)
 - **Rama:** `feature/coopers-siege-5-2-torneo` (desde `origin/main` `16c8bf4`, 5.1 publicada), publicada en `origin`.
-- **Último commit confirmado:** «Fase 5.2-C» (ver `git log -1`).
+- **Último commit confirmado:** «Fase 5.2-D/E/F/G» (ver `git log -1`).
 - **Cambios sin commit:** ninguno.
-- **Subfase actual:** 5.2-C completada (huesitos). `npm test` 10/10 (nuevas suites `tests/weapons.cjs`, `tests/supplies.cjs`).
+- **Subfase actual:** 5.2-D a 5.2-G completadas (campaña, jefes, historia, interfaz). `npm test` 12/12.
 
 ## Cambios de esta subfase
 
@@ -30,7 +30,7 @@ Subfases 5.2-B a 5.2-H y entrega (ver `docs/CAMPANA-5.2.md`).
 
 ## Próxima tarea exacta
 
-5.2-D: campaña. Crear `src/campaign/chapters.js` (datos de los 17 capítulos), `campaign.js` (estado, guardado, flujo, roster en `newMatch` con `app.campaign`), `bosses.js`, `story.js`, `dialogue.js`, `trophy.js` y estilos `src/ui/campaign.css`/`dialogue.css`.
+5.2-H y entrega: simulación de balance (`node tests/balance.cjs`), rendimiento móvil emulado, capturas en `docs/screenshots/5.2`, CHANGELOG/README/`docs/NOTAS-5.2.md`, vista previa por raw.githack de la rama y PR sin merge.
 
 ## Comandos para retomar
 

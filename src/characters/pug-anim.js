@@ -65,7 +65,7 @@ CS5.pugAnim={
    const now=performance.now()/1000;
    let expr='idle';
    const pose=c.previewPose;
-   if(pose&&pose!=='auto'){expr={aim:'focus',celebrate:'joy',hurt:'pain',scared:'fear',sad:'sad',dizzy:'dizzy',sleepy:'sleepy'}[pose]||'idle';}
+   if(pose&&pose!=='auto'){expr={aim:'focus',celebrate:'joy',hurt:'pain',scared:'fear',sad:'sad',dizzy:'dizzy',sleepy:'sleepy',surprise:'surprise',angry:'charge',focus:'focus',joy:'joy',fear:'fear',pain:'pain'}[pose]||'idle';}
    else{
     const isActive=c===ctx.active,celebrating=ctx.celebrating&&ctx.celebrating(c);
     const lost=ctx.phase==='over'&&ctx.winner&&c.team!==ctx.winner.id;
