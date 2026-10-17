@@ -288,7 +288,9 @@ DEFS[15]={
 // ---------------------------------------------------------------------------------
 // Motor: construye y cachea capas, y dibuja cielo + capas + ambiente cada frame.
 const cache=new Map();
-function quality(level){return level<=0?.5:level===1?.7:level===2?.85:1;}
+// Resolución de las capas pintadas por nivel. Son fondos suaves vistos a ~0,9 px por unidad:
+// 0,85 en Ultra apenas se nota y ahorra ~28 % de memoria frente a 1,0.
+function quality(level){return level<=0?.42:level===1?.58:level===2?.72:.85;}
 function build(map,level){
  const key=map+':'+level;if(cache.has(key))return cache.get(key);
  const def=DEFS[map]||DEFS[0],q=quality(level),rand=K.rng(4242+map*977);
@@ -312,7 +314,9 @@ function build(map,level){
  if(sky.clouds){for(let k=0;k<sky.clouds.count;k++)clouds.push({cv:K.cloudSprite(sr,260,110,sky.clouds.col,sky.clouds.shade),x:sr(),y:sky.clouds.y[0]+sr()*(sky.clouds.y[1]-sky.clouds.y[0]),s:.7+sr()*.7,v:.004+sr()*.008});}
  const out={def,layers,landmark,skyCv,clouds};
  cache.set(key,out);
- while(cache.size>3){const k=cache.keys().next().value;if(k===key)break;cache.delete(k);}
+ // Solo se conservan 2 mapas (el actual y el anterior, para volver del menú sin repintar) y del nivel vigente.
+ for(const k of [...cache.keys()])if(!k.endsWith(':'+level))cache.delete(k);
+ while(cache.size>2){const k=cache.keys().next().value;if(k===key)break;cache.delete(k);}
  return out;
 }
 
@@ -376,6 +380,7 @@ const amb={
 CS5.scenery={
  LW,DEFS,
  prepare(map,level){return build(map,level);},
+ cacheEntry(map,level){return cache.get(map+':'+level)||null;},
  // Posición en pantalla (fracción) de la fuente de luz principal del cielo.
  lightSource(map){const s=(DEFS[map]||DEFS[0]).sky||{},src=s.sun||s.moon||s.dyingStar||s.eclipse||s.planet;return src?{x:src.x,y:src.y}:{x:.5,y:.04};},
  // Dibuja el fondo completo en coordenadas de pantalla (c ya tiene la escala DPR).

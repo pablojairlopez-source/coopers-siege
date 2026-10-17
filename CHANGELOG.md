@@ -37,6 +37,13 @@
 - Bloom solo del render WebGL (muestrear el canvas 2D costaba ~8 ms/frame); fondo rasterizado a menor densidad.
 - HUD compacto en móvil horizontal (S23 Ultra emulado: barra de 38 px, minimapa de una fila) y sin solapes en plegables.
 
+### Ronda de pendientes antes del merge
+- Variantes renombradas sin marcas ajenas: «Pug ciborg (endoesqueleto cromado)» y «Pug fantasma (espectro risueño)»; etiqueta del mapa Fundición Omega: «Fábrica cibernética».
+- Rayos de luz cacheados a media resolución: explosiones en PC de 27–31 ms a ~18 ms de mediana.
+- Escenografía con menos memoria: 17 MB por mapa en Ultra (antes 22,5) y caché de 2 mapas (32 MB frente a 65).
+- Precarga de sprites y efectos al empezar la partida.
+- `tests/pug-poses.cjs` cambia de variante correctamente; `tests/memory.cjs` mide la memoria de la escenografía.
+
 ### Correcciones
 - LAN versus: el charco de ácido y el fuego en el suelo usaban azar cosmético para destruir terreno y hacer daño, lo que podía desincronizar a los dos jugadores. Ahora usan un generador determinista por efecto.
 

@@ -16,15 +16,19 @@ Rama: `feature/coopers-siege-5-nextgen` · PR #1 (lista para revisión, **sin me
 
 Documentos de entrega: `CHANGELOG.md`, `docs/COMPARATIVA-4.0-5.0.md`, `docs/AUDITORIA-5.0.md`, `docs/screenshots/`, `docs/perf/`.
 
-## Pendiente / ideas para siguientes sesiones
-- PC: Caldera Roja ~3 ms más lenta en reposo que 4.0 y un pico aislado de 138 ms en la cadena de explosiones de Archipiélago (`tests/perf.cjs`). Investigar con `node tests/spike.cjs 0 1`.
-- El primer frame tras iniciar una partida tarda (construcción de la escenografía y de las paredes 3D). En el flujo normal el menú ya construye la escenografía del mapa elegido, pero podría precargarse también al cambiar de preset.
-- Memoria JS mayor que 4.0 (69–117 MB frente a 38–82 MB) por las capas de fondo pintadas; se podría reducir la resolución de las capas lejanas en Económico/Equilibrado.
-- Las variantes de pug «Fantasma (Boo Mario Galaxy)» y «Mecha T-800 (Terminator)» citan marcas ajenas en el nombre visible; conviene renombrarlas.
-- `tests/pug-poses.cjs` no cambia la variante (el selector es `#pugVariant`); solo afecta a las capturas.
+## Ronda de pendientes (sesión 3) — hecho
+- [x] Variantes con marcas ajenas renombradas (ciborg, fantasma) y etiqueta del mapa Fundición.
+- [x] Coste de los rayos de luz: cacheados a media resolución (explosiones en PC ~18 ms; Caldera Roja en reposo 5,9 ms, igual que 4.0).
+- [x] Memoria de la escenografía: 22,5 → 17,1 MB por mapa en Ultra; caché de 3 → 2 mapas (65 → 32 MB).
+- [x] Precarga de sprites y efectos al iniciar la partida y de la escenografía del mapa.
+- [x] `tests/pug-poses.cjs` usa `#pugVariant`; nuevo `tests/memory.cjs`.
+
+## Pendiente
+- Pico único de ~80–110 ms la primera vez en la sesión que estalla una supernova en Archipiélago (PC). No se reproduce al repetirla (22 ms); probablemente inicialización interna del navegador/GPU. No resuelto con la precarga de sprites y efectos.
+- Las variantes ciborg y fantasma tienen cara propia y aún no muestran las expresiones nuevas (sí el resto de animaciones).
 - Probar en un Galaxy S23 Ultra físico: todas las mediciones móviles son emuladas.
 - Merge a `main` y publicación en GitHub Pages: solo con autorización del usuario.
-
 ## Registro de sesiones
 - Sesión 1: fases A–D.
 - Sesión 2: documentos de continuidad; fases E, F y G.
+- Sesión 3: ronda de pendientes antes del merge.

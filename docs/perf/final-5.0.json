@@ -1,5 +1,5 @@
 {
- "date": "2026-10-17T02:35:13.805Z",
+ "date": "2026-10-17T02:49:25.253Z",
  "runs": [
   {
    "profile": "pc",
@@ -8,21 +8,21 @@
    "backend": "WebGL 2.0",
    "idle": {
     "frames": 180,
-    "avgMs": 17.33,
-    "p50Ms": 18.7,
-    "p95Ms": 26.7,
-    "maxMs": 31.6,
-    "fpsEquivalent": 57.7
+    "avgMs": 14.61,
+    "p50Ms": 17.1,
+    "p95Ms": 21.8,
+    "maxMs": 29.9,
+    "fpsEquivalent": 68.5
    },
    "explosions": {
     "frames": 240,
-    "avgMs": 30.83,
-    "p50Ms": 29.4,
-    "p95Ms": 40.4,
-    "maxMs": 138,
-    "fpsEquivalent": 32.4
+    "avgMs": 18.67,
+    "p50Ms": 18.7,
+    "p95Ms": 23.5,
+    "maxMs": 108,
+    "fpsEquivalent": 53.6
    },
-   "heapMB": 117.3,
+   "heapMB": 73.1,
    "heapGrowthMB": 0,
    "particlesAtEnd": 477,
    "bloodAtEnd": 266
@@ -34,21 +34,21 @@
    "backend": "WebGL 2.0",
    "idle": {
     "frames": 180,
-    "avgMs": 9.46,
-    "p50Ms": 8.2,
-    "p95Ms": 19,
-    "maxMs": 21.3,
-    "fpsEquivalent": 105.8
+    "avgMs": 5.86,
+    "p50Ms": 6.1,
+    "p95Ms": 8,
+    "maxMs": 10.8,
+    "fpsEquivalent": 170.6
    },
    "explosions": {
     "frames": 240,
-    "avgMs": 26.76,
-    "p50Ms": 26.4,
-    "p95Ms": 35.5,
-    "maxMs": 52.4,
-    "fpsEquivalent": 37.4
+    "avgMs": 18.72,
+    "p50Ms": 19.5,
+    "p95Ms": 28.6,
+    "maxMs": 40.7,
+    "fpsEquivalent": 53.4
    },
-   "heapMB": 117.3,
+   "heapMB": 73.1,
    "heapGrowthMB": 0,
    "particlesAtEnd": 392,
    "bloodAtEnd": 506
@@ -60,21 +60,21 @@
    "backend": "WebGL 2.0",
    "idle": {
     "frames": 180,
-    "avgMs": 15.79,
-    "p50Ms": 18.7,
-    "p95Ms": 22.8,
-    "maxMs": 33.1,
-    "fpsEquivalent": 63.4
+    "avgMs": 19.54,
+    "p50Ms": 19.9,
+    "p95Ms": 23.2,
+    "maxMs": 27,
+    "fpsEquivalent": 51.2
    },
    "explosions": {
     "frames": 240,
-    "avgMs": 16.2,
-    "p50Ms": 16.6,
-    "p95Ms": 21.3,
-    "maxMs": 31.4,
-    "fpsEquivalent": 61.7
+    "avgMs": 17.53,
+    "p50Ms": 18.7,
+    "p95Ms": 24.7,
+    "maxMs": 33.3,
+    "fpsEquivalent": 57
    },
-   "heapMB": 117.3,
+   "heapMB": 73.1,
    "heapGrowthMB": 0,
    "particlesAtEnd": 388,
    "bloodAtEnd": 247
@@ -86,21 +86,21 @@
    "backend": "WebGL 2.0",
    "idle": {
     "frames": 180,
-    "avgMs": 17.39,
-    "p50Ms": 17.4,
-    "p95Ms": 19.6,
-    "maxMs": 25.3,
-    "fpsEquivalent": 57.5
+    "avgMs": 16.7,
+    "p50Ms": 16.6,
+    "p95Ms": 19.7,
+    "maxMs": 25.6,
+    "fpsEquivalent": 59.9
    },
    "explosions": {
     "frames": 240,
-    "avgMs": 26.82,
+    "avgMs": 27.11,
     "p50Ms": 25.6,
-    "p95Ms": 36.2,
-    "maxMs": 89.1,
-    "fpsEquivalent": 37.3
+    "p95Ms": 38,
+    "maxMs": 88.8,
+    "fpsEquivalent": 36.9
    },
-   "heapMB": 68.9,
+   "heapMB": 87.5,
    "heapGrowthMB": 0,
    "particlesAtEnd": 477,
    "bloodAtEnd": 266
@@ -112,21 +112,21 @@
    "backend": "WebGL 2.0",
    "idle": {
     "frames": 180,
-    "avgMs": 9.93,
-    "p50Ms": 10,
-    "p95Ms": 14.8,
-    "maxMs": 17,
-    "fpsEquivalent": 100.7
+    "avgMs": 10.16,
+    "p50Ms": 10.6,
+    "p95Ms": 15.7,
+    "maxMs": 18.4,
+    "fpsEquivalent": 98.4
    },
    "explosions": {
     "frames": 240,
-    "avgMs": 23.51,
-    "p50Ms": 23.2,
-    "p95Ms": 34.7,
-    "maxMs": 53.1,
-    "fpsEquivalent": 42.5
+    "avgMs": 23.4,
+    "p50Ms": 23.1,
+    "p95Ms": 34,
+    "maxMs": 55.8,
+    "fpsEquivalent": 42.7
    },
-   "heapMB": 68.9,
+   "heapMB": 87.5,
    "heapGrowthMB": 0,
    "particlesAtEnd": 392,
    "bloodAtEnd": 506
@@ -138,21 +138,21 @@
    "backend": "WebGL 2.0",
    "idle": {
     "frames": 180,
-    "avgMs": 16.83,
-    "p50Ms": 16.7,
-    "p95Ms": 18.9,
-    "maxMs": 20.4,
-    "fpsEquivalent": 59.4
+    "avgMs": 17.75,
+    "p50Ms": 17.8,
+    "p95Ms": 19.7,
+    "maxMs": 22.2,
+    "fpsEquivalent": 56.3
    },
    "explosions": {
     "frames": 240,
-    "avgMs": 23.76,
-    "p50Ms": 23.9,
-    "p95Ms": 29.3,
-    "maxMs": 54.5,
-    "fpsEquivalent": 42.1
+    "avgMs": 24.39,
+    "p50Ms": 24.1,
+    "p95Ms": 31.1,
+    "maxMs": 54.7,
+    "fpsEquivalent": 41
    },
-   "heapMB": 68.9,
+   "heapMB": 87.5,
    "heapGrowthMB": 0,
    "particlesAtEnd": 388,
    "bloodAtEnd": 247

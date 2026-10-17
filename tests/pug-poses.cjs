@@ -14,7 +14,7 @@ const {serve,launch,VIEWPORTS,ROOT}=require('./lib/harness.cjs');
   await page.waitForTimeout(500);
   const stage=page.locator('#pugPreview3D');
   for(const v of variants){
-   await page.evaluate(v=>{const s=document.getElementById('editorVariant');if(s){s.value=v;s.dispatchEvent(new Event('change'));s.dispatchEvent(new Event('input'));}},v);
+   await page.evaluate(v=>{const s=document.getElementById('pugVariant');if(s){s.value=v;s.dispatchEvent(new Event('change'));s.dispatchEvent(new Event('input'));}},v);
    for(const pose of ['idle','aim','celebrate','scared','hurt','dizzy','sad','sleepy']){
     await page.evaluate(p=>document.querySelector(`[data-pose="${p}"]`).click(),pose);
     await page.waitForTimeout(450);
