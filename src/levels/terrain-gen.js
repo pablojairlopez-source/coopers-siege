@@ -138,7 +138,28 @@ const LAYOUTS=[
  g=>{const {W,r,n}=g,cakes=[0,1,2].map(i=>[520+i*1000+(r()-.5)*150,1+Math.floor(r()*2)]),adds=[],carves=[];
   const donut=[W*.5+(r()-.5)*200,380];adds.push({type:'ellipse',x:donut[0],y:donut[1],rx:120,ry:120});carves.push({type:'ellipse',x:donut[0],y:donut[1],rx:50,ry:50});
   return {h:x=>{let y=520+40*Math.sin(x*.006)+16*n.fbm(x*.008,3);
-   for(const [c,tiers] of cakes)for(let t=0;t<=tiers;t++){const m=mesa(x,c,230-t*70,18);y=Math.min(y,y*(1-m)+(470-t*70)*m);}return y;},adds,carves};}
+   for(const [c,tiers] of cakes)for(let t=0;t<=tiers;t++){const m=mesa(x,c,230-t*70,18);y=Math.min(y,y*(1-m)+(470-t*70)*m);}return y;},adds,carves};},
+ // 16 · Jardín de Espinas (5.1): troncos de zarza suspendidos sobre un mar de nubes, ramas
+ // trenzadas que hacen de puentes, plataformas de raíces y flores gigantes con tallo.
+ // Las espinas de los puentes cuelgan por debajo: son silueta y terreno destructible, no dañan.
+ g=>{const {W,WATER,r,n}=g,adds=[],carves=[];
+  const trunks=[0,1,2,3].map(i=>[360+i*790+(r()-.5)*150,150+r()*60,390+r()*60]);
+  // Puentes de dos hebras retorcidas entre troncos vecinos.
+  for(let i=0;i<trunks.length-1;i++){
+   const [a,aw,at]=trunks[i],[b,bw,bt]=trunks[i+1],x0=a+aw*.6,x1=b-bw*.6,sag=40+r()*60,ph=r()*TAU;
+   for(let k=0;k<=46;k++){const t=k/46,x=x0+(x1-x0)*t,y=at+(bt-at)*t+sag*Math.sin(t*Math.PI)+12;
+    for(const s of [-1,1])adds.push({type:'ellipse',x,y:y+s*7*Math.sin(t*TAU*3+ph),rx:13,ry:9});
+    if(k%5===2){const sx=x+(r()-.5)*8,sy=y+14,len=14+r()*12;adds.push({type:'poly',pts:[[sx-5,sy],[sx+5,sy],[sx+(r()-.5)*6,sy+len]]});}}
+  }
+  // Plataformas de raíces flotantes por encima de los puentes.
+  for(let i=0;i<5;i++){const cx=520+i*520+(r()-.5)*140,cy=300+r()*60;adds.push(blob(r,cx,cy,70+r()*40,18+r()*8,.28,20));}
+  // Flores gigantes: tallo y corola que sirve de plataforma.
+  for(let i=0;i<3;i++){const cx=760+i*790+(r()-.5)*120,cy=360+r()*50;adds.push({type:'rect',x:cx-8,y:cy,w:16,h:WATER+60-cy});adds.push({type:'ellipse',x:cx,y:cy,rx:78,ry:15});adds.push({type:'ellipse',x:cx,y:cy-8,rx:30,ry:10});}
+  // Huecos y nudos en los troncos.
+  for(const [c,hw,top] of trunks){carves.push({type:'ellipse',x:c+(r()-.5)*hw*.6,y:top+95+r()*30,rx:hw*.32,ry:34});}
+  return {h:x=>{let y=WATER+130;
+   for(const [c,hw,top] of trunks){const m=mesa(x,c,hw,60),gnarl=top+22*n.fbm(x*.012,3)+10*Math.sin(x*.05);y=y*(1-m)+gnarl*m;}
+   return y;},adds,carves};}
 ];
 
 function makeLayout(index,seed,W,H,WATER){

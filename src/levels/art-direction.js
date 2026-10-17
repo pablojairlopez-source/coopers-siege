@@ -92,7 +92,13 @@ const ART=[
   terrain:{top:{color:'#ffd0ea',hi:'#ffffff',depth:7,deco:'frosting'},sub:{color:'#ff8ac4',depth:6},mid:'#e8a874',deep:'#9a5a3a',pattern:'cake',
    accents:[{type:'sprinkles',color:'#ffffff',density:.004},{type:'gems',color:'#ff4a8a',density:.0006}]},
   sky:['#5a3a9a','#ff9ad0','#ffe6f6'],water:'#ff6ab8',fog:'#ffe0f6',sun:'#fffaf0',
-  grade:{exposure:1.06,contrast:1.02,saturation:1.2,shadows:'#5a2a7a',highlights:'#fff0f8',vignette:.18,bloom:.7},scenery:'candy'}
+  grade:{exposure:1.06,contrast:1.02,saturation:1.2,shadows:'#5a2a7a',highlights:'#fff0f8',vignette:.18,bloom:.7},scenery:'candy'},
+ // 5.1 · Jardín de Espinas: corteza de zarza, musgo con espinas y un abismo de nubes.
+ {id:'thorns',rays:0.85,
+  terrain:{top:{color:'#5fae4e',hi:'#c4f29a',depth:5,deco:'thorns',thorn:'#3a1e26'},sub:{color:'#6e4a3c',depth:8},mid:'#5a3a32',deep:'#24161a',pattern:'bark',
+   accents:[{type:'roots',color:'#3a2420',density:.9},{type:'pebbles',color:'#d8b8e8',density:.0007},{type:'gems',color:'#ff9ad0',density:.0004}]},
+  sky:['#3a5294','#93a8de','#ffe2ee'],water:'#c9d2f2',fog:'#f2e8ff',sun:'#fff6e6',
+  grade:{exposure:1.05,contrast:1.05,saturation:1.08,shadows:'#3a2a5a',highlights:'#fff0f6',vignette:.24,bloom:.8},scenery:'thorns'}
 ];
 
 CS5.art=ART;

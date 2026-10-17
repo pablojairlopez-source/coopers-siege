@@ -1188,14 +1188,14 @@ body[data-phase="menu"] #turnBanner{display:none!important}
    <div class="form-row"><label id="difficultyWrap">Dificultad CPU<select id="difficulty"><option value="easy">Fácil</option><option value="normal" selected>Normal</option><option value="hard">Difícil</option></select></label><label>Tiempo por turno<select id="turnDuration"><option value="30">30 segundos</option><option value="45" selected>45 segundos</option><option value="60">60 segundos</option><option value="90">90 segundos</option></select></label></div>
    <details><summary>Personalizar nombres y arsenal</summary><div class="form-row"><label>Tu equipo<input id="teamA" type="text" value="Marea" maxlength="18" autocomplete="off"></label><label><span id="teamBLabel">Equipo CPU</span><input id="teamB" type="text" value="Brasa" maxlength="18" autocomplete="off"></label></div><label>Munición<select id="ammoMode"><option value="standard">Estándar · armas especiales limitadas</option><option value="abundant">Abundante · el doble de munición</option><option value="infinite">Infinita · caos total</option></select></label></details>
    <details class="graphics-settings"><summary>Gráficos, resolución y pantalla completa</summary><div class="form-row"><label>Calidad gráfica<select id="graphicsPreset"><option value="auto">Automática</option><option value="low">Económico</option><option value="medium">Equilibrado</option><option value="high">Alto</option><option value="ultra" selected>Ultra</option></select></label><label>Fluidez<select id="fpsLimit"><option value="0">Según el perfil</option><option value="30">30 FPS · ahorro</option><option value="60" selected>60 FPS · fluido</option></select></label></div><div class="form-row"><label>Resolución<select id="resolutionMode"><option value="native" selected>Nativa / QHD+ (Máxima nitidez)</option><option value="uhd">4K / Super-Res (3840p · SSAA)</option><option value="qhd">2K / QHD+ (2560×1440)</option><option value="fhd">Full HD (1920×1080)</option><option value="hd">HD (1280×720 · Ahorro)</option><option value="auto">Automática según calidad</option></select></label><label>Gore<select id="goreLevel"><option value="none">Ninguno · sin gore</option><option value="low">Bajo</option><option value="medium">Medio</option><option value="high">Alto</option><option value="demonic" selected>Demencial</option></select></label></div><div class="form-row"><label>Tamaño de fragmentos<select id="fragmentSize"><option value="small">Chicos</option><option value="medium" selected>Medianos</option><option value="large">Grandes</option><option value="giant">Gigantescos</option></select></label><label>Intensidad del clima<select id="weatherLevel"><option value="none">Desactivado</option><option value="normal">Suave</option><option value="intense" selected>Intenso</option><option value="storm">Tormenta</option></select></label></div><p id="goreInfo" class="graphics-info gore-info"></p><div class="play-checks"><label class="check"><input id="autoFullscreen" type="checkbox">Pantalla completa al comenzar</label><label class="check"><input id="showFPS" type="checkbox">Mostrar FPS</label></div><p id="graphicsInfo" class="graphics-info"></p></details>
-   <details><summary>Música adaptativa y volúmenes</summary><label>Modo musical<select id="musicMood"><option value="auto">🎵 Dinámico (cambia con el combate)</option><option value="adventure">🎹 Combate constante</option><option value="ambient">🌙 Exploración tranquila</option><option value="intense">⚡ Clímax permanente</option></select></label><div class="audio-sliders"><label>Maestro <b id="volMasterVal">80%</b><input id="volMaster" type="range" min="0" max="100" value="80"></label><label>Música <b id="volMusicVal">85%</b><input id="volMusic" type="range" min="0" max="100" value="85"></label><label>Efectos <b id="volSfxVal">90%</b><input id="volSfx" type="range" min="0" max="100" value="90"></label></div><div class="audio-settings"><label class="check"><input id="musicSetting" type="checkbox" checked>Música activa</label><label class="check"><input id="sfxSetting" type="checkbox" checked>Efectos</label></div><button type="button" id="openLyriaButton" class="lyria-btn">🎼 Banda sonora original (17 piezas)</button></details>
+   <details><summary>Música adaptativa y volúmenes</summary><label>Modo musical<select id="musicMood"><option value="auto">🎵 Dinámico (cambia con el combate)</option><option value="adventure">🎹 Combate constante</option><option value="ambient">🌙 Exploración tranquila</option><option value="intense">⚡ Clímax permanente</option></select></label><div class="audio-sliders"><label>Maestro <b id="volMasterVal">80%</b><input id="volMaster" type="range" min="0" max="100" value="80"></label><label>Música <b id="volMusicVal">85%</b><input id="volMusic" type="range" min="0" max="100" value="85"></label><label>Efectos <b id="volSfxVal">90%</b><input id="volSfx" type="range" min="0" max="100" value="90"></label></div><div class="audio-settings"><label class="check"><input id="musicSetting" type="checkbox" checked>Música activa</label><label class="check"><input id="sfxSetting" type="checkbox" checked>Efectos</label></div><button type="button" id="openLyriaButton" class="lyria-btn">🎼 Banda sonora original (18 piezas)</button></details>
   </div>
   <div class="workshop-launch"><button id="scenarioEditorButton">✎ Editor de escenario</button><button id="characterEditorButton">🐾 Editor de pugs</button></div>
   <button id="startButton" class="start">COMENZAR BATALLA <span aria-hidden="true">↗</span></button>
   <div class="menu-bottom"><a href="https://pablojairlopez-source.github.io/coopers-siege/" target="_blank" rel="noopener" class="text-button" style="color:#5cebe2;text-decoration:none;font-weight:800" title="Abrir versión web en GitHub Pages">🌐 GitHub Pages ↗</a><a href="https://github.com/pablojairlopez-source/coopers-siege" target="_blank" rel="noopener" class="text-button" style="color:#ffd479;text-decoration:none;font-weight:700" title="Repositorio oficial en GitHub">📦 Repo GitHub ↗</a><button id="menuFullscreenButton" class="text-button" aria-label="Pantalla completa" aria-pressed="false">⛶ Pantalla completa</button><button id="helpButton" class="text-button">Cómo jugar ↗</button></div>
  </section>
  <section class="menu-right">
-  <div class="edition"><strong>PUG PARTY · HUMOR NEGRO</strong>28 ARMAS · 16 MUNDOS 2× MÁS GRANDES · PUGS EXPRESIVOS<br>17 PIEZAS MUSICALES ORIGINALES · DESTRUCCIÓN 2.0 · WEBGL 2</div>
+  <div class="edition"><strong>PUG PARTY · HUMOR NEGRO</strong>28 ARMAS · 17 MUNDOS 2× MÁS GRANDES · PUGS EXPRESIVOS<br>18 PIEZAS MUSICALES ORIGINALES · DESTRUCCIÓN 2.0 · WEBGL 2</div>
   <div class="scene-caption"><b id="mapTitle">ISLAS TROPICALES</b><p id="mapDescription">Islas, cuevas y una brisa de verano.</p><div id="stageMusicBar" class="stage-music-bar"><span id="stageMusicIcon">♫</span> <span id="stageMusicStatus">Melodía de etapa:</span> <b id="stageMusicName">Brisa de Manglar</b> <button id="stageMusicToggleBtn" type="button" title="Alternar entre vista previa de la melodía del mapa y música del menú">🔊 Escuchar etapa</button></div></div>
   <div><p class="map-label">ELIGE TU CAMPO DE BATALLA</p><div id="maps" class="map-grid"></div><p class="tiny-note">Cada cráter cambia la siguiente jugada.</p></div>
  </section>
@@ -1335,6 +1335,7 @@ body[data-phase="menu"] #turnBanner{display:none!important}
 <script src="src/rendering/terrain-materials.js"></script>
 <script src="src/rendering/scenery-kit.js"></script>
 <script src="src/rendering/scenery.js"></script>
+<script src="src/rendering/scenery-thorns.js"></script>
 <script src="src/rendering/post.js"></script>
 <script src="src/rendering/props3d.js"></script>
 <script src="src/characters/pug-anim.js"></script>
@@ -2126,7 +2127,8 @@ const scenePalettes=[
  {sky:['#04152d','#0d4a6e','#38b8c4'],soil:['#4b7a8c','#163247'],rim:'#6ef7e8',water:'#096885',fog:'#7ef5ff',faces:['#103452','#246482','#68c9d9','#082036']},
  {sky:['#0d111c','#362938','#c95b38'],soil:['#525966','#1d222b'],rim:'#ff9c45',water:'#e8521c',fog:'#ff9852',faces:['#222834','#454e5e','#8a96a8','#12161f']},
  {sky:['#140612','#591224','#d9384a'],soil:['#542834','#1f0b12'],rim:'#ff4d6a',water:'#c9182b',fog:'#ff7088',faces:['#2b0f18','#631d2c','#b84255','#17060b']},
- {sky:['#26183d','#964b8a','#ffccf2'],soil:['#d98cb8','#593054'],rim:'#8cffd8',water:'#ff66b5',fog:'#ffe0f7',faces:['#4f2d59','#94548c','#f2a6d8','#2e1836']}
+ {sky:['#26183d','#964b8a','#ffccf2'],soil:['#d98cb8','#593054'],rim:'#8cffd8',water:'#ff66b5',fog:'#ffe0f7',faces:['#4f2d59','#94548c','#f2a6d8','#2e1836']},
+  {sky:['#2a3f80','#93a8de','#ffe2ee'],soil:['#5a3a32','#24161a'],rim:'#5fae4e',water:'#c9d2f2',fog:'#f2e8ff',faces:['#4a3a5a','#7a6a8a','#c8b8d8','#2a2038']}
 ];
 function applyScenePalettes(){for(let i=0;i<maps.length;i++)Object.assign(maps[i],{sky:[...scenePalettes[i].sky],soil:[...scenePalettes[i].soil],rim:scenePalettes[i].rim,water:scenePalettes[i].water,fog:scenePalettes[i].fog});}
 function pixelPolygon(c,points,color){c.fillStyle=color;c.beginPath();points.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.closePath();c.fill();}
@@ -2247,9 +2249,9 @@ function drawWeather(c,time,front){
   c.stroke();
  }
  // 7. Alien Spores, Forest Fireflies, Supernova Stardust & Candy Sprinkles: Maps 4, 6, 8, 15
- if([4,6,8,15].includes(map)){
+ if([4,6,8,15,16].includes(map)){
   const count=Math.round((front?48:24)*strength);
-  c.fillStyle=map===4?'#c4ff9e':map===6?'#ffe6a8':map===15?'#ff9ee2':'#b5ffd0';
+  c.fillStyle=map===4?'#c4ff9e':map===6?'#ffe6a8':map===15?'#ff9ee2':map===16?'#ffe6f2':'#b5ffd0';
   c.globalAlpha=front?.68:.35;
   c.beginPath();
   for(let i=0;i<count;i++){
@@ -5427,7 +5429,8 @@ const maps=[
 {id:'atlantis',name:'Abismo Atlantis',tag:'CIUDADela SUBMARINA 3D',icon:'🔱',bpm:104,key:55,scale:[0,2,3,7,9],desc:'Domos sumergidos, columnas de mármol y corales bioluminiscentes.'},
 {id:'factory',name:'Fundición Omega',tag:'FÁBRICA CIBERNÉTICA',icon:'⚙',bpm:134,key:48,scale:[0,2,3,5,7,10],desc:'Hornos de acero fundido, prensas hidráulicas 3D y láseres.'},
 {id:'inferno',name:'Catedral Gótica',tag:'INFIERNO CARMESÍ',icon:'🩸',bpm:132,key:48,scale:[0,1,3,5,7,8],desc:'Agujas góticas de obsidiana bajo un eclipse de luna de sangre.'},
-{id:'candy',name:'Dulce Caos',tag:'REINO DE AZÚCAR',icon:'🍩',bpm:124,key:60,scale:[0,2,4,7,9],desc:'Montañas de pastel, paletas gigantes 3D y glaseado explosivo.'}
+{id:'candy',name:'Dulce Caos',tag:'REINO DE AZÚCAR',icon:'🍩',bpm:124,key:60,scale:[0,2,4,7,9],desc:'Montañas de pastel, paletas gigantes 3D y glaseado explosivo.'},
+{id:'thorns',name:'Jardín de Espinas',tag:'ZARZAS SOBRE LAS NUBES',icon:'🥀',bpm:92,key:52,scale:[0,2,3,5,7,9,10],desc:'Zarzas colosales, puentes de ramas retorcidas y flores gigantes sobre un mar de nubes.'}
 ];
 const weapons=[
 {id:'rocket',name:'Bazuca',icon:'🚀',ammo:Infinity,radius:53,damage:46,charge:true,desc:'Gravedad + viento · cráter medio',short:'Misil con viento y gravedad.'},
