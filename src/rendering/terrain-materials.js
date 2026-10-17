@@ -76,6 +76,8 @@ const PATTERNS={
  marble(x,y,T){const v=Math.sin(x*.018+y*.006+T.a[(((y>>1)&255)<<8)|((x>>1)&255)]*9);return 1+(Math.abs(v)<.06?.3:0)+.05*(T.c[((y&255)<<8)|(x&255)]-.5);},
  plates(x,y,T){const px=x%64,py=y%40;let p=(px<2||py<2)?.6:(px<4||py<4)?1.12:1;const rx=px-6,ry=py-6,rx2=px-58;if((rx*rx+ry*ry<5)||(rx2*rx2+ry*ry<5))p=1.35;return p+.05*(T.b[((y&255)<<8)|(x&255)]-.5);},
  obsidian(x,y,T){const k=((y&255)<<8)|(x&255),e=T.vor.edge[k];return e<.08?1.45:(.86+(T.vor.id[k]%9)*.035);},
+ // Corteza retorcida: fibras diagonales onduladas con nudos.
+ bark(x,y,T){const w=T.a[(((y>>2)&255)<<8)|((x>>2)&255)],f=Math.sin(x*.16+y*.42+w*9),knot=T.vorBig.edge[(((y>>1)&255)<<8)|((x>>1)&255)];return (Math.abs(f)<.18?.72:1)*(knot<.06?.7:1)+.08*(T.b[((y&255)<<8)|(x&255)]-.5);},
  cake(x,y,T){const wave=Math.sin(x*.05)*3+T.a[((y&255)<<8)|((x>>1)&255)]*4,band=(y+wave)%30;const pore=(hash2(x>>1,y>>1)%23===0)?.8:1;return band<8?1.35:pore*(1+.06*(T.b[((y&255)<<8)|(x&255)]-.5));}
 };
 
@@ -83,6 +85,7 @@ CS5.paintTerrain=function(t,rect,W,H,WATER,mapIndex){
  const T=ensureTiles(),art=CS5.artFor(mapIndex),M=art.terrain,mask=t.mask,d=t.imageData.data;
  const top=rgb(M.top.color),hi=rgb(M.top.hi||M.top.color),sub=rgb(M.sub.color),mid=rgb(M.mid),deep=rgb(M.deep);
  const pattern=PATTERNS[M.pattern]||PATTERNS.soil,deco=M.top.deco;
+ const thornCol=rgb(M.top.thorn||'#3a1e26');
  const acc={};for(const a of M.accents||[])acc[a.type]=a;
  const vein=acc.veins,veinCol=vein?rgb(vein.color):null,veinGlow=vein?rgb(vein.glow||vein.color):null;
  const ys=Math.max(0,rect.y1-96),ye=Math.min(H-1,rect.y2+28);
@@ -104,8 +107,9 @@ CS5.paintTerrain=function(t,rect,W,H,WATER,mapIndex){
   const ch=hash2(x,77);
   let topD=topBase+Math.round((T.a[(x>>1)&255]-.5)*4);
   if(deco==='frosting'&&(ch%11)<3)topD+=6+(ch>>5)%18;
-  const bladeH=deco==='grass'?(2+((ch>>3)&7))*(T.b[(x>>2)&255]>.35?1:.45):deco==='moss'?1+((ch>>4)&3):deco==='petals'?1+((ch>>4)&3):deco==='snow'?2+Math.round(T.a[((x>>3)&255)]*4):deco==='coral'?(T.c[(x>>2)&255]>.58?3+((ch>>2)&7):0):deco==='rubble'?((T.b[(x*3)&255]>.62)?1+((ch>>6)&1):0):0;
-  const bladeOn=deco==='grass'?(ch&3)!==0:deco==='coral'?true:deco==='snow'||deco==='rubble'?true:(ch&1)===0;
+  const spike=deco==='thorns'&&(ch%13)<3;
+  const bladeH=deco==='thorns'?(spike?5+((ch>>4)&3):1+((ch>>3)&1)):deco==='grass'?(2+((ch>>3)&7))*(T.b[(x>>2)&255]>.35?1:.45):deco==='moss'?1+((ch>>4)&3):deco==='petals'?1+((ch>>4)&3):deco==='snow'?2+Math.round(T.a[((x>>3)&255)]*4):deco==='coral'?(T.c[(x>>2)&255]>.58?3+((ch>>2)&7):0):deco==='rubble'?((T.b[(x*3)&255]>.62)?1+((ch>>6)&1):0):0;
+  const bladeOn=deco==='thorns'?true:deco==='grass'?(ch&3)!==0:deco==='coral'?true:deco==='snow'||deco==='rubble'?true:(ch&1)===0;
   const mushroom=acc.mushrooms&&(ch%97)===0;
   for(let y=rect.y1;y<=rect.y2;y++){
    const i=y*W+x,j=i*4;
@@ -119,6 +123,7 @@ CS5.paintTerrain=function(t,rect,W,H,WATER,mapIndex){
       const k=a/Math.max(1,bladeH);
       if(deco==='snow'){const s=1-.18*k;out[0]=245*s;out[1]=250*s;out[2]=255;}
       else if(deco==='coral'){const c=(x>>4)%3;const base=c===0?[255,128,110]:c===1?[255,180,90]:[200,110,220];const s=.75+.35*k;out[0]=base[0]*s;out[1]=base[1]*s;out[2]=base[2]*s;if(hash2(x,y)%3===0){d[j+3]=0;continue;}}
+      else if(spike){const s=.8+.35*k;out[0]=thornCol[0]*s;out[1]=thornCol[1]*s;out[2]=thornCol[2]*s;}
       else if(deco==='rubble'){const s=.8+.2*(hash2(x,y)&3)/3;out[0]=mid[0]*s*1.25;out[1]=mid[1]*s*1.25;out[2]=mid[2]*s*1.25;}
       else{out[0]=top[0]+(hi[0]-top[0])*k;out[1]=top[1]+(hi[1]-top[1])*k;out[2]=top[2]+(hi[2]-top[2])*k;const sh=.72+.28*k;out[0]*=sh;out[1]*=sh;out[2]*=sh;}
       painted=true;

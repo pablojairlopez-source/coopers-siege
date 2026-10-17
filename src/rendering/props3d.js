@@ -52,7 +52,12 @@ const PROPS={
  // Dulce Caos: piruleta, gominola y bastón de caramelo.
  15:[(r,o,m,cap,ell)=>{cap(0,0,0,1.2,0,-34,0,1.2,'#ffffff','#e8e8f0',6,2,1);ell(0,-42,0,10,10,3,'#ff4a8a','#ffffff',12,6,1);ell(0,-42,3.2,6,6,.5,'#ffffff','#ff8ac0',10,4,1);ell(0,-42,3.6,2.5,2.5,.4,'#ff4a8a','#ff4a8a',8,3,1);},
     (r,o,m,cap,ell)=>{const col=['#7af0c8','#ffe06a','#b88aff','#ff8a8a'][Math.floor(r()*4)];ell(0,-10,0,11,11,11,col,col,10,6,1,.95);ell(-3,-16,8,3,4,1,'#ffffff','#ffffff',6,3,1);},
-    (r,o,m,cap,ell)=>{for(let k=0;k<9;k++){const y0=-k*5,y1=-(k+1)*5;cap(0,y0,0,2.6,0,y1,0,2.6,k%2?'#ffffff':'#ff3a5a',k%2?'#ffffff':'#ff3a5a',8,1,1);}for(let k=0;k<6;k++){const a=Math.PI+k/6*Math.PI,a2=Math.PI+(k+1)/6*Math.PI;cap(8+Math.cos(a)*8,-45+Math.sin(a)*8,0,2.6,8+Math.cos(a2)*8,-45+Math.sin(a2)*8,0,2.6,k%2?'#ffffff':'#ff3a5a',k%2?'#ffffff':'#ff3a5a',8,1,1);}}]
+    (r,o,m,cap,ell)=>{for(let k=0;k<9;k++){const y0=-k*5,y1=-(k+1)*5;cap(0,y0,0,2.6,0,y1,0,2.6,k%2?'#ffffff':'#ff3a5a',k%2?'#ffffff':'#ff3a5a',8,1,1);}for(let k=0;k<6;k++){const a=Math.PI+k/6*Math.PI,a2=Math.PI+(k+1)/6*Math.PI;cap(8+Math.cos(a)*8,-45+Math.sin(a)*8,0,2.6,8+Math.cos(a2)*8,-45+Math.sin(a2)*8,0,2.6,k%2?'#ffffff':'#ff3a5a',k%2?'#ffffff':'#ff3a5a',8,1,1);}}],
+ // 5.1 · Jardín de Espinas: flor gigante, arco de zarza con espinas y capullo luminoso.
+ 16:[(r,o,m,cap,ell)=>{cap(0,0,0,1.6,2,-20,0,1.3,'#3f8a4c','#86d690',6,2,0);cap(2,-20,0,1.3,-1,-38,0,1.1,'#3f8a4c','#86d690',6,2,0);ell(-6,-14,0,6,1.4,3,'#4fa65a','#a8f08a',8,3,0);
+     const pc=['#ff8ac4','#ffd36a','#b89aff'][Math.floor(r()*3)];for(let k=0;k<7;k++){const a=k/7*TAU;ell(-1+Math.cos(a)*7,-40+Math.sin(a)*7,0,5.5,3.2,2,pc,'#ffffff',8,4,1);}ell(-1,-40,1.5,3.6,3.6,2.2,'#ffe27a','#fff6c0',8,4,3,1);},
+    (r,o,m,cap,ell)=>{let px=-16,py=0;for(let k=1;k<=10;k++){const a=Math.PI-k/10*Math.PI,x=Math.cos(a)*16,y=-Math.sin(a)*26;cap(px,py,0,2.4,x,y,0,2.2,'#5a3a32','#8a6a5a',6,1,0);if(k%2)cap(x,y,0,.9,x+(k%4?3:-3),y-4,1.5,.1,'#2a1418','#6a3a3a',4,1,0);px=x;py=y;}ell(0,-27,1,3,2,1.5,'#ff8ac4','#ffe0f0',8,4,1);},
+    (r,o,m,cap,ell)=>{cap(0,0,0,1.8,1,-26,0,1.2,'#4a6a3a','#7aa060',6,2,0);for(let k=0;k<4;k++){const y=-5-k*6,s=k%2?1:-1;cap(.5,y,0,.8,.5+s*4,y-3,0,.1,'#2a1418','#5a2a2a',4,1,0);}ell(1,-31,0,4.5,6,4.5,'#ffc0e0','#fff0f8',10,6,3,1);}]
 };
 
 // Devuelve true si el mapa tiene un decorado propio para este punto.

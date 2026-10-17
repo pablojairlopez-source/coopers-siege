@@ -4,10 +4,13 @@ const {spawnSync}=require('node:child_process');
 const path=require('node:path');
 const suites=[
  ['LAN 6v6 (original)','lan-coop.cjs'],
+ ['LAN 5.1: controles nuevos y mapa 17','lan-51.cjs'],
  ['Escenarios ampliados','smoke.cjs'],
  ['Daño, gore y destrucción','effects.cjs'],
  ['HUD responsivo','ui.cjs'],
- ['Banda sonora y efectos','music.cjs',['10']]
+ ['Controles 5.1 (táctil y teclado)','controls.cjs'],
+ ['Banda sonora y efectos','music.cjs',['10']],
+ ['Mezcla de audio 5.1','audio-mix.cjs']
 ];
 const results=[];
 for(const [name,file,args=[]] of suites){

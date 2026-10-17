@@ -1,5 +1,31 @@
 # Changelog
 
+## 5.1 · Controles, audio y Jardín de Espinas (rama `feature/coopers-siege-5-1-controls-audio-thorns`)
+
+### Controles
+- Smartphone: arsenal en la esquina inferior izquierda y flechas ‹ › encima; ATACAR en la esquina inferior derecha y nuevo botón **SALTAR** encima, separados; márgenes de zona segura; arsenal que se abre desde la izquierda.
+- Eliminado el salto por deslizamiento hacia arriba; el salto táctil es solo el botón SALTAR (un toque = un salto).
+- Apuntado en dos pasos: el primer toque de ATACAR solo apunta (trayectoria, ángulo y pad ÁNGULO); mantener carga y soltar dispara; ✕ CANCELAR no gasta munición ni turno; `pointercancel` vuelve a apuntar sin disparar; multitouch para caminar y cargar a la vez.
+- PC: `A`/`D`, `Espacio` contextual (saltar fuera del ataque; cargar y disparar al soltar dentro), `W`/`S` y flechas para la elevación con límites, `Mayús` para ajuste fino, `Esc`/`X`/clic derecho para cancelar.
+- Máquina de estados común (`src/input/attack-controls.js`); la autoridad LAN y la guía predictiva no cambian.
+
+### Audio
+- Buses independientes de música, efectos, voces y ambiente con compresor suave y limitador (antes un compresor de −24 dB/12:1 aplastaba la mezcla).
+- Música −4 dB, control de graves y ducking discreto en explosiones grandes; sonoridad igualada entre piezas (dispersión 9,5 → 0,9 dB).
+- Disparos con transitorio, golpe grave y cola; explosiones en cinco capas (chasquido, sub-grave, cuerpo, escombros, retumbo) con segundo golpe en supernova, misiles y ataques orbitales.
+- Quejidos de dolor por síntesis de formantes en tres niveles (ligero, medio, fuerte) y lamento de muerte; ahora audibles. Límite de voces simultáneas por tipo.
+
+### Música
+- Compositor: varias melodías por sección, melodías escritas literales, contracantos escritos e instrumentación por sección.
+- Reescritas: «Furia de la Caldera» (Caldera Roja), «Réquiem para un Sol» desarrollado (Última Estrella), «Vigilia de los Colmillos» (Catedral Gótica), «Desfile de Caramelos» (Dulce Caos) e «Inspección de Engranajes» (Fundición Omega). Nueva: «Bruma entre Zarzas».
+- 13 instrumentos y 14 percusiones nuevas (coro oscuro, metales graves, bajo eléctrico, guitarra saturada, piano de juguete, kazoo, xilófono, vibráfono, kalimba, pistones, engranajes…).
+
+### Escenario
+- Mapa 17, **Jardín de Espinas**: troncos de zarza sobre un mar de nubes, puentes de ramas trenzadas con espinas, plataformas de raíces, flores gigantes, escenografía propia con la Gran Zarza, pétalos y polen, decorados 3D y ambiente sonoro.
+
+### Pruebas
+- Nuevas suites en `npm test`: `controls.cjs` (6 pantallas, táctil y teclado), `audio-mix.cjs` (mezcla real sin conexión), `lan-51.cjs` (LAN con controles nuevos y mapa 17). `music.cjs` mide frases escritas distintas en 3 minutos; `smoke.cjs` cubre los 17 mapas.
+
 ## 5.0 · Next Gen (rama `feature/coopers-siege-5-nextgen`, PR #1)
 
 ### Escenarios y gráficos (Fase B)

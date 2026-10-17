@@ -33,6 +33,39 @@ const {serve,launch,VIEWPORTS,ROOT}=require('./lib/harness.cjs');
    Object.assign(I,orig);Object.assign(D,origD);C.ac=null;C.song=null;
    return res;
   });
+  // 1b) 5.1 — Variedad real: frases de 4 compases comparadas sin tener en cuenta la
+  // transposición (un motivo repetido en otro tono cuenta como repetido), duración del
+  // ciclo de la forma, motivos, instrumentos solistas y tonalidades distintas.
+  const variety=await page.evaluate(()=>{
+   const C=CS5.composer,I=CS5.instruments.I,orig={...I},D=CS5.instruments.D,origD={...D},res=[];
+   const fake={currentTime:0,sampleRate:44100,createGain:()=>({gain:{value:0,setTargetAtTime(){},setValueAtTime(){}},connect(){},disconnect(){}}),createBiquadFilter:()=>({frequency:{value:0,setTargetAtTime(){}},Q:{value:0},connect(){}}),createWaveShaper:()=>({connect(){}}),createConvolver:()=>({connect(){}}),createDelay:()=>({delayTime:{setTargetAtTime(){}},connect(){}}),createStereoPanner:()=>({pan:{value:0},connect(){}}),createBuffer:(c,l)=>({getChannelData:()=>new Float32Array(l)})};
+   for(const k of Object.keys(D))D[k]=()=>{};
+   for(const song of [...CS5.songs.list,CS5.songs.menu]){
+    const notes=[],leads=new Set();
+    for(const k of Object.keys(I))I[k]=(ac,dest,m,t)=>{if(dest===C.layers.lead){notes.push([m,t]);leads.add(k);}};
+    C.ac=null;C.init(fake,{connect(){}});C.song=null;C.next=0;C.play(song,true);C.state='B';C.next=0;
+    const keys=new Set(),heard=new Set();while(C.next<180){C.schedule(Math.min(180,C.next+1));const sec=C.section();keys.add(sec.key||0);for(const k of ['melody','counterMelody'])if(sec[k])heard.add(C.motifName(sec,C.sectionBar,k));}
+    const bar=60/song.tempo*song.meter,ph=bar*4,phrases=new Map();
+    for(const [m,t] of notes){const i=Math.floor(t/ph+1e-6);(phrases.get(i)||phrases.set(i,[]).get(i)).push([Math.round((t-i*ph)/ph*64),m]);}
+    // Contorno perceptivo: 16 casillas por frase con la altura relativa a la mediana de la frase.
+    const contours=[...phrases.values()].filter(p=>p.length>2).map(p=>{const ms=p.map(n=>n[1]).sort((a,b)=>a-b),med=ms[ms.length>>1],slots=[];let k=0,cur=null;for(let s=0;s<16;s++){while(k<p.length&&p[k][0]<=s*4)cur=p[k++][1];slots.push(cur==null?null:cur-med);}return slots;});
+    const same=(a,b)=>{let n=0,ok=0;for(let i=0;i<16;i++){if(a[i]==null||b[i]==null)continue;n++;if(Math.abs(a[i]-b[i])<=1)ok++;}return n>0&&ok/n>=.7;};
+    const ideas=[];for(const c of contours)if(!ideas.some(x=>same(x,c)))ideas.push(c);
+    const formBars=song.form.reduce((a,n)=>a+(song.sections[n]?.bars||4),0);
+    const motifs=new Set(Object.values(song.sections).flatMap(s=>[].concat(s.melody||[],s.counterMelody||[])));
+    res.push({id:song.id,heard:heard.size,ideas:ideas.length,novelty:+(ideas.length/Math.max(1,contours.length)).toFixed(2),phrases:contours.length,formMin:+(formBars*bar/60).toFixed(1),motifs:motifs.size,leads:leads.size,keys:keys.size});
+   }
+   Object.assign(I,orig);Object.assign(D,origD);C.ac=null;C.song=null;
+   return res;
+  });
+  console.log('Variedad (3 min):','pieza'.padEnd(10),'frases escritas','ideas','novedad','frases','forma(min)','motivos','solistas','tonos');
+  for(const v of variety)console.log('                  ',v.id.padEnd(10),String(v.heard).padStart(15),String(v.ideas).padStart(5),String(v.novelty).padStart(7),String(v.phrases).padStart(6),String(v.formMin).padStart(10),String(v.motifs).padStart(7),String(v.leads).padStart(8),String(v.keys).padStart(5));
+  for(const id of ['volcano','supernova','inferno','candy','factory','thorns']){
+   const v=variety.find(x=>x.id===id);
+   assert.ok(v.formMin>=2.9,`${id}: la forma dura ${v.formMin} min antes de repetirse`);
+   assert.ok(v.heard>=8,`${id}: solo ${v.heard} frases escritas distintas en 3 min`);
+   assert.ok(v.motifs>=6&&v.leads>=3&&v.keys>=2,`${id}: ${v.motifs} motivos, ${v.leads} solistas, ${v.keys} tonalidades`);
+  }
   // 2) Render real sin conexión: nivel, saturación y timbre de cada pieza.
   const renders=await page.evaluate(async seconds=>{
    const C=CS5.composer,songs=[...CS5.songs.list,CS5.songs.menu],out=[];

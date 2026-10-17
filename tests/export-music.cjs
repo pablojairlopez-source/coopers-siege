@@ -1,5 +1,5 @@
 // Exporta la banda sonora a WAV (para escucharla fuera del juego).
-// Uso: node tests/export-music.cjs [segundos=60] [estado=B] [carpeta=test-results/music]
+// Uso: node tests/export-music.cjs [segundos=60] [estado=B] [carpeta=test-results/music] [ids separados por comas]
 const fs=require('node:fs');
 const path=require('node:path');
 const {serve,launch,ROOT}=require('./lib/harness.cjs');
@@ -10,11 +10,13 @@ function wav(samples,sr){const b=Buffer.alloc(44+samples.length*2);b.write('RIFF
  const srv=await serve(),browser=await launch(),page=await browser.newPage();
  await page.goto(srv.url);await page.waitForFunction(()=>window.CS5&&CS5.composer);
  const count=await page.evaluate(()=>CS5.songs.list.length+1);
+ const only=process.argv[5]?process.argv[5].split(','):null,ids=await page.evaluate(()=>[...CS5.songs.list.map(s=>s.id),'menu']);
  for(let i=0;i<count;i++){
+  if(only&&!only.includes(ids[i]))continue;
   const r=await page.evaluate(async({i,seconds,state})=>{
    const C=CS5.composer,song=i<CS5.songs.list.length?CS5.songs.list[i]:CS5.songs.menu,sr=22050,oc=new OfflineAudioContext(2,sr*seconds,sr);
    C.ac=null;C.init(oc,oc.destination);C.song=null;C.next=0;C.play(song,true);C.setState(i<CS5.songs.list.length?state:'MENU',true);
-   while(C.next<seconds)C.schedule(seconds);
+   {const st=window.setTimeout;window.setTimeout=(fn,ms,...a)=>ms>1500?0:st(fn,ms,...a);while(C.next<seconds)C.schedule(seconds);window.setTimeout=st;}
    const b=await oc.startRendering(),L=b.getChannelData(0),R=b.getChannelData(1),m=new Float32Array(L.length);let peak=0;for(let k=0;k<L.length;k++){m[k]=(L[k]+R[k])/2;peak=Math.max(peak,Math.abs(m[k]));}
    const norm=peak>.9?.9/peak:1;return {id:song.id,name:song.name,sr,data:Array.from(m,v=>v*norm)};
   },{i,seconds,state});

@@ -1,0 +1,123 @@
+/* Cooper's Siege 5.1 — controles en las esquinas.
+   Izquierda (pulgar izquierdo): arsenal en la esquina inferior, ‹ › encima, pad de ángulo a su derecha al apuntar.
+   Derecha (pulgar derecho): ATACAR en la esquina inferior, SALTAR encima (separados), ✕ cancelar al apuntar.
+   Se carga después del <style> principal: los selectores llevan «body» delante para ganar
+   en especificidad a las reglas !important heredadas de 5.0. */
+body{
+ --t51-sl:max(10px,env(safe-area-inset-left));
+ --t51-sr:max(10px,env(safe-area-inset-right));
+ --t51-sb:max(10px,env(safe-area-inset-bottom));
+ --t51-fire-w:176px;--t51-fire-h:54px;
+ --t51-arsenal-w:150px;--t51-arsenal-h:46px;
+ --t51-btn:56px;--t51-gap:18px;
+ --t51-pad-h:min(168px,38vh);
+}
+body #controls{
+ position:fixed!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;
+ transform:none!important;width:100%!important;max-width:none!important;height:0!important;
+ display:block!important;padding:0!important;gap:0!important;pointer-events:none!important;
+}
+body #controls>*{pointer-events:auto}
+body #controls>.move-panel,body #controls>.aim-panel,body #controls>.keyboard-hint,body #controls>#touchAimHint{display:none!important}
+
+/* ── Arsenal: esquina inferior izquierda ── */
+body #controls>#weaponsButton.arsenal-panel{
+ position:fixed!important;left:var(--t51-sl)!important;bottom:var(--t51-sb)!important;right:auto!important;
+ width:var(--t51-arsenal-w)!important;min-width:0!important;max-width:var(--t51-arsenal-w)!important;
+ min-height:var(--t51-arsenal-h)!important;height:var(--t51-arsenal-h)!important;max-height:var(--t51-arsenal-h)!important;
+ margin:0!important;padding:4px 10px!important;overflow:hidden!important;touch-action:manipulation;
+}
+body #controls>#weaponsButton .inventory-chevron{display:none!important}
+body #controls>#weaponsButton #weaponName{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;max-width:100%}
+
+/* ── ATACAR: esquina inferior derecha ── */
+body #controls>#fireButton{
+ position:fixed!important;right:var(--t51-sr)!important;bottom:var(--t51-sb)!important;left:auto!important;
+ width:var(--t51-fire-w)!important;min-width:0!important;max-width:var(--t51-fire-w)!important;
+ min-height:var(--t51-fire-h)!important;height:var(--t51-fire-h)!important;max-height:var(--t51-fire-h)!important;
+ margin:0!important;touch-action:none!important;-webkit-user-select:none;user-select:none;
+}
+body #controls>#fireButton #fireLabel{display:block!important;font-size:8px!important;white-space:nowrap}
+body #controls>#fireButton #fireMainText{white-space:nowrap;font-size:13px}
+body #controls>#fireButton #powerDirBadge{display:none!important}
+body #controls>#fireButton .fire-top-row{overflow:hidden}
+
+/* ── SALTAR: encima de ATACAR, alineado al borde derecho ── */
+body #controls>#touchJump{
+ position:fixed;right:var(--t51-sr);bottom:calc(var(--t51-sb) + var(--t51-fire-h) + var(--t51-gap));
+ width:calc(var(--t51-btn) + 18px);height:var(--t51-btn);border-radius:18px;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+ background:linear-gradient(160deg,#5cebe2,#0e9f9a);color:#05222a;border:1.5px solid #cffafe;
+ box-shadow:0 4px 0 #0b5f63,0 8px 22px rgba(0,0,0,.45);font:900 22px/1 system-ui;
+ touch-action:none;-webkit-user-select:none;user-select:none;cursor:pointer;
+}
+body #controls>#touchJump small{font-size:8.5px;letter-spacing:.7px}
+body #controls>#touchJump.pressed{transform:translateY(3px);box-shadow:0 1px 0 #0b5f63,0 4px 12px rgba(0,0,0,.45)}
+body #controls>#touchJump.locked{opacity:.38;filter:saturate(.3)}
+
+/* ── Movimiento: encima del arsenal ── */
+body #controls>#touchMovePad{
+ position:fixed;left:var(--t51-sl);bottom:calc(var(--t51-sb) + var(--t51-arsenal-h) + 14px);
+ display:flex;gap:12px;
+}
+body #touchMovePad button{
+ width:var(--t51-btn);height:var(--t51-btn);border-radius:16px;font:900 30px/1 system-ui;color:#f8fafc;
+ background:rgba(11,23,40,.72);border:1.5px solid rgba(92,235,226,.55);box-shadow:0 6px 16px rgba(0,0,0,.4);
+ touch-action:none;-webkit-user-select:none;user-select:none;padding:0;cursor:pointer;
+}
+body #touchMovePad button.pressed{background:rgba(92,235,226,.35)}
+
+/* ── Pad de ángulo: a la derecha del grupo izquierdo, solo al apuntar ── */
+body #controls>#aimPad{
+ position:fixed;left:calc(var(--t51-sl) + var(--t51-arsenal-w) + 16px);bottom:var(--t51-sb);
+ width:58px;height:var(--t51-pad-h);border-radius:18px;display:none;flex-direction:column;align-items:center;
+ justify-content:space-between;padding:6px 0;background:rgba(11,23,40,.78);border:1.5px solid rgba(253,224,71,.6);
+ color:#fde68a;font:900 13px/1 system-ui;touch-action:none;-webkit-user-select:none;user-select:none;cursor:ns-resize;
+ box-shadow:0 6px 18px rgba(0,0,0,.45);
+}
+body #aimPad small{font-size:7.5px;letter-spacing:.6px;color:#e2e8f0}
+body #aimPad .aim-pad-track{position:relative;flex:1;width:8px;margin:6px 0;border-radius:99px;background:linear-gradient(0deg,#334155,#fde047)}
+body #aimPad .aim-pad-track i{position:absolute;left:50%;width:24px;height:12px;margin-left:-12px;border-radius:8px;background:#fff7d6;
+ box-shadow:0 0 10px rgba(253,224,71,.8);bottom:calc(var(--elev,.74) * 100% - 6px)}
+body #aimPad.pressed{border-color:#fff7d6;background:rgba(40,32,8,.82)}
+
+/* ── Cancelar: a la izquierda de SALTAR, solo al apuntar ── */
+body #controls>#aimCancel{
+ position:fixed;right:calc(var(--t51-sr) + var(--t51-btn) + 18px + 14px);bottom:calc(var(--t51-sb) + var(--t51-fire-h) + var(--t51-gap));
+ width:var(--t51-btn);height:var(--t51-btn);border-radius:50%;display:none;flex-direction:column;align-items:center;justify-content:center;
+ background:rgba(30,10,16,.82);color:#fecdd3;border:1.5px solid #fb7185;font:900 18px/1 system-ui;touch-action:none;cursor:pointer;padding:0;
+}
+body #aimCancel small{font-size:6.5px;letter-spacing:.4px}
+
+body[data-attack="aiming"] #controls>#aimPad,body[data-attack="charging"] #controls>#aimPad{display:flex}
+body[data-attack="aiming"] #controls>#aimCancel,body[data-attack="charging"] #controls>#aimCancel{display:flex}
+
+/* Sin pantalla táctil (PC): movimiento y salto van por teclado. */
+body[data-touch="false"] #controls>#touchMovePad,body[data-touch="false"] #controls>#touchJump{display:none}
+
+/* Arsenal: se abre desde la izquierda, junto al pulgar izquierdo. */
+body #inventory{left:var(--t51-sl)!important;right:auto!important;bottom:calc(var(--t51-sb) + var(--t51-arsenal-h) + 10px)!important;
+ max-height:calc(100dvh - var(--t51-arsenal-h) - 80px)!important}
+body #toast{bottom:calc(var(--t51-sb) + 64px)!important}
+
+/* Teléfonos pequeños y S23 Ultra en horizontal (≤ 500 px de alto). */
+@media (max-height:500px) and (orientation:landscape){
+ body{--t51-fire-w:150px;--t51-fire-h:48px;--t51-arsenal-w:128px;--t51-arsenal-h:40px;--t51-btn:50px;--t51-gap:16px;--t51-pad-h:min(150px,40vh)}
+ body #controls>#fireButton #fireLabel{display:block!important;font-size:7px!important}
+}
+@media (max-height:380px) and (orientation:landscape){
+ body{--t51-fire-w:138px;--t51-fire-h:44px;--t51-arsenal-w:116px;--t51-arsenal-h:38px;--t51-btn:46px;--t51-gap:14px;--t51-pad-h:min(132px,40vh)}
+ body #controls>#touchMovePad{gap:10px}
+}
+/* Teléfonos estrechos: el botón no cabe con icono, texto y porcentaje. */
+@media (max-width:760px),(max-height:380px) and (orientation:landscape){
+ body #controls>#fireButton .fire-circle{display:none!important}
+ body #controls>#fireButton #fireMainText{font-size:11px;letter-spacing:.3px!important}
+ body #controls>#fireButton .fire-top-row{gap:4px!important}
+ body #teamHealth{overflow:hidden!important}
+ body #teamHealth .worms-hp-val{display:none!important}
+}
+/* Vertical o muy estrecho: todo un poco más pequeño. */
+@media (max-width:560px){
+ body{--t51-fire-w:140px;--t51-arsenal-w:118px;--t51-btn:50px}
+}
