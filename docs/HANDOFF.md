@@ -1,5 +1,13 @@
 # Traspaso entre agentes (Claude Code ⇄ Codex)
 
+## Trabajo actual · Localización bilingüe
+
+El usuario confirma y Git verifica la fusión de PR #3: `origin/main` `0f8cc74`. Árbol inicialmente limpio; referencias actualizadas sin descartar trabajo. Rama nueva `feature/coopers-siege-i18n-es419-en` creada desde esa base. Claude está sin disponibilidad; Codex trabaja solo en este árbol.
+
+Encargo completo leído del adjunto del usuario. Plan A–H, decisiones y glosario en `docs/LOCALIZACION.md`. Inventario con Acorn/parse5 (solo desarrollo): 3059 candidatas antes de clasificar notación musical/IDs/código. Línea base ejecutada: 15/15 suites aprobadas. Servicio centralizado inicial y catálogos mínimos en `src/i18n/`; `tests/i18n-core.cjs` aprobado. Aún no conectado al motor. Próximo paso: extracción por claves técnicas, revisión es-419 y adaptación íntegra en-US, integración y cambio en vivo sin alterar guardados ni estado. No repetir la línea base salvo cambios que lo justifiquen.
+
+No hacer merge ni publicar. El traspaso histórico que sigue describe la auditoría ya integrada en 5.2, no el estado actual de la PR #3.
+
 > Continuidad subordinada a Git. Antes de continuar: estado, rama, últimos diez commits y lectura de AGENTS/CLAUDE/PROGRESO/CAMPANA/NOTAS.
 
 ## Último traspaso · 17-10-2026 · Codex

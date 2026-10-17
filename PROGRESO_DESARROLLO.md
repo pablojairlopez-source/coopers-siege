@@ -1,5 +1,16 @@
 # Progreso de Cooper's Siege
 
+## Actualización bilingüe es-419 / en-US
+
+Base confirmada: `origin/main` `0f8cc74`, PR #3 fusionada. Rama `feature/coopers-siege-i18n-es419-en`, creada con árbol limpio tras `git fetch origin`. Encargo completo leído. Plan A–H y glosario: `docs/LOCALIZACION.md`.
+
+- A en curso: inventario AST/HTML, 3059 candidatas iniciales (incluye identificadores y notación musical que se excluirán editorialmente); 17 capítulos y 307 intervenciones de campaña, además de créditos y frases auxiliares.
+- Línea base completa ejecutada: 15/15 suites aprobadas con `node tests/run-all.cjs`, Chrome local y `TEST_BROWSER_PATH`.
+- Servicio i18n inicial y catálogos locales implementados; `node tests/i18n-core.cjs` aprobado (detección, preferencia, parámetros, plurales, respaldo, HTML seguro). Aún no conectado al juego ni declarado localización completa.
+- Sin cambios de mecánicas, guardados, IA, probabilidades, física ni protocolo LAN.
+
+Lo que sigue conserva el registro histórico de 5.2; su estado de publicación queda supersedido por la base confirmada de esta actualización.
+
 **5.1 publicada** en `main` (PR #2). **5.2 «El Torneo del Universo» en desarrollo** en la rama `feature/coopers-siege-5-2-torneo`. Estado técnico: `docs/HANDOFF.md`; diseño y seguimiento: `docs/CAMPANA-5.2.md`.
 
 ## 5.2 — El Torneo del Universo
