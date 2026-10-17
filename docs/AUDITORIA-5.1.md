@@ -18,7 +18,7 @@ Método: además de las pruebas existentes, una sonda en Chromium real con **toq
 
 | 6 | Exportación de música | Los instrumentos desconectan sus nodos con `setTimeout` contado desde `currentTime`. En un render sin conexión todo se programa en t = 0; si el render va más lento que el tiempo real, esas limpiezas cortaban notas futuras y los WAV/WebM salían con largos silencios (comprobado al decodificar: hasta 18 de 19 tramos de 10 s en silencio). En el juego la programación es en tiempo real y no ocurre. | Las herramientas sin conexión (`export-preview-audio.cjs`, `export-music.cjs`, `tests/lib/loudness.cjs`) omiten esas limpiezas mientras programan. La medición de sonoridad no cambia (dispersión 0,9 dB). | `tests/check-preview-audio.cjs` |
 
-Los WAV de 3 minutos generados antes en `test-results/music-5.1` (solo locales) estaban afectados; los archivos publicados en `preview/audio/` son la versión corregida y verificada.
+Los WAV de 3 minutos generados antes en `test-results/music-5.1` (solo locales) estaban afectados; los archivos que se publicaron en `preview/audio/` para la revisión eran la versión corregida y verificada (la carpeta se retiró antes del merge; se regeneran en `test-results/preview-audio`).
 
 ## Verificado sin defectos
 
@@ -42,4 +42,4 @@ Los WAV de 3 minutos generados antes en `test-results/music-5.1` (solo locales) 
 
 ## Qué sigue necesitando el dispositivo real
 
-Comodidad de pulgares y zonas seguras en el S23 Ultra, desbloqueo del audio y nivel por el altavoz del teléfono, rendimiento real y la escucha de las piezas. Para eso: vista previa y reproductor de música (ver `README.md`, sección «Vista previa de 5.1»).
+Comodidad de pulgares y zonas seguras en el S23 Ultra, desbloqueo del audio y nivel por el altavoz del teléfono, rendimiento real y la escucha de las piezas. Para eso se publicó temporalmente una vista previa y un reproductor de música en `preview/`, retirados antes del merge.

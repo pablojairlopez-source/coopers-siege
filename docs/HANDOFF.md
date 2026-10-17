@@ -9,7 +9,7 @@
 - **Rama:** `feature/coopers-siege-5-1-controls-audio-thorns` (desde `origin/main` `e5466e5`), publicada en `origin`.
 - **Último commit confirmado:** el de «Auditoría 5.1» (ver `git log -1`); antes «Fase 5.1-6/8» `697c7d7`. Commits de la 5.1: 5.1-0 `d7b695f`, 5.1-1/2 `4999b2a`, 5.1-5 `d5e9238`, 5.1-3 `5a61408`, 5.1-4 `532f1f9`, 5.1-6/8 (entrega).
 - **Cambios sin commit:** ninguno.
-- **PR:** abierta hacia `main`. **No fusionar sin autorización del usuario.**
+- **PR #2:** fusionada en `main` con autorización del usuario; 5.1 publicada en GitHub Pages. Futuros cambios: rama nueva y PR, sin merge sin autorización.
 
 ## Estado
 
@@ -21,11 +21,11 @@ Subfases 0–6 y 8 completas. `npm test`: 8/8 suites en verde (LAN original, LAN
 
 ## Auditoría 5.1
 
-Informe en `docs/AUDITORIA-5.1.md`. Corregido: pellizco falso con un dedo en un botón (`e.targetTouches`), quejido por veneno, recorte suave de seguridad tras el limitador (pico extremo 1,09 → 0,959), sonido de caída en las nubes del mapa 17 y etiqueta de versión 5.1. Vista previa sin publicar: `preview/index.html` servido por raw.githack desde la rama (ver README). Música en `preview/audio/*.webm` (`node tests/export-preview-audio.cjs 180`, luego `node tests/check-preview-audio.cjs 180`). Ojo: en renders sin conexión hay que omitir las limpiezas por `setTimeout` de los instrumentos (ver auditoría, defecto 6).
+Informe en `docs/AUDITORIA-5.1.md`. Corregido: pellizco falso con un dedo en un botón (`e.targetTouches`), quejido por veneno, recorte suave de seguridad tras el limitador (pico extremo 1,09 → 0,959), sonido de caída en las nubes del mapa 17 y etiqueta de versión 5.1. La vista previa (`preview/`, servida por raw.githack) se retiró antes del merge. Para regenerar la música escuchable: `node tests/export-preview-audio.cjs 180` y `node tests/check-preview-audio.cjs 180` (salida en `test-results/preview-audio`). Ojo: en renders sin conexión hay que omitir las limpiezas por `setTimeout` de los instrumentos (ver auditoría, defecto 6).
 
 ## Próxima tarea exacta
 
-Esperar la revisión del usuario en la PR. Ajustes probables tras su prueba en un S23 Ultra real: tamaños/posición de botones (variables `--t51-*` en `src/ui/controls.css`), niveles de mezcla (`scheduleAdventureMusic` en `index.html`) o pasajes musicales (`src/audio/songs.js`, después `node tests/calibrate-music.cjs 30` dos veces).
+5.1 publicada. Esperar la prueba del usuario en su S23 Ultra. Ajustes probables tras su prueba en un S23 Ultra real: tamaños/posición de botones (variables `--t51-*` en `src/ui/controls.css`), niveles de mezcla (`scheduleAdventureMusic` en `index.html`) o pasajes musicales (`src/audio/songs.js`, después `node tests/calibrate-music.cjs 30` dos veces).
 
 ## Comandos para retomar
 

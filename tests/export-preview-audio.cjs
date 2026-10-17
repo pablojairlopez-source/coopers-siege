@@ -1,5 +1,5 @@
 // Exporta las piezas nuevas o revisadas de 5.1 como audio comprimido (WebM/Opus) para
-// escucharlas sin abrir el juego (preview/audio/). Cada pieza se renderiza sin conexión
+// escucharlas sin abrir el juego (test-results/preview-audio/). Cada pieza se renderiza sin conexión
 // por la misma cadena de música del juego (calibración, ecualización, limitador) y se
 // codifica en Chromium con MediaRecorder (por eso tarda lo que dura cada pieza; se
 // codifican todas en paralelo).
@@ -8,7 +8,7 @@ const fs=require('node:fs'),path=require('node:path');
 const {serve,launch,ROOT}=require('./lib/harness.cjs');
 const seconds=Number(process.argv[2]||180);
 const ids=(process.argv[3]||'volcano,supernova,factory,inferno,candy,thorns').split(',');
-const OUT=path.join(ROOT,'preview','audio');
+const OUT=path.join(ROOT,'test-results','preview-audio');
 (async()=>{
  fs.mkdirSync(OUT,{recursive:true});
  const srv=await serve(),browser=await launch({gpu:false});

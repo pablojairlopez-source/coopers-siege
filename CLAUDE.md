@@ -4,7 +4,7 @@ Juego de artillería por turnos con pugs (navegador, PC y móvil). Se publica co
 
 ## Reglas del proyecto
 
-- La versión 5.0 está publicada desde `main` (PR #1 fusionado). Los cambios nuevos van en una rama propia y llegan a `main` por PR. **Nunca hacer merge ni push a `main`** sin autorización explícita del usuario.
+- La versión 5.1 está publicada desde `main` (PR #2 fusionado con autorización del usuario; 5.0 fue la PR #1). Los cambios nuevos van en una rama propia y llegan a `main` por PR. **Nunca hacer merge ni push a `main`** sin autorización explícita del usuario.
 - Estado y siguientes pasos: **leer `docs/HANDOFF.md` y `PROGRESO_DESARROLLO.md` al empezar** (tras `git status` y `git log`) y actualizarlos al terminar cada subfase. Codex usa `AGENTS.md` con las mismas reglas: mantener ambos coherentes. Rama 5.1: `feature/coopers-siege-5-1-controls-audio-thorns`.
 - Si hay cambios sin commit que no son tuyos, pueden ser del otro agente: no descartarlos. Prohibido sin autorización: `git reset --hard`, `git clean -fd`, force push.
 - Un commit identificable por fase («Fase X: …»); commits intermedios permitidos con el mismo prefijo.
