@@ -2,9 +2,15 @@
   "name": "coopers-siege",
   "private": true,
   "scripts": {
-    "test": "node tests/lan-coop.cjs",
+    "test": "node tests/run-all.cjs",
+    "test:lan": "node tests/lan-coop.cjs",
+    "test:smoke": "node tests/smoke.cjs",
+    "test:effects": "node tests/effects.cjs",
+    "test:ui": "node tests/ui.cjs",
+    "test:music": "node tests/music.cjs",
     "test:visual": "node tests/visual.cjs test-results/screens desktop,s23ultra",
-    "test:perf": "node tests/perf.cjs test-results/perf.json"
+    "test:perf": "node tests/perf.cjs test-results/perf.json",
+    "music:export": "node tests/export-music.cjs 60"
   },
   "devDependencies": { "playwright": "1.62.1" }
 }
