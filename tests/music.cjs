@@ -50,6 +50,19 @@ const {serve,launch,VIEWPORTS,ROOT}=require('./lib/harness.cjs');
    C.ac=null;C.song=null;
    return out;
   },seconds);
+  // 3) Efectos de sonido: cada familia de armas, cada material de explosión y las voces suenan.
+  const sfx=await page.evaluate(async()=>{
+   const out={},P=PocketSiege,app=P.state;
+   const render=async fn=>{const oc=new OfflineAudioContext(2,22050*1.6,22050);fn({context:oc,effectsGain:oc.destination});const b=await oc.startRendering(),d=b.getChannelData(0);let s=0;for(const v of d)s+=v*v;return Math.sqrt(s/d.length);};
+   const families={};for(const [w,f] of Object.entries(CS5.sfxFamilies))if(!families[f])families[f]=w;
+   for(const [f,w] of Object.entries(families)){app.weapon=w;out['disparo:'+f]=await render(a=>CS5.sfx.play(a,'shot',1,{}));}
+   for(let m=0;m<P.maps.length;m++){app.map=m;out['explosión:'+P.maps[m].id]=await render(a=>CS5.sfx.play(a,'explosion',1.2,{}));}
+   for(const k of ['hurt','death','jump','bounce','splash','turn','victory','nuclear'])out[k]=await render(a=>CS5.sfx.play(a,k,1.2,{}));
+   app.map=0;app.weapon='rocket';return out;
+  });
+  const quiet=Object.entries(sfx).filter(([,v])=>!(v>.002));
+  console.log(`Efectos renderizados: ${Object.keys(sfx).length} (${Object.keys(sfx).filter(k=>k.startsWith('disparo')).length} familias de armas, ${Object.keys(sfx).filter(k=>k.startsWith('explosión')).length} materiales de explosión).`);
+  assert.deepEqual(quiet,[],'todos los efectos producen sonido');
   console.log('Pieza'.padEnd(12),'RMS'.padStart(7),'pico'.padStart(6),'silencio'.padStart(9),'brillo'.padStart(7),'ZCR'.padStart(6),'ataques/s'.padStart(10),'compases únicos'.padStart(16),'repite tras (min)'.padStart(18));
   for(const r of renders){const rep=repetition.find(x=>x.id===r.id);console.log(r.id.padEnd(12),String(r.rms).padStart(7),String(r.peak).padStart(6),String(r.silent).padStart(9),String(r.brightness).padStart(7),String(r.zcr).padStart(6),String(r.onsetsPerSec).padStart(10),String(rep.uniqueBars).padStart(16),String(rep.repeatAfterMin).padStart(18));}
   fs.mkdirSync(path.join(ROOT,'test-results'),{recursive:true});

@@ -1302,6 +1302,7 @@ body[data-phase="menu"] #turnBanner{display:none!important}
 <script src="src/audio/instruments.js"></script>
 <script src="src/audio/composer.js"></script>
 <script src="src/audio/songs.js"></script>
+<script src="src/audio/sfx.js"></script>
 <script>
 
 'use strict';
@@ -5216,6 +5217,8 @@ function scaleSemi(scale, degree) {
 function scheduleAdventureMusic(){
  if(!audio.context||audio.context.state!=='running')return;
  const c=audio.context;
+ // 5.0: ambiente sonoro continuo del mapa durante la batalla.
+ CS5.ambience.update(c,audio.effectsGain,app.map,audio.sfx&&!app.paused&&app.phase!=='menu');
  const mp3Active=menuLoopEngine.shouldPlay();
  // Compensación de nivel: el menú suena más bajo que las etapas (lo comprueba npm test).
  const menuPhase=app.phase==='menu'&&!menuLoopEngine.stagePreviewActive;
@@ -6318,7 +6321,10 @@ const audio={context:null,music:true,sfx:true,next:0,step:0,master:null,musicGai
  tone(freq,start,length,type='triangle',volume=.3,dest=this.musicGain,slide){if(!this.context||!dest)return;const c=this.context,o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.setValueAtTime(Math.max(20,freq),start);if(slide)o.frequency.exponentialRampToValueAtTime(slide,start+length);g.gain.setValueAtTime(.001,start);g.gain.exponentialRampToValueAtTime(Math.max(.002,volume),start+.008);g.gain.exponentialRampToValueAtTime(.001,start+length);o.connect(g);g.connect(dest);o.start(start);o.stop(start+length+.01);o.onended=()=>{o.disconnect();g.disconnect();};},
  hiss(start,length,vol=.3,cutoff=1200,dest=this.effectsGain){if(!this.context||!this.noise)return;const c=this.context,s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();s.buffer=this.noise;s.loop=length>.45;f.type='lowpass';f.frequency.value=cutoff;g.gain.setValueAtTime(vol,start);g.gain.exponentialRampToValueAtTime(.001,start+length);s.connect(f);f.connect(g);g.connect(dest);s.start(start);s.stop(start+length);s.onended=()=>{s.disconnect();f.disconnect();g.disconnect();};},
  schedule(){scheduleAdventureMusic();},
- sound(kind,strength=1){if(isLanCoop()&&lanNet.role==='host'&&lanNet.soundQueue&&lanNet.soundQueue.length<32)lanNet.soundQueue.push({kind,strength});if(!this.sfx||!this.context)return;const t=this.context.currentTime,d=this.effectsGain;
+ sound(kind,strength=1,where=null){if(isLanCoop()&&lanNet.role==='host'&&lanNet.soundQueue&&lanNet.soundQueue.length<32)lanNet.soundQueue.push({kind,strength});if(!this.sfx||!this.context)return;
+  // 5.0: diseño sonoro por arma, material y distancia (src/audio/sfx.js); lo no cubierto usa los tonos de 4.0.
+  if(CS5.sfx.play(this,kind,strength,{pos:where?CS5.sfx.positional(where.x,where.y):null}))return;
+  const t=this.context.currentTime,d=this.effectsGain;
   if(kind==='shot'){this.tone(170,t,.18,'sawtooth',.45,d,40);this.hiss(t,.10,.2,2600);}
   else if(kind==='explosion'){this.hiss(t,.22+strength*.14,.5,950+strength*300);this.tone(95,t,.32,'sine',.6,d,25);}
   else if(kind==='jump')this.tone(240,t,.12,'square',.18,d,650);
@@ -6392,7 +6398,7 @@ function nextTurn(){if(checkWinner(true))return;resetTouchState();app.turn++;if(
  }else{app.active=alive[team.cursor%alive.length];team.cursor=(team.cursor+1)%Math.max(1,alive.length);}app.timer=app.turnTime;app.wind=(random()*2-1)*38;app.angle=45;app.power=65;app.shotCount=0;app.shotSecond=false;app.target=null;app.charging=false;app.aimMode=true;touchPlay.latchedCharge=false;app.actionAge=0;app.stable=0;app.aiAge=0;app.aiFired=false;app.aiPlan=null;app.interlude=1.1;app.weapon='rocket';setPhase('interlude');$('turnBanner').textContent=team.name+' · '+app.active.name+(cpuTurn()?' · CPU':isLanCoop()?(human()?' · TU TURNO':' · ALIADO'):'');$('turnBanner').style.setProperty('--team',colors[app.team]);$('turnBanner').classList.add('show');$('inventory').hidden=true;updateInventory();updateHUD();audio.sound('turn');}
 function checkWinner(force=false){const teams=app.teams.filter(t=>app.chars.some(c=>c.team===t.id&&c.hp>0));if(teams.length>1||app.phase==='over'||app.phase==='menu')return false;if(!force&&app.projectiles.length)return false;app.winner=teams[0]||null;showMatchResult();return true;}
 function showMatchResult(){setPhase('over');app.charging=false;input.keys.clear();input.pointers.clear();$('inventory').hidden=true;$('controls').hidden=true;app.resultDelay=app.deathBeat;$('result').hidden=app.resultDelay>0;const loss=(app.mode==='cpu'||isLanCoop())&&app.winner&&!app.winner.human;$('resultEyebrow').textContent=!app.winner?'EMPATE':loss?'LA CPU GANA ESTA VEZ':'VICTORIA';$('winnerTitle').textContent=app.winner?app.winner.name:'¡Nadie sobrevivió!';$('winnerTitle').style.color=app.winner?colors[app.winner.id]:'#ffd878';$('winnerText').textContent=loss?'Otra batalla, otra oportunidad. Ajusta el viento y busca cobertura.':app.winner?'¡Victoria! La bomba de celebración elimina a todos, pero el triunfo es tuyo.':'Dos escuadras eliminadas al mismo tiempo.';$('battleStats').textContent=app.turn+' turnos · '+app.totalShots+' ataques · '+Math.round(app.damageDone)+' de daño';audio.sound('victory');for(let i=0;i<65;i++)spawnFX(view.x+(effectsRandom()-.5)*1000,220+effectsRandom()*200,(effectsRandom()-.5)*100,-80-effectsRandom()*150,colors[i%4],3+effectsRandom()*3,2+effectsRandom()*2,'confetti');beginCelebration();return true;}
-function damage(c,amount,x,y){if(c.hp<=0||amount<=0)return;amount=Math.round(amount);CS5.pugAnim.hit(c,amount,x,y);if(c.shield>0){const blocked=Math.min(c.shield,amount);c.shield-=blocked;amount-=blocked;app.floats.push({x:c.x,y:c.y-48,life:1,text:'🛡 −'+blocked,color:'#8cecff'});}amount=Math.min(c.hp,amount);if(amount<=0)return;c.hp-=amount;c.hurt=.22;bloodSplash(c,amount,x,y);app.damageDone+=amount;app.floats.push({x:c.x,y:c.y-40,life:1.3,text:'−'+amount,color:'#ffbd94'});audio.sound('hurt');if(c.hp<=0)kill(c);}
+function damage(c,amount,x,y){if(c.hp<=0||amount<=0)return;amount=Math.round(amount);CS5.pugAnim.hit(c,amount,x,y);if(c.shield>0){const blocked=Math.min(c.shield,amount);c.shield-=blocked;amount-=blocked;app.floats.push({x:c.x,y:c.y-48,life:1,text:'🛡 −'+blocked,color:'#8cecff'});}amount=Math.min(c.hp,amount);if(amount<=0)return;c.hp-=amount;c.hurt=.22;bloodSplash(c,amount,x,y);app.damageDone+=amount;app.floats.push({x:c.x,y:c.y-40,life:1.3,text:'−'+amount,color:'#ffbd94'});audio.sound('hurt',amount>=28?1.6:1);if(c.hp<=0)kill(c);}
 function kill(c,water=false){if(c.hp<0)return;c.hp=-1;CS5.pugAnim.grief(app.chars,c);c.vx=0;c.walkVX=0;c.vy=0;pugDeath(c,water);if(c===app.active)app.charging=false;}
 
 function spawnFX(x,y,vx,vy,color,size,life,kind='spark'){if(app.fx.length>=Math.floor(600*app.quality))return null;const f={x,y,vx,vy,color,size,life,max:life,kind};app.fx.push(f);return f;}
@@ -6414,7 +6420,7 @@ function explode(x,y,r,amount,sourceTeam=-1,kind='normal'){
  if(typeof bloodFluid!=='undefined')bloodFluid.applyImpulse(x,y,r*1.68,amount||45);
  if(typeof envReactivity!=='undefined')envReactivity.onExplosion(x,y,r,amount||45);
  app.shake=Math.max(app.shake,Math.min(26,r*.075));
- audio.sound(r>=100?'nuclear':'explosion',r/65);
+ audio.sound(r>=100?'nuclear':'explosion',r/65,{x,y});
  const isSuper=r>=100||kind==='super';
  app.fx.push({x,y,vx:0,vy:0,color:isSuper?'#fff8dc':'#fff0c2',size:r*(isSuper?1.35:1.08),life:isSuper?.95:.68,max:isSuper?.95:.68,kind:'flash',super:isSuper});
  if(isSuper)app.fx.push({kind:'nuclear',x,y,vx:0,vy:0,size:r*.85,life:2.5,max:2.5,color:'#ffd87a'});
@@ -6512,7 +6518,7 @@ function shoot(fromLan=false){
  if(!(w.id==='shotgun'&&app.shotCount===1))team.ammo[w.id]-=1;
  c.recoilTimer=.28;app.lastPower=app.power;app.totalShots++;app.actionAge=0;app.stable=0;
  app.shotSecond=w.id==='shotgun'&&app.shotCount===0;app.shotCount++;
- setPhase('action');$('inventory').hidden=true;audio.sound('shot');
+ setPhase('action');$('inventory').hidden=true;audio.sound('shot',1,{x:c.x,y:c.y});
 
  if(extraShot(w,c)){}
  else if(w.id==='shotgun'){

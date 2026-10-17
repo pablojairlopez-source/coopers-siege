@@ -10,7 +10,7 @@ Rama: `feature/coopers-siege-5-nextgen` · PR en borrador: #1 · Base: `origin/m
 | B · Renovación gráfica y escenarios | ✅ | `32bd114` | Mapas 3072 u, trazados por mapa, materiales, escenografía, post-proceso, decorados 3D |
 | C · Pugs y animaciones | ✅ | `07e64d6` | 10 expresiones, mirada, parpadeo, muelle de panza, poses del editor |
 | D · Daño y destrucción | ✅ | `708fc07` | Onda expansiva, escombros, chamuscados, cráteres irregulares, frame tras explosión 57→15 ms |
-| E · Música y sonido | 🔄 en curso | — | Ver abajo |
+| E · Música y sonido | ✅ | `b2c6768` + siguiente | 17 piezas originales, compositor adaptativo, efectos por arma/material, ambientes |
 | F · Optimización móvil y UI | ⏳ | — | Ver abajo |
 | G · Pruebas e integración | ⏳ | — | Ver abajo |
 
@@ -44,4 +44,4 @@ Rama: `feature/coopers-siege-5-nextgen` · PR en borrador: #1 · Base: `origin/m
 
 ## Registro de sesiones
 - Sesión 1: fases A–D.
-- Sesión 2: documentos de continuidad; inicio de la Fase E.
+- Sesión 2: documentos de continuidad; Fase E completa; inicio de la Fase F.
