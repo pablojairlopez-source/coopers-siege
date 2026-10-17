@@ -1,67 +1,48 @@
 # Traspaso entre agentes (Claude Code ⇄ Codex)
 
-> Fuente de continuidad subordinada a Git. Antes de continuar: `git status`, `git log --oneline -10`, leer este archivo, `PROGRESO_DESARROLLO.md`, `docs/CAMPANA-5.2.md` y `docs/NOTAS-5.2.md`.
+> Continuidad subordinada a Git. Antes de continuar: estado, rama, últimos diez commits y lectura de AGENTS/CLAUDE/PROGRESO/CAMPANA/NOTAS.
 
-## Último traspaso
+## Último traspaso · 17-10-2026 · Codex
 
-### Auditoría Codex en curso · 17-10-2026
+- Rama: feature/coopers-siege-5-2-torneo. Partida de 0d816fe, árbol limpio y remoto confirmado; fases A–H conservadas.
+- Física gigante: commit 116bd43. IA y auditoría: 5362225. Medidas y documentación: commit de subfase K posterior (consultar git log).
+- PR #3: https://github.com/pablojairlopez-source/coopers-siege/pull/3, abierta hacia main. No hacer merge ni publicar sin autorización explícita.
+- Estado: implementación y auditoría terminadas; pendiente prueba humana en Galaxy S23 Ultra físico. Detalle y limitaciones: docs/AUDITORIA-5.2.md.
 
-Partida desde `0d816fe`, árbol limpio y remoto confirmado. Subfase física terminada: `Terrain.bodyClear/support/footSolid/surface/spot` admiten escala; los normales conservan el muestreo original. El jefe usa cuerpo 36×52 y pie de 36 px, con detección de obstáculos finos. Aparición, teletransporte, fase, carga y rescate validan el espacio 2×; el rescate busca otra plataforma si la original desapareció. Sin cambios al generador ni a las colisiones de proyectiles.
+## Cambios de auditoría
 
-Ejecutadas y aprobadas `tests/boss-physics.cjs` (17 mapas × 3 semillas, 51 apariciones, 102 rescates y geometría sintética) y `tests/campaign.cjs` (34 estados y habilidades).
+- Terrain.bodyClear/support/footSolid/surface/spot reciben escala. Cuerpo físico gigante 36×52, pie de 36 px, obstáculos finos. Muestreo normal 1× conservado. Aparición, teletransporte, fase, carga y rescate validan 2×; si desaparece la plataforma se busca otro apoyo. No se cambia el generador ni la colisión de proyectiles.
+- src/gameplay/campaign-ai.js: exclusivo de campaña, compartido por ambos bandos; bazuca y granada con trayectoria real, tiros descendentes, daño útil/remates y cuidado de aliados; aproximación y saltos simulados con copias de characterPhysics. Mantiene precisión por dificultad, HP y arsenal. CPU libre y LAN conservan el planificador anterior.
+- Última carga de escopeta: dos tiros con una carga, sin cambiar de arma en medio, para humano/CPU.
+- Historial reconstruido tras recargar desde escenas vistas, cierre con Escape/toque, sin manejadores acumulados; aviso ante fallo real del almacenamiento, exportación disponible. Quejido ligero con más margen sobre la música.
 
-Subfase J: planificador nuevo de campaña en `src/gameplay/campaign-ai.js`, trayectorias reales de bazuca/granada, tiros descendentes y navegación con saltos usando copias de la física. Mismos HP, arsenal y precisión por dificultad; ambos bandos usan la misma IA. También corregidos última carga de escopeta, historial tras recarga/cierre, aviso de guardado fallido y nivel del quejido ligero. Pruebas nuevas de IA y auditoría añadidas al runner (15 suites). 14 suites pasaron juntas; la de mezcla falló por margen del quejido (1,9 frente a 2 dB), se ajustó el nivel y pasó en la repetición. Nueva ejecución completa en curso.
+## Pruebas y mediciones
 
-Balance final de 72 combates: batalla 1, 0/36 límites y 26,5 turnos medios, 50 % victorias de escuadra; jefes, 19,8 turnos y 22 % victorias. Cero turnos forzados y cero bloqueos. Base reproducida: 14/36 y 52,1 turnos. Comparación con las mismas semillas reales y simulación estricta a 60 Hz en 17 mapas en curso. Detalles: `docs/AUDITORIA-5.2.md`. No presentar aún como entrega final.
+- 15/15 suites aprobadas en una ejecución completa de node tests/run-all.cjs, el runner de npm test. Incluye LAN original sin cambiar aserciones, suministros, inventarios, los 34 estados, retratos/diálogos, controles en seis pantallas y audio.
+- Nuevas: boss-physics (17 mapas × 3 semillas, 51 apariciones, 102 rescates y geometría sintética), campaign-ai (24 trayectorias reales y 408 planes equitativos), campaign-audit (historial persistido, almacenamiento y escopeta).
+- Reproducción histórica: 14/36 batallas 1 alcanzan 90 turnos; media 52,1. Revisión final: 0/36, media 26,5 y 50 % victorias de escuadra CPU. Jefes: 19,8 turnos y 22 % victorias CPU. Cero turnos forzados/bloqueos en 72 combates. Comparación adicional con 0d816fe sobre las mismas 72 semillas reales: docs/perf/auditoria-5.2-base-pareada.json.
+- Validación adicional de 34 combates a 60 Hz, 17 mapas, sin forzar turnos: un límite en batalla 1 (Catedral Gótica); jefes sin límites ni bloqueos físicos.
+- Datos, coste del planificador y frames: docs/perf/auditoria-5.2-*.json. Capturas S23 Ultra: docs/screenshots/5.2-auditoria/.
+- Medición aislada Android/CPU 4×: planificación 5,89–17,22 ms medios por caso, máximo 30 ms; explosiones 17,11–43,55 ms medios, pico 401,7 ms en Caldera. No garantiza 60 FPS; validar rendimiento sostenido en el teléfono físico.
+- En este entorno no había npm ni Chromium de Playwright disponible en la ruta prevista: se utilizó Node 24.19.0 del runtime y Chrome local con TEST_BROWSER_PATH. No declarar el teléfono físico como probado.
 
-- **Fecha:** 17-10-2026
-- **Agente:** Claude Code (Opus)
-- **Rama:** `feature/coopers-siege-5-2-torneo` (desde `origin/main` `16c8bf4`, 5.1 publicada), publicada en `origin`.
-- **Último commit confirmado:** «Entrega 5.2» (ver `git log -1`). Fases: 5.2-A `e3ad118`, 5.2-B `0a5efdc`, 5.2-C `66195cb`, 5.2-D/E/F/G `2632f67`; 5.2-H y entrega en el commit siguiente.
-- **Cambios sin commit:** ninguno.
-- **PR:** abierta hacia `main` **sin merge**. No fusionar ni desplegar sin autorización del usuario.
+## Limitaciones / próxima tarea
 
-## Estado
+1. Prueba final humana en Galaxy S23 Ultra: multitáctil, cancelar, rotación/pantalla completa, diálogos/historial, pausas al pensar la CPU, temperatura/rendimiento sostenido y escucha. La emulación no sustituye estas comprobaciones.
+2. Catedral Gótica, batalla 1, semilla 4217271691 a 60 Hz: dos supervivientes a unos 2287 px; la IA no encuentra camino seguro en su horizonte de tres segundos. Repetición confirmada, sin regalar armas ni forzar ganador. Reproducir con BALANCE_SEEDS_FROM=docs/perf/auditoria-5.2-17-mapas.json, BALANCE_STRICT=1, BALANCE_HZ=60, node tests/balance.cjs test-results/catedral.json 15 1.
+3. Jefes más exigentes para CPU: 22 % de victorias. Un humano puede esquivar/interrumpir; valorar dificultad jugando antes de ajustar cifras.
+4. Predicción física de bazuca/granada verificada; los premios especiales conservan heurísticas según arma, sin simular todas sus mecánicas futuras. No hay prueba exhaustiva de todas las semillas ni de todas las destrucciones posibles.
 
-5.2 completa: arsenal, huesitos, campaña de 17 capítulos con jefes, historia y diálogo con retratos 3D, interfaz, trofeo, pruebas, balance, capturas y vista previa. `npm test`: 12/12 en verde.
+## Repetir verificaciones
 
-## Archivos principales
+Con Node/npm y Playwright configurados: npm test. Alternativa idéntica: node tests/run-all.cjs. Si falta Chromium, TEST_BROWSER_PATH puede apuntar al Chrome local.
 
-- `src/gameplay/inventory-balance.js`, `supply-config.js`, `supply-drops.js`.
-- `src/campaign/chapters.js`, `story.js`, `bosses.js`, `dialogue.js`, `trophy.js`, `campaign.js`.
-- `src/ui/campaign.css`, `src/ui/dialogue.css`; `src/audio/sfx.js` (sonidos nuevos); `src/characters/pug-anim.js` (poses de expresión para retratos).
-- `index.html`: ayudantes `pugHit`/`pugCY`/`pugScale`, IA `aiChooseWeapon`, enganches de huesitos, jefes y campaña, botón de campaña, ayuda 5.2, versión 5.2.
-- Pruebas nuevas: `tests/weapons.cjs`, `supplies.cjs`, `campaign.cjs`, `narrative.cjs`; herramientas `tests/balance.cjs`, `tests/shots-52.cjs`; `tests/perf.cjs` admite `cNbM` (batallas de campaña).
+- node tests/balance.cjs test-results/balance.json 1,4,8,11,13,17 6
+- BALANCE_REF=0d816fe y BALANCE_SEEDS_FROM=docs/perf/auditoria-5.2-final.json para comparar código anterior sin cambiar de rama.
+- BALANCE_STRICT=1 y BALANCE_HZ=60 para no descartar proyectiles ni forzar turnos.
+- node tests/perf.cjs test-results/perf.json 0,2,c4b2,c17b2 pc,android (sin otras pruebas simultáneas).
+- node tests/ai-timing.cjs test-results/ia.json (S23 Ultra emulado, CPU 4×).
 
-## Errores conocidos / pendientes
+## Decisiones conservadas de A–H
 
-- Validación en un S23 Ultra físico pendiente (la vista previa de raw.githack sirve para ello).
-- Colisión de los jefes con el terreno a escala 1× (solo visual en túneles estrechos).
-
-## Próxima tarea exacta
-
-Esperar la prueba del usuario en la vista previa (https://raw.githack.com/pablojairlopez-source/coopers-siege/feature/coopers-siege-5-2-torneo/index.html) y sus comentarios en la PR. Ajustes probables: textos en `src/campaign/story.js`, vida y habilidades en `src/campaign/chapters.js` (después `node tests/balance.cjs`), probabilidades en `src/gameplay/supply-config.js`, tamaños de diálogo en `src/ui/dialogue.css`. Merge solo con autorización explícita.
-
-## Comandos para retomar
-
-```powershell
-$env:PATH="$env:LOCALAPPDATA\coopers-tools\node-v24.22.0-win-x64;$env:PATH"
-git status; git log --oneline -10
-npm test
-node tests/shots-52.cjs test-results/shots-52 desktop,s23ultra,fold
-node tests/balance.cjs test-results/balance.json 1,4,8,11,13,17 6
-node tests/perf.cjs test-results/perf.json 0,2,c4b2,c17b2 pc,android
-```
-
-## Decisiones de arquitectura
-
-- **Arsenal:** `CS5.arsenal` es la única puerta de consumo y comprobación (humanos, bots, jefes). JSON convierte `Infinity` en `null`: `normalize` lo restaura en el invitado LAN.
-- **Huesitos:** semillas sin estado (`hashSeed(seed, ronda/id)`) para que la aparición y el premio sean deterministas en ambos lados; solo la autoridad detecta la recogida.
-- **Jefes:** habilidades anunciadas un turno antes y ejecutadas en el siguiente turno del jefe; interrumpibles con 40 de daño. `c._immune` evita que el jefe se dañe con sus propias explosiones síncronas. Caer al agua: −45 y vuelve a su plataforma (`rescue`).
-- **Campaña:** `app.campaign` activa `applySettings` (CPU, 45 s, huesitos normales, dificultad guardada) y `setupMatch` (roster, arsenal estándar, terreno sin el editor). La aproximación de la IA cuando no tiene disparo solo se usa en campaña, para no alterar el resto de modos (ni los tiempos de la prueba LAN original).
-- **Retratos y trofeo:** contexto WebGL propio fuera de pantalla (`CS5.view3d`), copiado a lienzos 2D; sin WebGL se usa el dibujo 2D.
-- **Herencia 5.1:** controles `CS5.attack`; buses de audio; LAN cooperativo = anfitrión simula; versus = ambos simulan con la misma semilla.
-
-## Bloqueadores conocidos
-
-- Sin dispositivo físico: S23 Ultra, plegables y tablets se prueban por emulación (Playwright).
+CS5.arsenal unifica consumo y comprobación; normalize restaura Infinity tras JSON LAN. Huesitos con semilla derivada y recogida autoritativa. Habilidades de jefe anunciadas un turno antes e interrumpibles con 40 de daño; rescate pierde 45 HP. Guardado versionado en coopers-siege-campaign-v1. Retratos/trofeo comparten renderizador fuera de pantalla, con respaldo 2D. LAN cooperativo: anfitrión simula; versus: misma semilla.

@@ -23,6 +23,13 @@
 
 ### Pruebas
 - Nuevas suites en `npm test`: `weapons.cjs`, `supplies.cjs`, `campaign.cjs` (progresión de los 34 estados), `narrative.cjs`. Herramientas: `tests/balance.cjs` (simulación CPU contra CPU) y `tests/shots-52.cjs` (capturas).
+
+### Auditoría independiente de 5.2
+- IA de campaña con trayectoria real de bazuca y granada, tiros descendentes y rutas con saltos; mismo arsenal, vida y precisión por dificultad. En la muestra de 36 batallas contra bots: 14 → 0 límites de 90 turnos y 52,1 → 26,5 turnos medios.
+- Física de terreno a 2× para los jefes, aparición y rescate seguros, incluidos túneles, techos y terreno destruido. Física normal, generador y colisiones de proyectiles conservados.
+- Corregidos segundo tiro de la última carga de escopeta, historial tras recargar/cierre, aviso de almacenamiento fallido y margen del quejido ligero sobre la música.
+- 15/15 suites; nuevas regresiones de física, IA y continuidad. Limitaciones humanas y caso residual de Catedral Gótica documentados en `docs/AUDITORIA-5.2.md`.
+
 ## 5.1 · Controles, audio y Jardín de Espinas (rama `feature/coopers-siege-5-1-controls-audio-thorns`)
 
 ### Controles

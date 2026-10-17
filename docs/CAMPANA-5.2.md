@@ -19,6 +19,9 @@ Documento de diseño y seguimiento de la versión 5.2. Rama: `feature/coopers-si
 | 5.2-G | Interfaz de campaña: recorrido, galería de jefes, trofeo 3D, final y créditos | ✅ |
 | 5.2-H | Pruebas nuevas, progresión de 34 estados, balance | ✅ |
 | Entrega | Capturas, CHANGELOG, vista previa S23, PR sin merge | ✅ |
+| 5.2-I | Auditoría física gigante, aparición y rescate seguros en 17 mapas (`116bd43`) | ✅ |
+| 5.2-J | IA con trayectorias y rutas reales, escopeta, historial y guardado (`5362225`) | ✅ |
+| 5.2-K | Medición independiente y entrega de auditoría; ver `AUDITORIA-5.2.md` | ✅ |
 
 ## Fase B — Arsenal
 

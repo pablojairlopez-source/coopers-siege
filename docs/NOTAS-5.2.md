@@ -2,6 +2,8 @@
 
 Rama `feature/coopers-siege-5-2-torneo`. Diseño y registro por fases: [`CAMPANA-5.2.md`](CAMPANA-5.2.md).
 
+Auditoría independiente posterior a `0d816fe`: [`AUDITORIA-5.2.md`](AUDITORIA-5.2.md). Física gigante, IA de campaña, última carga de escopeta, historial tras recarga, fallo de guardado y margen del quejido ligero corregidos. Las cifras de entrega originales se conservan abajo como historial; consultar la auditoría para las mediciones finales. 15/15 suites aprobadas.
+
 ## Cómo jugar lo nuevo
 
 - **Campaña:** menú principal → **🏆 CAMPAÑA — EL TORNEO DEL UNIVERSO** (en móvil apaisado también el botón compacto «🏆 CAMPAÑA» de la fila superior). Elige un capítulo desbloqueado en el recorrido y pulsa **JUGAR**. Cada capítulo: diálogos → batalla 1 (3 contra 5) → diálogo → presentación del jefe → jefe → victoria. Si pierdes, **REINTENTAR** repite esa misma batalla; la batalla 1 ganada no se repite.
@@ -27,9 +29,9 @@ Rama `feature/coopers-siege-5-2-torneo`. Diseño y registro por fases: [`CAMPANA
 - `CS5.campaign`: guardado `coopers-siege-campaign-v1` (validado por `sanitize`), flujo, interfaz. `newMatch` llama a `applySettings` y `setupMatch` cuando `app.campaign` está activo; `showMatchResult` → `onMatchEnd`; la pausa dramática → `reveal`.
 - `CS5.dialogue`, `CS5.portraits`, `CS5.view3d`: un renderizador WebGL propio fuera de pantalla que reutiliza `drawPug` para retratos (con caché) y para `CS5.trophy`.
 
-## Pruebas (npm test: 12 suites)
+## Pruebas (runner de npm test: 15 suites)
 
-LAN 6v6 original · LAN 5.1 · escenarios ×17 · gore · HUD · controles · **arsenal 5.2** · **huesitos 5.2** · **campaña 5.2** · **narrativa 5.2** · música · mezcla. Última ejecución completa: 12/12 en verde.
+LAN 6v6 original · LAN 5.1 · escenarios ×17 · gore · HUD · controles · **arsenal 5.2** · **huesitos 5.2** · **campaña 5.2** · **narrativa 5.2** · música · mezcla. Última ejecución completa de auditoría: 15/15 en verde con node tests/run-all.cjs. Se añaden boss-physics, campaign-ai y campaign-audit.
 
 - `tests/weapons.cjs`: arsenal estándar idéntico (humano/CPU, 2–4 equipos), bazuca y granada ∞, limitadas 2 → 0, agotadas no se eligen ni disparan, IA con inventarios aleatorios nunca planifica ni dispara un arma agotada, modos abundante/infinito.
 - `tests/supplies.cjs`: intervalo 2–4 rondas, 102 caídas en los 17 mapas (87 en suelo, el resto al agua) sin quedar nunca dentro de la roca, re-caída al destruir el suelo, recogida humana en el suelo y en vuelo, bot que camina hasta el huesito, caducidad, máximo simultáneo, distribución sobre 20 000 sorteos (74,7 / 20,1 / 5,2 %), nunca bazuca/granada, topes con re-sorteo y respaldo curativo, canje único, explosión, LAN versus (el invitado no decide; inventario sincronizado; mensajes repetidos no duplican) y cooperativo.
@@ -46,14 +48,19 @@ La escuadra del jugador la juega la misma IA que los rivales, así que mide el e
 | v1 (esbirros 100 HP, escuadra en un extremo) | 3 % | 25/36 | 22 % | 19,6 | 3,2 |
 | v2 (esbirros 60 HP) | 8 % | 26/36 | 22 % | 19,6 | 3,2 |
 | **v3 (rivales intercalados + la IA se acerca si no tiene disparo)** | **28 %** (45 % de las decididas) | 14/36 | **36 %** | 24,3 | 3,9 |
+| **v4 (auditoría Codex: trayectorias y navegación reales, física gigante)** | **50 %** | **0/36** | **22 %** | **19,8** | **2,9** |
 
 Cambios aplicados: `botHp` 60 (5 × 60 = 300, igual que la escuadra), colocación intercalada como en las partidas normales y, solo en campaña, aproximación de la IA cuando no tiene disparo útil. Datos: `docs/perf/balance-5.2-*.json`. En «fácil» y «difícil» la dificultad cambia la puntería de ambos bandos en esta simulación (fácil: jefe 42 %; difícil: 75 %), así que esos números no representan la experiencia de un humano.
+
+v4 conserva HP, precisión por dificultad, arsenal estándar y suministros. Batalla 1 pasa de 52,1 a 26,5 turnos medios. Los 72 combates finales terminan sin bloqueos ni turnos forzados. Los jefes son más exigentes para la escuadra CPU; valorar dificultad humana esquivando e interrumpiendo habilidades. Datos y comparación por semilla real: `docs/perf/auditoria-5.2-*.json`.
 
 ## Rendimiento (emulado, `docs/perf/final-5.2.json`)
 
 Android emulado (S23 Ultra, CPU 4× más lenta): reposo 8,7–16,3 ms y explosiones 17,7–25,7 ms de media en tropical, volcán, caramelo, espinas y jefes de los capítulos 4 y 17 (5.1: 10–17 / 21–30 ms). Distrito Neón varía entre 12 y 17 ms en reposo de una ejecución a otra (`neon-variacion-5.2.json`); sus batallas de campaña quedan dentro de ese margen. El huesito no usa `shadowBlur` (caro en lienzos 2D móviles).
 
 ## Capturas
+
+Auditoría posterior: `docs/perf/auditoria-5.2-rendimiento.json` (medición aislada, Chrome 155). Android/CPU 4×: reposo 8,85–24,79 ms; explosiones 17,11–43,55 ms medios, pico 401,7 ms en Caldera Roja. Planificación de IA: 5,89–17,22 ms medios por caso, máximo observado 30 ms. No comparar directamente con los tiempos históricos anteriores ni asumir 60 FPS en el teléfono; detalles en `AUDITORIA-5.2.md`.
 
 `docs/screenshots/5.2/` (escritorio, S23 Ultra y plegable): huesito en paracaídas, recorrido, diálogo con retrato 3D, presentación de Cooper Cero, combate contra el Faraón Costilla con zona anunciada y barra de jefe, batalla 1, derrota, galería de jefes y trofeo.
 
@@ -64,6 +71,6 @@ Sin tocar la versión publicada: https://raw.githack.com/pablojairlopez-source/c
 ## Pendiente / limitaciones
 
 - (Resuelto) Diálogos de ejemplo del encargo integrados literalmente: presentación del torneo (`c1.intro`), Faraón Costilla (`c4.bossIntro`), revelación (`c16.intro`), carta de invitación (`prologue`), advertencia de Caldera Roja con la interrupción de Huesón (`c11.victory`), frase final de Huesón y respuesta de Cooper (`finale`), título «COOPER'S TROPHY — CAMPEONES DEL UNIVERSO» y botón «CAMPAÑA — EL TORNEO DEL UNIVERSO».
-- Validación humana en un S23 Ultra físico (controles, legibilidad de los diálogos, rendimiento real).
-- Los jefes usan la física de colisión de 1× con el terreno (su caja de impacto sí es 2×): en túneles estrechos el modelo puede atravesar visualmente el techo.
+- Validación humana en un S23 Ultra físico (controles, legibilidad de los diálogos, rendimiento real). Caso residual de combate largo en Catedral Gótica y exigencia de los jefes para CPU: ver AUDITORIA-5.2.md.
+- (Resuelto en auditoría Codex) Física de jefes a 2× también contra el terreno, aparición, teletransporte y rescate; pruebas de túneles/paredes/techos/saltos/caídas y 51 apariciones/102 rescates en los 17 mapas.
 - Música: el jefe final usa la pieza de «Última Estrella» en estado de clímax (la música adaptativa pasa sola a clímax con un único rival) más rugidos y estribillos de fase; no hay una pieza nueva para el jefe final.

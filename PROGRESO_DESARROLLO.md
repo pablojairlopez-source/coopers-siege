@@ -17,10 +17,10 @@
 | Entrega | ✅ | Capturas, CHANGELOG, README, notas, vista previa raw.githack, PR sin merge |
 | I · Auditoría de física gigante | ✅ | Cuerpo y apoyo 2×; aparición y rescate seguros en 17 mapas; commit `116bd43` |
 | J · Auditoría IA, inventario y continuidad | ✅ | Predicción real de bazuca/granada, tiros descendentes, rutas con saltos; última carga de escopeta, historial persistido, aviso de fallo de guardado y margen del quejido ligero |
-| K · Medición y entrega de auditoría | En curso | Comparación por semilla real, simulación estricta a 60 Hz, rendimiento y PR #3; ver `docs/AUDITORIA-5.2.md` |
+| K · Medición y entrega de auditoría | ✅ | Comparación por semilla real, simulación estricta a 60 Hz, rendimiento y PR #3; ver `docs/AUDITORIA-5.2.md` |
 
 ## Pendiente heredado de 5.1
-- Auditoría independiente (Codex, 17-10-2026): física gigante e IA verificadas; se conserva vida/arsenal. Muestra final: batalla 1, 0/36 límites de 90 turnos y 26,5 turnos medios (base reproducida: 14/36 y 52,1). 14 suites aprobadas en el runner final antes de ajustar audio; el fallo de mezcla (quejido ligero 1,9 dB) se corrigió y `tests/audio-mix.cjs` pasó tras el ajuste. Nueva ejecución completa de 15 suites y mediciones finales en curso.
+- Auditoría independiente (Codex, 17-10-2026): 15/15 suites aprobadas. Batalla 1: 0/36 límites y 26,5 turnos medios frente a 14/36 y 52,1 de base; física gigante verificada en 17 mapas. La muestra estricta adicional conserva un caso largo en Catedral Gótica, documentado con semilla. Datos y límites: docs/AUDITORIA-5.2.md.
 - Validación en un Galaxy S23 Ultra físico; escucha humana de las piezas revisadas.
 
 ## Registro de sesiones
@@ -28,3 +28,5 @@
 - Sesión 4 (Claude Code, 17-10-2026): 5.1 completa y PR abierta.
 - Sesión 5 (Claude Code, 17-10-2026): auditoría 5.1 y publicación (PR #2, autorizada).
 - Sesión 6 (Claude Code, 17-10-2026): 5.2 completa (A–H y entrega), PR abierta sin merge.
+
+- Sesión 7 (Codex, 17-10-2026): auditoría independiente, subfases I–K, commits y push a la rama 5.2, PR #3 actualizada sin merge; prueba física en S23 Ultra pendiente.
