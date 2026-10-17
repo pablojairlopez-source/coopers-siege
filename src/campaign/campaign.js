@@ -50,7 +50,7 @@ const campaign={
   let s=null;try{s=sanitize(JSON.parse(localStorage.getItem(KEY)||'null'));}catch{}
   this.save=s||defaultSave();return this.save;
  },
- store(){this.save.updated=Date.now();try{localStorage.setItem(KEY,JSON.stringify(this.save));}catch{}},
+ store(){this.save.updated=Date.now();try{localStorage.setItem(KEY,JSON.stringify(this.save));this.saveWarningShown=false;return true;}catch{if(!this.saveWarningShown){toast('No se pudo guardar la campaña en este navegador. Exporta tu progreso desde Ajustes antes de salir.',6);this.saveWarningShown=true;}return false;}},
  hasProgress(){const s=this.save||this.load();return s.victories+s.defeats>0||s.seen.length>0;},
  reset(){this.save=defaultSave();this.store();},
  markSeen(id){if(!id)return;if(!this.save)this.load();if(!this.save.seen.includes(id)){this.save.seen.push(id);this.store();}},
@@ -266,7 +266,7 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
   if(act==='export'){const blob=new Blob([this.exportData()],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='coopers-siege-campana.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Progreso exportado.',2.4);return;}
   if(act==='import'){this.body.querySelector('#cmpImport')?.click();return;}
   if(act==='newgame'){this.confirm('¿Empezar una campaña nueva?','Se borrará el progreso guardado (capítulos, jefes y trofeo). Puedes exportarlo antes.','Sí, empezar de cero',()=>{this.reset();this.selected=1;this.screen='map';this.renderHub();toast('Campaña nueva. ¡Rumbo al Archipiélago Sol!',3);});return;}
-  if(act==='history'){CS5.dialogue.build();CS5.dialogue.ui.hist.hidden=false;CS5.dialogue.el.hidden=false;CS5.dialogue.showHistory(true);const close=()=>{if(!CS5.dialogue.open)CS5.dialogue.el.hidden=true;};CS5.dialogue.ui.hist.querySelector('.dlg-history-close').addEventListener('click',close,{once:true});return;}
+  if(act==='history'){CS5.dialogue.openArchive(this.save.seen);return;}
   if(act==='finale'){this.hideHub();this.finale();return;}
   if(act==='modal-close'){this.modal.hidden=true;return;}
   if(act==='confirm-yes'){this.modal.hidden=true;const f=this._confirm;this._confirm=null;f&&f();return;}

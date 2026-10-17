@@ -1346,7 +1346,7 @@ body[data-phase="menu"] #turnBanner{display:none!important}
 <script src="src/audio/songs.js"></script>
 <script src="src/audio/loudness.js"></script>
 <script src="src/audio/sfx.js"></script>
-<script src="src/input/attack-controls.js"></script><script src="src/gameplay/inventory-balance.js"></script><script src="src/gameplay/supply-config.js"></script><script src="src/gameplay/supply-drops.js"></script>
+<script src="src/input/attack-controls.js"></script><script src="src/gameplay/inventory-balance.js"></script><script src="src/gameplay/supply-config.js"></script><script src="src/gameplay/supply-drops.js"></script><script src="src/gameplay/campaign-ai.js"></script>
 <script src="src/campaign/chapters.js"></script><script src="src/campaign/story.js"></script><script src="src/campaign/bosses.js"></script><script src="src/campaign/dialogue.js"></script><script src="src/campaign/trophy.js"></script><script src="src/campaign/campaign.js"></script>
 <script>
 
@@ -6426,7 +6426,7 @@ function explode(x,y,r,amount,sourceTeam=-1,kind='normal'){
  for(const c of app.chars){if(c.hp<=0)continue;let dx=c.x-x,dy=pugCY(c)-y,d=Math.hypot(dx,dy),reach=r+28*pugScale(c);if(d<reach){let f=1-d/reach;damage(c,amount*(.22+.78*f),x,y);if(c.hp>0){let len=Math.max(12,d),kb=1/(c.mass||1);c.vx+=dx/len*(180+260*f)*kb;c.vy+=(Math.min(-75,dy/len*(150+270*f))-105)*kb;c.grounded=false;}}}
  for(const mine of app.mines)if(!mine.dead&&Math.hypot(mine.x-x,mine.y-y)<r+12){mine.dead=true;app.projectiles.push({id:'chain',x:mine.x,y:mine.y,vx:0,vy:0,age:0,fuse:.12+random()*.10,team:mine.team,radius:61,damage:54});}
 }
-function characterPhysics(c,dt,control=0,jump=false){if(c.hp<=0)return;c.hurt=Math.max(0,c.hurt-dt);c.landTimer=Math.max(0,(c.landTimer||0)-dt);c.recoilTimer=Math.max(0,(c.recoilTimer||0)-dt);c.chilled=Math.max(0,(c.chilled||0)-dt);
+function characterPhysics(c,dt,control=0,jump=false,preview=false){if(c.hp<=0)return;c.hurt=Math.max(0,c.hurt-dt);c.landTimer=Math.max(0,(c.landTimer||0)-dt);c.recoilTimer=Math.max(0,(c.recoilTimer||0)-dt);c.chilled=Math.max(0,(c.chilled||0)-dt);
  c.shocked=Math.max(0,(c.shocked||0)-dt);
  if((c.poisoned||0)>0){
   const prevP=Math.floor(c.poisoned);
@@ -6444,13 +6444,13 @@ function characterPhysics(c,dt,control=0,jump=false){if(c.hp<=0)return;c.hurt=Ma
  c.jumpBuffer=Math.max(0,(c.jumpBuffer||0)-dt);if(jump)c.jumpBuffer=.16;c.coyote=c.grounded?.10:Math.max(0,(c.coyote||0)-dt);
  // Stop intentional walking immediately; explosion impulses retain their own momentum.
  const impulse=(c.vx-(c.walkVX||0))*Math.pow(c.grounded?.015:.70,dt);c.walkVX=control*112;c.vx=c.walkVX+impulse;if(control)c.dir=control<0?-1:1;
- const jumped=c.jumpBuffer>0&&c.coyote>0;if(jumped){c.vy=-246;c.grounded=false;c.jumpBuffer=0;c.coyote=0;audio.sound('jump');}
+ const jumped=c.jumpBuffer>0&&c.coyote>0;if(jumped){c.vy=-246;c.grounded=false;c.jumpBuffer=0;c.coyote=0;if(!preview)audio.sound('jump');}
  c.vy=c.grounded?0:clamp(c.vy+530*dt,-650,650);let steps=Math.max(1,Math.ceil(Math.max(Math.abs(c.vx),Math.abs(c.vy))*dt/3)),sub=dt/steps;
  for(let i=0;i<steps;i++){let nx=clamp(c.x+c.vx*sub,-260,W+260);if(terrain.bodyClear(nx,c.y,scale))c.x=nx;else if((wasGround||c.grounded)&&Math.abs(nx-c.x)>.001){let stepped=false;for(let s=1;s<=8;s++)if(terrain.bodyClear(nx,c.y-s,scale)&&!terrain.solid(nx,c.y-s)){c.x=nx;c.y-=s;stepped=true;break;}if(!stepped){c.vx=0;c.walkVX=0;}}else{c.vx=0;c.walkVX=0;}
   if(wasGround&&!jumped&&c.vy>=0&&!terrain.support(c.x,c.y,scale)){const floor=terrain.surface(c.x,c.y-1,true,scale);if(floor&&floor.y>=c.y-1&&floor.y-c.y<=8){c.y=floor.y;c.grounded=true;c.vy=0;}}
-  let ny=c.y+c.vy*sub;if(c.grounded&&terrain.support(c.x,c.y,scale)){c.vy=0;continue;}if(c.vy>=0){if(terrain.footSolid(c.x,ny,scale)){let impact=c.vy;let contact=Math.floor(ny);for(let yy=Math.floor(c.y);yy<=Math.ceil(ny);yy++)if(terrain.footSolid(c.x,yy,scale)){contact=yy;break;}if(!wasGround&&impact>85)c.landTimer=.24;c.y=contact-.01;c.vy=0;c.grounded=true;if(impact>300)damage(c,(impact-300)*.15,c.x,c.y);}else{c.y=ny;c.grounded=false;}}
+  let ny=c.y+c.vy*sub;if(c.grounded&&terrain.support(c.x,c.y,scale)){c.vy=0;continue;}if(c.vy>=0){if(terrain.footSolid(c.x,ny,scale)){let impact=c.vy;let contact=Math.floor(ny);for(let yy=Math.floor(c.y);yy<=Math.ceil(ny);yy++)if(terrain.footSolid(c.x,yy,scale)){contact=yy;break;}if(!wasGround&&impact>85)c.landTimer=.24;c.y=contact-.01;c.vy=0;c.grounded=true;if(impact>300){if(preview)c.hp-=(impact-300)*.15;else damage(c,(impact-300)*.15,c.x,c.y);}}else{c.y=ny;c.grounded=false;}}
   else if(!terrain.bodyClear(c.x,ny,scale)){c.vy=15;}else c.y=ny;
-  if(c.y>=WATER+4){if(c.boss&&CS5.bosses.rescue(c))break;kill(c,true);break;}
+  if(c.y>=WATER+4){if(preview){c.hp=0;break;}if(c.boss&&CS5.bosses.rescue(c))break;kill(c,true);break;}
  }
  if(!terrain.bodyClear(c.x,c.y,scale)){let resolved=false;for(let d=1;d<=26*scale&&!resolved;d++)for(const sign of [-1,1])if(terrain.bodyClear(c.x+d*sign,c.y,scale)&&!terrain.solid(c.x+d*sign,c.y)){c.x=clamp(c.x+d*sign,-260,W+260);c.vx=0;c.walkVX=0;resolved=true;break;}if(!resolved)for(let k=0;k<36*scale;k++){if(terrain.bodyClear(c.x,c.y,scale))break;c.y-=1;}c.grounded=terrain.support(c.x,c.y,scale)&&c.vy>=0;}
 }
@@ -6482,7 +6482,8 @@ function addProjectile(id,c,angle,power){const w=weaponOf(id),a=rad(angle),dx=c.
 function shoot(fromLan=false){
  if(!canAct())return false;
  const c=app.active,w=weaponOf(),team=app.teams[app.team];
- if(!CS5.arsenal.canFire(team,w.id)){toast('Sin munición. Elige otra arma.');return false;}
+ if(app.shotCount===1&&w.id!=='shotgun')return false;
+ if(!(w.id==='shotgun'&&app.shotCount===1)&&!CS5.arsenal.canFire(team,w.id)){toast('Sin munición. Elige otra arma.');return false;}
  if(w.id==='medkit'&&c.hp>=(c.maxHp||100)){toast('Este pug ya está lleno de energía.');return false;}
  if(w.id==='shield'&&c.shield>=45){toast('El escudo ya está completo.');return false;}
  if(w.target&&!app.target){toast('Primero toca el mapa para marcar tu objetivo.');return false;}
@@ -6907,7 +6908,7 @@ function aiChooseWeapon(c,target,team,level,best){
  let roll=random()*total;for(const [id,weight] of list){roll-=weight;if(roll<=0)return id;}
  return 'rocket';
 }
-function planAI(noDetour=false){const c=app.active,enemies=app.chars.filter(e=>e.hp>0&&e.team!==c.team);if(!enemies.length)return;const target=enemies.reduce((a,b)=>dist(c,a)<dist(c,b)?a:b),team=app.teams[c.team],level=app.difficulty;c.dir=target.x>=c.x?1:-1;
+function planAI(noDetour=false){if(app.campaign)return CS5.campaignAI.plan(app.active,noDetour);const c=app.active,enemies=app.chars.filter(e=>e.hp>0&&e.team!==c.team);if(!enemies.length)return;const target=enemies.reduce((a,b)=>dist(c,a)<dist(c,b)?a:b),team=app.teams[c.team],level=app.difficulty;c.dir=target.x>=c.x?1:-1;
  const increments=level==='hard'?4:level==='normal'?7:11,pstep=level==='hard'?5:9;let best={angle:45,power:65,score:-1e9};const r=53;
  for(let angle=12;angle<=84;angle+=increments)for(let power=24;power<=100;power+=pstep){const p=simulateRocket(c,angle,power);let score=0;for(const e of app.chars){if(e.hp<=0)continue;const d=Math.hypot(e.x-p.x,pugCY(e)-p.y),f=p.hit?Math.max(0,1-d/(r+25*pugScale(e))):0;score+=f*(e.team===c.team?-150:100);}score-=Math.hypot(target.x-p.x,pugCY(target)-p.y)*.045;if(!p.hit)score-=40;if(score>best.score)best={angle,power,score};}
  let weapon=aiChooseWeapon(c,target,team,level,best);
@@ -6924,7 +6925,7 @@ function planAI(noDetour=false){const c=app.active,enemies=app.chars.filter(e=>e
 function updateAI(dt){if(!app.active||app.active.hp<=0)return;app.aiAge+=dt;if(!app.aiPlan&&app.aiAge>.45)planAI();if(!app.aiPlan)return;const c=app.active,plan=app.aiPlan,delay=plan.walkTime||0;if(app.phase==='aim'){
  if(c.boss&&CS5.bosses?.aiTurn(c,dt))return;
  if(app.aiAge>=1.0+delay&&!plan.replanned){planAI(true);app.aiPlan.replanned=true;app.aiPlan.walkTime=delay;return;}
- if(app.aiAge>1.15+delay){app.weapon=app.shotCount===1?'shotgun':plan.weapon;if(!CS5.arsenal.canFire(app.teams[app.team],app.weapon))app.weapon=plan.weapon='rocket';app.target=plan.target;const da=((plan.angle-app.angle+540)%360)-180;app.angle=wrapAngle360(app.angle+da*Math.min(1,dt*5));app.power=plan.power;updateHUD();}
+ if(app.aiAge>1.15+delay){app.weapon=app.shotCount===1?'shotgun':plan.weapon;if(app.shotCount!==1&&!CS5.arsenal.canFire(app.teams[app.team],app.weapon))app.weapon=plan.weapon='rocket';app.target=plan.target;const da=((plan.angle-app.angle+540)%360)-180;app.angle=wrapAngle360(app.angle+da*Math.min(1,dt*5));app.power=plan.power;updateHUD();}
  if(app.aiAge>2.05+delay){app.angle=plan.angle;if(!shoot()){app.weapon=plan.weapon='rocket';shoot();}app.aiFired=true;}}
 }
 function step(dt){app.viewTime+=dt;
@@ -6939,7 +6940,7 @@ function step(dt){app.viewTime+=dt;
  if(app.phase==='menu'||app.phase==='over')return;
  if(app.phase==='interlude'){app.interlude-=dt;if(app.interlude<=0){setPhase('aim');$('turnBanner').classList.remove('show');updateHUD();}}
  let control=0,jump=false;if(human()&&canMove()){control=(input.keys.has('d')||input.keys.has('arrowright')||[...input.pointers.values()].includes('right')?1:0)-(input.keys.has('a')||input.keys.has('arrowleft')||[...input.pointers.values()].includes('left')?1:0);jump=input.keys.has('jump');input.keys.delete('jump');}
- if(cpuTurn()&&canMove()&&app.active){const plan=app.aiPlan,bot=app.active;if(app.phase==='aim'&&plan?.walkTo!=null&&app.aiAge>.5&&app.aiAge<.5+(plan.walkTime||0)&&Math.abs(plan.walkTo-bot.x)>4){control=plan.walkTo>bot.x?1:-1;if(bot.grounded&&Math.abs(bot.vx)<1&&app.aiAge>.62)jump=true;}else if(app.phase==='aim'&&plan?.walkTo==null&&app.aiAge>.55&&app.aiAge<.98){const next=terrain.surface(app.active.x+app.active.dir*22,app.active.y-12);if(next&&Math.abs(next.y-app.active.y)<12)control=app.active.dir;}else if(app.phase==='action'&&app.actionAge<1.25&&['dynamite','mine'].includes(app.weapon))control=-app.active.dir;}
+ if(cpuTurn()&&canMove()&&app.active){const plan=app.aiPlan,bot=app.active;if(app.phase==='aim'&&plan?.walkTo!=null&&app.aiAge>.5&&app.aiAge<.5+(plan.walkTime||0)&&Math.abs(plan.walkTo-bot.x)>4){control=plan.walkTo>bot.x?1:-1;if(plan.route){const time=app.aiAge-.5;plan.route.jumpIndex=plan.route.jumpIndex||0;if(time>=plan.route.jumps[plan.route.jumpIndex]){jump=true;plan.route.jumpIndex++;}}else if(bot.grounded&&Math.abs(bot.vx)<1&&app.aiAge>.62)jump=true;}else if(app.phase==='aim'&&plan?.walkTo==null&&app.aiAge>.55&&app.aiAge<.98){const next=terrain.surface(app.active.x+app.active.dir*22,app.active.y-12);if(next&&Math.abs(next.y-app.active.y)<12)control=app.active.dir;}else if(app.phase==='action'&&app.actionAge<1.25&&['dynamite','mine'].includes(app.weapon))control=-app.active.dir;}
  if(isLanCoop()&&app.active?.controller==='client'){
   const remote=lanNet.remoteControl;
   if(canMove()&&remote&&remote.turn===app.turn&&Date.now()-remote.at<400){control=remote.move;jump=remote.jump;remote.jump=false;}

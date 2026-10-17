@@ -8,7 +8,11 @@
 
 Partida desde `0d816fe`, árbol limpio y remoto confirmado. Subfase física terminada: `Terrain.bodyClear/support/footSolid/surface/spot` admiten escala; los normales conservan el muestreo original. El jefe usa cuerpo 36×52 y pie de 36 px, con detección de obstáculos finos. Aparición, teletransporte, fase, carga y rescate validan el espacio 2×; el rescate busca otra plataforma si la original desapareció. Sin cambios al generador ni a las colisiones de proyectiles.
 
-Ejecutadas y aprobadas `tests/boss-physics.cjs` (17 mapas × 3 semillas, 51 apariciones, 102 rescates y geometría sintética) y `tests/campaign.cjs` (34 estados y habilidades). Nueva suite añadida a `npm test`. IA/balance y auditoría general siguen en curso; no presentar aún como entrega final.
+Ejecutadas y aprobadas `tests/boss-physics.cjs` (17 mapas × 3 semillas, 51 apariciones, 102 rescates y geometría sintética) y `tests/campaign.cjs` (34 estados y habilidades).
+
+Subfase J: planificador nuevo de campaña en `src/gameplay/campaign-ai.js`, trayectorias reales de bazuca/granada, tiros descendentes y navegación con saltos usando copias de la física. Mismos HP, arsenal y precisión por dificultad; ambos bandos usan la misma IA. También corregidos última carga de escopeta, historial tras recarga/cierre, aviso de guardado fallido y nivel del quejido ligero. Pruebas nuevas de IA y auditoría añadidas al runner (15 suites). 14 suites pasaron juntas; la de mezcla falló por margen del quejido (1,9 frente a 2 dB), se ajustó el nivel y pasó en la repetición. Nueva ejecución completa en curso.
+
+Balance final de 72 combates: batalla 1, 0/36 límites y 26,5 turnos medios, 50 % victorias de escuadra; jefes, 19,8 turnos y 22 % victorias. Cero turnos forzados y cero bloqueos. Base reproducida: 14/36 y 52,1 turnos. Comparación con las mismas semillas reales y simulación estricta a 60 Hz en 17 mapas en curso. Detalles: `docs/AUDITORIA-5.2.md`. No presentar aún como entrega final.
 
 - **Fecha:** 17-10-2026
 - **Agente:** Claude Code (Opus)

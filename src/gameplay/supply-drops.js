@@ -165,7 +165,7 @@ const supply={
    // Camino transitable: sin saltos de más de 10 px ni huecos hacia el agua.
    let prev=c.y,walk=true;
    for(let x=c.x;Math.abs(x-s.x)>4;x+=Math.sign(dx)*8){
-    const f=terrain.surface(x,prev-40);
+    const f=terrain.surface(x,prev-40,true,pugScale(c));
     if(!f||Math.abs(f.y-prev)>10||f.y>WATER-26){walk=false;break;}
     prev=f.y;
    }

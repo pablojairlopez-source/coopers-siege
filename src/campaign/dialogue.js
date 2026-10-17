@@ -92,9 +92,9 @@ const dialogue={
   this.ui.box.addEventListener('click',e=>{if(e.target.closest('button'))return;this.next();});
   q('.dlg-shade').addEventListener('click',()=>this.next());
   window.addEventListener('keydown',e=>{
-   if(!this.open)return;
    const k=e.key;
    if(!this.ui.hist.hidden){if(k==='Escape'){this.showHistory(false);e.preventDefault();e.stopImmediatePropagation();}return;}
+   if(!this.open)return;
    if(k===' '||k==='Enter'){this.next();}else if(k==='Escape'){this.finish(true);}else if(k==='h'||k==='H'){this.showHistory(true);}else return;
    e.preventDefault();e.stopImmediatePropagation();
   },true);
@@ -149,9 +149,19 @@ const dialogue={
   CS5.campaign?.markSeen?.(this.id);
   const d=this.done;this.done=null;if(d)d(skipped);
  },
- showHistory(show){
+ openArchive(seen){
+  this.build();const old=this.ctx,entries=[];
+  for(const id of new Set(seen)){
+   const chapter=Number(/^c(\d+)\./.exec(id)?.[1])||1;this.ctx={chapter};
+   const lines=CS5.campaignStory[id];if(!Array.isArray(lines))continue;
+   for(const [who,,text] of lines)entries.push({who:this.speaker(who).name||'Carta',text});
+  }
+  this.ctx=old;this.el.hidden=false;this.showHistory(true,entries);
+ },
+ showHistory(show,entries=this.history){
   const u=this.ui;if(!u)return;u.hist.hidden=!show;
-  if(show){u.histList.innerHTML=this.history.map(h=>`<li><b>${escapeHTML(h.who)}</b> ${escapeHTML(h.text)}</li>`).join('');u.histList.parentElement.scrollTop=1e9;}
+  if(show){u.histList.innerHTML=entries.map(h=>`<li><b>${escapeHTML(h.who)}</b> ${escapeHTML(h.text)}</li>`).join('');u.histList.parentElement.scrollTop=1e9;}
+  else if(!this.open)this.el.hidden=true;
  },
  // Frase breve sin pausar la partida.
  bark(who,expr,text,ctx){

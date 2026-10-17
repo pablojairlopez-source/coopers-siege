@@ -15,9 +15,12 @@
 | G · Interfaz de campaña | ✅ | Recorrido, galería, trofeo, final |
 | H · Pruebas y balance | ✅ | `npm test` 12/12; balance documentado en `docs/NOTAS-5.2.md` |
 | Entrega | ✅ | Capturas, CHANGELOG, README, notas, vista previa raw.githack, PR sin merge |
+| I · Auditoría de física gigante | ✅ | Cuerpo y apoyo 2×; aparición y rescate seguros en 17 mapas; commit `116bd43` |
+| J · Auditoría IA, inventario y continuidad | ✅ | Predicción real de bazuca/granada, tiros descendentes, rutas con saltos; última carga de escopeta, historial persistido, aviso de fallo de guardado y margen del quejido ligero |
+| K · Medición y entrega de auditoría | En curso | Comparación por semilla real, simulación estricta a 60 Hz, rendimiento y PR #3; ver `docs/AUDITORIA-5.2.md` |
 
 ## Pendiente heredado de 5.1
-- Auditoría independiente (Codex, 17-10-2026), subfase física: cuerpo/apoyo 2×, teletransporte y habilidades de desplazamiento con espacio suficiente, aparición y rescate seguros sin cambiar terreno. Ejecutadas `tests/boss-physics.cjs` (51 apariciones, 102 rescates, túneles/paredes/techos/saltos/caídas) y `tests/campaign.cjs` (34 estados y habilidades): aprobadas. Auditoría de IA y balance en curso.
+- Auditoría independiente (Codex, 17-10-2026): física gigante e IA verificadas; se conserva vida/arsenal. Muestra final: batalla 1, 0/36 límites de 90 turnos y 26,5 turnos medios (base reproducida: 14/36 y 52,1). 14 suites aprobadas en el runner final antes de ajustar audio; el fallo de mezcla (quejido ligero 1,9 dB) se corrigió y `tests/audio-mix.cjs` pasó tras el ajuste. Nueva ejecución completa de 15 suites y mediciones finales en curso.
 - Validación en un Galaxy S23 Ultra físico; escucha humana de las piezas revisadas.
 
 ## Registro de sesiones

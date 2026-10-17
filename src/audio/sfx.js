@@ -81,7 +81,8 @@ const MAT={
 const VOWEL={a:[820,1250],o:[520,900],u:[360,820],e:[560,1800],i:[330,2300]};
 // Curvas de voz: tono (Hz relativos), vocales de inicio/fin, duración, vibrato y nivel.
 const VOICE={
- light:()=>({len:rnd(.13,.19),p:[rnd(470,560),rnd(380,430)],v:[pick(['u','o']),'u'],vib:0,level:.62,breath:.15}),
+ // Margen sobre la música también para las variaciones de vocal y tono más suaves.
+ light:()=>({len:rnd(.13,.19),p:[rnd(470,560),rnd(380,430)],v:[pick(['u','o']),'u'],vib:0,level:.72,breath:.15}),
  medium:()=>({len:rnd(.28,.38),p:[rnd(520,600),rnd(760,860),rnd(400,460)],v:[pick(['a','o']),pick(['u','o'])],vib:6,level:.8,breath:.2}),
  heavy:()=>({len:rnd(.52,.68),p:[rnd(620,700),rnd(1050,1200),rnd(950,1050),rnd(380,450)],v:['a',pick(['i','e'])],vib:9.5,level:1.15,breath:.28}),
  death:()=>({len:rnd(.85,1.05),p:[rnd(820,900),rnd(980,1060),rnd(520,600),rnd(190,230)],v:['a','o'],vib:7,level:1.1,breath:.24})
