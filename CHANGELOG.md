@@ -1,5 +1,28 @@
 # Changelog
 
+## 5.2 · El Torneo del Universo (rama `feature/coopers-siege-5-2-torneo`)
+
+### Arsenal
+- **Bazuca y granada común infinitas** para humanos, bots, enemigos de campaña y jefes (el bate sigue siendo reutilizable). Las granadas especiales (polar, adhesiva, racimo, sagrada) y el resto de armas son limitadas.
+- **Arsenal inicial estándar**: bazuca ∞, granada ∞, escopeta 2, mina 2, bate ∞; el resto empieza a 0 (sin superarmas al inicio). «Abundante» (arsenal clásico ×2) e «Infinita» se conservan para partidas personalizadas.
+- **Igualdad total humano/bot**: inventario por equipo, mismas comprobaciones y mismo consumo (`CS5.arsenal`); la IA solo elige armas con munición y usa lo que consigue en los huesitos.
+
+### Huesitos (suministros del cielo)
+- Caen en paracaídas cada 2–4 rondas (configurable: normales, frecuentes, escasos o desactivados), con gravedad, deriva por viento, colisión, recogida en vuelo o en el suelo, caducidad, máximo simultáneo; nunca quedan dentro de la roca, vuelven a caer si se destruye el suelo y salen despedidos con las explosiones.
+- Premio sorteado al recogerlo: común 75 %, potente 20 %, legendario 5 %; arma y cantidad según `src/gameplay/supply-config.js`, con topes y re-sorteo. Nunca bazuca ni granada común. Insignia «NUEVO» en el arsenal.
+- Los bots los detectan, valoran distancia y peligro y caminan a por ellos sin conocer el contenido.
+- LAN: aparición determinista, identificadores únicos, una sola recogida válida y sorteo decidido por el anfitrión (versus por mensaje, cooperativo en la instantánea).
+
+### Campaña «El Torneo del Universo»
+- 17 capítulos × 2 batallas: 3 pugs (Cooper, Pipa, Bongo) contra 5 bots de la misma variante con cosméticos reproducibles, y después un **jefe gigante** (2× de tamaño y caja de impacto, 250–400 HP, resistencia al empuje, 1–2 habilidades con enfriamiento que se anuncian con una zona marcada y se pueden interrumpir con 40 de daño). Cooper Cero (400 HP) tiene tres fases según su vida.
+- IA de jefe temática: cíborg precisión, demonio fuego y agresividad, fantasma desplazamiento, zombi resistencia, esqueleto estrategia, alienígena energía.
+- Historia en cuatro actos con Cooper, Pipa, Bongo, el Maestro Huesón, Roco y Cooper Cero: prólogo con la carta de invitación, seis conversaciones por capítulo, gran giro en el Jardín de Espinas, final con la liberación de Cooper Cero, la Cooper's Cup auténtica, créditos y escena poscréditos.
+- Diálogo cinematográfico con **retratos 3D** generados con el modelo del pug (variante, colores, accesorios y expresión), texto progresivo con sonido, avanzar, omitir e historial.
+- Recorrido de 17 escenarios por actos, galería de jefes derrotados, presentación del jefe, pantallas de victoria y derrota (reintento de la misma batalla sin perder progreso), **trofeo 3D dorado** con figura de pug y celebración.
+- Guardado automático versionado, continuar, nueva campaña con confirmación, exportar e importar el progreso, dificultad y personalización de la escuadra.
+
+### Pruebas
+- Nuevas suites en `npm test`: `weapons.cjs`, `supplies.cjs`, `campaign.cjs` (progresión de los 34 estados), `narrative.cjs`. Herramientas: `tests/balance.cjs` (simulación CPU contra CPU) y `tests/shots-52.cjs` (capturas).
 ## 5.1 · Controles, audio y Jardín de Espinas (rama `feature/coopers-siege-5-1-controls-audio-thorns`)
 
 ### Controles

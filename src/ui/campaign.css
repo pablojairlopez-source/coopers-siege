@@ -118,3 +118,15 @@ body[data-phase="menu"] #campaignChip,body[data-phase="menu"] #bossBar{display:n
 /* Acceso compacto a la campaña en la fila superior del menú: solo en pantallas bajas (móvil apaisado). */
 #campaignBadge{display:none;border-color:#ffd36a!important;color:#ffd36a!important}
 @media (max-height:500px) and (orientation:landscape){#campaignBadge{display:inline-flex}}
+
+/* Pantallas bajas (móvil apaisado): presentación del jefe y resultados en dos columnas para que
+   los botones queden visibles sin desplazar. */
+@media (max-height:500px) and (orientation:landscape){
+ .cmp-result .modal{display:grid!important;grid-template-columns:auto minmax(0,1fr);column-gap:18px;align-items:center;text-align:left;width:min(880px,94vw)!important;max-width:none!important}
+ .cmp-result .modal>*{grid-column:2;margin-top:2px;margin-bottom:2px}
+ .cmp-result .modal>canvas{grid-column:1;grid-row:1/span 9;width:150px!important;height:150px!important;margin:0}
+ .cmp-result .modal h2{font-size:22px;margin:0}
+ .cmp-result .cmp-abil{margin:0;max-width:none;font-size:11px}
+ .cmp-result .cmp-boss-stats{justify-content:flex-start;margin:2px 0}
+ .cmp-result .modal .start{min-height:38px;padding:6px 14px}
+}

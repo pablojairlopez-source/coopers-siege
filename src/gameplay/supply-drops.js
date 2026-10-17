@@ -188,11 +188,12 @@ const supply={
     c.strokeStyle='#7a3b3b';c.lineWidth=1.4;c.beginPath();c.arc(0,-46,28,Math.PI,0);c.stroke();
    }
    const glow=.5+.5*Math.sin(time*5+s.id);
-   c.shadowColor='#fff2b0';c.shadowBlur=8+glow*10;
+   // Halo barato (sin shadowBlur, que es caro en lienzos 2D de móvil).
+   c.globalAlpha=fade*(.18+.14*glow);c.fillStyle='#fff2b0';c.beginPath();c.ellipse(0,0,24,14,0,0,Math.PI*2);c.fill();c.globalAlpha=fade;
    // Hueso: dos nudos por extremo y una caña con lazo.
    c.fillStyle='#f6ead0';c.strokeStyle='#6b4a2b';c.lineWidth=2;
    const bone=()=>{c.beginPath();c.roundRect?c.roundRect(-11,-4.5,22,9,3):c.rect(-11,-4.5,22,9);for(const [x,y] of [[-12,-4.5],[-12,4.5],[12,-4.5],[12,4.5]]){c.moveTo(x+5.5,y);c.arc(x,y,5.5,0,Math.PI*2);}};
-   bone();c.fill();c.shadowBlur=0;bone();c.stroke();
+   bone();c.fill();bone();c.stroke();
    c.fillStyle='#ff5f7a';c.beginPath();c.moveTo(-3,-4.5);c.lineTo(3,4.5);c.lineTo(-3,4.5);c.lineTo(3,-4.5);c.closePath();c.fill();
    c.fillStyle='#ffe28a';c.font='bold 9px system-ui,sans-serif';c.textAlign='center';c.fillText('?',0,-11-glow*2);
    c.restore();

@@ -107,6 +107,8 @@ const looks={
 CS5.campaignData={version:1,cast,abilities,styles,chapters,looks,
  squad:['cooper','pipa','bongo'],
  // Valores de equilibrio: escala de los jefes y daño para interrumpir una habilidad anunciada.
- boss:{scale:2,mass:2.6,breakDamage:40,announceChance:.85,rescueDamage:45}
+ boss:{scale:2,mass:2.6,breakDamage:40,announceChance:.85,rescueDamage:45},
+ // Vida de los 5 rivales de la batalla 1 (la escuadra del jugador tiene 3 × 100). Ver docs/CAMPANA-5.2.md (balance).
+ botHp:60
 };
 })();

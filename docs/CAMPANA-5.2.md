@@ -17,8 +17,8 @@ Documento de diseño y seguimiento de la versión 5.2. Rama: `feature/coopers-si
 | 5.2-E | Jefes gigantes: escala 2×, 250–400 HP, habilidades con enfriamiento, IA temática | ✅ |
 | 5.2-F | Historia en 4 actos y diálogo cinematográfico con retratos 3D | ✅ |
 | 5.2-G | Interfaz de campaña: recorrido, galería de jefes, trofeo 3D, final y créditos | ✅ |
-| 5.2-H | Pruebas nuevas, progresión de 34 estados, balance | pendiente |
-| Entrega | Capturas, CHANGELOG, vista previa S23, PR sin merge | pendiente |
+| 5.2-H | Pruebas nuevas, progresión de 34 estados, balance | ✅ |
+| Entrega | Capturas, CHANGELOG, vista previa S23, PR sin merge | ✅ |
 
 ## Fase B — Arsenal
 
@@ -79,3 +79,4 @@ Documento de diseño y seguimiento de la versión 5.2. Rama: `feature/coopers-si
 - 17-10-2026 · Claude Code (Opus) · 5.2-B: `CS5.arsenal`; IA que elige solo entre armas con munición (`aiChooseWeapon`), cajas de impacto escalables (`pugHit`, `pugCY`, `pugScale`) y resistencia al empuje (`mass`) para los jefes; `tests/weapons.cjs`. `npm test` 9/9.
 - 17-10-2026 · Claude Code (Opus) · 5.2-C: `CS5.supply` + `CS5.supplyConfig`; selector «Huesitos» (normales/frecuentes/escasos/desactivados) también enviado en `match_start`; insignia «NUEVO» en el arsenal; sonidos `supplyDrop/Land/Expire`, `pickup`; `tests/supplies.cjs`; `tests/shots-52.cjs` (capturas). `npm test` 10/10.
 - 17-10-2026 · Claude Code (Opus) · 5.2-D/E/F/G: `src/campaign/{chapters,story,bosses,dialogue,trophy,campaign}.js`, `src/ui/dialogue.css`, estilos de campaña; botón «CAMPAÑA — EL TORNEO DEL UNIVERSO» (y acceso compacto en móvil apaisado); `tests/campaign.cjs` (34 estados) y `tests/narrative.cjs`. `npm test` 12/12.
+- 17-10-2026 · Claude Code (Opus) · 5.2-H y entrega: balance en tres iteraciones (esbirros 60 HP, colocación intercalada, aproximación de la IA en campaña), tarjeta de jefe y resultados en dos columnas en móvil, texto progresivo por tiempo real, defectos corregidos (diálogos vistos sin cargar la campaña, retrato sin guardado, retratos duplicados de jefes demonio), rendimiento emulado, capturas, CHANGELOG, README y `docs/NOTAS-5.2.md`.

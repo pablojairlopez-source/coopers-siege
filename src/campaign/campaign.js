@@ -82,20 +82,22 @@ const campaign={
    {id:0,name:'Cooper y compañía',human:true,cursor:0,ammo:CS5.arsenal.initial(weapons,'standard')},
    {id:1,name:a.battle===1?ch.team:ch.boss.name,human:false,cursor:0,ammo:CS5.arsenal.initial(weapons,'standard')}
   ];
-  const spots=CS5.safeSpawns(terrain,10,W,WATER).slice().sort((p,q)=>p.x-q.x);
-  const mine=spots.slice(0,squad.length),rest=spots.slice(squad.length);
+  // Colocación: como en las partidas normales, los rivales quedan intercalados cerca de la escuadra
+  // (con todos en un extremo del mundo de 3072 px las partidas se atascaban; ver el balance).
+  const spots=CS5.safeSpawns(terrain,a.battle===1?8:12,W,WATER).slice().sort((p,q)=>p.x-q.x);
   app.chars=[];let id=0;
-  squad.forEach((who,i)=>{const s=mine[i],cast=D().cast[who],cus=this.save.squad[who]||{};app.chars.push({id:id++,team:0,name:cast.name,x:s.x,y:s.y,vx:0,vy:0,dir:1,hp:100,grounded:true,hurt:0,fallStart:s.y,lastY:s.y,size:1,variant:cast.variant,fur:cus.fur||cast.fur,accessory:cus.accessory||cast.accessory,backgear:cast.backgear,cosmeticColor:cast.color,squadId:who});});
-  const center=mine.reduce((t,s)=>t+s.x,0)/mine.length;
+  const addSquad=(who,s)=>{const cast=D().cast[who],cus=this.save.squad[who]||{};app.chars.push({id:id++,team:0,name:cast.name,x:s.x,y:s.y,vx:0,vy:0,dir:1,hp:100,grounded:true,hurt:0,fallStart:s.y,lastY:s.y,size:1,variant:cast.variant,fur:cus.fur||cast.fur,accessory:cus.accessory||cast.accessory,backgear:cast.backgear,cosmeticColor:cast.color,squadId:who});};
   if(a.battle===1){
-   const pickIdx=[0,1,2,3,4,5,6].slice(0,rest.length),chosen=[];
-   for(let k=0;k<5&&rest.length;k++)chosen.push(rest[Math.min(rest.length-1,Math.round(k*(rest.length-1)/4))]);
-   chosen.forEach((s,i)=>{const look=this.botLook(ch,i+1);app.chars.push({id:id++,team:1,name:ch.bots[i],x:s.x,y:s.y,vx:0,vy:0,dir:-1,hp:100,grounded:true,hurt:0,fallStart:s.y,lastY:s.y,size:1,variant:look.variant,fur:look.fur,accessory:look.accessory,backgear:look.backgear,cosmeticColor:look.color});});
-   void pickIdx;
+   const pattern=[1,0,1,0,1,0,1,1],bots=[];let si=0;
+   spots.forEach((s,k)=>{if(pattern[k]===0&&si<squad.length)addSquad(squad[si++],s);else bots.push(s);});
+   bots.slice(0,5).forEach((s,i)=>{const look=this.botLook(ch,i+1);app.chars.push({id:id++,team:1,name:ch.bots[i],x:s.x,y:s.y,vx:0,vy:0,dir:-1,hp:D().botHp,maxHp:D().botHp,grounded:true,hurt:0,fallStart:s.y,lastY:s.y,size:1,variant:look.variant,fur:look.fur,accessory:look.accessory,backgear:look.backgear,cosmeticColor:look.color});});
   }else{
+   // Jefe cerca del centro, en un punto despejado para su tamaño; la escuadra a 300–900 px de él.
    const clear=s=>{for(let dy=30;dy<=64;dy+=8)for(let dx=-18;dx<=18;dx+=9)if(terrain.solid(s.x+dx,s.y-dy))return false;return true;};
-   const cands=rest.filter(clear);const pool=cands.length?cands:rest;
-   const s=pool.reduce((b,q)=>Math.abs(Math.abs(q.x-center)-1000)<Math.abs(Math.abs(b.x-center)-1000)?q:b,pool[0]);
+   const cands=spots.filter(clear),pool=cands.length?cands:spots;
+   const s=pool.reduce((b,q)=>Math.abs(q.x-W/2)<Math.abs(b.x-W/2)?q:b,pool[0]);
+   const others=spots.filter(q=>q!==s).sort((p,q)=>Math.abs(Math.abs(p.x-s.x)-550)-Math.abs(Math.abs(q.x-s.x)-550));
+   squad.forEach((who,i)=>addSquad(who,others[i]||others[0]));
    const boss={id:id++,team:1,name:ch.boss.name,x:s.x,y:s.y,vx:0,vy:0,dir:-1,hp:100,grounded:true,hurt:0,fallStart:s.y,lastY:s.y};
    CS5.bosses.setup(boss,{...ch.boss,variant:ch.variant},this.save.difficulty);
    app.chars.push(boss);
@@ -256,7 +258,7 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
   const img=CS5.portraits.get(p,expr,side,cv.width*2);c.drawImage(img,0,0,cv.width,cv.height);
   if(who==='shadow'){c.globalCompositeOperation='source-atop';c.fillStyle='#0b1022';c.fillRect(0,0,cv.width,cv.height);c.globalCompositeOperation='source-over';c.fillStyle='#ffffff55';c.font=`900 ${cv.width*.32}px system-ui`;c.textAlign='center';c.fillText('?',cv.width/2,cv.height*.62);}
  },
- castLook(id){const c=D().cast[id],q=this.save.squad[id]||{};return {...c,accessory:q.accessory||c.accessory,fur:q.fur||c.fur};},
+ castLook(id){const c=D().cast[id],q=(this.save||this.load()).squad[id]||{};return {...c,accessory:q.accessory||c.accessory,fur:q.fur||c.fur};},
  action(act,data){
   const n=Number(data.n);
   if(act==='select'){if(!this.unlocked(n)){toast('Capítulo bloqueado: completa el anterior.',2.4);return;}this.selected=n;this.renderMap();return;}
@@ -376,6 +378,8 @@ CS5.campaignShots={
  dialogue(){campaign.load();campaign.hideHub();$('menu').hidden=true;CS5.dialogue.play('c4.bossIntro',S()['c4.bossIntro'],{chapter:4});CS5.dialogue.next();},
  bosscard(){if(CS5.dialogue.open)CS5.dialogue.finish(true);campaign.load();$('menu').hidden=true;campaign.showBossCard(17,()=>{});},
  boss(){if(CS5.dialogue.open)CS5.dialogue.finish(true);campaign.closeResult();campaign.load();campaign.startBattle(4,2);for(let i=0;i<120;i++)PocketSiege.step(1/60);const b=app.chars.find(c=>c.boss);app.team=1;app.active=b;CS5.bosses.announce(b,'sandTrap');updateHUD();campaign.updateBossBar();},
+ battle1(){campaign.closeResult();campaign.load();campaign.startBattle(1,1);for(let i=0;i<150;i++)PocketSiege.step(1/60);},
+ gallery(){campaign.leaveBattle();campaign.load();for(const c of CS5.campaignData.chapters.slice(0,7)){campaign.save.progress[c.n]={b1:true,b2:true};campaign.save.bosses.push(c.boss.id);}campaign.showHub('gallery');},
  trophy(){campaign.leaveBattle?.();campaign.load();campaign.save.trophy=true;campaign.showHub('trophy');}
 };
 campaign.sanitize=sanitize;campaign.defaultSave=defaultSave;

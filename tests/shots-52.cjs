@@ -25,7 +25,7 @@ const only=process.argv[4]?process.argv[4].split(','):null;
     }else{
      await page.evaluate(n=>CS5.campaignShots[n](),name);await page.waitForTimeout(900);
     }
-    const file=path.join(out,`${v}-${name}.png`);await page.screenshot({path:file});console.log(file);
+    const file=path.join(out,`${v}-${name}.jpg`);await page.screenshot({path:file,type:'jpeg',quality:82});console.log(file);
    }
    await ctx.close();
   }
