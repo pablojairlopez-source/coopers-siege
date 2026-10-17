@@ -4,7 +4,7 @@ Juego de artillería por turnos con pugs (navegador, PC y móvil). Se publica co
 
 ## Reglas del proyecto
 
-- La versión 5.0 se desarrolla en `feature/coopers-siege-5-nextgen`. **Nunca hacer merge ni push a `main`** sin autorización explícita del usuario. PR en borrador: #1.
+- La versión 5.0 está publicada desde `main` (PR #1 fusionado). Los cambios nuevos van en una rama propia y llegan a `main` por PR. **Nunca hacer merge ni push a `main`** sin autorización explícita del usuario.
 - Estado y siguientes pasos: **leer `PROGRESO_DESARROLLO.md` al empezar** y actualizarlo al terminar cada bloque de trabajo.
 - Un commit identificable por fase («Fase X: …»); commits intermedios permitidos con el mismo prefijo.
 - No eliminar funcionalidades: 28 armas, terreno destructible, IA, editor de escenarios y de pugs, CPU, local, LAN versus y cooperativo LAN 6v6.

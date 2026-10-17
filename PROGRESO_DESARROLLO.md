@@ -1,6 +1,6 @@
 # Progreso de Cooper's Siege 5.0
 
-Rama: `feature/coopers-siege-5-nextgen` · PR #1 (lista para revisión, **sin merge**) · Base: `origin/main` @ `c8ced21`.
+**5.0 publicada.** PR #1 fusionado en `main` (`e30568f`, 17-10-2026) con autorización del usuario y desplegado en GitHub Pages; verificado en https://pablojairlopez-source.github.io/coopers-siege/ (título 5.0, módulos de `src/` cargados, sin errores). Rama de desarrollo: `feature/coopers-siege-5-nextgen`.
 
 ## Estado por fase
 
@@ -31,4 +31,4 @@ Documentos de entrega: `CHANGELOG.md`, `docs/COMPARATIVA-4.0-5.0.md`, `docs/AUDI
 ## Registro de sesiones
 - Sesión 1: fases A–D.
 - Sesión 2: documentos de continuidad; fases E, F y G.
-- Sesión 3: ronda de pendientes antes del merge.
+- Sesión 3: ronda de pendientes; merge a main y publicación en GitHub Pages (autorizados).
