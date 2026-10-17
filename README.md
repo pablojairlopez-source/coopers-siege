@@ -20,6 +20,13 @@ El salto solo se hace con el botón **SALTAR** (deslizar hacia arriba ya no salt
 **PC**: `A`/`D` caminar · `Espacio` saltar · `F`, `Enter` o el botón ATACAR para apuntar · `W`/`S` o `↑`/`↓` ángulo (con `Mayús`, más fino) · **mantén `Espacio`** para cargar y suéltalo para disparar · `Esc`, `X` o clic derecho cancelan · `Q` arsenal · `Tab` cambiar de pug.
 Dentro del apuntado `Espacio` nunca salta: solo carga y dispara (una vez por pulsación).
 
+## Novedades de 5.2 · El Torneo del Universo
+
+- **Campaña** de 17 capítulos × 2 batallas: tu escuadra (Cooper, Pipa y Bongo) contra cinco rivales y después contra el **jefe gigante** de cada mundo, con habilidades anunciadas que se pueden esquivar o interrumpir. Historia en cuatro actos con diálogos y **retratos 3D**, guardado automático, galería de jefes y el **Cooper's Trophy** en 3D.
+- **Bazuca y granada común infinitas** para todos; arsenal inicial estándar (escopeta 2, mina 2, bate) e igualdad total entre humanos y bots.
+- **Huesitos**: suministros que caen del cielo con armas comunes, potentes o legendarias, también en LAN.
+ técnicas: [`docs/NOTAS-5.2.md`](docs/NOTAS-5.2.md).
+
 ## Novedades de 5.1
 
 - Controles rediseñados con una máquina de estados común a PC y táctil (reposo → apuntando → cargando).
@@ -73,7 +80,10 @@ npx playwright install chromium
 npm test
 ```
 
-`npm test` ejecuta ocho suites: LAN 6v6 (original), LAN 5.1 (controles nuevos y mapa 17), escenarios, daño y gore, HUD responsivo, controles 5.1, banda sonora y mezcla de audio. Otras herramientas:
+`npm test` ejecuta doce suites: LAN 6v6 (original), LAN 5.1, escenarios, daño y gore, HUD responsivo, controles, arsenal 5.2, huesitos, campaña (34 estados), narrativa, banda sonora y mezcla de audio. Otras herramientas:
+
+- `node tests/balance.cjs`: simulación de balance de la campaña (CPU contra CPU).
+- `node tests/shots-52.cjs <carpeta> desktop,s23ultra,fold`: capturas de las novedades de 5.2.
 
 - `npm run test:visual`: capturas de los 17 mapas en escritorio y Galaxy S23 Ultra emulado.
 - `node tests/controls-shots.cjs <carpeta> s23ultra,fold,desktop`: capturas de los controles en reposo y apuntando.

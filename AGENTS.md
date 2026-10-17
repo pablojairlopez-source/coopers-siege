@@ -14,9 +14,9 @@ Los archivos de continuidad están subordinados al estado real del código y de 
 ## Reglas del proyecto
 
 - `main` publica la versión actual en GitHub Pages (carpeta raíz, sin build). **Nunca merge, push ni despliegue a `main`** sin autorización explícita del usuario.
-- Rama de trabajo 5.1: `feature/coopers-siege-5-1-controls-audio-thorns` (la misma para Claude Code y Codex).
+- Rama de trabajo 5.2: `feature/coopers-siege-5-2-torneo` (la misma para Claude Code y Codex). Diseño y seguimiento: `docs/CAMPANA-5.2.md`.
 - Prohibido sin autorización: `git reset --hard`, `git clean -fd`, `git push --force`.
-- Commits pequeños con prefijo de fase («Fase 5.1-X: …»). Al cerrar cada subfase: tests pertinentes, actualizar `PROGRESO_DESARROLLO.md` y `docs/HANDOFF.md`, commit y push de la rama.
+- Commits pequeños con prefijo de fase («Fase 5.2-X: …»). Al cerrar cada subfase: tests pertinentes, actualizar `PROGRESO_DESARROLLO.md` y `docs/HANDOFF.md`, commit y push de la rama.
 - No eliminar funcionalidades: 28 armas, terreno destructible, IA, editor de escenarios y de pugs, CPU, local, LAN versus y cooperativo LAN 6v6.
 - En LAN el anfitrión es la autoridad. Lo cosmético usa `effectsRandom`; lo que cambia terreno o vida debe ser determinista.
 - Audio 100 % original y procedural (Web Audio). Las referencias musicales del usuario son dirección artística: no copiar melodías, frases ni progresiones distintivas; no descargar audio de YouTube.

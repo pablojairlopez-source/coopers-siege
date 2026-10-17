@@ -1,0 +1,78 @@
+{
+ "date": "2026-10-17T22:30:49.287Z",
+ "profile": "S23 Ultra emulado, CPU 4×, sin render",
+ "runs": [
+  {
+   "n": 1,
+   "battle": 1,
+   "avgMs": 8.84,
+   "p95Ms": 24.2
+  },
+  {
+   "n": 1,
+   "battle": 2,
+   "avgMs": 9.43,
+   "p95Ms": 16.3
+  },
+  {
+   "n": 4,
+   "battle": 1,
+   "avgMs": 17.22,
+   "p95Ms": 30
+  },
+  {
+   "n": 4,
+   "battle": 2,
+   "avgMs": 9.82,
+   "p95Ms": 12.8
+  },
+  {
+   "n": 8,
+   "battle": 1,
+   "avgMs": 7.41,
+   "p95Ms": 10.3
+  },
+  {
+   "n": 8,
+   "battle": 2,
+   "avgMs": 9.25,
+   "p95Ms": 13.1
+  },
+  {
+   "n": 11,
+   "battle": 1,
+   "avgMs": 12.34,
+   "p95Ms": 18.1
+  },
+  {
+   "n": 11,
+   "battle": 2,
+   "avgMs": 8.15,
+   "p95Ms": 16.5
+  },
+  {
+   "n": 13,
+   "battle": 1,
+   "avgMs": 7.47,
+   "p95Ms": 11.1
+  },
+  {
+   "n": 13,
+   "battle": 2,
+   "avgMs": 5.89,
+   "p95Ms": 9.1
+  },
+  {
+   "n": 17,
+   "battle": 1,
+   "avgMs": 10.63,
+   "p95Ms": 15.2
+  },
+  {
+   "n": 17,
+   "battle": 2,
+   "avgMs": 8.79,
+   "p95Ms": 13
+  }
+ ]
+}

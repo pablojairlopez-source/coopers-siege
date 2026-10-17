@@ -50,6 +50,8 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH||'playwright');
   assert.ok(await host.evaluate(x=>PocketSiege.state.active.x>x,x),'guest movement simulated by host');
   await client.evaluate(()=>{PocketSiege.input.keys.clear();CooperLAN.coopClock=1;PocketSiege.step(1/60);});
   await host.evaluate(()=>{PocketSiege.state.active.hp=50;});await sync();
+  // 5.2: el arsenal estándar ya no trae premio curativo; el anfitrión concede uno (como un huesito). Solo preparación: aserciones intactas.
+  await host.evaluate(()=>{const s=PocketSiege.state;CS5.arsenal.grant(s.teams[s.team],'medkit',1);});await sync();
   const before=await host.evaluate(()=>PocketSiege.state.totalShots);
   await client.evaluate(()=>{PocketSiege.selectWeapon('medkit');PocketSiege.shoot();PocketSiege.shoot();});
   await host.waitForFunction(n=>PocketSiege.state.totalShots===n+1,before);await sync();

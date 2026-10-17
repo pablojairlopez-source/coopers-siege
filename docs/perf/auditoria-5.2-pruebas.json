@@ -1,0 +1,24 @@
+{
+ "date": "2026-10-17T22:29:18.634Z",
+ "command": "node tests/run-all.cjs (runner de npm test)",
+ "node": "v24.19.0",
+ "suites": [
+  "✔ LAN 6v6 (original) (10 s)",
+  "✔ LAN 5.1: controles nuevos y mapa 17 (7 s)",
+  "✔ Escenarios ampliados (16 s)",
+  "✔ Daño, gore y destrucción (7 s)",
+  "✔ HUD responsivo (8 s)",
+  "✔ Controles 5.1 (táctil y teclado) (12 s)",
+  "✔ Arsenal 5.2 e igualdad humano/bot (9 s)",
+  "✔ Huesitos 5.2 (suministros, IA y LAN) (20 s)",
+  "✔ Campaña 5.2 (34 estados, jefes, guardado, final) (28 s)",
+  "✔ Física 2× de jefes en 17 mapas (24 s)",
+  "✔ IA campaña: trayectorias, rutas y equidad (22 s)",
+  "✔ Auditoría campaña: historial, guardado y escopeta (4 s)",
+  "✔ Narrativa y diálogo 5.2 (9 s)",
+  "✔ Banda sonora y efectos (11 s)",
+  "✔ Mezcla de audio 5.1 (44 s)"
+ ],
+ "passed": 15,
+ "failed": 0
+}

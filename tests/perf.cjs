@@ -21,7 +21,8 @@ function stats(samples){
 
 (async()=>{
  const outFile=path.resolve(ROOT,process.argv[2]||'test-results/perf.json');
- const maps=(process.argv[3]||'0,2,7').split(',').map(Number);
+ // 5.2: un mapa «cNbM» mide la batalla M del capítulo N de la campaña (jefe, huesitos, aura y zona).
+const maps=(process.argv[3]||'0,2,7').split(',').map(v=>/^c\d+b[12]$/.test(v)?v:Number(v));
  const profiles=(process.argv[4]||'pc,android').split(',');
  const srv=await serve(),browser=await launch(),errors=[],result={date:new Date().toISOString(),runs:[]};
  try{
@@ -38,7 +39,8 @@ function stats(samples){
    for(const m of maps){
     const run=await page.evaluate(async({m,preset})=>{
      const P=PocketSiege;P.applyGraphicsPreset(preset,false);
-     P.mainMenu();P.selectMap(m);document.getElementById('modeCPU').click();P.newMatch(777+m);
+     if(typeof m==='string'){const [ch,b]=m.slice(1).split('b').map(Number);CS5.campaign.load();CS5.campaign.startBattle(ch,b);const boss=P.state.chars.find(c=>c.boss);if(boss)CS5.bosses.announce(boss,boss.boss.abilities[0]);CS5.supply.spawn(rng(5));}
+     else{P.mainMenu();P.selectMap(m);document.getElementById('modeCPU').click();P.newMatch(777+m);}
      for(let i=0;i<120;i++)P.step(1/60);
      const nextFrame=()=>new Promise(r=>requestAnimationFrame(r));
      const measure=async(n,each)=>{const out=[];for(let i=0;i<n;i++){await nextFrame();const t0=performance.now();each&&each(i);P.step(1/60);P.render(performance.now()/1000);
@@ -51,7 +53,7 @@ function stats(samples){
      const heap0=performance.memory?.usedJSHeapSize||0;
      const boom=await measure(240,i=>{if(i%30===0){const x=200+((i*137)%Math.max(400,(P.terrain.mask.length/768)-400));P.explode(x,430,i%60===0?123:70,60,-1,i%60===0?'super':'normal');}});
      const heap1=performance.memory?.usedJSHeapSize||0;
-     return {map:P.maps[m].id,preset:preset,backend:P.renderer?.backend,idle,boom,heapMB:+(heap1/1048576).toFixed(1),heapGrowthMB:+((heap1-heap0)/1048576).toFixed(1),particles:s.fx.length,blood:P.bloodFluid?.count||0};
+     return {map:typeof m==='string'?m:P.maps[m].id,preset:preset,backend:P.renderer?.backend,idle,boom,heapMB:+(heap1/1048576).toFixed(1),heapGrowthMB:+((heap1-heap0)/1048576).toFixed(1),particles:s.fx.length,blood:P.bloodFluid?.count||0};
     },{m,preset:prof.preset});
     const entry={profile:name,map:run.map,preset:run.preset,backend:run.backend,idle:stats(run.idle),explosions:stats(run.boom),heapMB:run.heapMB,heapGrowthMB:run.heapGrowthMB,particlesAtEnd:run.particles,bloodAtEnd:run.blood};
     result.runs.push(entry);
