@@ -6,21 +6,22 @@
 
 - **Fecha:** 17-10-2026
 - **Agente:** Claude Code (Opus)
-- **Rama:** `feature/coopers-siege-5-1-controls-audio-thorns` (creada desde `origin/main` `e5466e5`)
-- **Último commit confirmado:** ver `git log -1` (este archivo se actualiza en cada commit de subfase)
-- **Cambios sin commit:** ninguno al cerrar la subfase.
+- **Rama:** `feature/coopers-siege-5-1-controls-audio-thorns` (desde `origin/main` `e5466e5`), publicada en `origin`.
+- **Último commit confirmado:** el de «Fase 5.1-6/8» (ver `git log -1`). Commits de la 5.1: 5.1-0 `d7b695f`, 5.1-1/2 `4999b2a`, 5.1-5 `d5e9238`, 5.1-3 `5a61408`, 5.1-4 `532f1f9`, 5.1-6/8 (entrega).
+- **Cambios sin commit:** ninguno.
+- **PR:** abierta hacia `main`. **No fusionar sin autorización del usuario.**
+
+## Estado
+
+Subfases 0–6 y 8 completas. `npm test`: 8/8 suites en verde (LAN original, LAN 5.1, escenarios ×17, gore, HUD, controles, música, mezcla).
 
 ## Línea base (antes de 5.1)
 
-`npm test` en `e5466e5`: 5/5 suites en verde — LAN 6v6 (9 s), escenarios ampliados 32 partidas (18 s), daño/gore (5 s), HUD responsivo 4 pantallas (5 s), banda sonora 17 piezas (11 s).
-
-## Estado de la 5.1
-
-Ver checklist en `PROGRESO_DESARROLLO.md`.
+`npm test` en `e5466e5`: 5/5 suites en verde.
 
 ## Próxima tarea exacta
 
-Fase 5.1-4: mapa 17 «Jardín de Espinas» (índice 16, id `thorns`). La música ya existe (`SONGS[16]` en `src/audio/songs.js`, ambiente `thorns` y material `wood` en `sfx.js`). Falta: entrada en `maps` (`index.html`), trazado en `src/levels/terrain-gen.js`, dirección de arte (`art-direction.js`), materiales (`terrain-materials.js`), fondo (`scenery.js`), decorados 3D (`props3d.js`), miniatura, editor y pruebas (smoke con 17 mapas).
+Esperar la revisión del usuario en la PR. Ajustes probables tras su prueba en un S23 Ultra real: tamaños/posición de botones (variables `--t51-*` en `src/ui/controls.css`), niveles de mezcla (`scheduleAdventureMusic` en `index.html`) o pasajes musicales (`src/audio/songs.js`, después `node tests/calibrate-music.cjs 30` dos veces).
 
 ## Comandos para retomar
 
@@ -28,16 +29,18 @@ Fase 5.1-4: mapa 17 «Jardín de Espinas» (índice 16, id `thorns`). La música
 $env:PATH="$env:LOCALAPPDATA\coopers-tools\node-v24.22.0-win-x64;$env:PATH"
 git status; git log --oneline -10
 npm test
+node tests/controls-shots.cjs test-results/controls s23ultra,fold,desktop
+node tests/export-music.cjs 180 B test-results/music-5.1 volcano,thorns
 ```
 
 ## Decisiones de arquitectura
 
-- **Controles (5.1-1/2):** máquina de estados `CS5.attack` en `src/input/attack-controls.js` (`idle → aiming → charging`), común a teclado, ratón y táctil. Solo toca `app.angle`, `app.power`, `app.charging` y llama a `shoot()`: la autoridad LAN no cambia. `setPhase` y `resetTouchState` llaman a `CS5.attack.reset()`. Disposición en `src/ui/controls.css` (selectores con `body` delante para ganar a los `!important` de 5.0). W/S/↑/↓ ajustan la *elevación* en [-85°, 90°] sin cruzar la vertical (no cambian `c.dir`, que no se sincroniza en LAN coop). El salto por deslizamiento se eliminó; el salto táctil es `#touchJump` (máx. uno cada 180 ms). Prueba: `tests/controls.cjs` (en `npm test`).
-
-- **Audio (5.1-5):** `audio.buildMix(c)` crea los buses (música con paso alto + estante grave −3 dB + `musicDuck`; efectos; voces; ambiente) → compresor de bus suave (−12 dB, 2,5:1) → limitador (−3 dB, 20:1). Niveles en `scheduleAdventureMusic`: música 0,44 (antes 0,70; menú 0,21), efectos 0,74, voces 0,45, ambiente 0,36, todos × deslizadores. `audio.duck(depth,hold)` lo pide `sfx.js` en explosiones grandes. Sonoridad por canción igualada con `CS5.musicTrim` (`src/audio/loudness.js`, generado por `tests/calibrate-music.cjs`). Quejidos: `damage()` llama `sound('hurt', daño/20)`; `sfx.painKind` → ligero <15, medio <35, fuerte ≥35; `pugDeath` llama `sound('death')` antes de `nuclear`. Las voces tenían pico 0,22 tras un paso banda y sonaban en el mismo instante que la explosión (enmascaradas) y la muerte no tenía voz. Límite de voces por tipo en `sfx.js` (`LIMITS`). Prueba: `tests/audio-mix.cjs`.
-
-- **Música (5.1-3):** el compositor admite `melody` como lista (una melodía por frase de 4 compases), `literal:true` (melodía escrita sin secuencia/cadencia automáticas; variaciones solo en reapariciones), `counterMelody` (contracanto escrito), `inst` por sección y `tempo` por sección. `mel('…')` en `songs.js` es la notación compacta. Reescritas: Caldera Roja, Última Estrella (conserva su tema), Fundición Omega, Catedral Gótica, Dulce Caos; nueva: Jardín de Espinas. Referencias de YouTube: solo se pudo leer el título (Kirby 64 «File Select» y «Factory Inspection»); no se escuchó el audio. `tests/music.cjs` informa frases escritas distintas en 3 min (revisadas 9–14, antiguas 3). Exportar WAV: `node tests/export-music.cjs 180 B test-results/music-5.1 volcano,thorns`.
+- **Controles (5.1-1/2):** máquina de estados `CS5.attack` en `src/input/attack-controls.js` (`idle → aiming → charging`), común a teclado, ratón y táctil. Solo toca `app.angle`, `app.power`, `app.charging` y llama a `shoot()`: la autoridad LAN no cambia. `setPhase` y `resetTouchState` llaman a `CS5.attack.reset()`. Disposición en `src/ui/controls.css` (selectores con `body` delante para ganar a los `!important` de 5.0). W/S/↑/↓ ajustan la *elevación* en [-85°, 90°] sin cruzar la vertical (no cambian `c.dir`, que no se sincroniza en LAN coop). El salto por deslizamiento se eliminó; el salto táctil es `#touchJump` (máx. uno cada 180 ms). Comportamiento exacto: `docs/NOTAS-5.1.md`.
+- **Audio (5.1-5):** `audio.buildMix(c)` crea los buses (música con paso alto + estante grave −3 dB + `musicDuck`; efectos; voces; ambiente) → compresor de bus (−12 dB, 2,5:1) → limitador (−3 dB, 20:1). Niveles en `scheduleAdventureMusic`: música 0,44 (menú 0,21), efectos 0,74, voces 0,45, ambiente 0,36. `audio.duck(depth,hold)` lo pide `sfx.js`. Sonoridad por canción con `CS5.musicTrim` (`src/audio/loudness.js`, generado). Quejidos: `damage()` → `sound('hurt', daño/20)`; `pugDeath` → `sound('death')` antes de `nuclear`.
+- **Música (5.1-3):** el compositor admite `melody` como lista, `literal:true`, `counterMelody`, `inst` y `tempo` por sección; `mel('…')` es la notación compacta de `songs.js`. Referencias de YouTube: solo se leyó el título; no se escuchó el audio.
+- **Mapa 17 (5.1-4):** índice 16, id `thorns`; espinas solo visuales/terreno (sin daño por contacto). Escenografía en `src/rendering/scenery-thorns.js`.
 
 ## Bloqueadores conocidos
 
 - Sin dispositivo físico: S23 Ultra, plegables y tablets se prueban por emulación (Playwright).
+- Escucha humana pendiente de las piezas revisadas.

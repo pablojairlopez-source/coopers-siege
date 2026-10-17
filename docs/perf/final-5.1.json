@@ -1,0 +1,219 @@
+{
+ "date": "2026-10-17T15:06:28.959Z",
+ "runs": [
+  {
+   "profile": "pc",
+   "map": "tropic",
+   "preset": "ultra",
+   "backend": "WebGL 2.0",
+   "idle": {
+    "frames": 180,
+    "avgMs": 6.02,
+    "p50Ms": 5.3,
+    "p95Ms": 13.1,
+    "maxMs": 16.1,
+    "fpsEquivalent": 166.1
+   },
+   "explosions": {
+    "frames": 240,
+    "avgMs": 18.98,
+    "p50Ms": 18.2,
+    "p95Ms": 26.6,
+    "maxMs": 92.3,
+    "fpsEquivalent": 52.7
+   },
+   "heapMB": 110.6,
+   "heapGrowthMB": 0,
+   "particlesAtEnd": 477,
+   "bloodAtEnd": 266
+  },
+  {
+   "profile": "pc",
+   "map": "volcano",
+   "preset": "ultra",
+   "backend": "WebGL 2.0",
+   "idle": {
+    "frames": 180,
+    "avgMs": 5.59,
+    "p50Ms": 5.7,
+    "p95Ms": 8.8,
+    "maxMs": 11.4,
+    "fpsEquivalent": 178.9
+   },
+   "explosions": {
+    "frames": 240,
+    "avgMs": 12.76,
+    "p50Ms": 12.7,
+    "p95Ms": 23.1,
+    "maxMs": 27.3,
+    "fpsEquivalent": 78.3
+   },
+   "heapMB": 110.6,
+   "heapGrowthMB": 0,
+   "particlesAtEnd": 392,
+   "bloodAtEnd": 506
+  },
+  {
+   "profile": "pc",
+   "map": "candy",
+   "preset": "ultra",
+   "backend": "WebGL 2.0",
+   "idle": {
+    "frames": 180,
+    "avgMs": 4.95,
+    "p50Ms": 5,
+    "p95Ms": 7.6,
+    "maxMs": 14.1,
+    "fpsEquivalent": 202.2
+   },
+   "explosions": {
+    "frames": 240,
+    "avgMs": 10.46,
+    "p50Ms": 8.8,
+    "p95Ms": 18.9,
+    "maxMs": 21.3,
+    "fpsEquivalent": 95.6
+   },
+   "heapMB": 110.6,
+   "heapGrowthMB": 0,
+   "particlesAtEnd": 399,
+   "bloodAtEnd": 232
+  },
+  {
+   "profile": "pc",
+   "map": "thorns",
+   "preset": "ultra",
+   "backend": "WebGL 2.0",
+   "idle": {
+    "frames": 180,
+    "avgMs": 5.39,
+    "p50Ms": 5.5,
+    "p95Ms": 7.8,
+    "maxMs": 11.4,
+    "fpsEquivalent": 185.6
+   },
+   "explosions": {
+    "frames": 240,
+    "avgMs": 16.22,
+    "p50Ms": 17.2,
+    "p95Ms": 21.7,
+    "maxMs": 26.9,
+    "fpsEquivalent": 61.6
+   },
+   "heapMB": 110.6,
+   "heapGrowthMB": 0,
+   "particlesAtEnd": 410,
+   "bloodAtEnd": 333
+  },
+  {
+   "profile": "android",
+   "map": "tropic",
+   "preset": "auto",
+   "backend": "WebGL 2.0",
+   "idle": {
+    "frames": 180,
+    "avgMs": 17.36,
+    "p50Ms": 17.1,
+    "p95Ms": 20,
+    "maxMs": 28,
+    "fpsEquivalent": 57.6
+   },
+   "explosions": {
+    "frames": 240,
+    "avgMs": 30.08,
+    "p50Ms": 28.9,
+    "p95Ms": 39.7,
+    "maxMs": 100.9,
+    "fpsEquivalent": 33.2
+   },
+   "heapMB": 61,
+   "heapGrowthMB": 0,
+   "particlesAtEnd": 477,
+   "bloodAtEnd": 266
+  },
+  {
+   "profile": "android",
+   "map": "volcano",
+   "preset": "auto",
+   "backend": "WebGL 2.0",
+   "idle": {
+    "frames": 180,
+    "avgMs": 10.05,
+    "p50Ms": 10.3,
+    "p95Ms": 15.5,
+    "maxMs": 18,
+    "fpsEquivalent": 99.5
+   },
+   "explosions": {
+    "frames": 240,
+    "avgMs": 26.24,
+    "p50Ms": 25.4,
+    "p95Ms": 43.3,
+    "maxMs": 82.1,
+    "fpsEquivalent": 38.1
+   },
+   "heapMB": 61,
+   "heapGrowthMB": 0,
+   "particlesAtEnd": 392,
+   "bloodAtEnd": 506
+  },
+  {
+   "profile": "android",
+   "map": "candy",
+   "preset": "auto",
+   "backend": "WebGL 2.0",
+   "idle": {
+    "frames": 180,
+    "avgMs": 12.41,
+    "p50Ms": 12.7,
+    "p95Ms": 15.4,
+    "maxMs": 18,
+    "fpsEquivalent": 80.6
+   },
+   "explosions": {
+    "frames": 240,
+    "avgMs": 21.23,
+    "p50Ms": 20.3,
+    "p95Ms": 30.5,
+    "maxMs": 62.1,
+    "fpsEquivalent": 47.1
+   },
+   "heapMB": 61,
+   "heapGrowthMB": 0,
+   "particlesAtEnd": 399,
+   "bloodAtEnd": 232
+  },
+  {
+   "profile": "android",
+   "map": "thorns",
+   "preset": "auto",
+   "backend": "WebGL 2.0",
+   "idle": {
+    "frames": 180,
+    "avgMs": 11.26,
+    "p50Ms": 11.9,
+    "p95Ms": 16,
+    "maxMs": 22,
+    "fpsEquivalent": 88.8
+   },
+   "explosions": {
+    "frames": 240,
+    "avgMs": 23.74,
+    "p50Ms": 23.1,
+    "p95Ms": 35.2,
+    "maxMs": 68.7,
+    "fpsEquivalent": 42.1
+   },
+   "heapMB": 61,
+   "heapGrowthMB": 0,
+   "particlesAtEnd": 410,
+   "bloodAtEnd": 333
+  }
+ ],
+ "gpu": {
+  "webgl": true,
+  "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 Laptop GPU (0x00002C59) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "maxTexture": 16384
+ }
+}

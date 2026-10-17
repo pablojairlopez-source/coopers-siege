@@ -110,7 +110,7 @@ body #toast{bottom:calc(var(--t51-sb) + 64px)!important}
  body #controls>#touchMovePad{gap:10px}
 }
 /* Teléfonos estrechos: el botón no cabe con icono, texto y porcentaje. */
-@media (max-width:760px){
+@media (max-width:760px),(max-height:380px) and (orientation:landscape){
  body #controls>#fireButton .fire-circle{display:none!important}
  body #controls>#fireButton #fireMainText{font-size:11px;letter-spacing:.3px!important}
  body #controls>#fireButton .fire-top-row{gap:4px!important}

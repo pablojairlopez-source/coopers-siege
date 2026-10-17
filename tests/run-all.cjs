@@ -4,6 +4,7 @@ const {spawnSync}=require('node:child_process');
 const path=require('node:path');
 const suites=[
  ['LAN 6v6 (original)','lan-coop.cjs'],
+ ['LAN 5.1: controles nuevos y mapa 17','lan-51.cjs'],
  ['Escenarios ampliados','smoke.cjs'],
  ['Daño, gore y destrucción','effects.cjs'],
  ['HUD responsivo','ui.cjs'],
