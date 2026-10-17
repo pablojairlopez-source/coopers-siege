@@ -108,7 +108,7 @@ function voice(ac,dest,t,kind,pitch=1){
 }
 
 // Límite de voces simultáneas por tipo (racimos, cadenas de minas, varios heridos).
-const LIMITS={explosion:[5,.25],nuclear:[2,.4],hurt:[3,.15],death:[3,.3],shot:[4,.12],bounce:[4,.1],splash:[3,.2]};
+const LIMITS={blip:[2,.03],pickup:[2,.2],explosion:[5,.25],nuclear:[2,.4],hurt:[3,.15],death:[3,.3],shot:[4,.12],bounce:[4,.1],splash:[3,.2]};
 const recentByCtx=new WeakMap();
 function gate(ac,kind){const lim=LIMITS[kind];if(!lim)return true;let recent=recentByCtx.get(ac);if(!recent)recentByCtx.set(ac,recent={});const now=ac.currentTime,list=(recent[kind]||(recent[kind]=[])).filter(x=>now-x<lim[1]);recent[kind]=list;if(list.length>=lim[0])return false;list.push(now);return true;}
 
@@ -157,6 +157,16 @@ const sfx={
   if(kind==='splash'){noise(ac,base,t,.5,.4,'bandpass',1800,.8,600);for(let k=0;k<4;k++)tone(ac,base,t+.05+k*.06,rnd(400,700),rnd(900,1400),.08,.07);return true;}
   if(kind==='turn'){CS5.instruments.I.bell(ac,base,79,t,.1,.1,{ratio:3,index:.8,len:.6});CS5.instruments.I.bell(ac,base,86,t+.09,.1,.1,{ratio:3,index:.8,len:.8});return true;}
   if(kind==='victory'){const I=CS5.instruments.I;[[0,67],[.14,72],[.28,76],[.42,79],[.62,84]].forEach(([k,m])=>I.brass(ac,base,m,t+k,k>.5?.8:.16,.5));I.timpani?.(ac,base,43,t,1,.4);return true;}
+  // 5.2: huesitos, diálogo, jefes y trofeo (todo sintetizado).
+  if(kind==='supplyDrop'){noise(ac,base,t,1.1,.10,'bandpass',700,1.2,300);CS5.instruments.I.bell(ac,base,84,t+.05,.12,.08,{ratio:3,index:.6,len:.7});return true;}
+  if(kind==='supplyLand'){const d=spatial(ac,base,opts.pos,.5);thump(ac,d,t,.45*strength,150,60,.18);noise(ac,d,t,.12,.18*strength,'lowpass',900);return true;}
+  if(kind==='pickup'){const d=spatial(ac,base,opts.pos,.6),I=CS5.instruments.I,notes=strength>=3?[72,76,79,84,88,91]:strength>=2?[72,76,79,84]:[76,79,84];notes.forEach((m,k)=>I.bell(ac,d,m,t+k*.06,.18,.12,{ratio:3,index:.7,len:.7}));if(strength>=3)I.brass(ac,d,60,t+.36,.6,.3);return true;}
+  if(kind==='supplyExpire'){noise(ac,base,t,.35,.12,'highpass',2400,.7);tone(ac,base,t,700,300,.25,.06,'triangle');return true;}
+  if(kind==='blip'){tone(ac,voiceBus,t,(opts.pitch||520)*rnd(.96,1.04),0,.035,.05*strength,'square');return true;}
+  if(kind==='bossCharge'){tone(ac,base,t,70,220,1.1,.25,'sawtooth');noise(ac,base,t,1.1,.12,'bandpass',400,2,1600);return true;}
+  if(kind==='bossRoar'){tone(ac,voiceBus,t,110,70,.9,.35,'sawtooth');tone(ac,voiceBus,t,165,90,.9,.18,'square');noise(ac,voiceBus,t,.8,.18,'lowpass',700);audio.duck?.(.6,1);return true;}
+  if(kind==='trophy'){const I=CS5.instruments.I;[[0,60],[.18,64],[.36,67],[.54,72],[.8,76],[1.0,79],[1.3,84]].forEach(([k,m])=>I.brass(ac,base,m,t+k,k>1?1.2:.3,.42));I.timpani?.(ac,base,36,t+1.3,1,.5);[96,100,103].forEach((m,k)=>I.bell(ac,base,m,t+1.4+k*.08,.4,.06,{ratio:3,index:1,len:1.2}));return true;}
+  if(kind==='defeat'){const I=CS5.instruments.I;[[0,67],[.3,63],[.6,60],[1,55]].forEach(([k,m])=>I.brass(ac,base,m,t+k,.5,.3));return true;}
   return false;
  }
 };

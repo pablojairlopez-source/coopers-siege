@@ -12,7 +12,7 @@ Documento de diseño y seguimiento de la versión 5.2. Rama: `feature/coopers-si
 |---|---|---|
 | 5.2-A | Rama, línea base, este documento, continuidad | ✅ |
 | 5.2-B | Arsenal: bazuca y granada común infinitas; arsenal inicial estándar; igualdad humano/bot | ✅ |
-| 5.2-C | Huesitos: suministros que caen del cielo, recompensas por categoría, IA y LAN | pendiente |
+| 5.2-C | Huesitos: suministros que caen del cielo, recompensas por categoría, IA y LAN | ✅ |
 | 5.2-D | Campaña: 17 capítulos × 2 batallas, guardado, derrota/reintento | pendiente |
 | 5.2-E | Jefes gigantes: escala 2×, 250–400 HP, habilidades con enfriamiento, IA temática | pendiente |
 | 5.2-F | Historia en 4 actos y diálogo cinematográfico con retratos 3D | pendiente |
@@ -77,3 +77,4 @@ Documento de diseño y seguimiento de la versión 5.2. Rama: `feature/coopers-si
 
 - 17-10-2026 · Claude Code (Opus) · 5.2-A: rama creada, línea base 8/8, documento creado.
 - 17-10-2026 · Claude Code (Opus) · 5.2-B: `CS5.arsenal`; IA que elige solo entre armas con munición (`aiChooseWeapon`), cajas de impacto escalables (`pugHit`, `pugCY`, `pugScale`) y resistencia al empuje (`mass`) para los jefes; `tests/weapons.cjs`. `npm test` 9/9.
+- 17-10-2026 · Claude Code (Opus) · 5.2-C: `CS5.supply` + `CS5.supplyConfig`; selector «Huesitos» (normales/frecuentes/escasos/desactivados) también enviado en `match_start`; insignia «NUEVO» en el arsenal; sonidos `supplyDrop/Land/Expire`, `pickup`; `tests/supplies.cjs`; `tests/shots-52.cjs` (capturas). `npm test` 10/10.

@@ -7,9 +7,9 @@
 - **Fecha:** 17-10-2026
 - **Agente:** Claude Code (Opus)
 - **Rama:** `feature/coopers-siege-5-2-torneo` (desde `origin/main` `16c8bf4`, 5.1 publicada), publicada en `origin`.
-- **Último commit confirmado:** «Fase 5.2-B» (ver `git log -1`).
+- **Último commit confirmado:** «Fase 5.2-C» (ver `git log -1`).
 - **Cambios sin commit:** ninguno.
-- **Subfase actual:** 5.2-B completada (arsenal). `npm test` 9/9 (nueva suite `tests/weapons.cjs`).
+- **Subfase actual:** 5.2-C completada (huesitos). `npm test` 10/10 (nuevas suites `tests/weapons.cjs`, `tests/supplies.cjs`).
 
 ## Cambios de esta subfase
 
@@ -30,7 +30,7 @@ Subfases 5.2-B a 5.2-H y entrega (ver `docs/CAMPANA-5.2.md`).
 
 ## Próxima tarea exacta
 
-5.2-C: integrar `src/gameplay/supply-config.js` y `src/gameplay/supply-drops.js` (`CS5.supply`) en `index.html`: `reset` en `newMatch`, `onTurn` al final de `nextTurn`, `step` en `step()`, `onExplosion` en `explode()`, `draw` en `overlay()`, `supplies` en la instantánea cooperativa, mensaje `supply_pick` en versus; sonidos nuevos en `sfx.js`; selector «Huesitos» en el menú; prueba `tests/supplies.cjs`.
+5.2-D: campaña. Crear `src/campaign/chapters.js` (datos de los 17 capítulos), `campaign.js` (estado, guardado, flujo, roster en `newMatch` con `app.campaign`), `bosses.js`, `story.js`, `dialogue.js`, `trophy.js` y estilos `src/ui/campaign.css`/`dialogue.css`.
 
 ## Comandos para retomar
 

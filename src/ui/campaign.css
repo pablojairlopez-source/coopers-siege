@@ -1,0 +1,5 @@
+/* Cooper's Siege 5.2 — Huesitos en el arsenal y campaña «El Torneo del Universo». */
+
+/* Arma recién obtenida en un huesito: insignia «NUEVO» hasta que se elige. */
+#weaponGrid .weapon-card.fresh{box-shadow:0 0 0 2px #ffe28a,0 0 18px #ffd36a88;position:relative}
+#weaponGrid .weapon-card.fresh::after{content:'NUEVO';position:absolute;top:4px;right:6px;font:900 9px/1 system-ui,sans-serif;letter-spacing:.08em;color:#2a1a05;background:#ffe28a;border-radius:6px;padding:2px 5px}
