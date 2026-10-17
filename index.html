@@ -1293,7 +1293,7 @@ Prompt:
   <aside id="terrainTools" class="editor-tools"><h3>Tu campo de batalla</h3><label>Ambiente<select id="editorTheme"></select></label><button id="editorTemplate">Cargar plantilla de este ambiente</button><div class="editor-tool-pair"><button id="brushAdd" class="selected">＋ Dibujar suelo</button><button id="brushErase">− Borrar suelo</button></div><label>Forma del pincel<select id="brushShape"><option value="circle">● Circular suave</option><option value="rock">⬢ Roca orgánica</option><option value="square">■ Bloque arquitectónico</option></select></label><label>Tamaño del pincel <b id="brushValue">35</b><input id="brushSize" type="range" min="8" max="100" value="35"></label><div class="editor-tool-pair"><button id="editorUndo">↶ Deshacer</button><button id="editorRedo">↷ Rehacer</button></div><label class="check"><input id="useCustomLevel" type="checkbox">Usar este terreno en la partida</label><p id="editorSpawnInfo"></p><p class="editor-note">Los puntos de color muestran dónde aparecerán los pugs. Dibuja islas, puentes y cuevas; el agua elimina al instante.</p></aside>
   <aside id="pugTools" class="editor-tools" hidden><h3>Un pug con personalidad</h3><div class="editor-tool-pair"><label>Equipo<select id="editorTeam"><option value="0">Equipo 1</option><option value="1">Equipo 2</option><option value="2">Equipo 3</option><option value="3">Equipo 4</option></select></label><label>Pug<select id="editorSlot"><option value="0">Pug 1</option><option value="1">Pug 2</option><option value="2">Pug 3</option><option value="3">Pug 4</option></select></label></div><label>Nombre<input id="pugName" type="text" maxlength="18" value="Cooper" autocomplete="off"></label><div class="editor-tool-pair"><label>Pelaje<input id="pugFur" type="color" value="#ddbb88"></label><label>Color del equipo<input id="pugTeamColor" type="color" value="#60e0dd"></label></div><label>Tamaño <b id="pugSizeValue">100%</b><input id="pugSize" type="range" min="85" max="115" value="100"></label><label>Accesorio<select id="pugAccessory"><option value="none">Al natural</option><option value="cap">Gorra</option><option value="crown">Corona real</option><option value="halo">Aureola angelical</option><option value="horns">Cuernos infernales</option><option value="samurai">Kabuto samurái</option><option value="astronaut">Casco espacial</option><option value="mohawk">Cresta punk</option><option value="chef">Gorro de chef</option><option value="vr">Visor Ciber VR</option><option value="bandana">Bandana táctica</option><option value="glasses">Lentes oscuros</option><option value="pirate">Tricornio pirata</option><option value="helmet">Casco táctico</option><option value="viking">Casco vikingo</option><option value="wizard">Sombrero de mago</option><option value="sombrero">Sombrero mexicano</option><option value="headphones">Audífonos DJ</option><option value="gasmask">Máscara de gas</option><option value="monocle">Monóculo dorado</option><option value="bowtie">Corbatín elegante</option></select></label><label>Variante de Pug<select id="pugVariant"><option value="normal">Pug clásico</option><option value="zombie">Pug zombi</option><option value="skeleton">Pug esqueleto (Calavera)</option><option value="cyber">Pug Mecha T-800 (Terminator)</option><option value="demon">Pug demonio (Infernal)</option><option value="alien">Pug alienígena (3 ojos)</option><option value="ghost">Pug Fantasma (Boo Mario Galaxy)</option></select></label><label>Equipo de espalda<select id="pugBackgear"><option value="none">Sin accesorio</option><option value="cape">Capa real</option><option value="wings">Alas de ángel</option><option value="batwings">Alas de dragón/demonio</option><option value="jetpack">Mochila propulsora</option><option value="spider">Patas arácnidas mecha</option><option value="katana">Katanas samurái cruzadas</option><option value="toxic">Tanque de plasma tóxico</option></select></label><label>Previsualizar daño en combate<select id="pugDamagePreview"><option value="100">100% · Sano e intacto</option><option value="75">75% · Moretones y rasguños</option><option value="50">50% · Heridas abiertas y oreja mordida</option><option value="22">20% · Cráneo y costillas expuestas</option></select></label><label>Color de cosméticos<input id="pugCosmeticColor" type="color" value="#ffd389"></label><label>Girar modelo<input id="pugRotation" type="range" min="-180" max="180" value="20"></label><label class="check"><input id="pugAutoRotate" type="checkbox" checked>Giro automático</label><button id="resetPug">Restablecer este pug</button><p class="editor-note">Personaliza hasta 4 pugs por equipo. Arrastra el modelo para girarlo. Los accesorios y variantes se aplican a la batalla; el gore elegido controla las heridas visibles.</p></aside>
   <div id="terrainStage" class="editor-stage" style="position:relative"><canvas id="terrainEditorCanvas" width="1536" height="768" aria-label="Editor de terreno. Arrastra para dibujar o borrar suelo."></canvas><div class="studio-overlay-bar"><button id="zoomOutBtn" title="Alejar vista">🔍−</button><button id="zoomResetBtn" class="selected">100%</button><button id="zoomInBtn" title="Acercar vista">🔍＋</button><button id="gridToggleBtn" class="selected">Cuadrícula</button></div></div>
-  <div id="pugStage" class="editor-stage pug-preview" hidden><canvas id="pugEditorCanvas" width="700" height="500" aria-label="Vista previa del pug personalizado"></canvas><canvas id="pugPreview3D" width="700" height="500" aria-label="Modelo 3D del pug. Arrastra para girar."></canvas><div class="studio-top-bar"><div id="pugCamBar" class="studio-top-group"><button data-yaw="0" title="Vista Frontal (0°)">Frontal 0°</button><button data-yaw="35" class="selected" title="Vista Tres Cuartos (35°)">3/4 · 35°</button><button data-yaw="90" title="Perfil Lateral (90°)">Lateral 90°</button><button data-yaw="180" title="Vista Posterior / Espalda (180°)">Espalda 180°</button></div><div class="studio-top-group"><button id="pugZoomOut" title="Alejar">🔍−</button><button id="pugZoomReset">100%</button><button id="pugZoomIn" title="Acercar">🔍＋</button><button id="pugDebugRig" title="Mostrar ejes locales, huesos y puntos de anclaje 3D">🦴 Anclajes 3D</button></div></div><div id="pugPoseBar" class="studio-overlay-bar"><button data-pose="idle" class="selected">🐾 Reposo</button><button data-pose="walk">🏃 Caminar</button><button data-pose="jump">↥ Saltar</button><button data-pose="aim">🎯 Apuntar</button><button data-pose="celebrate">★ Celebrar</button></div></div>
+  <div id="pugStage" class="editor-stage pug-preview" hidden><canvas id="pugEditorCanvas" width="700" height="500" aria-label="Vista previa del pug personalizado"></canvas><canvas id="pugPreview3D" width="700" height="500" aria-label="Modelo 3D del pug. Arrastra para girar."></canvas><div class="studio-top-bar"><div id="pugCamBar" class="studio-top-group"><button data-yaw="0" title="Vista Frontal (0°)">Frontal 0°</button><button data-yaw="35" class="selected" title="Vista Tres Cuartos (35°)">3/4 · 35°</button><button data-yaw="90" title="Perfil Lateral (90°)">Lateral 90°</button><button data-yaw="180" title="Vista Posterior / Espalda (180°)">Espalda 180°</button></div><div class="studio-top-group"><button id="pugZoomOut" title="Alejar">🔍−</button><button id="pugZoomReset">100%</button><button id="pugZoomIn" title="Acercar">🔍＋</button><button id="pugDebugRig" title="Mostrar ejes locales, huesos y puntos de anclaje 3D">🦴 Anclajes 3D</button></div></div><div id="pugPoseBar" class="studio-overlay-bar"><button data-pose="idle" class="selected">🐾 Reposo</button><button data-pose="walk">🏃 Caminar</button><button data-pose="jump">↥ Saltar</button><button data-pose="aim">🎯 Apuntar</button><button data-pose="celebrate">★ Celebrar</button><button data-pose="scared">😱 Miedo</button><button data-pose="hurt">💥 Dolor</button><button data-pose="dizzy">💫 Mareo</button><button data-pose="sad">😢 Derrota</button><button data-pose="sleepy">💤 Sueño</button></div></div>
  </div>
  <footer class="workshop-footer"><div><p id="editorStatus" role="status">Dibuja con el dedo o el ratón.</p><span>Guardar aplica tus cambios a la próxima partida en este navegador.</span></div><div class="workshop-actions"><button id="importProject">Importar</button><button id="exportProject">Exportar</button><button id="saveWorkshop" class="primary-editor">Guardar y aplicar</button></div><input id="projectFile" type="file" accept=".json,application/json" hidden></footer>
 </section>
@@ -1305,6 +1305,7 @@ Prompt:
 <script src="src/rendering/scenery.js"></script>
 <script src="src/rendering/post.js"></script>
 <script src="src/rendering/props3d.js"></script>
+<script src="src/characters/pug-anim.js"></script>
 <script>
 
 'use strict';
@@ -3562,7 +3563,9 @@ function buildPugRig(c,time,size,customYaw=null){
  const celSquash=celebrating?(0.45-celWave)*0.26:0;
  const breath=Math.sin(time*3.4+(c.id||0))*.025;
 
- const totalSquash=hopSquash+landSquash+celSquash-jumpStretch*.55;
+ // 5.0: muelle de panza (src/characters/pug-anim.js) suma squash & stretch con inercia.
+ const A=c._anim,jig=A?A.jig:0,shake=A?(A.mix.shake||0):0;
+ const totalSquash=hopSquash+landSquash+celSquash-jumpStretch*.55+jig;
  const sx=1+totalSquash+breath;
  const sy=1-totalSquash*1.12-breath*.6;
  const sz=1+totalSquash*.95+breath;
@@ -3579,10 +3582,10 @@ function buildPugRig(c,time,size,customYaw=null){
  const basePitch=customYaw!==null?.10:.06;
  // Seal galumph pitch: rocks nose-up on launch and pitches forward onto belly on landing
  const sealPitch=walking?(walkCos*0.26):0;
- const sealRoll=walking?(walk*0.11):(celebrating?Math.sin(time*9.5)*0.14:0);
+ const sealRoll=(walking?(walk*0.11):(celebrating?Math.sin(time*9.5)*0.14:0))+(A?A.roll:0);
 
  let mRoot=matIdentity();
- mRoot=matTranslate(mRoot,c.x,c.y,26*size);
+ mRoot=matTranslate(mRoot,c.x+Math.sin(time*57)*shake*.55,c.y,26*size);
  mRoot=matScale(mRoot,size,size,size);
  mRoot=matRotateX(mRoot,basePitch);
  mRoot=matRotateY(mRoot,yaw);
@@ -4068,7 +4071,7 @@ function drawPug(r,out,c,time,size,customYaw=null){
  if(useCache){
   const activeMove=Math.abs(c.vx||0)>1||Math.abs(c.vy||0)>1||!c.grounded||(c.hurt||0)>0||(c.recoilTimer||0)>0||(c.landTimer||0)>0;
   const qTime=activeMove?Math.floor(time*30):Math.floor(time*4+(c.id||0)*1.7);
-  cacheKey=qTime+':'+Math.round(c.x*2)+':'+Math.round(c.y*2)+':'+(c.dir||1)+':'+(c.hurt>0?1:0)+':'+(c.shield||0)+':'+baseSize.toFixed(2)+':'+(c===app.active?Math.round(app.angle)+':'+app.weapon:'0')+':'+(c.variant||'normal')+':'+(c.accessory||'none')+':'+(c.backgear||'none')+':'+(c.fur||'')+':'+(c.cosmeticColor||'')+':'+terrain.version;
+  cacheKey=qTime+':'+Math.round(c.x*2)+':'+Math.round(c.y*2)+':'+(c.dir||1)+':'+(c.hurt>0?1:0)+':'+(c.shield||0)+':'+baseSize.toFixed(2)+':'+(c===app.active?Math.round(app.angle)+':'+app.weapon:'0')+':'+(c.variant||'normal')+':'+(c.accessory||'none')+':'+(c.backgear||'none')+':'+(c.fur||'')+':'+(c.cosmeticColor||'')+':'+terrain.version+':'+(c._anim?.sig||'');
   if(c._meshKey===cacheKey&&c._meshData){
    out.appendSlice(c._meshData);
    return;
@@ -4404,10 +4407,15 @@ function drawPug(r,out,c,time,size,customYaw=null){
   rigEllipsoid(r,out,mBody,0,-3.2,9.8,8.8,6.0,3.2,muzzleCol,dark,12,8,0,.88);
 
   // 1E. Thick Curved Forehead & Supraorbital Brow Wrinkles arching cleanly ABOVE the eyes
-  const browTilt=rig.activeAim?-.35:(isZomb?-.40:.15);
+  // 5.0: cejas expresivas (enfado, preocupación, sorpresa) según src/characters/pug-anim.js.
+  const EX=c._anim?.mix||CS5.pugAnim.EXPRESSIONS.idle;
+  const browTilt=isZomb?-.40:clamp((EX.brow||0)*.9+.12,-.7,.95),browLift=-(EX.browLift||0)*1.35;
   for(const side of [-1,1]){
-   rigCapsule(r,out,mBody,side*1.3,-7.8-browTilt*.3,11.6,1.25,side*5.2,-8.2+browTilt*.2,11.2,1.35,fur,furShade,7,2,0,.90,.96);
-   rigCapsule(r,out,mBody,side*5.2,-8.2+browTilt*.2,11.2,1.35,side*8.6,-6.0,10.0,1.2,fur,furShade,7,2,0,.92,.96);
+   const yIn=-7.8-browTilt*1.25+browLift,yMid=-8.2-browTilt*.15+browLift,yOut=-6.0+browTilt*.85+browLift*.6;
+   rigCapsule(r,out,mBody,side*1.3,yIn,11.6,1.25,side*5.2,yMid,11.2,1.35,fur,furShade,7,2,0,.90,.96);
+   rigCapsule(r,out,mBody,side*5.2,yMid,11.2,1.35,side*8.6,yOut,10.0,1.2,fur,furShade,7,2,0,.92,.96);
+   // Segunda arruga de la frente, más fina, que acompaña a la ceja.
+   rigCapsule(r,out,mBody,side*.9,yIn-2.9,10.4,.7,side*5.0,yMid-2.6,9.9,.78,furShade,fur,6,1,0,.86,.92);
   }
   rigCapsule(r,out,mBody,0,-9.0,11.4,.70,0,-5.8,12.4,.80,furDeep,furShade,5,1,0,.78,.84);
 
@@ -4439,7 +4447,10 @@ function drawPug(r,out,c,time,size,customYaw=null){
   for(const sx of [-.75,.75])rigEllipsoid(r,out,mBody,sx,-1.7,16.4,.46,.60,.35,'#050405','#050405',5,3,0,.6);
 
   // 1I. Big Wide-Set Bulging Deformers Googly Eyes oriented along the spherical face normal
-  const blink=c.hurt>0||Math.sin(time*.85+(c.id||0)*2.1)>.994;
+  // 5.0: párpados, mirada y expresión vienen del animador (parpadeo natural, pupilas que siguen la acción).
+  const AN=c._anim,lid=AN?AN.lid:((c.hurt>0||Math.sin(time*.85+(c.id||0)*2.1)>.994)?.1:1);
+  const blink=lid<.22,lookX=AN?AN.lookX:0,lookY=AN?AN.lookY:0;
+  const spin=(EX.spiral||0)>.4?[Math.cos(time*13)*.55,Math.sin(time*13)*.55]:[0,0];
   for(const side of [-1,1]){
    let mEye=matTranslate(mBody,side*5.0,-4.5,12.4);
    mEye=matRotateY(mEye,side*.18);
@@ -4460,14 +4471,32 @@ function drawPug(r,out,c,time,size,customYaw=null){
      rigEllipsoid(r,out,mEye,-.55,-.65,2.7,.60,.65,.45,'#ffffff','#ffffff',6,4,3,1);
     }
    }else{
-    // Deformers Classic Pug Eye: Big round white/blue-grey sclera ring + taupe iris + big glossy black pupil + crisp white specular dot!
-    rigEllipsoid(r,out,mEye,0,0,.6,3.05,blink?.45:3.15,1.6,blink?muzzleCol:'#eef4f8','#95a4b0',10,7,1,.98);
-    if(!blink){
-     rigEllipsoid(r,out,mEye,0,.05,1.4,2.22,2.32,1.15,'#6b5e57','#423833',9,6,1,1);
-     rigEllipsoid(r,out,mEye,0,.05,2.0,1.65,1.75,.90,'#090b10','#090b10',8,5,1,1);
-     rigEllipsoid(r,out,mEye,-.52,-.62,2.65,.62,.68,.45,'#ffffff','#ffffff',6,4,3,1);
-     rigEllipsoid(r,out,mEye,.70,.60,2.55,.30,.30,.35,'#d8f0ff','#d8f0ff',5,3,3,1);
+    if((EX.happy||0)>.5){
+     // Ojos de felicidad «^^».
+     rigEllipsoid(r,out,mEye,0,.6,.4,2.9,2.2,1.2,muzzleCol,dark,8,5,0,.9);
+     rigCapsule(r,out,mEye,-2.3,.9,1.6,.55,0,-1.2,2.0,.62,'#140c0c','#140c0c',5,1,0,1,1);
+     rigCapsule(r,out,mEye,0,-1.2,2.0,.62,2.3,.9,1.6,.55,'#140c0c','#140c0c',5,1,0,1,1);
+    }else if((EX.cross||0)>.5){
+     // Ojos «×» de dolor.
+     rigEllipsoid(r,out,mEye,0,0,.4,2.9,2.6,1.2,muzzleCol,dark,8,5,0,.9);
+     rigCapsule(r,out,mEye,-1.7,-1.7,1.8,.5,1.7,1.7,1.8,.5,'#140c0c','#140c0c',5,1,0,1,1);
+     rigCapsule(r,out,mEye,-1.7,1.7,1.8,.5,1.7,-1.7,1.8,.5,'#140c0c','#140c0c',5,1,0,1,1);
+    }else{
+     // Ojo saltón clásico: el párpado superior baja al entrecerrar y la pupila sigue la acción.
+     const open=Math.min(1.25,lid),sy=Math.max(.45,3.15*open),cy=(1-Math.min(1,open))*1.1;
+     rigEllipsoid(r,out,mEye,0,cy,.6,3.05*(open>1?1.06:1),sy,1.6,blink?muzzleCol:'#eef4f8','#95a4b0',10,7,1,.98);
+     if(!blink){
+      const ps=EX.pupil||1,px=clamp(lookX*.95+spin[0],-1.05,1.05),py=clamp(lookY*.8+spin[1],-.9,.9)*Math.min(1,open);
+      rigEllipsoid(r,out,mEye,px*.7,.05+py*.7+cy*.5,1.4,2.22*Math.min(1,ps*1.05),2.32*Math.min(1,ps*1.05)*Math.min(1,open),1.15,'#6b5e57','#423833',9,6,1,1);
+      rigEllipsoid(r,out,mEye,px,.05+py+cy*.5,2.0,1.65*ps,1.75*ps*Math.min(1,open),.90,'#090b10','#090b10',8,5,1,1);
+      rigEllipsoid(r,out,mEye,-.52+px*.4,-.62+py*.3,2.65,.62,.68,.45,'#ffffff','#ffffff',6,4,3,1);
+      rigEllipsoid(r,out,mEye,.70+px*.4,.60+py*.3,2.55,.30,.30,.35,'#d8f0ff','#d8f0ff',5,3,3,1);
+      // Párpado superior visible al entrecerrar (concentración, sueño, tristeza).
+      if(open<.9)rigCapsule(r,out,mEye,-3.0,cy-sy+.2,1.5,.75,3.0,cy-sy+.2+(EX.brow||0)*side*-.6,1.5,.75,muzzleCol,dark,7,1,0,.9,.9);
+     }
     }
+    // Lágrima (tristeza) que resbala por la mejilla.
+    if((EX.tear||0)>.4&&side>0){const ty=1.5+((time*.6)%1)*4;rigEllipsoid(r,out,mEye,1.2,ty,1.6,.55,.8,.5,'#9ee8ff','#ffffff',6,4,1,1);}
    }
   }
 
@@ -4556,8 +4585,17 @@ function drawPug(r,out,c,time,size,customYaw=null){
  // ============================================================================
  if(!isSkel&&!isMecha&&!isGhost){
   // Cute Pink Pug Tongue Tip peeking out between the jowls when panting/moving
-  const pantOut=rig.walking?.85:(.35+Math.sin(time*4.5+(c.id||0))*.25);
-  rigCapsule(r,out,mBody,0,2.2,14.2,1.15,0,3.2+pantOut*1.4,15.0,.95,'#ff6e9c','#ffa8c5',6,1,1,.96,1);
+  // 5.0: boca expresiva (sorpresa «O», grito de dolor, risa, dientes apretados al cargar).
+  const EXM=c._anim?.mix||CS5.pugAnim.EXPRESSIONS.idle,mouth=EXM.mouth||0;
+  if(mouth>.08){
+   rigEllipsoid(r,out,mBody,0,2.7+mouth*1.1,13.8,2.0+mouth*1.1,.55+mouth*1.9,1.35,'#4a0e1a','#1c0408',9,6,1,.9);
+   if((EXM.teeth||0)>.4)for(let k=-2;k<=2;k++)rigCapsule(r,out,mBody,k*.9,2.5,14.7,.36,k*.9,3.3,14.7,.3,'#fffaf0','#d8d0c0',4,1,1,1,1);
+  }
+  const pantOut=(rig.walking?.85:(.35+Math.sin(time*4.5+(c.id||0))*.25))*(.25+(EXM.tongue||0)*.9)+mouth*.6;
+  if(pantOut>.12)rigCapsule(r,out,mBody,0,2.2+mouth,14.2,1.15,0,3.2+mouth*1.4+pantOut*1.4,15.0,.95,'#ff6e9c','#ffa8c5',6,1,1,.96,1);
+  // Gotas de sudor (miedo) y rubor en las mejillas (alegría).
+  if((EXM.sweat||0)>.4){const ph=(time*.9)%1;rigEllipsoid(r,out,mBody,9.4,-9+ph*7,9.2,.8,1.1,.7,'#bff4ff','#ffffff',6,4,1,1);}
+  if((EXM.blush||0)>.3)for(const side of [-1,1])rigEllipsoid(r,out,mBody,side*7.6,.6,11.6,2.2,1.1,.8,'#ff7a9a','#ff5a7a',7,4,1,1);
   // Soft Inner Ear Pinna Folds
   for(const side of [-1,1]){
    if(!((side<0&&isZomb)||(side>0&&(c.hp??100)<60&&(c.hp??100)>0))){
@@ -4708,14 +4746,16 @@ function drawPug(r,out,c,time,size,customYaw=null){
  }
  // 3. CUTE CURLED PUG TAIL ON THE UPPER REAR
  // ============================================================================
- const wagFreq=(rig.walking||rig.celebrating)?18:5.5;
- const wagAmp=(rig.walking||rig.celebrating)?2.4:.75;
+ // 5.0: la cola expresa el ánimo: meneo frenético de alegría, quieta al apuntar, encogida con miedo o tristeza.
+ const mood=c._anim?.expr||'idle',tucked=mood==='fear'||mood==='sad'||mood==='pain';
+ const wagFreq=(rig.walking||rig.celebrating||mood==='joy')?18:mood==='focus'||mood==='charge'?1.5:tucked?9:5.5;
+ const wagAmp=(rig.walking||rig.celebrating||mood==='joy')?2.6:mood==='focus'||mood==='charge'?.2:tucked?.35:.75;
  const wag=Math.sin(time*wagFreq+(c.id||0))*wagAmp;
  let prevT=[0,0,0],prevR=isSkel?1.4:2.0;
  const tailSegs=isSkel?6:7;
  if(!isGhost)for(let i=1;i<=tailSegs;i++){
   const t=i/tailSegs,ang=t*TAU*1.25;
-  const curlR=2.8*(1-t*.40);
+  const curlR=2.8*(1-t*.40)*(tucked?.55:1);
   const curT=[wag*t,-3.0*t-Math.sin(ang)*curlR,-1.0-Math.cos(ang)*curlR];
   const curR=(isSkel||isMecha)?Math.max(.55,1.3*(1-t*.55)):Math.max(.75,2.0*(1-t*.36));
   const tCol0=isMecha?'#5c7087':isSkel?boneShade:furShade;
@@ -4766,12 +4806,16 @@ function previewPugMesh(o,yaw){
  let r=pugPreview.renderer;
  if(r.fallback){r={fallback:true,preview:true,sphereCache:{},vert:DepthRenderer.prototype.vert,quad:DepthRenderer.prototype.quad,box:DepthRenderer.prototype.box,sphere:DepthRenderer.prototype.sphere};}
  o.previewPose=pugPreview.pose||'idle';
+ // 5.0: el editor muestra también las expresiones (miedo, dolor, mareo, derrota, sueño).
+ if(pugPreview.anim)o._anim=pugPreview.anim;
+ CS5.pugAnim.frame([o],app.viewTime,1/30,{phase:'menu'});pugPreview.anim=o._anim;
  const mesh=[];
  drawPug(r,mesh,o,app.viewTime,1.25,yaw);
  return {r,mesh};
 }
 
 function drawPugPreview(c,width,height,o){
+ pugPreview.applySpin?.(1/40);
  const autoOff=$('pugAutoRotate').checked?(app.viewTime-pugPreview.started)*.55:0;
  const yaw=rad(Number($('pugRotation').value)||0)+autoOff;
  pugPreview.yaw=yaw;
@@ -4813,31 +4857,36 @@ function drawPugPreview(c,width,height,o){
 }
 function setupPugPreview(){
  const stage=$('pugStage');
+ // 5.0: giro táctil con inercia (deslizar y soltar) y zoom con dos dedos.
+ const touches=new Map();let pinch0=0,zoom0=1;
+ const setYaw=deg=>{deg=Math.round(((deg+540)%360)-180);$('pugRotation').value=String(deg);pugPreview.yaw=rad(deg);$('pugCamBar')?.querySelectorAll('button').forEach(b=>b.classList.remove('selected'));};
  stage.addEventListener('pointerdown',e=>{
   if(e.target.closest('button'))return;
   e.preventDefault();
-  if(pugPreview.pointer!==null)return;
-  pugPreview.pointer=e.pointerId;pugPreview.lastX=e.clientX;
+  touches.set(e.pointerId,{x:e.clientX,y:e.clientY});
   try{stage.setPointerCapture(e.pointerId);}catch{}
-  $('pugAutoRotate').checked=false;
+  $('pugAutoRotate').checked=false;pugPreview.spinV=0;
+  if(touches.size===2){const [a,b]=[...touches.values()];pinch0=Math.hypot(a.x-b.x,a.y-b.y);zoom0=pugPreview.zoom||1;pugPreview.pointer=null;}
+  else if(pugPreview.pointer===null){pugPreview.pointer=e.pointerId;pugPreview.lastX=e.clientX;pugPreview.lastT=performance.now();}
  });
  stage.addEventListener('pointermove',e=>{
+  if(!touches.has(e.pointerId))return;
+  e.preventDefault();touches.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(touches.size===2&&pinch0>0){const [a,b]=[...touches.values()];pugPreview.zoom=clamp(zoom0*Math.hypot(a.x-b.x,a.y-b.y)/pinch0,.75,2.4);if($('pugZoomReset'))$('pugZoomReset').textContent=Math.round(pugPreview.zoom*100)+'%';drawPugStudio();return;}
   if(e.pointerId!==pugPreview.pointer)return;
-  e.preventDefault();
-  let degrees=Number($('pugRotation').value)+(e.clientX-pugPreview.lastX)*.85;
-  degrees=Math.round(((degrees+540)%360)-180);
-  $('pugRotation').value=String(degrees);
-  pugPreview.yaw=rad(degrees);
+  const dx=e.clientX-pugPreview.lastX,now=performance.now();
+  setYaw(Number($('pugRotation').value)+dx*.85);
+  pugPreview.spinV=dx*.85/Math.max(8,now-(pugPreview.lastT||now))*1000;pugPreview.lastT=now;
   pugPreview.lastX=e.clientX;
-  $('pugCamBar')?.querySelectorAll('button').forEach(b=>b.classList.remove('selected'));
   drawPugStudio();
  });
  for(const type of ['pointerup','pointercancel','lostpointercapture']){
-  stage.addEventListener(type,e=>{if(e.pointerId===pugPreview.pointer)pugPreview.pointer=null;});
+  stage.addEventListener(type,e=>{touches.delete(e.pointerId);if(touches.size<2)pinch0=0;if(e.pointerId===pugPreview.pointer){pugPreview.pointer=null;if(performance.now()-(pugPreview.lastT||0)>90)pugPreview.spinV=0;}});
  }
- stage.addEventListener('wheel',e=>{
+ // Inercia del giro tras soltar.
+ pugPreview.applySpin=dt=>{const v=pugPreview.spinV||0;if(Math.abs(v)<4||pugPreview.pointer!==null){pugPreview.spinV=0;return;}setYaw(Number($('pugRotation').value)+v*dt);pugPreview.spinV=v*Math.pow(.06,dt);}; stage.addEventListener('wheel',e=>{
   e.preventDefault();
-  pugPreview.zoom=clamp((pugPreview.zoom||1)+(e.deltaY<0?.12:-.12),.75,1.8);
+  pugPreview.zoom=clamp((pugPreview.zoom||1)+(e.deltaY<0?.12:-.12),.75,2.4);
   if($('pugZoomReset'))$('pugZoomReset').textContent=Math.round(pugPreview.zoom*100)+'%';
   drawPugStudio();
  },{passive:false});
@@ -6613,13 +6662,14 @@ void main(){if(material>.5){gl_FragColor=vec4(waterSurface(vPos,normalize(vNorma
   this.drawBuffer('water',false,1);
   if(!this.pugBuilder)this.pugBuilder=new FastVertexBuilder(1048576);
   const alive=app.phase==='menu'?menuChars:app.chars;
+  CS5.pugAnim.frame(alive,time,graphics.renderDelta,pugAnimContext());
   let objSig=app.phase+':'+terrain.version+':'+app.projectiles.length+':'+Math.floor(time*6)+':';
   if(app.projectiles.length===0){
    for(let i=0;i<alive.length;i++){
     const c=alive[i];if(c.hp<=0)continue;
     const activeMove=Math.abs(c.vx||0)>1||Math.abs(c.vy||0)>1||!c.grounded||(c.hurt||0)>0||(c.recoilTimer||0)>0||(c.landTimer||0)>0;
     const qTime=activeMove?Math.floor(time*30):Math.floor(time*4+(c.id||0)*1.7);
-    objSig+=c.id+','+qTime+','+Math.round(c.x*2)+','+Math.round(c.y*2)+','+(c.dir||1)+','+(c.hurt>0?1:0)+','+Math.ceil((c.hp||100)/10)+','+(c===app.active?Math.round(app.angle)+app.weapon:'')+';';
+    objSig+=c.id+','+qTime+','+Math.round(c.x*2)+','+Math.round(c.y*2)+','+(c.dir||1)+','+(c.hurt>0?1:0)+','+Math.ceil((c.hp||100)/10)+','+(c===app.active?Math.round(app.angle)+app.weapon:'')+','+(c._anim?.sig||'')+';';
    }
    for(let i=0;i<app.mines.length;i++){
     const m=app.mines[i];if(!m.dead)objSig+=Math.round(m.x)+','+Math.round(m.y)+';';
@@ -6734,6 +6784,14 @@ const audio={context:null,music:true,sfx:true,next:0,step:0,master:null,musicGai
 };
 function refreshTerrain(){if(terrain.dirty)terrain.paint();}
 function setPhase(p){app.phase=p;document.body.dataset.phase=p;}
+// 5.0: contexto visual para las expresiones de los pugs (no afecta a la simulación).
+function pugAnimContext(){
+ const flying=app.projectiles.find(p=>p.age>=0&&!p.dead&&p.id!=='chain');
+ return {active:app.active,phase:app.phase,charging:app.charging,winner:app.winner,
+  celebrating:c=>app.phase==='over'&&app.winner&&c.team===app.winner.id,
+  danger:c=>{let d=0;for(const p of app.projectiles){if(p.dead||p.age<0)continue;const dx=c.x-p.x,dy=c.y-14-p.y,dist=Math.hypot(dx,dy);if(dist<280&&(p.vx*dx+p.vy*dy)>0)d=Math.max(d,1-dist/280);}for(const m of app.mines)if(!m.dead&&m.age>1&&Math.hypot(c.x-m.x,c.y-m.y)<90)d=Math.max(d,.5);return d;},
+  lookTarget:c=>{if(flying)return flying;if(c===app.active&&app.phase==='aim'){const a=rad(app.angle||0);return {x:c.x+Math.cos(a)*(c.dir||1)*120,y:c.y-14-Math.sin(a)*120};}return app.active&&app.active!==c&&app.phase!=='menu'?app.active:null;}};
+}
 function newMatch(forcedSeed=null){audio.init();readSettings();menuLoopEngine.stagePreviewActive=false;menuLoopEngine.stopImmediate();adaptiveMusic.forcedState=null;adaptiveMusic.resetStems();setTimeout(()=>menuLoopEngine.syncWithGameState(),20);
  const matchSeed=forcedSeed!==null?(forcedSeed>>>0):((Date.now()^Math.floor(Math.random()*1e9))>>>0);
  random=rng(seed=matchSeed);
@@ -6763,8 +6821,8 @@ function nextTurn(){if(checkWinner(true))return;resetTouchState();app.turn++;if(
  }else{app.active=alive[team.cursor%alive.length];team.cursor=(team.cursor+1)%Math.max(1,alive.length);}app.timer=app.turnTime;app.wind=(random()*2-1)*38;app.angle=45;app.power=65;app.shotCount=0;app.shotSecond=false;app.target=null;app.charging=false;app.aimMode=true;touchPlay.latchedCharge=false;app.actionAge=0;app.stable=0;app.aiAge=0;app.aiFired=false;app.aiPlan=null;app.interlude=1.1;app.weapon='rocket';setPhase('interlude');$('turnBanner').textContent=team.name+' · '+app.active.name+(cpuTurn()?' · CPU':isLanCoop()?(human()?' · TU TURNO':' · ALIADO'):'');$('turnBanner').style.setProperty('--team',colors[app.team]);$('turnBanner').classList.add('show');$('inventory').hidden=true;updateInventory();updateHUD();audio.sound('turn');}
 function checkWinner(force=false){const teams=app.teams.filter(t=>app.chars.some(c=>c.team===t.id&&c.hp>0));if(teams.length>1||app.phase==='over'||app.phase==='menu')return false;if(!force&&app.projectiles.length)return false;app.winner=teams[0]||null;showMatchResult();return true;}
 function showMatchResult(){setPhase('over');app.charging=false;input.keys.clear();input.pointers.clear();$('inventory').hidden=true;$('controls').hidden=true;app.resultDelay=app.deathBeat;$('result').hidden=app.resultDelay>0;const loss=(app.mode==='cpu'||isLanCoop())&&app.winner&&!app.winner.human;$('resultEyebrow').textContent=!app.winner?'EMPATE':loss?'LA CPU GANA ESTA VEZ':'VICTORIA';$('winnerTitle').textContent=app.winner?app.winner.name:'¡Nadie sobrevivió!';$('winnerTitle').style.color=app.winner?colors[app.winner.id]:'#ffd878';$('winnerText').textContent=loss?'Otra batalla, otra oportunidad. Ajusta el viento y busca cobertura.':app.winner?'¡Victoria! La bomba de celebración elimina a todos, pero el triunfo es tuyo.':'Dos escuadras eliminadas al mismo tiempo.';$('battleStats').textContent=app.turn+' turnos · '+app.totalShots+' ataques · '+Math.round(app.damageDone)+' de daño';audio.sound('victory');for(let i=0;i<65;i++)spawnFX(view.x+(effectsRandom()-.5)*1000,220+effectsRandom()*200,(effectsRandom()-.5)*100,-80-effectsRandom()*150,colors[i%4],3+effectsRandom()*3,2+effectsRandom()*2,'confetti');beginCelebration();return true;}
-function damage(c,amount,x,y){if(c.hp<=0||amount<=0)return;amount=Math.round(amount);if(c.shield>0){const blocked=Math.min(c.shield,amount);c.shield-=blocked;amount-=blocked;app.floats.push({x:c.x,y:c.y-48,life:1,text:'🛡 −'+blocked,color:'#8cecff'});}amount=Math.min(c.hp,amount);if(amount<=0)return;c.hp-=amount;c.hurt=.22;bloodSplash(c,amount,x,y);app.damageDone+=amount;app.floats.push({x:c.x,y:c.y-40,life:1.3,text:'−'+amount,color:'#ffbd94'});audio.sound('hurt');if(c.hp<=0)kill(c);}
-function kill(c,water=false){if(c.hp<0)return;c.hp=-1;c.vx=0;c.walkVX=0;c.vy=0;pugDeath(c,water);if(c===app.active)app.charging=false;}
+function damage(c,amount,x,y){if(c.hp<=0||amount<=0)return;amount=Math.round(amount);CS5.pugAnim.hit(c,amount,x,y);if(c.shield>0){const blocked=Math.min(c.shield,amount);c.shield-=blocked;amount-=blocked;app.floats.push({x:c.x,y:c.y-48,life:1,text:'🛡 −'+blocked,color:'#8cecff'});}amount=Math.min(c.hp,amount);if(amount<=0)return;c.hp-=amount;c.hurt=.22;bloodSplash(c,amount,x,y);app.damageDone+=amount;app.floats.push({x:c.x,y:c.y-40,life:1.3,text:'−'+amount,color:'#ffbd94'});audio.sound('hurt');if(c.hp<=0)kill(c);}
+function kill(c,water=false){if(c.hp<0)return;c.hp=-1;CS5.pugAnim.grief(app.chars,c);c.vx=0;c.walkVX=0;c.vy=0;pugDeath(c,water);if(c===app.active)app.charging=false;}
 
 function spawnFX(x,y,vx,vy,color,size,life,kind='spark'){if(app.fx.length>=Math.floor(600*app.quality))return null;const f={x,y,vx,vy,color,size,life,max:life,kind};app.fx.push(f);return f;}
 function addWaterRipple(x,strength=1){
@@ -6779,6 +6837,7 @@ function addWaterRipple(x,strength=1){
 }
 function explode(x,y,r,amount,sourceTeam=-1,kind='normal'){
  terrain.destroy(x,y,r);
+ for(const c of app.chars)if(c.hp>0)CS5.pugAnim.nearExplosion(c,Math.hypot(c.x-x,c.y-14-y),r);
  if(typeof bloodFluid!=='undefined')bloodFluid.applyImpulse(x,y,r*1.68,amount||45);
  if(typeof envReactivity!=='undefined')envReactivity.onExplosion(x,y,r,amount||45);
  app.shake=Math.max(app.shake,Math.min(26,r*.075));
