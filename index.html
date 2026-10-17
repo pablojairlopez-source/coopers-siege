@@ -1160,6 +1160,7 @@ body[data-phase="menu"] #turnBanner{display:none!important}
  #controls{flex-wrap:nowrap!important}
  #toast{bottom:104px!important}
 }</style>
+<link rel="stylesheet" href="src/ui/controls.css">
 </head>
 <body data-phase="menu">
 <canvas id="background" aria-hidden="true"></canvas><canvas id="depth" aria-hidden="true"></canvas><canvas id="effects" aria-label="Escenario de batalla. Toca para apuntar o marcar un objetivo."></canvas><div class="vignette"></div>
@@ -1214,8 +1215,12 @@ body[data-phase="menu"] #turnBanner{display:none!important}
  <button id="weaponsButton" class="control-panel arsenal-panel"><span id="weaponIcon">🚀</span><span><small class="weapon-subtitle">ARSENAL · Q</small><b id="weaponName">Bazuca</b><span id="weaponAmmo">∞ cargas</span></span><span class="inventory-chevron">⌃</span></button>
  <div class="control-panel aim-panel"><div class="angle-adjust"><button id="aimUp" aria-label="Aumentar ángulo">⌃</button><button id="aimDown" aria-label="Reducir ángulo">⌄</button></div><div class="aim-details"><div class="aim-label">ÁNGULO <b id="angleValue">45°</b></div><input id="angleSlider" type="range" min="0" max="360" step="1" value="45" aria-label="Ángulo de disparo 360 grados"></div></div>
  <button id="fireButton" type="button"><span class="fire-top-row"><span class="fire-circle">🎯</span><span id="fireMainText">ATACAR</span><span class="fire-pwr-pill"><b id="powerValue">65%</b><span id="powerDirBadge" hidden>▲</span></span></span><span class="power-track fire-power-track"><i id="powerFill"></i><span id="lastPowerTick" title="Potencia del disparo anterior" hidden></span></span><span id="fireLabel">PULSA O MANTÉN · POTENCIA</span></button>
+ <div id="touchMovePad" class="t51-move"><button id="touchMoveLeft" type="button" aria-label="Mover a la izquierda">‹</button><button id="touchMoveRight" type="button" aria-label="Mover a la derecha">›</button></div>
+ <button id="touchJump" type="button" aria-label="Saltar"><span>⤒</span><small>SALTAR</small></button>
+ <div id="aimPad" role="slider" aria-label="Ángulo de disparo: arrastra arriba o abajo" aria-valuemin="-85" aria-valuemax="90"><b id="aimPadValue">45°</b><span class="aim-pad-track"><i></i></span><small>ÁNGULO</small></div>
+ <button id="aimCancel" type="button" aria-label="Cancelar ataque sin gastar munición"><span>✕</span><small>CANCELAR</small></button>
  <div id="touchAimHint" hidden>Toca y arrastra en el escenario para apuntar.</div>
- <div class="keyboard-hint">A / D · mover &nbsp; ESPACIO · saltar &nbsp; ↑ / ↓ · ángulo &nbsp; F / ENTER · cargar y disparar &nbsp; TAB · criatura &nbsp; ESC · pausa</div>
+ <div class="keyboard-hint">A / D · mover &nbsp; ESPACIO · saltar &nbsp; F / ENTER / ATACAR · apuntar &nbsp; W / S · ángulo &nbsp; mantén ESPACIO · cargar, suelta · disparar &nbsp; ESC · cancelar</div>
 </div>
 <aside id="inventory" hidden><div class="inventory-heading"><div><h2>Elige tu próxima travesura.</h2><p>Munición compartida por equipo · daño a aliados activado</p></div><button id="closeInventory" class="close" aria-label="Cerrar arsenal">×</button></div><div id="arsenalCats" class="arsenal-cats"><button data-cat="all" class="selected">Todas (28)</button><button data-cat="heavy">Artillería</button><button data-cat="cluster">Racimo / Área</button><button data-cat="direct">Directas</button><button data-cat="tactical">Tácticas</button></div><div id="arsenalPreviewCard" class="arsenal-preview-card">
  <div id="arsenalPreviewIcon" class="arsenal-preview-icon">🚀</div>
@@ -1232,7 +1237,7 @@ body[data-phase="menu"] #turnBanner{display:none!important}
 <div id="weaponGrid" class="weapon-grid"></div><p id="weaponHint" hidden></p></aside>
 <div id="pause" class="overlay" hidden><section class="modal"><p class="eyebrow">UN RESPIRO ANTES DEL CAOS</p><h2>Batalla en pausa.</h2><p>El tiempo y la física están detenidos.</p><div class="pause-actions"><label class="check"><input id="pauseMusic" type="checkbox" checked>Música</label><label class="check"><input id="pauseSfx" type="checkbox" checked>Efectos</label></div><label>Ambiente musical<select id="pauseMusicMood"><option value="auto">🎵 Dinámico por Escenario</option><option value="adventure">🎹 Aventura por Bioma</option><option value="ambient">🌙 Ambiental por Mapa</option><option value="intense">⚡ Clímax Intenso por Mapa</option></select></label><div class="pause-graphics"><div class="form-row"><label>Gráficos<select id="pauseGraphicsPreset"><option value="auto">Automática</option><option value="low">Económico</option><option value="medium">Equilibrado</option><option value="high">Alto</option><option value="ultra" selected>Ultra</option></select></label><label>Fluidez<select id="pauseFPSLimit"><option value="0">Según el perfil</option><option value="30">30 FPS · ahorro</option><option value="60" selected>60 FPS · fluido</option></select></label></div><div class="form-row"><label>Resolución<select id="pauseResolutionMode"><option value="native" selected>Nativa / QHD+ (Máxima nitidez)</option><option value="uhd">4K / Super-Res (3840p · SSAA)</option><option value="qhd">2K / QHD+ (2560×1440)</option><option value="fhd">Full HD (1920×1080)</option><option value="hd">HD (1280×720 · Ahorro)</option><option value="auto">Automática según calidad</option></select></label><label>Gore<select id="pauseGoreLevel"><option value="none">Ninguno · sin gore</option><option value="low">Bajo</option><option value="medium">Medio</option><option value="high">Alto</option><option value="demonic" selected>Demencial</option></select></label></div><div class="form-row"><label>Tamaño de fragmentos<select id="pauseFragmentSize"><option value="small">Chicos</option><option value="medium" selected>Medianos</option><option value="large">Grandes</option><option value="giant">Gigantescos</option></select></label><label>Intensidad del clima<select id="pauseWeatherLevel"><option value="none">Desactivado</option><option value="normal">Suave</option><option value="intense" selected>Intenso</option><option value="storm">Tormenta</option></select></label></div><p id="pauseGoreInfo" class="graphics-info gore-info"></p><label class="check"><input id="pauseShowFPS" type="checkbox">Mostrar FPS</label><p id="pauseGraphicsInfo" class="graphics-info"></p></div><button id="resumeButton" class="start">CONTINUAR BATALLA</button><div><button id="pauseHelp" class="text-button">Cómo jugar</button> · <button id="pauseMenu" class="text-button">Volver al menú</button></div></section></div>
 <div id="result" class="overlay" hidden><section class="modal"><p id="resultEyebrow" class="eyebrow">VICTORIA</p><h2 id="winnerTitle">Marea</h2><p id="winnerText">¡La última escuadra en pie!</p><div id="battleStats"></div><button id="rematchButton" class="start">JUGAR LA REVANCHA ↗</button><button id="resultMenu" class="text-button">Cambiar escenario o equipos</button></section></div>
-<div id="help" class="overlay" hidden><section class="modal"><button id="closeHelp" class="close" aria-label="Cerrar instrucciones">×</button><p class="eyebrow">MANUAL DE TRAVESURAS</p><h2>Apunta. Dispara. Sobrevive.</h2><p>Cada criatura tiene <b>100 de vida</b>. Los equipos alternan turnos. Gana el último equipo que conserve pugs vivas; caer al agua o a la lava elimina al instante.</p><div class="help-grid"><div><b>1. Encuentra tu posición</b><kbd>A</kbd> / <kbd>D</kbd> o flechas para caminar. <kbd>Espacio</kbd> para saltar. <kbd>Tab</kbd> cambia de criatura antes del ataque.</div><div><b>2. Elige un arma</b>Toca el arsenal o pulsa <kbd>Q</kbd>. La munición pertenece al equipo. La escopeta permite dos tiros.</div><div><b>3. Ajusta el disparo</b><kbd>↑</kbd> / <kbd>↓</kbd> o el deslizador ajustan el ángulo. Mantén <kbd>F</kbd>, <kbd>Enter</kbd> o ATACAR para cargar; suelta para lanzar.</div><div><b>4. Escapa del impacto</b>Después de disparar puedes moverte durante 2,5 segundos. El turno cambia cuando proyectiles y pugs se estabilizan.</div></div><h3>EN EL CELULAR Y PC (PANTALLA LIMPIA SIN FLECHAS)</h3><p>La pantalla está libre de flechas para darte máxima visibilidad: <b>presiona los bordes izquierdo o derecho</b> de la pantalla para que el pug camine en esa dirección, y <b>desliza hacia arriba</b> para saltar. Pulsa o mantén el botón <b>🎯 APUNTAR</b> para que el pug empiece a apuntar (mostrando el dial 360° sobre el pug) y a cargar la potencia del disparo; desliza para ajustar el ángulo y suelta para disparar. En PC también puedes usar <kbd>A</kbd>/<kbd>D</kbd>, <kbd>Espacio</kbd>, <kbd>↑</kbd>/<kbd>↓</kbd> y <kbd>F</kbd>/<kbd>Enter</kbd>.</p><h3>NIVELES DE GORE</h3><p>Ninguno elimina sangre y fragmentos. Bajo muestra unas gotas al recibir daño. Medio añade fragmentos temporales al morir. Alto aumenta sangre y restos. Demencial añade sangre abundante que escurre por las paredes y deja fragmentos ensangrentados durante la partida; se limpian al empezar otra batalla. Si destruyes el suelo, los restos caen y las manchas de esa zona se eliminan.</p><h3>RENDIMIENTO Y LUCES</h3><p>En Gráficos, elige Automática, Económico, Equilibrado, Alto o Ultra. Económico reduce la resolución, el detalle y las partículas. Alto y Ultra añaden rayos de luz, hasta cuatro luces de explosión simultáneas, sombras dinámicas y mayor nitidez. Tormenta produce relámpagos y truenos; Puerto Tempestad los incluye de forma natural. El fondo tiene varias capas de pixel art con paralaje. Elige el clima: Suave, Intenso o Tormenta; Económico desactiva el clima para reducir la carga. Puedes limitar el dibujo a 30 o 60 FPS desde el menú o la pausa.</p><h3>ARMAS CON OBJETIVO</h3><p>Teledirigido, ataque aéreo y teletransporte: toca el escenario o el minimapa para marcar el punto y después pulsa ATACAR. Para teletransportarte necesitas una superficie libre. El minimapa permite apuntar lejos.</p><h3>PEQUEÑOS DETALLES, GRANDES EXPLOSIONES</h3><p>La bazuca y las granadas reciben viento. Las granadas rebotan; banana y racimo liberan cargas. Las minas detectan a ambos equipos y pueden explotar en cadena. El bate requiere estar cerca. La supernova destruye una zona enorme.</p><p>Al perder vida, los pugs sueltan salpicones de sangre. Al morir, dejan una mini nube nuclear y fragmentos caricaturescos. La explosión de despedida es un efecto visual. Tras la victoria, cae una bomba nuclear que elimina a los supervivientes como celebración; el ganador y las estadísticas ya están fijados.</p><p class="help-tip">Hay daño a aliados y por caídas fuertes. Usa cuevas como cobertura, vigila el viento y no pongas una mina donde tendrás que pasar después.</p><p>El Taller de pugs muestra un modelo 3D girable con el dedo, variantes clásico/zombi/esqueleto, accesorios y equipo para la espalda. La música original cambia de tema por escenario y evoluciona según la batalla; puedes elegir su ambiente en el menú o la pausa. La música y los efectos se activan al comenzar o tocar sus controles. <kbd>Esc</kbd> pausa la batalla. Todo el juego está incorporado en este archivo.</p></section></div>
+<div id="help" class="overlay" hidden><section class="modal"><button id="closeHelp" class="close" aria-label="Cerrar instrucciones">×</button><p class="eyebrow">MANUAL DE TRAVESURAS</p><h2>Apunta. Dispara. Sobrevive.</h2><p>Cada criatura tiene <b>100 de vida</b>. Los equipos alternan turnos. Gana el último equipo que conserve pugs vivas; caer al agua o a la lava elimina al instante.</p><div class="help-grid"><div><b>1. Encuentra tu posición</b><kbd>A</kbd> / <kbd>D</kbd> o flechas para caminar. <kbd>Espacio</kbd> para saltar. <kbd>Tab</kbd> cambia de criatura antes del ataque.</div><div><b>2. Elige un arma</b>Toca el arsenal o pulsa <kbd>Q</kbd>. La munición pertenece al equipo. La escopeta permite dos tiros.</div><div><b>3. Ajusta el disparo</b>Pulsa ATACAR (o <kbd>F</kbd>) para apuntar, ajusta con <kbd>W</kbd>/<kbd>S</kbd> o el pad ÁNGULO, mantén <kbd>Espacio</kbd> o ATACAR para cargar y suelta para lanzar.</div><div><b>4. Escapa del impacto</b>Después de disparar puedes moverte durante 2,5 segundos. El turno cambia cuando proyectiles y pugs se estabilizan.</div></div><h3>CONTROLES 5.1</h3><p><b>Smartphone:</b> a la izquierda, el arsenal (esquina inferior) y las flechas ‹ › para caminar; a la derecha, <b>ATACAR</b> (esquina inferior) y <b>SALTAR</b> encima. El salto solo se hace con el botón SALTAR. Toca <b>ATACAR</b> una vez para apuntar: aparecen la trayectoria, el ángulo y el pad <b>ÁNGULO</b> (arrástralo arriba o abajo con el pulgar izquierdo). Después <b>mantén ATACAR</b> para cargar la potencia y <b>suelta</b> para disparar; mientras cargas también puedes deslizar el dedo sobre ATACAR para afinar el ángulo. <b>✕ CANCELAR</b> sale del apuntado sin gastar munición ni turno.</p><p><b>PC:</b> <kbd>A</kbd>/<kbd>D</kbd> caminar, <kbd>Espacio</kbd> saltar. <kbd>F</kbd>, <kbd>Enter</kbd> o el botón ATACAR entran en el apuntado; ahí <kbd>W</kbd>/<kbd>S</kbd> o <kbd>↑</kbd>/<kbd>↓</kbd> ajustan el ángulo (con <kbd>Mayús</kbd>, más fino) y <b>mantener <kbd>Espacio</kbd></b> carga la potencia; al soltarlo se dispara una sola vez. Dentro del apuntado <kbd>Espacio</kbd> nunca salta. <kbd>Esc</kbd>, <kbd>X</kbd> o clic derecho cancelan sin gastar munición. Caminar por los bordes del escenario y apuntar arrastrando sobre él siguen disponibles.</p><h3>NIVELES DE GORE</h3><p>Ninguno elimina sangre y fragmentos. Bajo muestra unas gotas al recibir daño. Medio añade fragmentos temporales al morir. Alto aumenta sangre y restos. Demencial añade sangre abundante que escurre por las paredes y deja fragmentos ensangrentados durante la partida; se limpian al empezar otra batalla. Si destruyes el suelo, los restos caen y las manchas de esa zona se eliminan.</p><h3>RENDIMIENTO Y LUCES</h3><p>En Gráficos, elige Automática, Económico, Equilibrado, Alto o Ultra. Económico reduce la resolución, el detalle y las partículas. Alto y Ultra añaden rayos de luz, hasta cuatro luces de explosión simultáneas, sombras dinámicas y mayor nitidez. Tormenta produce relámpagos y truenos; Puerto Tempestad los incluye de forma natural. El fondo tiene varias capas de pixel art con paralaje. Elige el clima: Suave, Intenso o Tormenta; Económico desactiva el clima para reducir la carga. Puedes limitar el dibujo a 30 o 60 FPS desde el menú o la pausa.</p><h3>ARMAS CON OBJETIVO</h3><p>Teledirigido, ataque aéreo y teletransporte: toca el escenario o el minimapa para marcar el punto y después pulsa ATACAR. Para teletransportarte necesitas una superficie libre. El minimapa permite apuntar lejos.</p><h3>PEQUEÑOS DETALLES, GRANDES EXPLOSIONES</h3><p>La bazuca y las granadas reciben viento. Las granadas rebotan; banana y racimo liberan cargas. Las minas detectan a ambos equipos y pueden explotar en cadena. El bate requiere estar cerca. La supernova destruye una zona enorme.</p><p>Al perder vida, los pugs sueltan salpicones de sangre. Al morir, dejan una mini nube nuclear y fragmentos caricaturescos. La explosión de despedida es un efecto visual. Tras la victoria, cae una bomba nuclear que elimina a los supervivientes como celebración; el ganador y las estadísticas ya están fijados.</p><p class="help-tip">Hay daño a aliados y por caídas fuertes. Usa cuevas como cobertura, vigila el viento y no pongas una mina donde tendrás que pasar después.</p><p>El Taller de pugs muestra un modelo 3D girable con el dedo, variantes clásico/zombi/esqueleto, accesorios y equipo para la espalda. La música original cambia de tema por escenario y evoluciona según la batalla; puedes elegir su ambiente en el menú o la pausa. La música y los efectos se activan al comenzar o tocar sus controles. <kbd>Esc</kbd> pausa la batalla. Todo el juego está incorporado en este archivo.</p></section></div>
 
 
 
@@ -1338,6 +1343,7 @@ body[data-phase="menu"] #turnBanner{display:none!important}
 <script src="src/audio/composer.js"></script>
 <script src="src/audio/songs.js"></script>
 <script src="src/audio/sfx.js"></script>
+<script src="src/input/attack-controls.js"></script>
 <script>
 
 'use strict';
@@ -1490,10 +1496,11 @@ function resetTouchState(){
  input.keys.delete('jump');
  for(const c of app.chars)c.jumpBuffer=0;
  input.pointers.clear();
+ CS5.attack?.reset();
  app.charging=false;
- app.aimMode=true;
+ app.aimMode=false;
  audio.stopChargeTone?.();
- for(const id of ['moveLeft','moveRight','aimUp','aimDown','jumpButton','fireButton'])$(id)?.classList.remove('pressed','aim-active','charging');
+ for(const id of ['moveLeft','moveRight','aimUp','aimDown','jumpButton','fireButton','touchMoveLeft','touchMoveRight','touchJump','aimPad'])$(id)?.classList.remove('pressed','aim-active','charging');
 }
 function fullscreenActive(){return !!(document.fullscreenElement||document.webkitFullscreenElement);}
 function syncFullscreen(){const active=fullscreenActive();for(const id of ['fullscreenButton','menuFullscreenButton']){$(id).classList.toggle('selected',active);$(id).setAttribute('aria-pressed',String(active));$(id).setAttribute('title',active?'Salir de pantalla completa':'Pantalla completa');}$('fullscreenButton').textContent=active?'⤢':'⛶';resetTouchState();resize();}
@@ -1510,15 +1517,6 @@ function markTouch(e){if(e.pointerType==='touch'||e.pointerType==='pen'){touchPl
 function wrapAngle360(a){const v=Number(a)||0;return((v%360)+360)%360;}
 function touchSliderAngle(e){ensureAimPhase();if(!canAct()||!human())return;const r=$('angleSlider').getBoundingClientRect();app.angle=Math.round(clamp((e.clientX-r.left)/Math.max(1,r.width),0,1)*360)%360;updateHUD();}
 
-function triggerSwipeJump(){
- ensureAimPhase();
- if(!canMove()||!human())return false;
- input.keys.add('jump');
- if(!touchPlay.edgeVisual)touchPlay.edgeVisual={left:0,right:0,jump:0};
- touchPlay.edgeVisual.jump=0.38;
- return true;
-}
-
 function setupTouchPlay(){
  touchPlay.walkPointers=new Map();
  touchPlay.sceneTouches=new Map();
@@ -1529,147 +1527,22 @@ function setupTouchPlay(){
   for(const type of ['selectstart','contextmenu','dragstart'])control.addEventListener(type,block);
  }
  // Keep legacy hidden button listeners intact for compatibility
- for(const [id,key]of [['moveLeft','left'],['moveRight','right'],['aimUp','up'],['aimDown','down']]){
+ for(const [id,key]of [['moveLeft','left'],['moveRight','right'],['aimUp','up'],['aimDown','down'],['touchMoveLeft','left'],['touchMoveRight','right']]){
   const b=$(id),movement=key==='left'||key==='right';
   if(!b)continue;
-  b.addEventListener('pointerdown',e=>{e.preventDefault();markTouch(e);ensureAimPhase();if(!(movement?canMove():canAct())||!human())return;b.setPointerCapture(e.pointerId);input.pointers.set(e.pointerId,key);b.classList.add('pressed');});
+  b.addEventListener('pointerdown',e=>{e.preventDefault();markTouch(e);ensureAimPhase();if(!(movement?canMove():canAct())||!human())return;try{b.setPointerCapture(e.pointerId);}catch{}input.pointers.set(e.pointerId,key);b.classList.add('pressed');});
   const end=e=>{input.pointers.delete(e.pointerId);b.classList.remove('pressed');};
   for(const ev of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(ev,end);
  }
  const jumpButton=$('jumpButton');
  if(jumpButton){
-  jumpButton.addEventListener('pointerdown',e=>{e.preventDefault();markTouch(e);triggerSwipeJump();});
+  jumpButton.addEventListener('pointerdown',e=>{e.preventDefault();markTouch(e);CS5.attack.jump();});
  }
  $('skipMobile')?.addEventListener('click',()=>{$('skipButton')?.click();});
 
- // === BOTÓN "🎯 ATACAR" (#fireButton): EJECUTA EL COMANDO DE POTENCIA Y DISPARO EN PC Y SMARTPHONE ===
- // Soporta ambos modos de forma híbrida:
- // 1. Mantener presionado ATACAR -> Carga la barra de potencia (15% <-> 100%) y dispara al soltar (>= 240 ms).
- // 2. Pulsar/Hacer clic en ATACAR (< 240 ms) -> Inicia la barra de potencia oscilante en vivo, y al volver a pulsar ATACAR dispara con esa potencia.
- const fire=$('fireButton');
- fire.addEventListener('pointerdown',e=>{
-  if(e.button!==undefined&&e.button!==0)return;
-  e.preventDefault();
-  e.stopPropagation();
-  markTouch(e);
-  ensureAimPhase();
-  touchPlay.lastPointerEventTime=performance.now();
-  if(!canAct()||!human())return;
-
-  const w=weaponOf(),o=app.active;
-  // Si la barra de potencia ya estaba cargando (modo clic-para-cargar / clic-para-disparar), este toque ejecuta el disparo inmediato
-  if(app.charging){
-   touchPlay.fireOnDown=true;
-   touchPlay.firePointer=null;
-   touchPlay.latchedCharge=false;
-   releaseCharge(false);
-   return;
-  }
-
-  touchPlay.fireOnDown=false;
-  touchPlay.firePointer=e.pointerId;
-  touchPlay.fireDownTime=performance.now();
-  touchPlay.fireStartX=e.clientX;
-  touchPlay.fireStartY=e.clientY;
-  touchPlay.fireStartAngle=app.angle;
-  touchPlay.fireDragged=false;
-  touchPlay.latchedCharge=false;
-  try{fire.setPointerCapture(e.pointerId);}catch{}
-  app.aimMode=true;
-
-  if(w.charge){
-   if(w.target&&!app.target&&o){
-    const a=rad(app.angle),dx=o.dir*Math.cos(a),dy=-Math.sin(a);
-    app.target={x:clamp(o.x+dx*240,20,W-20),y:clamp(o.y-18+dy*180,35,WATER-10)};
-   }
-   startCharge();
-  }else{
-   audio.init();
-   updateHUD();
-  }
- });
-
- fire.addEventListener('pointermove',e=>{
-  if(e.pointerId!==touchPlay.firePointer||!canAct()||!human())return;
-  e.preventDefault();
-  const dx=e.clientX-touchPlay.fireStartX,dy=e.clientY-touchPlay.fireStartY;
-  if(Math.hypot(dx,dy)>10){
-   touchPlay.fireDragged=true;
-   if(e.clientY<view.height-95){
-    aimPoint(toWorld(e.clientX,e.clientY),weaponOf().target);
-   }else{
-    if(app.active&&Math.abs(dx)>34)app.active.dir=dx<0?-1:1;
-    app.angle=wrapAngle360(touchPlay.fireStartAngle-dy*0.85);
-   }
-   updateHUD();
-  }
- });
-
- const endFire=(e,isCancel)=>{
-  if(touchPlay.firePointer===null||e.pointerId!==touchPlay.firePointer)return;
-  touchPlay.firePointer=null;
-  touchPlay.lastPointerEventTime=performance.now();
-  if(touchPlay.fireOnDown){touchPlay.fireOnDown=false;return;}
-  if(!canAct()||!human()){releaseCharge(true);return;}
-
-  const heldMs=performance.now()-(touchPlay.fireDownTime||0);
-  const w=weaponOf();
-  if(w.charge){
-   // Si fue un clic o toque corto (< 240 ms) sin arrastrar, mantiene la barra de potencia cargando (15% <-> 100%) para que el siguiente clic en ATACAR dispare
-   if(heldMs<240&&!touchPlay.fireDragged){
-    touchPlay.latchedCharge=true;
-    app.charging=true;
-    app.aimMode=true;
-    updateHUD();
-    return;
-   }
-   // Si mantuvo presionado ATACAR (>= 240 ms) o arrastró mientras cargaba, dispara al soltar con la potencia actual
-   touchPlay.latchedCharge=false;
-   releaseCharge(false);
-  }else{
-   if(w.target&&!app.target){
-    app.aimMode=true;
-    updateHUD();
-    toast('Toca el escenario o minimapa para marcar el objetivo y pulsa ATACAR.',2.8);
-   }else{
-    shoot();
-   }
-  }
- };
- fire.addEventListener('pointerup',e=>endFire(e,false));
- fire.addEventListener('pointercancel',e=>endFire(e,true));
- window.addEventListener('pointerup',e=>{if(e.pointerId===touchPlay.firePointer)endFire(e,false);});
-
- // Fallback click handler para navegadores o dispositivos que disparen click directo sin pointerdown previo
- fire.addEventListener('click',e=>{
-  if(performance.now()-(touchPlay.lastPointerEventTime||0)<350)return;
-  ensureAimPhase();
-  if(!canAct()||!human())return;
-  const w=weaponOf(),o=app.active;
-  if(w.charge){
-   if(app.charging){
-    touchPlay.latchedCharge=false;
-    releaseCharge(false);
-   }else{
-    if(w.target&&!app.target&&o){
-     const a=rad(app.angle),dx=o.dir*Math.cos(a),dy=-Math.sin(a);
-     app.target={x:clamp(o.x+dx*240,20,W-20),y:clamp(o.y-18+dy*180,35,WATER-10)};
-    }
-    startCharge();
-    touchPlay.latchedCharge=true;
-    updateHUD();
-   }
-  }else{
-   if(w.target&&!app.target){
-    app.aimMode=true;
-    updateHUD();
-    toast('Toca el escenario para marcar el objetivo y pulsa ATACAR.',2.8);
-   }else{
-    shoot();
-   }
-  }
- });
-
+ // 5.1: ATACAR, SALTAR, el pad de ángulo y cancelar usan la máquina de estados común
+ // (src/input/attack-controls.js): primer toque = apuntar, mantener = cargar, soltar = disparar.
+ CS5.attack.setup();
  // === ESCENARIO (#effects): BORDES PARA CAMINAR, SWIPE ARRIBA PARA SALTAR, APUNTADO Y ZOOM ===
  const scene=$('effects');
  const cancelSingleTouchesForPinch=()=>{
@@ -1755,6 +1628,8 @@ function setupTouchPlay(){
    }
   }
   if(touchPlay.pinching||performance.now()<(touchPlay.pinchCooldown||0))return;
+  // Clic derecho: cancela el ataque en curso sin disparar.
+  if(e.button===2){e.preventDefault();CS5.attack.cancel();return;}
   ensureAimPhase();
   if(!human()||app.paused)return;
   e.preventDefault();
@@ -1820,18 +1695,9 @@ function setupTouchPlay(){
   }
   if(touchPlay.pinching||!human()||app.paused)return;
 
-  // 1. Gesto de deslizar hacia arriba (Swipe Up -> Saltar) cuando camina por los bordes
+  // 1. Caminar por los bordes. 5.1: deslizar hacia arriba ya no salta (solo el botón SALTAR).
   const wp=touchPlay.walkPointers.get(e.pointerId);
   if(wp){
-   const dx=e.clientX-wp.anchorX;
-   const dy=e.clientY-wp.anchorY;
-   if(dy<-34&&Math.abs(dy)>Math.abs(dx)*1.15&&wp.dir!==null&&!app.charging&&canMove()){
-    triggerSwipeJump();
-    wp.anchorX=e.clientX;
-    wp.anchorY=e.clientY;
-    wp.swipedUp=true;
-    return;
-   }
    if(wp.dir!==null&&canMove()){
     const vw=Math.max(320,view.width||window.innerWidth);
     if(e.clientX<=vw*0.36){
@@ -1923,7 +1789,7 @@ function drawTouchAimDial(c){
  // 2. Dial de apuntado 360° + Barra de potencia integrada alrededor y sobre el Pug activo
  if(!canAct()||!human()||weaponOf().target)return;
  const o=app.active;if(!o)return;
- const activeEngage=Boolean(app.charging||touchPlay.aimPointer!==null||touchPlay.firePointer!==null||input.keys.has('arrowup')||input.keys.has('arrowdown')||[...input.pointers.values()].some(v=>v==='up'||v==='down'));
+ const activeEngage=Boolean(app.charging||CS5.attack.state!=='idle'||input.keys.has('w')||input.keys.has('s')||touchPlay.aimPointer!==null||touchPlay.firePointer!==null||input.keys.has('arrowup')||input.keys.has('arrowdown')||[...input.pointers.values()].some(v=>v==='up'||v==='down'));
  const p=toScreen(o.x,o.y-18),radius=clamp(Math.min(view.width,view.height)*.16,44,76);
  const angle=rad(app.angle),w=weaponOf();
  const tCol=colors[o.team]||'#5cebe2';
@@ -6438,7 +6304,7 @@ const audio={context:null,music:true,sfx:true,next:0,step:0,master:null,musicGai
  }
 };
 function refreshTerrain(){if(terrain.dirty)terrain.paint();}
-function setPhase(p){app.phase=p;document.body.dataset.phase=p;}
+function setPhase(p){app.phase=p;document.body.dataset.phase=p;if(p!=='aim')CS5.attack?.reset();}
 // 5.0: contexto visual para las expresiones de los pugs (no afecta a la simulación).
 function pugAnimContext(){
  const flying=app.projectiles.find(p=>p.age>=0&&!p.dead&&p.id!=='chain');
@@ -7008,7 +6874,7 @@ function step(dt){app.viewTime+=dt;
  }
  for(const c of app.chars)characterPhysics(c,dt,c===app.active?control:0,c===app.active?jump:false);
  for(const p of [...app.projectiles])stepProjectile(p,dt);app.projectiles=app.projectiles.filter(p=>!p.dead);for(const m of app.mines)stepMine(m,dt);app.mines=app.mines.filter(m=>!m.dead);
- if(app.phase==='aim'){app.timer-=dt;if(human()&&canAct()){if(input.keys.has('arrowup')||[...input.pointers.values()].includes('up')){app.aimMode=true;app.angle=wrapAngle360(app.angle+76*dt);updateHUD();}if(input.keys.has('arrowdown')||[...input.pointers.values()].includes('down')){app.aimMode=true;app.angle=wrapAngle360(app.angle-76*dt);updateHUD();}if(app.charging){
+ if(app.phase==='aim'){app.timer-=dt;if(human()&&canAct()){const ptrs=[...input.pointers.values()],up=input.keys.has('arrowup')||input.keys.has('w')||ptrs.includes('up'),down=input.keys.has('arrowdown')||input.keys.has('s')||ptrs.includes('down');if(up!==down){CS5.attack.nudgeAngle((up?1:-1)*(input.keys.has('shift')?24:62)*dt);updateHUD();}if(app.charging){
  app.chargePeakFlash=Math.max(0,(app.chargePeakFlash||0)-dt);
  const dir=app.chargeDir||1,spd=app.chargeSpeed||58;
  let nextP=app.power+dir*spd*dt;
@@ -7213,9 +7079,11 @@ if(f.kind==='flash'){
  c.globalAlpha=1;
  if(app.active&&app.active.hp>0&&['aim','interlude'].includes(app.phase)){
   const o=app.active,a=rad(app.angle),dx=o.dir*Math.cos(a),dy=-Math.sin(a),w=weaponOf();
-  if(app.aimMode||app.charging||!human()){
+  {
    c.strokeStyle=colors[o.team];c.lineWidth=1.8;c.setLineDash([4,5]);c.beginPath();c.moveTo(o.x+dx*20,o.y-18+dy*15);c.lineTo(o.x+dx*85,o.y-18+dy*70);c.stroke();c.setLineDash([]);
-   if(w.charge&&app.phase==='aim'){const points=previewTrajectory(o,app.angle,app.power,w.id);points.forEach((p,i)=>{c.globalAlpha=1-i/points.length;ellipse(c,p.x,p.y,2.5,2.5,'#fff1bd');});c.globalAlpha=1;}
+   // 5.1: la guía predictiva (mismo integrador que el disparo real) aparece al apuntar.
+   const guide=!human()||app.charging||CS5.attack.state!=='idle'||touchPlay.aimPointer!==null;
+   if(guide&&w.charge&&app.phase==='aim'){const points=previewTrajectory(o,app.angle,app.power,w.id);points.forEach((p,i)=>{c.globalAlpha=1-i/points.length;ellipse(c,p.x,p.y,2.5,2.5,'#fff1bd');});c.globalAlpha=1;}
   }
   c.fillStyle=colors[o.team];c.beginPath();c.moveTo(o.x,o.y-62+Math.sin(time*4)*3);c.lineTo(o.x-6,o.y-72+Math.sin(time*4)*3);c.lineTo(o.x+6,o.y-72+Math.sin(time*4)*3);c.fill();
  }
@@ -7384,15 +7252,16 @@ if($('lastPowerTick')){
  if(app.lastPower!=null&&w.charge){$('lastPowerTick').hidden=false;$('lastPowerTick').style.left=clamp(app.lastPower,0,100)+'%';}
  else $('lastPowerTick').hidden=true;
 }$('fireButton').classList.toggle('charging',app.charging);
-$('fireButton').classList.toggle('aim-active',Boolean(app.aimMode&&!app.charging));
+$('fireButton').classList.toggle('aim-active',CS5.attack.state==='aiming');
 const canPressFire=(canAct()||(app.phase==='interlude'&&!app.paused&&app.active?.hp>0))&&human();
 $('fireButton').disabled=!canPressFire;
-if($('fireMainText')){
- $('fireMainText').textContent=app.charging?(touchPlay.latchedCharge?'¡DISPARAR!':'CARGANDO'):'ATACAR';
-}
-$('fireLabel').textContent=!human()?(cpuTurn()?'CPU APUNTANDO':isLanCoop()?'TURNO DE TU ALIADO':'TURNO RIVAL EN LAN'):app.phase==='action'?(canMove()?'¡CORRE!':'RESOLVIENDO'):w.charge?(app.charging?(touchPlay.latchedCharge?'PULSA PARA DISPARAR ('+Math.round(app.power)+'%)':'SUELTA PARA DISPARAR ('+Math.round(app.power)+'%)'):'PULSA O MANTÉN · POTENCIA'):(w.target&&!app.target?'MARCA EL OBJETIVO EN EL MAPA':'PULSA PARA ATACAR');
+const fireText=CS5.attack.labels(w);
+if($('fireMainText'))$('fireMainText').textContent=canPressFire?fireText.main:'ATACAR';
+$('fireLabel').textContent=!human()?(cpuTurn()?'CPU APUNTANDO':isLanCoop()?'TURNO DE TU ALIADO':'TURNO RIVAL EN LAN'):app.phase==='action'?(canMove()?'¡CORRE!':'RESOLVIENDO'):fireText.sub;
+if($('aimPadValue')){const a=wrapAngle360(app.angle),e=Math.round(a<=90||a>=270?(a>180?a-360:a):180-a);$('aimPadValue').textContent=e+'°';$('aimPad').style.setProperty('--elev',((e+85)/175).toFixed(3));$('aimPad').setAttribute('aria-valuenow',String(e));}
+$('touchJump')?.classList.toggle('locked',CS5.attack.state!=='idle'||!canMove()||!human());
  const ws=app.weapon+team.ammo[w.id]+app.shotCount+app.phase+Boolean(app.target);if(ws!==lastWeapon){$('weaponIcon').innerHTML=getWeaponIconSVG(w.id);$('weaponName').textContent=w.name;$('weaponAmmo').textContent=(team.ammo[w.id]===Infinity?'∞':Math.max(0,team.ammo[w.id]))+' '+(app.shotCount===1&&w.id==='shotgun'?'· 2.º tiro':'cargas');$('weaponHint').textContent=w.short;$('targetHelp').hidden=!(w.target&&app.phase==='aim');$('targetHelp').textContent=app.target?'Objetivo marcado · confirma el ataque':'Toca el mapa o minimapa para marcar el objetivo';lastWeapon=ws;}
- $('phaseLabel').textContent=app.phase==='action'?app.shotSecond?'Primer disparo de escopeta':app.actionAge<2.5?'RETIRADA · bordes para correr':'ESPERANDO IMPACTOS':!human()?(cpuTurn()?'TURNO DE LA CPU':isLanCoop()?'TURNO DE TU ALIADO':'JUGADOR LAN EN TURNO'):app.phase==='interlude'?'PREPARADOS':(app.aimMode?'APUNTANDO · mantén APUNTAR para cargar':'BORDES: CAMINAR · ↑: SALTAR · APUNTAR');$('touchAimHint').hidden=!(touchPlay.touchSeen&&canAct()&&human());$('touchAimHint').textContent=w.target?'Toca y arrastra para marcar el objetivo.':'Toca y arrastra en el escenario para ajustar el ángulo.';$('cycleButton').disabled=!canAct()||!human()||app.shotCount>0;$('cycleMobile').disabled=$('cycleButton').disabled;}
+ $('phaseLabel').textContent=app.phase==='action'?app.shotSecond?'Primer disparo de escopeta':app.actionAge<2.5?'RETIRADA · bordes para correr':'ESPERANDO IMPACTOS':!human()?(cpuTurn()?'TURNO DE LA CPU':isLanCoop()?'TURNO DE TU ALIADO':'JUGADOR LAN EN TURNO'):app.phase==='interlude'?'PREPARADOS':(CS5.attack.state==='charging'?'CARGANDO · suelta para disparar':CS5.attack.state==='aiming'?'APUNTANDO · ajusta el ángulo y mantén para cargar':'MOVER · SALTAR · ATACAR');$('touchAimHint').hidden=!(touchPlay.touchSeen&&canAct()&&human());$('touchAimHint').textContent=w.target?'Toca y arrastra para marcar el objetivo.':'Toca y arrastra en el escenario para ajustar el ángulo.';$('cycleButton').disabled=!canAct()||!human()||app.shotCount>0;$('cycleMobile').disabled=$('cycleButton').disabled;}
 function escapeHTML(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 const weaponCats={
  heavy:['rocket','grenade','dynamite','homing','super','salvo','sticky','holy','orbital'],
@@ -7797,8 +7666,8 @@ renderMapThumbnails();$('maps').addEventListener('click',e=>{const b=e.target.cl
  $('helpButton').addEventListener('click',()=>$('help').hidden=false);$('pauseHelp').addEventListener('click',()=>$('help').hidden=false);$('closeHelp').addEventListener('click',()=>$('help').hidden=true);
  for(const id of ['musicSetting','pauseMusic'])$(id).addEventListener('change',e=>{audio.music=e.target.checked;audio.init();updateAudioButtons();});for(const id of ['sfxSetting','pauseSfx'])$(id).addEventListener('change',e=>{audio.sfx=e.target.checked;audio.init();updateAudioButtons();});$('musicToggle').addEventListener('click',()=>{audio.music=!audio.music;audio.init();updateAudioButtons();});
  $('minimap').addEventListener('pointerdown',e=>{e.preventDefault();if(!canAct()||!human())return;const r=$('minimap').getBoundingClientRect(),p={x:(e.clientX-r.left)/r.width*W,y:(e.clientY-r.top)/r.height*H};if(weaponOf().target){if(app.weapon==='teleport'){const floor=terrain.surface(p.x);if(floor)p.y=floor.y;}aimPoint(p,true);}else{app.cameraWide=!app.cameraWide;}});
- window.addEventListener('keydown',e=>{if(studio.open)return;if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;const k=e.key.toLowerCase();if(['arrowup','arrowdown','arrowleft','arrowright',' ','tab','enter'].includes(k))e.preventDefault();if(k==='escape'||k==='p'){if(!$('help').hidden){$('help').hidden=true;return;}if(!$('inventory').hidden){$('inventory').hidden=true;return;}if(!e.repeat)pauseGame();return;}ensureAimPhase();if(!human()||app.paused)return;input.keys.add(k);if(k===' '&&!e.repeat){if(app.charging&&touchPlay.latchedCharge){touchPlay.keyShotFired=true;releaseCharge(false);return;}if(canMove())input.keys.add('jump');}if((k==='f'||k==='enter')&&!e.repeat){if(app.charging){touchPlay.keyShotFired=true;releaseCharge(false);}else{touchPlay.keyShotFired=false;touchPlay.keyChargeStart=performance.now();startCharge();}}if(k==='tab'&&!e.repeat)cycleCharacter();if(k==='q'&&!e.repeat)$('weaponsButton').click();if(k==='v'&&!e.repeat)$('viewButton').click();});
- window.addEventListener('keyup',e=>{const k=e.key.toLowerCase();input.keys.delete(k);if(k==='f'||k==='enter'){if(touchPlay.keyShotFired){touchPlay.keyShotFired=false;return;}if(app.charging){const held=performance.now()-(touchPlay.keyChargeStart||0);if(held<240){touchPlay.latchedCharge=true;updateHUD();}else{releaseCharge(false);}}}});
+ window.addEventListener('keydown',e=>{if(studio.open)return;if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;const k=e.key.toLowerCase();if(['arrowup','arrowdown','arrowleft','arrowright',' ','tab','enter'].includes(k))e.preventDefault();if(k==='escape'||k==='p'){if(!$('help').hidden){$('help').hidden=true;return;}if(!$('inventory').hidden){$('inventory').hidden=true;return;}if(k==='escape'&&!e.repeat&&CS5.attack.cancel())return;if(!e.repeat)pauseGame();return;}ensureAimPhase();if(!human()||app.paused)return;input.keys.add(k);if(CS5.attack.keyDown(k,e.repeat))return;if(k==='x'&&!e.repeat){CS5.attack.cancel();return;}if(k==='tab'&&!e.repeat)cycleCharacter();if(k==='q'&&!e.repeat)$('weaponsButton').click();if(k==='v'&&!e.repeat)$('viewButton').click();});
+ window.addEventListener('keyup',e=>{const k=e.key.toLowerCase();input.keys.delete(k);if(k==='shift')input.keys.delete('shift');if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;CS5.attack.keyUp(k);});
  document.addEventListener('contextmenu',e=>e.preventDefault());
 }
 function boot(){ctx=$('effects').getContext('2d');bgctx=$('background').getContext('2d',{alpha:false});applyScenePalettes();CS5.applyArtDirection(maps);loadPlayOptions();loadGoreOptions();try{renderer=new DepthRenderer($('depth'));}catch(e){console.warn('WebGL: usando render compatible',e);$('depth').style.display='none';renderer={fallback:true,version:-1,draw(){}};}

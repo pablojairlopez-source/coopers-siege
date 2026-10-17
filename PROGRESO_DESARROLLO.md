@@ -7,8 +7,8 @@
 | Subfase | Estado | Resumen |
 |---|---|---|
 | 0 · Rama, línea base, continuidad | ✅ | `AGENTS.md`, `docs/HANDOFF.md`; `npm test` 5/5 en verde en `e5466e5` |
-| 1 · Controles smartphone | ⏳ | Armas a la izquierda, ATACAR + SALTAR a la derecha, sin salto por deslizamiento, apuntado en dos pasos |
-| 2 · Controles PC | ⏳ | A/D, W/S ángulo, SPACE contextual (saltar / cargar y disparar), cancelar sin gastar munición |
+| 1 · Controles smartphone | ✅ | Armas a la izquierda, ATACAR + SALTAR a la derecha, sin salto por deslizamiento, apuntado en dos pasos |
+| 2 · Controles PC | ✅ | A/D, W/S ángulo, SPACE contextual (saltar / cargar y disparar), cancelar sin gastar munición |
 | 5 · Mezcla de audio | ⏳ | Buses, limitador, música −4 dB, disparos/explosiones con cuerpo, quejidos de dolor audibles |
 | 3 · Revisión musical | ⏳ | Caldera Roja, Última Estrella, Catedral Gótica, Dulce Caos, Fundición Omega |
 | 4 · Mapa 17 Jardín de Espinas | ⏳ | Trazado, arte, escenografía, decorados y música propia |

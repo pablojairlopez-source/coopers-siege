@@ -20,7 +20,7 @@ Ver checklist en `PROGRESO_DESARROLLO.md`.
 
 ## Próxima tarea exacta
 
-Fase 5.1-1/2: máquina de estados de ataque compartida (PC y táctil) y nueva disposición de controles móviles.
+Fase 5.1-5: mezcla de audio (buses, limitador, música −4 dB), disparos/explosiones con más cuerpo y quejidos de dolor audibles. Empezar por `src/audio/sfx.js` y el enrutamiento de `audio` en `index.html` (buscar `musicGain`, `sfxGain`, `function sound`).
 
 ## Comandos para retomar
 
@@ -32,7 +32,7 @@ npm test
 
 ## Decisiones de arquitectura
 
-(se completan a medida que avanza la 5.1)
+- **Controles (5.1-1/2):** máquina de estados `CS5.attack` en `src/input/attack-controls.js` (`idle → aiming → charging`), común a teclado, ratón y táctil. Solo toca `app.angle`, `app.power`, `app.charging` y llama a `shoot()`: la autoridad LAN no cambia. `setPhase` y `resetTouchState` llaman a `CS5.attack.reset()`. Disposición en `src/ui/controls.css` (selectores con `body` delante para ganar a los `!important` de 5.0). W/S/↑/↓ ajustan la *elevación* en [-85°, 90°] sin cruzar la vertical (no cambian `c.dir`, que no se sincroniza en LAN coop). El salto por deslizamiento se eliminó; el salto táctil es `#touchJump` (máx. uno cada 180 ms). Prueba: `tests/controls.cjs` (en `npm test`).
 
 ## Bloqueadores conocidos
 

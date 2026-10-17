@@ -7,6 +7,7 @@ const suites=[
  ['Escenarios ampliados','smoke.cjs'],
  ['Daño, gore y destrucción','effects.cjs'],
  ['HUD responsivo','ui.cjs'],
+ ['Controles 5.1 (táctil y teclado)','controls.cjs'],
  ['Banda sonora y efectos','music.cjs',['10']]
 ];
 const results=[];
