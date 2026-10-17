@@ -45,5 +45,8 @@ const VIEWPORTS={
  fold:{viewport:{width:904,height:832},deviceScaleFactor:2.6,isMobile:true,hasTouch:true},
  ultrawide:{viewport:{width:2560,height:1080},deviceScaleFactor:1}
 };
+// Las aserciones históricas de texto se ejecutan con idioma español explícito.
+// Las suites bilingües sobrescriben locale para comprobar la detección real.
+for(const profile of Object.values(VIEWPORTS))profile.locale='es-CL';
 
 module.exports={ROOT,serve,launch,gpuInfo,VIEWPORTS};

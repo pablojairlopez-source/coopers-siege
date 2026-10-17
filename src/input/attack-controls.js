@@ -36,13 +36,13 @@
   if(A.state!=='idle')return true;
   A.state='aiming';note('aim');audio.init();
   const w=weaponOf();
-  if(w.target&&!app.target)toast(()=>CS5.i18n.t("input.attack-controls.enter.s001"),2.8);
+  if(w.target&&!app.target)toastLocalized(()=>CS5.i18n.t("input.attack-controls.enter.s001"),2.8);
   sync();return true;
  };
  A.cancel=()=>{
   if(A.state==='idle')return false;
   A.state='idle';A.source=null;A.firePointer=null;stopCharge();note('cancel');
-  sync();toast(()=>CS5.i18n.t("input.attack-controls.cancel.s001"),1.5);return true;
+  sync();toastLocalized(()=>CS5.i18n.t("input.attack-controls.cancel.s001"),1.5);return true;
  };
  A.beginCharge=src=>{
   if(!ok()||A.state!=='aiming')return false;
@@ -60,7 +60,7 @@
   A.state='idle';A.source=null;stopCharge();
   if(!ok()){sync();return false;}
   const w=weaponOf();
-  if(w.target&&!app.target){A.state='aiming';sync();toast(()=>CS5.i18n.t("input.attack-controls.release.s001"),2.4);return false;}
+  if(w.target&&!app.target){A.state='aiming';sync();toastLocalized(()=>CS5.i18n.t("input.attack-controls.release.s001"),2.4);return false;}
   const fired=shoot();note(fired?'shot':'blocked');
   if(!fired&&canAct())A.state='aiming';
   sync();return fired;

@@ -1,0 +1,14 @@
+// Cobertura y glosario derivados de los recursos entregados, sin modificar traducciones.
+const fs=require('node:fs'),vm=require('node:vm');const catalogs={};
+for(const file of ['es-419','en-US','story-es-419','story-en-US'])vm.runInNewContext(fs.readFileSync('src/i18n/'+file+'.js','utf8'),{CS5:{i18n:{register:(l,d)=>Object.assign(catalogs[l]??={},d)}}});
+const es=catalogs['es-419'],en=catalogs['en-US'],manifest=JSON.parse(fs.readFileSync('src/i18n/manifest.json')),original=new Map(manifest.map(row=>[row.key,row.original]));
+const group=k=>k.startsWith('story.')?'Historia':k.startsWith('campaign.')?'Campaña y diálogos':k.startsWith('weapons.')?'Armas':k.startsWith('maps.')?'Mapas':k.startsWith('audio.')?'Música':k.startsWith('input.')?'Controles':k.startsWith('gameplay.')?'Suministros':k.startsWith('ui.html.')?'HTML':k.startsWith('ui.main.')?'Juego y menús':'Servicio y detalles adicionales';
+const coverage={};for(const key of Object.keys(es))coverage[group(key)]=(coverage[group(key)]||0)+1;
+const report={keys:Object.keys(es).length,esRevised:[...original].filter(([k,v])=>es[k]!=null&&es[k]!==v).length,enDifferent:Object.keys(en).filter(k=>JSON.stringify(en[k])!==JSON.stringify(es[k])).length,manifestKeys:original.size,coverage};
+fs.mkdirSync('test-results/i18n',{recursive:true});fs.writeFileSync('test-results/i18n/coverage.json',JSON.stringify(report,null,1));
+const rows=[['Campaña','campaign.title'],['Escuadra','campaign.campaign.setupMatch.s001'],['Presentador','campaign.data.hueson.name'],['Primer campeón','campaign.data.cero.name'],['Victoria','audio.composer.data.s006'],['Derrota','audio.composer.data.s007'],['Continuar','campaign.campaign.chapterPanel.s010']];
+for(const k of Object.keys(es))if(/^(weapons|maps)\.[^.]+\.name$|^campaign\.bosses\.[^.]+\.name$|^campaign\.chapters\.\d+\.team$|^campaign\.data\.[^.]+\.name$|^audio\.songs\.[^.]+\.(name|genre)$|^gameplay\.supply-config\.data\./.test(k))rows.push([group(k),k]);
+for(let n=494;n<=514;n++)rows.push(['Accesorio','ui.html.option.s'+n]);for(let n=516;n<=522;n++)rows.push(['Variante','ui.html.option.s'+n]);for(let n=524;n<=531;n++)rows.push(['Equipo de espalda','ui.html.option.s'+n]);
+let md="# Glosario maestro es-419 / en-US\n\nLos IDs internos no se traducen. Cooper, Pipa, Bongo y Roco, la marca Cooper's Siege y Cooper's Trophy se conservan. Los nombres escritos por jugadores, sus proyectos y códigos LAN se muestran literalmente.\n\nHuesitos → **Supply Bones**; individual: **supply bone**. Galletas → **cookies**. Los nombres artísticos de mapas se adaptan sin cambiar medidas ni identificadores (Kilómetro Cero → Mile Zero).\n\n| Categoría | Español latinoamericano | English | Clave |\n|---|---|---|---|\n";
+for(const [category,key]of rows)md+=`| ${category} | ${es[key]} | ${en[key]} | \`${key}\` |\n`;
+fs.writeFileSync('docs/GLOSARIO.md',md);console.log(report);

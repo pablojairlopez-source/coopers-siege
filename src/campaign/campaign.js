@@ -50,7 +50,7 @@ const campaign={
   let s=null;try{s=sanitize(JSON.parse(localStorage.getItem(KEY)||'null'));}catch{}
   this.save=s||defaultSave();return this.save;
  },
- store(){this.save.updated=Date.now();try{localStorage.setItem(KEY,JSON.stringify(this.save));this.saveWarningShown=false;return true;}catch{if(!this.saveWarningShown){toast(()=>CS5.i18n.t("campaign.campaign.store.s001"),6);this.saveWarningShown=true;}return false;}},
+ store(){this.save.updated=Date.now();try{localStorage.setItem(KEY,JSON.stringify(this.save));this.saveWarningShown=false;return true;}catch{if(!this.saveWarningShown){toastLocalized(()=>CS5.i18n.t("campaign.campaign.store.s001"),6);this.saveWarningShown=true;}return false;}},
  hasProgress(){const s=this.save||this.load();return s.victories+s.defeats>0||s.seen.length>0;},
  reset(){this.save=defaultSave();this.store();},
  markSeen(id){if(!id)return;if(!this.save)this.load();if(!this.save.seen.includes(id)){this.save.seen.push(id);this.store();}},
@@ -239,7 +239,7 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
 <section><h3 data-i18n="campaign.campaign.renderSettings.s008">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s008")}</h3><div class="cmp-row"><button type="button" class="mini-button" data-do="export" data-i18n="campaign.campaign.renderSettings.s009">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s009")}</button><button type="button" class="mini-button" data-do="import" data-i18n="campaign.campaign.renderSettings.s010">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s010")}</button><button type="button" class="mini-button danger" data-do="newgame" data-i18n="campaign.campaign.renderSettings.s011">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s011")}</button><button type="button" class="mini-button" data-do="history" data-i18n="campaign.campaign.renderSettings.s012">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s012")}</button></div><input type="file" id="cmpImport" accept="application/json,.json" hidden></section></div>`;
   const d=this.body.querySelector('#cmpDifficulty');d.value=s.difficulty;d.addEventListener('change',()=>{this.save.difficulty=d.value;this.store();this.renderHub();});
   this.body.querySelectorAll('select[data-squad]').forEach(sel=>sel.addEventListener('change',()=>{this.save.squad[sel.dataset.squad][sel.dataset.k]=sel.value;this.store();this.paintPortraits();}));
-  this.body.querySelector('#cmpImport').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{if(this.importData(t)){toast(()=>CS5.i18n.t("campaign.campaign.renderSettings.s013"),2.5);this.renderHub();}else toast(()=>CS5.i18n.t("campaign.campaign.renderSettings.s014"),3.5);});});
+  this.body.querySelector('#cmpImport').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{if(this.importData(t)){toastLocalized(()=>CS5.i18n.t("campaign.campaign.renderSettings.s013"),2.5);this.renderHub();}else toastLocalized(()=>CS5.i18n.t("campaign.campaign.renderSettings.s014"),3.5);});});
   this.paintPortraits();
  },
  // Pinta los retratos 3D de la interfaz (escuadra, jefe, bots, sombras de jefes por descubrir).
@@ -260,12 +260,12 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
  castLook(id){const c=D().cast[id],q=(this.save||this.load()).squad[id]||{};return {...c,accessory:q.accessory||c.accessory,fur:q.fur||c.fur};},
  action(act,data){
   const n=Number(data.n);
-  if(act==='select'){if(!this.unlocked(n)){toast(()=>CS5.i18n.t("campaign.campaign.action.s001"),2.4);return;}this.selected=n;this.renderMap();return;}
+  if(act==='select'){if(!this.unlocked(n)){toastLocalized(()=>CS5.i18n.t("campaign.campaign.action.s001"),2.4);return;}this.selected=n;this.renderMap();return;}
   if(act==='play'){this.play(n);return;}
   if(act==='replay'){this.replay(n,Number(data.b));return;}
-  if(act==='export'){const blob=new Blob([this.exportData()],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='coopers-siege-campana.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast(()=>CS5.i18n.t("campaign.campaign.action.s002"),2.4);return;}
+  if(act==='export'){const blob=new Blob([this.exportData()],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='coopers-siege-campana.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toastLocalized(()=>CS5.i18n.t("campaign.campaign.action.s002"),2.4);return;}
   if(act==='import'){this.body.querySelector('#cmpImport')?.click();return;}
-  if(act==='newgame'){this.confirm(CS5.i18n.t("campaign.campaign.action.s003"),CS5.i18n.t("campaign.campaign.action.s004"),CS5.i18n.t("campaign.campaign.action.s005"),()=>{this.reset();this.selected=1;this.screen='map';this.renderHub();toast(()=>CS5.i18n.t("campaign.campaign.action.s006"),3);});return;}
+  if(act==='newgame'){this.confirm(CS5.i18n.t("campaign.campaign.action.s003"),CS5.i18n.t("campaign.campaign.action.s004"),CS5.i18n.t("campaign.campaign.action.s005"),()=>{this.reset();this.selected=1;this.screen='map';this.renderHub();toastLocalized(()=>CS5.i18n.t("campaign.campaign.action.s006"),3);});return;}
   if(act==='history'){CS5.dialogue.openArchive(this.save.seen);return;}
   if(act==='finale'){this.hideHub();this.finale();return;}
   if(act==='modal-close'){this.modal.hidden=true;return;}

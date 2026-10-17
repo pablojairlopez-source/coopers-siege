@@ -92,7 +92,7 @@ const dialogue={
   this.ui.box.addEventListener('click',e=>{if(e.target.closest('button,select,label'))return;this.next();});
   q('.dlg-shade').addEventListener('click',()=>this.next());
   window.addEventListener('keydown',e=>{
-   if(e.target.closest('select,input,textarea'))return;
+   if(e.target?.closest?.('select,input,textarea,#languagePicker'))return;
    const k=e.key;
    if(!this.ui.hist.hidden){if(k==='Escape'){this.showHistory(false);e.preventDefault();e.stopImmediatePropagation();}return;}
    if(!this.open)return;

@@ -1,5 +1,12 @@
 # Changelog
 
+## Localización es-419 / en-US (en revisión)
+
+- 1617 recursos por idioma: menús, HUD, 28 armas, 17 mapas, editores, LAN, música y campaña. Revisión de español neutro y adaptación inglesa de 106 escenas/319 intervenciones, créditos y frases de fase.
+- Selector en vivo con preferencia independiente; conserva estado de combate, progreso, línea y avance del diálogo, historial y reproducción musical. Formato de guardado 5.2 intacto.
+- QA específica de catálogos, parámetros, plurales, respaldo, guardados antiguos, 34 estados por idioma, LAN con idiomas opuestos, capturas móviles y rendimiento. Sin cambios de equilibrio, física ni red.
+- Cabeceras de campaña/editor con espacio reservado para el selector; mapas con nombres completos; etiquetas de munición en singular/plural y metadatos actualizados a 28 armas/17 mapas.
+
 ## 5.2 · El Torneo del Universo (rama `feature/coopers-siege-5-2-torneo`)
 
 ### Arsenal

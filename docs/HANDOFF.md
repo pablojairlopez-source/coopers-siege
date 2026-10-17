@@ -12,6 +12,8 @@ Pruebas ya ejecutadas: línea base 15/15 antes de cambios; nuevas `i18n-core`, `
 
 No hacer merge ni publicar. El traspaso histórico que sigue describe la auditoría ya integrada en 5.2, no el estado actual de la PR #3.
 
+Avance de QA (fase G): 1617 claves; `i18n-audit --check` sin residuales, 19 invariantes técnicas/de marca. `i18n-lan` e `i18n-saves` aprobadas: idiomas opuestos en coop 6v6, importación generada por campaña 5.2 real, 68 victorias, historial y preferencia tras reiniciar Chromium. `campaign-audit` y `narrative` originales aprobadas tras mantener la API string de toast y aceptar eventos de teclado enviados a window. Primeras 190 capturas pasan; ampliación a seis perfiles/22 escenas en curso. Pruebas finales y rendimiento en ejecución; no atribuir un resultado definitivo hasta leer sus logs. Glosario completo: `docs/GLOSARIO.md`; informe reproducible: `tools/i18n-report.cjs`.
+
 > Continuidad subordinada a Git. Antes de continuar: estado, rama, últimos diez commits y lectura de AGENTS/CLAUDE/PROGRESO/CAMPANA/NOTAS.
 
 ## Último traspaso · 17-10-2026 · Codex

@@ -8,6 +8,14 @@ https://pablojairlopez-source.github.io/coopers-siege/
 
 ## Controles (5.1)
 
+## Localización bilingüe (rama de revisión)
+
+Interfaz y campaña completas en **Español (Latinoamérica)** y **English**. Abre **🌐 ES / EN** para cambiar de idioma en cualquier pantalla o durante una batalla. La preferencia se conserva en este navegador; la primera visita usa su idioma (otros idiomas utilizan español).
+
+Los guardados de 5.2 conservan su formato y pueden exportarse/importarse entre idiomas. El cambio no reinicia el combate ni el diálogo. Glosario: [docs/GLOSARIO.md](docs/GLOSARIO.md); arquitectura y QA: [docs/LOCALIZACION.md](docs/LOCALIZACION.md).
+
+## Controles (5.1)
+
 **Smartphone** (horizontal): a la izquierda, el **arsenal** en la esquina inferior y las flechas **‹ ›** encima; a la derecha, **ATACAR** en la esquina inferior y **SALTAR** encima.
 
 1. Toca **ATACAR** una vez: entras en el apuntado (aparecen la trayectoria, el ángulo y el pad **ÁNGULO**). Este toque nunca dispara.

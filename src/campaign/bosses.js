@@ -60,8 +60,8 @@ const bosses={
   const self=SELF.has(id);
   b.pending={id,x:self?c.x:t.x,y:self?pugCY(c):pugCY(t),targetId:t.id,dmg:0,ready:false,r:ZONE[id]||0,self};
   const a=D().abilities[id];
-  app.floats.push({x:c.x,y:c.y-90,life:2.6,text:'⚠ '+a.icon+' '+a.name.toUpperCase(),color:'#ffb35c'});
-  toast(()=>CS5.i18n.t("campaign.bosses.announce.s001",{p0:b.name,p1:a.name,p2:a.desc,p3:D().boss.breakDamage}),4.2);
+  app.floats.push({x:c.x,y:c.y-90,life:2.6,get text(){return '⚠ '+a.icon+' '+a.name.toUpperCase()},color:'#ffb35c'});
+  toastLocalized(()=>CS5.i18n.t("campaign.bosses.announce.s001",{p0:b.name,p1:a.name,p2:a.desc,p3:D().boss.breakDamage}),4.2);
   audio.sound('bossCharge',1,{x:c.x,y:c.y});
   return b.pending;
  },
@@ -74,7 +74,7 @@ const bosses={
  execute(c,p){
   const b=c.boss,a=D().abilities[p.id];
   b.pending=null;b.cd[p.id]=Math.max(1,a.cd-b.cdBonus);b.used++;
-  app.floats.push({x:c.x,y:c.y-92,life:1.8,text:a.icon+' '+a.name,color:'#ff6b6b'});
+  app.floats.push({x:c.x,y:c.y-92,life:1.8,get text(){return a.icon+' '+a.name},color:'#ff6b6b'});
   audio.sound('bossRoar',1,{x:c.x,y:c.y});
   app.shake=Math.max(app.shake,10);
   c._immune=true;
@@ -91,7 +91,7 @@ const bosses={
    if(b.pending.dmg>=D().boss.breakDamage){
     const a=D().abilities[b.pending.id];b.cd[b.pending.id]=Math.max(1,a.cd-b.cdBonus);b.pending=null;b.interrupts++;
     app.floats.push({x:c.x,y:c.y-96,life:2,get text(){return CS5.i18n.t("campaign.bosses.onDamage.s001")},color:'#9bffd3'});
-    toast(()=>CS5.i18n.t("campaign.bosses.onDamage.s002",{p0:b.name}),3);
+    toastLocalized(()=>CS5.i18n.t("campaign.bosses.onDamage.s002",{p0:b.name}),3);
    }
   }
   this.checkPhase(c);
@@ -117,7 +117,7 @@ const bosses={
   const s=this.safePlace(c.boss.home.x,c.boss.home.y,c);if(!s)return false;
   c.hp-=loss;c.x=s.x;c.y=s.y;c.boss.home={...s};c.vx=c.vy=c.walkVX=0;c.grounded=true;
   app.floats.push({x:c.x,y:c.y-80,life:2,text:'🌊 −'+loss,color:'#8cecff'});
-  toast(()=>CS5.i18n.t("campaign.bosses.rescue.s001",{p0:CS5.i18n.characterName(c),p1:loss}),3);
+  toastLocalized(()=>CS5.i18n.t("campaign.bosses.rescue.s001",{p0:CS5.i18n.characterName(c),p1:loss}),3);
   this.onDamage(c,loss);
   return true;
  },

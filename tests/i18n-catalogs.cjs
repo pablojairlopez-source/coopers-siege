@@ -7,6 +7,7 @@ assert.deepEqual(Object.keys(es).sort(),Object.keys(en).sort());
 const params=s=>[...String(s).matchAll(/\{(\w+)\}/g)].map(m=>m[1]).sort();
 for(const [key,value]of Object.entries(es)){
  assert.ok(value&&en[key],key+' no puede estar vacío');
+ if(typeof value==='object'){assert.deepEqual(Object.keys(value).sort(),Object.keys(en[key]).sort(),key+' plurales');for(const form of Object.keys(value)){assert.ok(value[form]&&en[key][form]);assert.deepEqual(params(value[form]),params(en[key][form]));}}
  if(typeof value==='string'){
   assert.deepEqual(params(value),params(en[key]),key+' parámetros');
   assert.ok(!/(?<!\p{L})(vosotros|vuestro|vuestra|habéis|tenéis|podéis|os|nevera|bocadillo|ratón|ordenador|vale)(?!\p{L})/iu.test(value),key+' regionalismo: '+value);

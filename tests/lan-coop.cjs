@@ -12,7 +12,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH||'playwright');
  let browser;
  try{
   browser=await chromium.launch({headless:true,...(process.env.TEST_BROWSER_PATH?{executablePath:process.env.TEST_BROWSER_PATH}:{}),args:['--autoplay-policy=no-user-gesture-required']});
-  const context=await browser.newContext({viewport:{width:1366,height:900}});
+  const context=await browser.newContext({viewport:{width:1366,height:900},locale:'es-CL'});
   // Drive fixed simulation steps ourselves. Exercise the real BroadcastChannel
   // transport without depending on public brokers or external STUN services.
   await context.addInitScript(()=>{const raf=window.requestAnimationFrame.bind(window);window.requestAnimationFrame=cb=>cb.name==='frame'?0:raf(cb);window.WebSocket=undefined;window.RTCPeerConnection=undefined;});
@@ -97,7 +97,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH||'playwright');
   await host.evaluate(()=>{const el=document.getElementById('volMusic');el.value='42';el.dispatchEvent(new Event('input'));});
   await host.reload();await host.waitForFunction(()=>window.PocketSiege);
   assert.equal(await host.locator('#volMusic').inputValue(),'42','audio balance survives reload');
-  const rtcContext=await browser.newContext({viewport:{width:1366,height:900}});
+  const rtcContext=await browser.newContext({viewport:{width:1366,height:900},locale:'es-CL'});
   await rtcContext.addInitScript(()=>{const raf=requestAnimationFrame.bind(window);window.requestAnimationFrame=cb=>cb.name==='frame'?0:raf(cb);window.WebSocket=undefined;});
   const rtcHost=await rtcContext.newPage(),rtcClient=await rtcContext.newPage();
   for(const p of [rtcHost,rtcClient]){p.on('pageerror',e=>errors.push(e.message));await p.goto(`http://127.0.0.1:${server.address().port}`);await p.waitForFunction(()=>window.PocketSiege);await p.evaluate(()=>{CooperLAN.rtcConfig=()=>({iceServers:[]});document.getElementById('modeLAN').click();});}

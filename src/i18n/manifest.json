@@ -10833,5 +10833,103 @@
   "line": 287,
   "kind": "js",
   "original": "¡VICTORIA!"
+ },
+ {
+  "file": "index.html",
+  "line": 1185,
+  "key": "extra.lan.inline",
+  "kind": "html",
+  "original": "100% dentro del juego (Sin .bat):"
+ },
+ {
+  "file": "index.html",
+  "line": 1242,
+  "key": "extra.help.mobile",
+  "kind": "html",
+  "original": "Smartphone:"
+ },
+ {
+  "file": "index.html",
+  "line": 1242,
+  "key": "extra.help.release",
+  "kind": "html",
+  "original": "suelta"
+ },
+ {
+  "file": "index.html",
+  "line": 1242,
+  "key": "extra.help.walk",
+  "kind": "html",
+  "original": "caminar,"
+ },
+ {
+  "file": "index.html",
+  "line": 1242,
+  "key": "extra.help.jump",
+  "kind": "html",
+  "original": "saltar."
+ },
+ {
+  "file": "index.html",
+  "line": 1242,
+  "key": "extra.help.or",
+  "kind": "html",
+  "original": "o"
+ },
+ {
+  "file": "index.html",
+  "line": 1242,
+  "key": "extra.help.hold",
+  "kind": "html",
+  "original": "mantener"
+ },
+ {
+  "file": "index.html",
+  "line": 1242,
+  "key": "extra.help.arsenal",
+  "kind": "html",
+  "original": "Arsenal:"
+ },
+ {
+  "file": "index.html",
+  "line": 1242,
+  "key": "extra.help.bones",
+  "kind": "html",
+  "original": "huesitos"
+ },
+ {
+  "file": "index.html",
+  "line": 1242,
+  "key": "extra.help.bonesTitle",
+  "kind": "html",
+  "original": "Huesitos:"
+ },
+ {
+  "file": "index.html",
+  "line": 1328,
+  "key": "extra.damage.full",
+  "kind": "html",
+  "original": "100% · Sano e intacto"
+ },
+ {
+  "file": "index.html",
+  "line": 1328,
+  "key": "extra.damage.75",
+  "kind": "html",
+  "original": "75% · Moretones y rasguños"
+ },
+ {
+  "file": "index.html",
+  "line": 1328,
+  "key": "extra.damage.50",
+  "kind": "html",
+  "original": "50% · Heridas abiertas y oreja mordida"
+ },
+ {
+  "file": "index.html",
+  "line": 1328,
+  "key": "extra.damage.20",
+  "kind": "html",
+  "original": "20% · Cráneo y costillas expuestas"
  }
 ]

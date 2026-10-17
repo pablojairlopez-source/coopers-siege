@@ -4,6 +4,8 @@
   "scripts": {
     "test": "node tests/run-all.cjs",
     "test:lan": "node tests/lan-coop.cjs",
+    "test:i18n": "node tests/i18n.cjs",
+    "test:i18n:visual": "node tests/i18n-visual.cjs",
     "test:smoke": "node tests/smoke.cjs",
     "test:effects": "node tests/effects.cjs",
     "test:ui": "node tests/ui.cjs",
