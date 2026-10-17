@@ -22,7 +22,7 @@ Dentro del apuntado `Espacio` nunca salta: solo carga y dispara (una vez por pul
 
 ## Novedades de 5.2 · El Torneo del Universo
 
-- **Campaña** de 17 capítulos × 2 batallas: tu escuadra (Cooper, Pipa y Bongo) contra cinco rivales y después contra el **jefe gigante** de cada mundo, con habilidades anunciadas que se pueden esquivar o interrumpir. Historia en cuatro actos con diálogos y **retratos 3D**, guardado automático, galería de jefes y la **Cooper's Cup** en 3D.
+- **Campaña** de 17 capítulos × 2 batallas: tu escuadra (Cooper, Pipa y Bongo) contra cinco rivales y después contra el **jefe gigante** de cada mundo, con habilidades anunciadas que se pueden esquivar o interrumpir. Historia en cuatro actos con diálogos y **retratos 3D**, guardado automático, galería de jefes y el **Cooper's Trophy** en 3D.
 - **Bazuca y granada común infinitas** para todos; arsenal inicial estándar (escopeta 2, mina 2, bate) e igualdad total entre humanos y bots.
 - **Huesitos**: suministros que caen del cielo con armas comunes, potentes o legendarias, también en LAN.
  técnicas: [`docs/NOTAS-5.2.md`](docs/NOTAS-5.2.md).

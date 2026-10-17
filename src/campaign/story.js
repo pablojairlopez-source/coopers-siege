@@ -11,21 +11,24 @@ const S={};
 const ch=(n,o)=>{for(const k of Object.keys(o))S['c'+n+'.'+k]=o[k];};
 
 S.prologue=[
- ['carta','idle','«Estimado capitán Cooper: la Federación Intergaláctica de Pugs le invita al TORNEO DEL UNIVERSO. Diecisiete mundos. Diecisiete campeones. Un solo trofeo: la Cooper\'s Cup, forjada en oro de estrella. Premio adicional: galletas ilimitadas de por vida. Firma: Maestro Huesón, presentador vitalicio.»'],
- ['cooper','surprise','¿Galletas ilimitadas? ¿De por vida? Pipa, prepara las maletas. Bongo, prepara… algo.'],
- ['pipa','focus','Una invitación con tu nombre en el trofeo, enviada por alguien que firma «vitalicio». Nada sospechoso.'],
- ['bongo','joy','¡Ya preparé algo! Es un bocadillo. También me lo comí. ¿Cuenta como preparado?'],
- ['cooper','joy','Cuenta como entrenamiento. Equipo: ¡al Torneo del Universo!']
+ ['carta','idle','«Estimado Cooper: tus futuras victorias ya han sido registradas. Por favor, procura no alterar el resultado.» Firmado: Maestro Huesón, presentador del Torneo del Universo.'],
+ ['pipa','focus','Una invitación que ya conoce el resultado y te pide que no lo estropees. Nada sospechoso.'],
+ ['cooper','idle','Diecisiete mundos, campeones armados hasta los bigotes… No sé, Pipa. ¿Pone algo más?'],
+ ['pipa','idle','Al dorso, en letra pequeña: «Los ganadores también reciben galletas».'],
+ ['cooper','joy','Aceptamos. Pipa, prepara las maletas. Bongo, prepara… algo.'],
+ ['bongo','joy','¡Ya preparé algo! Es un bocadillo. También me lo comí. ¿Cuenta como preparado?']
 ];
 
 // ---------------- ACTO I · LA INVITACIÓN ----------------
 ch(1,{
  intro:[
-  ['hueson','joy','¡Bienvenidos, criaturas de cola enroscada, al TORNEO DEL UNIVERSO! Yo soy el Maestro Huesón, y llevo presentando este torneo desde… desde… desde siempre, ¡qué gracioso!'],
-  ['hueson','focus','Las reglas son sencillas: diecisiete mundos, dos combates por mundo. Primero, la escuadra local. Después, su campeón. El que llegue al final levantará la Cooper\'s Cup.'],
-  ['cooper','joy','Una pregunta técnica: las galletas ilimitadas, ¿se entregan antes o después de levantar la copa?'],
-  ['hueson','idle','Después, capitán. Siempre después. Todo ocurre… después.'],
-  ['pipa','focus','Se ha quedado mirando al vacío dos segundos exactos. Lo he cronometrado.']
+  ['hueson','joy','¡Damas, caballeros y criaturas con hocico! ¡Bienvenidos al torneo más peligroso del universo!'],
+  ['cooper','joy','Disculpa, ¿los ganadores reciben galletas?'],
+  ['pipa','fear','Cooper, estamos rodeados de campeones armados.'],
+  ['bongo','joy','Yo también quiero saber lo de las galletas.'],
+  ['hueson','focus','¡El premio será más grande de lo que jamás imaginaron!'],
+  ['pipa','focus','No sé por qué, pero eso sonó como una amenaza.'],
+  ['hueson','idle','Diecisiete mundos, dos combates por mundo: primero la escuadra local, después su campeón. Y el que llegue al final… levantará el Cooper\'s Trophy.']
  ],
  pre1:[
   ['bot','angry','¡Grumetes del Arrecife, a sus puestos! Estos forasteros no conocen las corrientes de nuestras islas.'],
@@ -129,8 +132,10 @@ ch(4,{
   ['pipa','focus','Hay inscripciones en las paredes de la pirámide. Copa, corona, un pug encerrado. Lo dibujo por si acaso.']
  ],
  bossIntro:[
-  ['boss','joy','¡Contemplad al Faraón Costilla, soberano de las dunas, señor de mil esqueletos y dueño de la arena que pisáis!'],
-  ['cooper','idle','Encantado. ¿También eres dueño de la sombra? Porque aquí no hay ni un poco.'],
+  ['boss','angry','¡He dormido tres mil años esperando un rival digno!'],
+  ['cooper','idle','Yo dormí catorce horas ayer.'],
+  ['boss','surprise','...'],
+  ['bongo','joy','Lo impresionante es que después quería seguir durmiendo.'],
   ['boss','angry','¡Silencio, mortal glotón! He escrito en piedra la jugada de cada uno de vosotros. Mis trampas de arena os esperan y mis costillas son muralla.'],
   ['boss','focus','Durante tres mil años guardé el secreto de esta pirámide: el nombre del primer campeón. Ganádmelo… si podéis contar más rápido que yo.']
  ],
@@ -353,7 +358,9 @@ ch(11,{
   ['roco','focus','Yo vigilo la izquierda. Que conste que sigo siendo observador.']
  ],
  victory:[
-  ['boss','idle','Aprobado. Última advertencia, capitán: no levantes la copa. Pase lo que pase. Busca otra manera.'],
+  ['boss','sad','Cada victoria alimenta algo que debería permanecer dormido.'],
+  ['hueson','fear','¡Y ESO ES TODO DESDE CALDERA ROJA! ¡Siguiente combate: Kilómetro Cero! ¡Rápido, rápido, que se enfría la lava!'],
+  ['boss','idle','Última advertencia, capitán, ahora que no grita: no levantes la copa. Pase lo que pase. Busca otra manera.'],
   ['cooper','focus','Otra manera. Siempre hay otra manera. Normalmente incluye galletas.'],
   ['pipa','idle','Fin del Acto II. Sabemos qué es el trofeo. Ahora falta saber cómo romper su hechizo.']
  ]
@@ -485,6 +492,11 @@ ch(15,{
 ch(16,{
  intro:[
   ['hueson','sad','Jardín de Espinas. Sobre las nubes, lejos del guion. Aquí las zarzas no dejan pasar las órdenes del trofeo.'],
+  ['hueson','focus','El trofeo no concede poder. Lo roba.'],
+  ['pipa','angry','Entonces, ¿por qué nos trajiste aquí?'],
+  ['hueson','idle','Porque todos los equipos anteriores quisieron poseerlo. Ustedes son los primeros que preguntaron qué les ocurrió a los perdedores.'],
+  ['cooper','idle','Bueno... yo pregunté dónde estaba el buffet.'],
+  ['hueson','sad','Sí. Todavía intento comprender por qué la profecía te eligió.'],
   ['hueson','idle','Yo fui el mejor amigo de Cooper Cero. Su presentador, su entrenador, su compañero. Cuando la copa lo atrapó, intenté sacarlo… y la copa me ató a ella. Desde entonces presento el torneo. Sin poder parar. Sin poder irme.'],
   ['cooper','sad','Llevas siglos sonriendo para un torneo que odias.'],
   ['hueson','sad','Sonreír es lo único que el guion me deja hacer por mi cuenta.']
@@ -556,9 +568,9 @@ S.finale=[
  ['hueson','joy','¡Y tú igual de presumido! Siglos esperando para decirte esto: te lo dije.'],
  ['roco','joy','¡Mis compañeros! ¡Ahí están, en la grada, quejándose del frío! ¡Están bien!'],
  ['pipa','focus','La hermana de la Dama Escarcha, con gorro azul, discutiendo con el árbitro. Promesa cumplida.'],
- ['carta','idle','La copa ya no brilla con energía robada. Brilla con su propio oro. Es, por primera vez, un trofeo auténtico: la Cooper\'s Cup.'],
- ['hueson','idle','Escuchad todos. Un campeón no es quien levanta la copa. Es quien hace que nadie se quede fuera de la foto.'],
- ['cooper','joy','Muy bonito, Huesón. Y ahora la pregunta importante: ¿dónde están las galletas ilimitadas?'],
+ ['carta','idle','La copa ya no brilla con energía robada. Brilla con su propio oro. Es, por primera vez, un trofeo auténtico: el Cooper\'s Trophy.'],
+ ['hueson','joy','Por primera vez en mil años tenemos un equipo ganador que no quiso quedarse con todo el poder.'],
+ ['cooper','surprise','¿Eso significa que no vienen galletas?'],
  ['carta','idle','Un rumor crujiente recorre el estadio. Del fondo de la copa empiezan a brotar galletas. Muchas. Infinitas. Las galletas han respondido.'],
  ['bongo','joy','¡Las galletas han hablado! ¡Y dicen «cómeme»!'],
  ['cero','joy','Cooper… gracias. Por compartirlo. Por compartirlas.'],

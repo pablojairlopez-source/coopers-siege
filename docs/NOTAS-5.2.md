@@ -63,7 +63,7 @@ Sin tocar la versión publicada: https://raw.githack.com/pablojairlopez-source/c
 
 ## Pendiente / limitaciones
 
-- Diálogos de ejemplo del encargo: el texto literal no estaba en el resumen recibido por este agente; las escenas de presentación del torneo (`c1.intro`), Faraón Costilla (`c4.bossIntro`) y la revelación final (`c15.victory`, `c16.intro`, `c17.bossIntro`) son versiones propias con esos mismos momentos. Sustituirlas en `src/campaign/story.js` si se dispone del texto.
+- (Resuelto) Diálogos de ejemplo del encargo integrados literalmente: presentación del torneo (`c1.intro`), Faraón Costilla (`c4.bossIntro`), revelación (`c16.intro`), carta de invitación (`prologue`), advertencia de Caldera Roja con la interrupción de Huesón (`c11.victory`), frase final de Huesón y respuesta de Cooper (`finale`), título «COOPER'S TROPHY — CAMPEONES DEL UNIVERSO» y botón «CAMPAÑA — EL TORNEO DEL UNIVERSO».
 - Validación humana en un S23 Ultra físico (controles, legibilidad de los diálogos, rendimiento real).
 - Los jefes usan la física de colisión de 1× con el terreno (su caja de impacto sí es 2×): en túneles estrechos el modelo puede atravesar visualmente el techo.
 - Música: el jefe final usa la pieza de «Última Estrella» en estado de clímax (la música adaptativa pasa sola a clímax con un único rival) más rugidos y estribillos de fase; no hay una pieza nueva para el jefe final.

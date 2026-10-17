@@ -229,7 +229,7 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
  },
  renderTrophy(){
   const s=this.save;
-  this.body.innerHTML=`<div class="cmp-trophy"><canvas class="cmp-trophy-canvas" width="420" height="420"></canvas><div><h3>${s.trophy?'La Cooper\'s Cup es vuestra':'La Cooper\'s Cup'}</h3><p>${s.trophy?'Compartida con todos los campeones del universo. Las galletas siguen saliendo.':'Derrota a los 17 campeones y descubre la verdad del torneo para conseguirla.'}</p>${s.finished?'<button type="button" class="mini-button" data-do="finale">▶ Ver el final otra vez</button>':''}</div></div>`;
+  this.body.innerHTML=`<div class="cmp-trophy"><canvas class="cmp-trophy-canvas" width="420" height="420"></canvas><div><h3>${s.trophy?'El Cooper\'s Trophy es vuestro':'El Cooper\'s Trophy'}</h3><p>${s.trophy?'Compartida con todos los campeones del universo. Las galletas siguen saliendo.':'Derrota a los 17 campeones y descubre la verdad del torneo para conseguirla.'}</p>${s.finished?'<button type="button" class="mini-button" data-do="finale">▶ Ver el final otra vez</button>':''}</div></div>`;
   CS5.trophy.animate(this.body.querySelector('canvas'),s.trophy);
  },
  renderSettings(){
@@ -338,7 +338,7 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
  },
  showTrophyCelebration(next){
   const el=document.createElement('div');el.id='trophyCelebration';el.className='overlay cmp-celebrate';
-  el.innerHTML=`<section class="modal"><p class="eyebrow">¡CAMPEONES DEL UNIVERSO!</p><h2>La Cooper's Cup</h2><canvas width="420" height="420"></canvas><p>El primer trofeo auténtico del torneo, compartido por todos.</p><button type="button" class="start">CRÉDITOS ↗</button></section><div class="cmp-confetti"></div>`;
+  el.innerHTML=`<section class="modal"><p class="eyebrow">EL TORNEO DEL UNIVERSO</p><h2>COOPER'S TROPHY — CAMPEONES DEL UNIVERSO</h2><canvas width="420" height="420"></canvas><p>El primer trofeo auténtico del torneo, compartido por todos.</p><button type="button" class="start">CRÉDITOS ↗</button></section><div class="cmp-confetti"></div>`;
   document.body.appendChild(el);
   const conf=el.querySelector('.cmp-confetti');for(let i=0;i<70;i++){const s=document.createElement('i');s.style.left=(i*137%100)+'%';s.style.animationDelay=(i%14)*.18+'s';s.style.background=['#ffd36a','#ff797d','#60e0dd','#c0a5ff','#9be37a'][i%5];conf.appendChild(s);}
   CS5.trophy.animate(el.querySelector('canvas'),true);audio.sound('trophy',1);

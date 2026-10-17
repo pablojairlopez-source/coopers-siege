@@ -1,4 +1,4 @@
-// Cooper's Siege 5.2 — La Cooper's Cup en 3D: copa dorada (material metálico), asas, peana
+// Cooper's Siege 5.2 — El Cooper's Trophy en 3D: copa dorada (material metálico), asas, peana
 // de madera con placa, y una figura de pug dorada en lo alto. Gira sobre sí misma.
 // Usa el renderizador de retratos (`CS5.view3d`); sin WebGL dibuja una versión 2D.
 (function(){

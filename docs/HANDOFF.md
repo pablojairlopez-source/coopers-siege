@@ -25,7 +25,6 @@
 
 ## Errores conocidos / pendientes
 
-- Texto literal de los «diálogos de ejemplo» del encargo no disponible para este agente: se escribieron versiones propias (ver `docs/NOTAS-5.2.md`, «Pendiente»).
 - Validación en un S23 Ultra físico pendiente (la vista previa de raw.githack sirve para ello).
 - Colisión de los jefes con el terreno a escala 1× (solo visual en túneles estrechos).
 
