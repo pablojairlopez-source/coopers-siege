@@ -96,7 +96,9 @@ CS5.pugAnim={
    else{if(time>a.saccade){a.saccade=time+.8+hash(Math.floor(time*2)+(c.id||0)*31)*2.4;a.sx=(hash(Math.floor(time*5)+(c.id||0))-.5)*1.2;a.sy=(hash(Math.floor(time*7)+(c.id||0)*3)-.5)*.6;}tx=a.sx||0;ty=a.sy||0;}
    a.lookX=lerp(a.lookX,clamp(tx,-1,1),1-Math.pow(.0001,dt));a.lookY=lerp(a.lookY,clamp(ty,-1,1),1-Math.pow(.0001,dt));
    // Firma compacta para las cachés de malla (solo cambia cuando cambia la cara).
-   a.sig=expr+(Math.round(a.lid*5))+','+Math.round(a.lookX*4)+','+Math.round(a.lookY*3)+','+Math.round(a.jig*20)+','+Math.round(a.roll*20)+','+Math.round(a.mix.mouth*4)+','+Math.round((a.soot||0)*10);
+   // Resolución menor para los pugs que no tienen el turno: menos reconstrucciones de malla.
+   const fine=c===ctx.active;
+   a.sig=expr+(Math.round(a.lid*(fine?5:3)))+','+Math.round(a.lookX*(fine?4:2))+','+Math.round(a.lookY*(fine?3:1))+','+Math.round(a.jig*(fine?20:8))+','+Math.round(a.roll*(fine?20:8))+','+Math.round(a.mix.mouth*4)+','+Math.round((a.soot||0)*10);
   }
  },
  get:anim

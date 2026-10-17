@@ -3113,6 +3113,7 @@ function recordBloodHit(f,x,y){
 function bakePersistentBody(f){if(!f.persistent||f.baked)return;f.baked=true;const body={...f,life:4,max:4,resting:true,baked:false,vx:0,vy:0,spin:0};gore.bodies.push(body);drawCombatFX(gore.corpseCanvas.getContext('2d'),body);if(f.bloody)paintPermanentBlood(f.x,f.y+2,f.size*1.35);f.life=0;}
 function syncGoreTerrain(){
  if(terrain.dirty)terrain.paint();
+ else if(terrain.paintQueue?.length)terrain.paintStep(3);
  if(!goreConfig().blood||gore.surfaceVersion===terrain.version)return;
  const blood=gore.bloodCanvas.getContext('2d');
  // 5.0: solo se recorta la zona dañada (antes, el lienzo completo de 3072×768).
@@ -3173,6 +3174,9 @@ function pugDeath(c,water){
  audio.sound('nuclear');
  if(water){addWaterRipple(x,1.6);audio.sound('splash');}
 }
+// Generador determinista por efecto con consecuencias de juego (charcos de ácido, fuego):
+// depende solo de su posición y equipo, así que es idéntico en ambos clientes LAN.
+function gameplayRng(f){return f.rng||(f.rng=rng(((Math.round(f.x*8)*73856093)^(Math.round(f.y*8)*19349663)^((f.team+3)*83492791))>>>0));}
 function updateCombatFX(dt){
  app.deathBeat=Math.max(0,app.deathBeat-dt);
  if(app.phase==='over'&&app.resultDelay>0){
@@ -3192,7 +3196,8 @@ function updateCombatFX(dt){
    if(f.nextMelt<=0){
     f.nextMelt=.24;
     f.y+=4;
-    terrain.destroy(f.x+(effectsRandom()-.5)*14,f.y,f.size*.55);
+    // 5.0: azar determinista propio del charco (antes effectsRandom, que avanza distinto en cada cliente LAN).
+    terrain.destroy(f.x+(gameplayRng(f)()-.5)*14,f.y,f.size*.55);
     spawnFX(f.x+(effectsRandom()-.5)*f.size,f.y,-app.wind*.2,-28-effectsRandom()*25,'#78ff3b',3.2,.55);
    }
    continue;
@@ -3200,7 +3205,7 @@ function updateCombatFX(dt){
   if(f.kind==='groundFire'){
    if(effectsRandom()<0.35)spawnFX(f.x+(effectsRandom()-.5)*f.size,f.y,(effectsRandom()-.5)*18,-35-effectsRandom()*35,effectsRandom()<.5?'#ff6a2b':'#ffd86b',3.4,.42);
    for(const c of app.chars){
-    if(c.hp>0&&Math.hypot(c.x-f.x,c.y-10-f.y)<f.size+14&&effectsRandom()<0.08){
+    if(c.hp>0&&Math.hypot(c.x-f.x,c.y-10-f.y)<f.size+14&&gameplayRng(f)()<0.08){
      damage(c,4,f.x,f.y);
     }
    }
@@ -5560,8 +5565,9 @@ class Terrain{
   this.version=0;this.dirtyRect=null;this.gpuRect=null;this.dirtyChunks=new Set();
   this.markAllChunks();this.generate(mapIndex);
  }
- updateTopSurface(){
-  for(let x=0;x<W;x++){
+ updateTopSurface(x1=0,x2=W-1){
+  // 5.0: tras un cráter solo se recalculan sus columnas (antes, las 3072).
+  for(let x=Math.max(0,x1);x<=Math.min(W-1,x2);x++){
    let y=0;
    while(y<WATER&&!this.mask[y*W+x])y++;
    this.topSurface[x]=y;
@@ -5614,15 +5620,39 @@ class Terrain{
  }
  paint(full=false){
   if(!this.imageData)this.imageData=this.ctx.createImageData(W,H);
-  const rect=(!full&&this.dirtyRect)?this.dirtyRect:{x1:0,y1:0,x2:W-1,y2:H-1};
-  if(full){this.gpuRect=null;this.markAllChunks();}
-  // 5.0: materiales procedurales por mapa (src/rendering/terrain-materials.js).
+  const isFull=full||!this.dirtyRect;
+  const rect=isFull?{x1:0,y1:0,x2:W-1,y2:H-1}:this.dirtyRect;
   // Se amplía el rectángulo hacia arriba para recalcular la decoración de superficie.
   rect.y1=Math.max(0,rect.y1-14);
-  CS5.paintTerrain(this,rect,W,H,WATER,Math.max(0,maps.indexOf(this.map)));
-  this.ctx.putImageData(this.imageData,0,0,rect.x1,rect.y1,rect.x2-rect.x1+1,rect.y2-rect.y1+1);
-  this.updateTopSurface();
+  if(isFull){
+   // 5.0: materiales procedurales por mapa (src/rendering/terrain-materials.js).
+   this.gpuRect=null;this.markAllChunks();this.paintQueue=[];
+   CS5.paintTerrain(this,rect,W,H,WATER,Math.max(0,maps.indexOf(this.map)));
+   this.ctx.putImageData(this.imageData,0,0,rect.x1,rect.y1,rect.x2-rect.x1+1,rect.y2-rect.y1+1);
+  }else{
+   // 5.0: el cráter se abre al instante (solo alfa) y el repintado fino de bordes,
+   // oclusión y chamuscado se reparte en franjas verticales con un presupuesto por
+   // frame. Evitaba picos de 60–70 ms en móviles tras explosiones grandes.
+   const d=this.imageData.data,m=this.mask;
+   for(let y=rect.y1;y<=rect.y2;y++){const row=y*W;for(let x=rect.x1;x<=rect.x2;x++){const i=row+x;if(!m[i])d[i*4+3]=0;}}
+   this.ctx.putImageData(this.imageData,0,0,rect.x1,rect.y1,rect.x2-rect.x1+1,rect.y2-rect.y1+1);
+   (this.paintQueue||(this.paintQueue=[]));
+   for(let x=rect.x1;x<=rect.x2;x+=16)this.paintQueue.push({x1:x,x2:Math.min(rect.x2,x+15),y1:rect.y1,y2:rect.y2});
+   this.paintStep(this.paintBudget??3);
+  }
+  this.updateTopSurface(rect.x1,rect.x2);
   this.dirtyRect=null;this.dirty=false;
+ }
+ // Procesa franjas pendientes de repintado durante `ms` milisegundos como máximo.
+ paintStep(ms=3){
+  const q=this.paintQueue;if(!q||!q.length)return;
+  const t0=performance.now(),idx=Math.max(0,maps.indexOf(this.map));
+  while(q.length&&performance.now()-t0<ms){
+   const r=q.shift();CS5.paintTerrain(this,r,W,H,WATER,idx);
+   this.ctx.putImageData(this.imageData,0,0,r.x1,r.y1,r.x2-r.x1+1,r.y2-r.y1+1);
+   const g=this.gpuRect;this.gpuRect=g?{x1:Math.min(g.x1,r.x1),y1:Math.min(g.y1,r.y1),x2:Math.max(g.x2,r.x2),y2:Math.max(g.y2,r.y2)}:{...r};
+   this.texVersion=(this.texVersion||0)+1;
+  }
  }
 }
 const HEX_CACHE=new Map();
@@ -6156,7 +6186,7 @@ void main(){if(material>.5){gl_FragColor=vec4(waterSurface(vPos,normalize(vNorma
   this.upload('props3d',out,this.g.STATIC_DRAW);
  }
  sync(){
-  if(this.fallback||this.contextLost||this.version===terrain.version)return;
+  if(this.fallback||this.contextLost||(this.version===terrain.version&&this.texVersion===terrain.texVersion))return;
   const g=this.g,step=graphicsConfig().terrainStep;
   const fullRebuild=this.version===-1||this.chunkStep!==step||!terrain.gpuRect;
   g.bindTexture(g.TEXTURE_2D,this.texture);
@@ -6187,7 +6217,7 @@ void main(){if(material>.5){gl_FragColor=vec4(waterSurface(vPos,normalize(vNorma
   if(!propsDirty)for(const d of decorations){const c=Math.floor(d.x/CHUNK_W);if(changed.includes(c)&&(d._solid!==terrain.solid(d.x,d.y+3))){propsDirty=true;break;}}
   terrain.dirtyChunks.clear();
   if(propsDirty){for(const d of decorations)d._solid=terrain.solid(d.x,d.y+3);this.buildProps3D();}
-  this.version=terrain.version;
+  this.version=terrain.version;this.texVersion=terrain.texVersion;
  }
  drawBuffer(name,textured,material=0){
   const count=this[name+'Count']||0;if(!count)return;
@@ -7250,10 +7280,14 @@ function drawMinimap(){
  const c=$('minimap').getContext('2d'),mw=$('minimap').width,mh=$('minimap').height;
  if(!terrain.minimapCache||terrain.minimapVersion!==terrain.version){
   if(!terrain.minimapCache){terrain.minimapCache=document.createElement('canvas');terrain.minimapCache.width=mw;terrain.minimapCache.height=mh;}
-  const mc=terrain.minimapCache.getContext('2d');
-  mc.fillStyle='#16223e';mc.fillRect(0,0,mw,mh);
-  mc.globalAlpha=.8;mc.drawImage(terrain.canvas,0,0,mw,mh);mc.globalAlpha=1;
-  mc.fillStyle=terrain.map.water;mc.fillRect(0,WATER/H*mh,mw,mh-WATER/H*mh);
+  // 5.0: el minimapa se muestrea directamente de la máscara (antes se escalaba en CPU
+  // el lienzo de terreno de 3072×768, ~27 ms en móviles tras cada cráter).
+  const mc=terrain.minimapCache.getContext('2d'),img=mc.createImageData(mw,mh),px=img.data;
+  const bg=hex('#16223e'),top=hex(terrain.map.rim),soil=hex(terrain.map.soil[0]),deep=hex(terrain.map.soil[1]),wat=hex(terrain.map.water),wy=Math.floor(WATER/H*mh);
+  for(let my=0;my<mh;my++){const y=Math.min(H-1,Math.floor((my+.5)*H/mh));for(let mx=0;mx<mw;mx++){const x=Math.min(W-1,Math.floor((mx+.5)*W/mw)),j=(my*mw+mx)*4;let c=bg;
+   if(terrain.mask[y*W+x]){const above=y>6&&!terrain.mask[(y-6)*W+x];c=above?top:(y>520?deep:soil);}else if(my>=wy)c=wat;
+   px[j]=c[0];px[j+1]=c[1];px[j+2]=c[2];px[j+3]=255;}}
+  mc.putImageData(img,0,0);
   terrain.minimapVersion=terrain.version;
  }
  c.drawImage(terrain.minimapCache,0,0);for(const o of app.chars){if(o.hp<=0)continue;c.fillStyle=colors[o.team];c.beginPath();c.arc(o.x/W*mw,o.y/H*mh,2.6,0,TAU);c.fill();}c.strokeStyle='#ffffff88';c.lineWidth=1;const halfX=view.width/view.scale/2,halfY=view.height/view.scale/2;c.strokeRect((view.x-halfX)/W*mw,(view.y-halfY)/H*mh,halfX*2/W*mw,halfY*2/H*mh);if(app.target){c.strokeStyle='#ffd68a';c.beginPath();c.arc(app.target.x/W*mw,app.target.y/H*mh,4,0,TAU);c.stroke();}}
