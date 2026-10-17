@@ -93,9 +93,8 @@ const campaign={
    bots.slice(0,5).forEach((s,i)=>{const look=this.botLook(ch,i+1);app.chars.push({id:id++,team:1,name:ch.bots[i],x:s.x,y:s.y,vx:0,vy:0,dir:-1,hp:D().botHp,maxHp:D().botHp,grounded:true,hurt:0,fallStart:s.y,lastY:s.y,size:1,variant:look.variant,fur:look.fur,accessory:look.accessory,backgear:look.backgear,cosmeticColor:look.color});});
   }else{
    // Jefe cerca del centro, en un punto despejado para su tamaño; la escuadra a 300–900 px de él.
-   const clear=s=>{for(let dy=30;dy<=64;dy+=8)for(let dx=-18;dx<=18;dx+=9)if(terrain.solid(s.x+dx,s.y-dy))return false;return true;};
-   const cands=spots.filter(clear),pool=cands.length?cands:spots;
-   const s=pool.reduce((b,q)=>Math.abs(q.x-W/2)<Math.abs(b.x-W/2)?q:b,pool[0]);
+   const s=CS5.bosses.safePlace(W/2,spots[Math.floor(spots.length/2)].y);
+   if(!s)throw new Error('No hay una aparición segura para el jefe.');
    const others=spots.filter(q=>q!==s).sort((p,q)=>Math.abs(Math.abs(p.x-s.x)-550)-Math.abs(Math.abs(q.x-s.x)-550));
    squad.forEach((who,i)=>addSquad(who,others[i]||others[0]));
    const boss={id:id++,team:1,name:ch.boss.name,x:s.x,y:s.y,vx:0,vy:0,dir:-1,hp:100,grounded:true,hurt:0,fallStart:s.y,lastY:s.y};

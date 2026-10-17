@@ -4,6 +4,12 @@
 
 ## Último traspaso
 
+### Auditoría Codex en curso · 17-10-2026
+
+Partida desde `0d816fe`, árbol limpio y remoto confirmado. Subfase física terminada: `Terrain.bodyClear/support/footSolid/surface/spot` admiten escala; los normales conservan el muestreo original. El jefe usa cuerpo 36×52 y pie de 36 px, con detección de obstáculos finos. Aparición, teletransporte, fase, carga y rescate validan el espacio 2×; el rescate busca otra plataforma si la original desapareció. Sin cambios al generador ni a las colisiones de proyectiles.
+
+Ejecutadas y aprobadas `tests/boss-physics.cjs` (17 mapas × 3 semillas, 51 apariciones, 102 rescates y geometría sintética) y `tests/campaign.cjs` (34 estados y habilidades). Nueva suite añadida a `npm test`. IA/balance y auditoría general siguen en curso; no presentar aún como entrega final.
+
 - **Fecha:** 17-10-2026
 - **Agente:** Claude Code (Opus)
 - **Rama:** `feature/coopers-siege-5-2-torneo` (desde `origin/main` `16c8bf4`, 5.1 publicada), publicada en `origin`.

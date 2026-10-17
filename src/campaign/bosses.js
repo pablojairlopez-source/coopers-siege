@@ -19,6 +19,18 @@ const near=(x,y,r,c)=>enemiesOf(c).filter(e=>Math.hypot(e.x-x,pugCY(e)-y)<r);
 const groundY=x=>{x=Math.max(15,Math.min(W-15,Math.round(x)));const t=terrain.topSurface?.[x];return t>0&&t<WATER?t-2:WATER-30;};
 
 const bosses={
+ // Busca apoyo y espacio para todo el cuerpo; también sirve tras destruir la plataforma.
+ safePlace(x,y,c=null){
+  const scale=c?pugScale(c):D().boss.scale;
+  const spot=terrain.spot(x,y,scale,c);if(spot)return spot;
+  let best=null,score=Infinity;
+  for(let xx=40;xx<W-40;xx+=12){
+   const s=terrain.surface(xx,0,true,scale);if(!s||s.y>WATER-30)continue;
+   if(app.chars.some(e=>e!==c&&e.hp>0&&Math.abs(e.x-s.x)<40&&Math.abs(e.y-s.y)<65))continue;
+   const d=Math.abs(s.x-x)+Math.abs(s.y-y)*.5;if(d<score){best=s;score=d;}
+  }
+  return best;
+ },
  // Convierte un personaje en jefe. `def` viene de chapters.js.
  setup(c,def,difficulty='normal'){
   const st=D().styles[def.style]||D().styles.normal,cfg=D().boss;
@@ -102,7 +114,8 @@ const bosses={
   if(!c.boss)return false;
   const loss=D().boss.rescueDamage;
   if(c.hp-loss<=0)return false;
-  c.hp-=loss;c.x=c.boss.home.x;c.y=c.boss.home.y;c.vx=c.vy=c.walkVX=0;c.grounded=true;
+  const s=this.safePlace(c.boss.home.x,c.boss.home.y,c);if(!s)return false;
+  c.hp-=loss;c.x=s.x;c.y=s.y;c.boss.home={...s};c.vx=c.vy=c.walkVX=0;c.grounded=true;
   app.floats.push({x:c.x,y:c.y-80,life:2,text:'🌊 −'+loss,color:'#8cecff'});
   toast(c.boss.name+' trepa de vuelta a su plataforma (−'+loss+' de vida).',3);
   this.onDamage(c,loss);
@@ -157,7 +170,7 @@ const bosses={
   frost(c,p){app.fx.push({kind:'cryoNova',x:p.x,y:p.y,size:ZONE.frost,life:.85,max:.85,color:'#8cf5ff'});audio.sound('splash');for(const e of near(p.x,p.y,ZONE.frost,c)){e.chilled=8.5;damage(e,22,p.x,p.y);app.floats.push({x:e.x,y:e.y-52,life:1.5,text:'❄ CONGELADO',color:'#8cf5ff'});}},
   phase(c){
    const foes=enemiesOf(c);let best=null,score=-1;
-   for(let k=0;k<14;k++){const x=60+random()*(W-120),s=terrain.spot(x,groundY(x));if(!s||s.y>WATER-40)continue;const d=Math.min(...foes.map(e=>Math.abs(e.x-s.x)));const sc=Math.min(d,700)-Math.abs(d-480)*.3;if(sc>score){score=sc;best=s;}}
+   for(let k=0;k<14;k++){const x=60+random()*(W-120),s=terrain.spot(x,groundY(x),pugScale(c),c);if(!s||s.y>WATER-40)continue;const d=Math.min(...foes.map(e=>Math.abs(e.x-s.x)));const sc=Math.min(d,700)-Math.abs(d-480)*.3;if(sc>score){score=sc;best=s;}}
    if(!best)return;
    for(let i=0;i<30;i++){spawnFX(c.x,c.y-30,(effectsRandom()-.5)*140,(effectsRandom()-.5)*160,'#cfe9ff',4,.8);spawnFX(best.x,best.y-30,(effectsRandom()-.5)*140,(effectsRandom()-.5)*160,'#9fe8ff',4,.9);}
    app.fx.push({x:c.x,y:c.y-30,end:{x:best.x,y:best.y-30},life:.4,max:.4,kind:'beam',color:'#cfe9ff'});
@@ -168,7 +181,7 @@ const bosses={
   plasma(c,p){for(let k=0;k<5;k++){const x=Math.max(20,Math.min(W-20,p.x+(k-2)*46));app.projectiles.push({id:'chain',x,y:groundY(x),vx:0,vy:0,age:-k*.15,fuse:.05,team:c.team,owner:c.id,radius:34,damage:20});app.fx.push({x,y:0,end:{x,y:groundY(x)},life:.5,max:.5,kind:'teslaArc',color:'#b9ef8b'});}},
   abyss(c,p){addWaterRipple(p.x,2.2);audio.sound('splash');for(let i=0;i<40;i++)spawnFX(p.x+(effectsRandom()-.5)*ZONE.abyss*2,p.y+20,(effectsRandom()-.5)*80,-120-effectsRandom()*160,'#4fd9ff',3,1);const dir=Math.sign(p.x-c.x)||1;for(const e of near(p.x,p.y,ZONE.abyss,c)){damage(e,20,p.x,p.y);e.vx+=dir*380/(e.mass||1);e.vy-=150;e.grounded=false;}},
   firestorm(c,p){for(let i=0;i<6;i++){const tx=Math.max(30,Math.min(W-30,p.x+(i-2.5)*46));app.projectiles.push({id:'meteor',x:tx-160,y:-70-i*68,vx:125,vy:275,age:-i*.12,team:c.team,owner:c.id,fuse:0,radius:44,damage:32,trail:[]});}},
-  charge(c,p){const t=app.chars.find(e=>e.id===p.targetId&&e.hp>0);const tx=t?t.x:p.x,dir=Math.sign(tx-c.x)||1;const s=terrain.spot(Math.max(30,Math.min(W-30,tx-dir*46)),t?t.y:p.y);if(s){app.fx.push({x:c.x,y:c.y-30,end:{x:s.x,y:s.y-30},life:.35,max:.35,kind:'beam',color:'#ff7a3d'});c.x=s.x;c.y=s.y;c.vx=c.vy=c.walkVX=0;c.grounded=true;c.boss.home={x:s.x,y:s.y};}explode(c.x+dir*34,c.y-16,46,34,c.team,'normal');},
+  charge(c,p){const t=app.chars.find(e=>e.id===p.targetId&&e.hp>0);const tx=t?t.x:p.x,dir=Math.sign(tx-c.x)||1;const s=terrain.spot(Math.max(30,Math.min(W-30,tx-dir*46)),t?t.y:p.y,pugScale(c),c);if(s){app.fx.push({x:c.x,y:c.y-30,end:{x:s.x,y:s.y-30},life:.35,max:.35,kind:'beam',color:'#ff7a3d'});c.x=s.x;c.y=s.y;c.vx=c.vy=c.walkVX=0;c.grounded=true;c.boss.home={x:s.x,y:s.y};}explode(c.x+dir*34,c.y-16,46,34,c.team,'normal');},
   outbreak(c,p){bosses.abilities.spores(c,{...p});c.hp=Math.min(c.maxHp,c.hp+20);app.floats.push({x:c.x,y:c.y-70,life:1.8,text:'🧟 +20',color:'#b6ff6a'});},
   press(c,p){const tx=Math.max(25,Math.min(W-25,p.x));app.fx.push({x:tx,y:0,end:{x:tx,y:WATER},life:1.15,max:1.15,kind:'orbitalBeam',color:'#ff4d4d',radius:46});for(let yy=110;yy<WATER-8;yy+=40){if(terrain.solid(tx,yy)||yy>terrain.topSurface[tx|0]-30)explode(tx,yy,40,20,c.team,'super');if(yy>terrain.topSurface[tx|0]+60)break;}},
   glaze(c,p){for(let i=0;i<3;i++)app.projectiles.push({id:'sticky',x:Math.max(20,Math.min(W-20,p.x+(i-1)*38)),y:-60-i*40,vx:0,vy:180,age:-i*.15,team:c.team,owner:c.id,fuse:0,radius:50,damage:32,trail:[]});},

@@ -17,6 +17,7 @@
 | Entrega | ✅ | Capturas, CHANGELOG, README, notas, vista previa raw.githack, PR sin merge |
 
 ## Pendiente heredado de 5.1
+- Auditoría independiente (Codex, 17-10-2026), subfase física: cuerpo/apoyo 2×, teletransporte y habilidades de desplazamiento con espacio suficiente, aparición y rescate seguros sin cambiar terreno. Ejecutadas `tests/boss-physics.cjs` (51 apariciones, 102 rescates, túneles/paredes/techos/saltos/caídas) y `tests/campaign.cjs` (34 estados y habilidades): aprobadas. Auditoría de IA y balance en curso.
 - Validación en un Galaxy S23 Ultra físico; escucha humana de las piezas revisadas.
 
 ## Registro de sesiones

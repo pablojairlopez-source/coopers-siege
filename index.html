@@ -5526,15 +5526,16 @@ class Terrain{
   this.dirtyRect={x1:0,y1:0,x2:W-1,y2:H-1};this.gpuRect=null;this.markAllChunks();this.paint(true);
  }
  solid(x,y){x=Math.floor(x);y=Math.floor(y);return x>=0&&x<W&&y>=0&&y<H&&this.mask[y*W+x]===1;}
- bodyClear(x,y){for(const dx of [-9,0,9])for(const dy of [-26,-18,-7,-1])if(this.solid(x+dx,y+dy))return false;return true;}
- support(x,y){return this.solid(x-9,y+1)||this.solid(x,y+1)||this.solid(x+9,y+1);}
- surface(x,from=200,body=true){
+ bodyClear(x,y,scale=1){if(scale===1){for(const dx of [-9,0,9])for(const dy of [-26,-18,-7,-1])if(this.solid(x+dx,y+dy))return false;return true;}for(let dx=-9*scale;dx<=9*scale;dx+=1)for(let dy=-26*scale;dy<=-1;dy+=1)if(this.solid(x+dx,y+dy))return false;return true;}
+ footSolid(x,y,scale=1){if(scale===1)return this.solid(x-9,y)||this.solid(x,y)||this.solid(x+9,y);for(let dx=-9*scale;dx<=9*scale;dx++)if(this.solid(x+dx,y))return true;return false;}
+ support(x,y,scale=1){return this.footSolid(x,y+1,scale);}
+ surface(x,from=200,body=true,scale=1){
   x=clamp(Math.round(x),15,W-15);
   if(!body&&this.topSurface){const sy=this.topSurface[x];if(sy>0&&sy<WATER-6)return {x,y:sy-1};}
-  for(let y=Math.max(0,Math.floor(from));y<WATER-6;y++)if(body?(this.support(x,y)&&this.bodyClear(x,y)):this.solid(x,y))return {x,y:body?y:y-1};
+  for(let y=Math.max(0,Math.floor(from));y<WATER-6;y++)if(body?(this.support(x,y,scale)&&this.bodyClear(x,y,scale)):this.solid(x,y))return {x,y:body?y:y-1};
   return null;
  }
- spot(x,y){x=clamp(x,18,W-18);let best=null,dd=Infinity;for(let iy=Math.max(50,Math.round(y)-95);iy<Math.min(WATER-12,Math.round(y)+120);iy++){if(this.support(x,iy)&&this.bodyClear(x,iy)){const d=Math.abs(iy-y);if(d<dd){best={x,y:iy};dd=d;}}}if(best&&app.chars.some(c=>c.hp>0&&c!==app.active&&Math.abs(c.x-best.x)<25&&Math.abs(c.y-best.y)<30))return null;return best;}
+ spot(x,y,scale=1,ignore=app.active){x=clamp(x,18*scale,W-18*scale);let best=null,dd=Infinity;for(let iy=Math.max(50,Math.round(y)-95);iy<Math.min(WATER-12,Math.round(y)+120);iy++){if(this.support(x,iy,scale)&&this.bodyClear(x,iy,scale)){const d=Math.abs(iy-y);if(d<dd){best={x,y:iy};dd=d;}}}if(best&&app.chars.some(c=>c.hp>0&&c!==ignore&&Math.abs(c.x-best.x)<12.5*(scale+pugScale(c))&&Math.abs(c.y-best.y)<15*(scale+pugScale(c))))return null;return best;}
  destroy(x,y,r){
   let changed=0;
   const x1=clamp(Math.floor(x-r*1.14),0,W-1),x2=clamp(Math.ceil(x+r*1.14),0,W-1),y1=clamp(Math.floor(y-r*1.14),0,H-1),y2=clamp(Math.ceil(y+r*1.14),0,H-1);
@@ -6439,19 +6440,19 @@ function characterPhysics(c,dt,control=0,jump=false){if(c.hp<=0)return;c.hurt=Ma
   }
  }
  if(c.chilled)control*=.45;
- if(c.shocked>0)control=0;const wasGround=c.grounded;c.grounded=terrain.support(c.x,c.y)&&c.vy>=0&&terrain.bodyClear(c.x,c.y);
+ if(c.shocked>0)control=0;const scale=pugScale(c),wasGround=c.grounded;c.grounded=terrain.support(c.x,c.y,scale)&&c.vy>=0&&terrain.bodyClear(c.x,c.y,scale);
  c.jumpBuffer=Math.max(0,(c.jumpBuffer||0)-dt);if(jump)c.jumpBuffer=.16;c.coyote=c.grounded?.10:Math.max(0,(c.coyote||0)-dt);
  // Stop intentional walking immediately; explosion impulses retain their own momentum.
  const impulse=(c.vx-(c.walkVX||0))*Math.pow(c.grounded?.015:.70,dt);c.walkVX=control*112;c.vx=c.walkVX+impulse;if(control)c.dir=control<0?-1:1;
  const jumped=c.jumpBuffer>0&&c.coyote>0;if(jumped){c.vy=-246;c.grounded=false;c.jumpBuffer=0;c.coyote=0;audio.sound('jump');}
  c.vy=c.grounded?0:clamp(c.vy+530*dt,-650,650);let steps=Math.max(1,Math.ceil(Math.max(Math.abs(c.vx),Math.abs(c.vy))*dt/3)),sub=dt/steps;
- for(let i=0;i<steps;i++){let nx=clamp(c.x+c.vx*sub,-260,W+260);if(terrain.bodyClear(nx,c.y))c.x=nx;else if((wasGround||c.grounded)&&Math.abs(nx-c.x)>.001){let stepped=false;for(let s=1;s<=8;s++)if(terrain.bodyClear(nx,c.y-s)&&!terrain.solid(nx,c.y-s)){c.x=nx;c.y-=s;stepped=true;break;}if(!stepped){c.vx=0;c.walkVX=0;}}else{c.vx=0;c.walkVX=0;}
-  if(wasGround&&!jumped&&c.vy>=0&&!terrain.support(c.x,c.y)){const floor=terrain.surface(c.x,c.y-1);if(floor&&floor.y>=c.y-1&&floor.y-c.y<=8){c.y=floor.y;c.grounded=true;c.vy=0;}}
-  let ny=c.y+c.vy*sub;if(c.grounded&&terrain.support(c.x,c.y)){c.vy=0;continue;}if(c.vy>=0){if(terrain.solid(c.x-9,ny)||terrain.solid(c.x,ny)||terrain.solid(c.x+9,ny)){let impact=c.vy;let contact=Math.floor(ny);for(let yy=Math.floor(c.y);yy<=Math.ceil(ny);yy++)if(terrain.solid(c.x-9,yy)||terrain.solid(c.x,yy)||terrain.solid(c.x+9,yy)){contact=yy;break;}if(!wasGround&&impact>85)c.landTimer=.24;c.y=contact-.01;c.vy=0;c.grounded=true;if(impact>300)damage(c,(impact-300)*.15,c.x,c.y);}else{c.y=ny;c.grounded=false;}}
-  else if(!terrain.bodyClear(c.x,ny)){c.vy=15;}else c.y=ny;
+ for(let i=0;i<steps;i++){let nx=clamp(c.x+c.vx*sub,-260,W+260);if(terrain.bodyClear(nx,c.y,scale))c.x=nx;else if((wasGround||c.grounded)&&Math.abs(nx-c.x)>.001){let stepped=false;for(let s=1;s<=8;s++)if(terrain.bodyClear(nx,c.y-s,scale)&&!terrain.solid(nx,c.y-s)){c.x=nx;c.y-=s;stepped=true;break;}if(!stepped){c.vx=0;c.walkVX=0;}}else{c.vx=0;c.walkVX=0;}
+  if(wasGround&&!jumped&&c.vy>=0&&!terrain.support(c.x,c.y,scale)){const floor=terrain.surface(c.x,c.y-1,true,scale);if(floor&&floor.y>=c.y-1&&floor.y-c.y<=8){c.y=floor.y;c.grounded=true;c.vy=0;}}
+  let ny=c.y+c.vy*sub;if(c.grounded&&terrain.support(c.x,c.y,scale)){c.vy=0;continue;}if(c.vy>=0){if(terrain.footSolid(c.x,ny,scale)){let impact=c.vy;let contact=Math.floor(ny);for(let yy=Math.floor(c.y);yy<=Math.ceil(ny);yy++)if(terrain.footSolid(c.x,yy,scale)){contact=yy;break;}if(!wasGround&&impact>85)c.landTimer=.24;c.y=contact-.01;c.vy=0;c.grounded=true;if(impact>300)damage(c,(impact-300)*.15,c.x,c.y);}else{c.y=ny;c.grounded=false;}}
+  else if(!terrain.bodyClear(c.x,ny,scale)){c.vy=15;}else c.y=ny;
   if(c.y>=WATER+4){if(c.boss&&CS5.bosses.rescue(c))break;kill(c,true);break;}
  }
- if(!terrain.bodyClear(c.x,c.y)){let resolved=false;for(let d=1;d<=26&&!resolved;d++)for(const sign of [-1,1])if(terrain.bodyClear(c.x+d*sign,c.y)&&!terrain.solid(c.x+d*sign,c.y)){c.x=clamp(c.x+d*sign,-260,W+260);c.vx=0;c.walkVX=0;resolved=true;break;}if(!resolved)for(let k=0;k<36;k++){if(terrain.bodyClear(c.x,c.y))break;c.y-=1;}c.grounded=terrain.support(c.x,c.y)&&c.vy>=0;}
+ if(!terrain.bodyClear(c.x,c.y,scale)){let resolved=false;for(let d=1;d<=26*scale&&!resolved;d++)for(const sign of [-1,1])if(terrain.bodyClear(c.x+d*sign,c.y,scale)&&!terrain.solid(c.x+d*sign,c.y)){c.x=clamp(c.x+d*sign,-260,W+260);c.vx=0;c.walkVX=0;resolved=true;break;}if(!resolved)for(let k=0;k<36*scale;k++){if(terrain.bodyClear(c.x,c.y,scale))break;c.y-=1;}c.grounded=terrain.support(c.x,c.y,scale)&&c.vy>=0;}
 }
 function previewTrajectory(c,angle,power,id){
  // Mirror launch position, gravity, wind and homing at the simulation's fixed
@@ -6486,7 +6487,7 @@ function shoot(fromLan=false){
  if(w.id==='shield'&&c.shield>=45){toast('El escudo ya está completo.');return false;}
  if(w.target&&!app.target){toast('Primero toca el mapa para marcar tu objetivo.');return false;}
  if(w.id==='teleport'){
-  const spot=terrain.spot(app.target.x,app.target.y);
+  const spot=terrain.spot(app.target.x,app.target.y,pugScale(app.active));
   if(!spot){toast('Ese punto no tiene suelo libre. Marca otra superficie.');return false;}
   app.target=spot;
  }
@@ -6961,7 +6962,7 @@ function step(dt){app.viewTime+=dt;
  if(cpuTurn()&&(app.phase==='aim'||app.phase==='action'))updateAI(dt);
  if(app.mode==='lan'&&!isLanCoop()&&lanNet.connected)lanNet.tick(dt);
  if(app.phase==='action'){app.actionAge+=dt;const unsettled=app.projectiles.length>0||app.chars.some(c=>c.hp>0&&(!c.grounded||Math.abs(c.vx)>16||Math.abs(c.vy)>10));app.stable=unsettled?0:app.stable+dt;
-  if(!app.projectiles.length&&app.actionAge>12){for(const c of app.chars)if(c.hp>0){c.vx=0;c.walkVX=0;if(terrain.support(c.x,c.y)&&terrain.bodyClear(c.x,c.y)){c.vy=0;c.grounded=true;}}}
+  if(!app.projectiles.length&&app.actionAge>12){for(const c of app.chars)if(c.hp>0){c.vx=0;c.walkVX=0;if(terrain.support(c.x,c.y,pugScale(c))&&terrain.bodyClear(c.x,c.y,pugScale(c))){c.vy=0;c.grounded=true;}}}
   if(app.stable>.5&&app.actionAge>2.65){if(checkWinner())return;if(app.shotSecond&&app.active.hp>0&&app.timer>0){app.shotSecond=false;setPhase('aim');app.aiAge=1.4;app.aiFired=false;toast('Escopeta: te queda el segundo disparo.',2);}else nextTurn();}
  }
  if(app.phase==='aim'&&app.projectiles.length){setPhase('action');app.actionAge=0;app.shotSecond=false;}
