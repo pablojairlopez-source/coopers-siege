@@ -22,10 +22,23 @@ async function serve(root=ROOT){
 }
 
 // GPU real cuando está disponible (ANGLE/D3D11 en Windows); si no, SwiftShader.
-async function launch({gpu=true}={}){
+async function launch({gpu=true,manualLanguageWelcome=false}={}){
  const args=['--autoplay-policy=no-user-gesture-required','--ignore-gpu-blocklist'];
  if(gpu)args.push('--enable-gpu','--use-angle=d3d11','--enable-unsafe-webgpu');
- return chromium.launch({headless:true,args,...(process.env.TEST_BROWSER_PATH?{executablePath:process.env.TEST_BROWSER_PATH}:{})});
+ const browser=await chromium.launch({headless:true,args,...(process.env.TEST_BROWSER_PATH?{executablePath:process.env.TEST_BROWSER_PATH}:{})});
+ // Las suites históricas parten desde el menú. Solo el entorno de pruebas confirma
+ // automáticamente la bienvenida; la prueba dedicada usa manualLanguageWelcome.
+ if(!manualLanguageWelcome){
+  const newContext=browser.newContext.bind(browser);
+  browser.newContext=async options=>{
+   const context=await newContext(options);
+   await context.addInitScript(()=>{
+    document.addEventListener('DOMContentLoaded',()=>document.getElementById('languageWelcomeContinue')?.click(),{once:true});
+   });
+   return context;
+  };
+ }
+ return browser;
 }
 
 async function gpuInfo(page){
