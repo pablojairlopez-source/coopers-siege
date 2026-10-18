@@ -2,6 +2,8 @@
 CS5.i18n.register('es-419',{
  "language.name": "Español (Latinoamérica)",
  "language.changed": "Idioma actualizado.",
+ "startup.continue": "CONTINUAR →",
+ "startup.note": "Puedes cambiar el idioma más adelante en las opciones.",
  "common.items": {
   "one": "{count} elemento",
   "other": "{count} elementos"
