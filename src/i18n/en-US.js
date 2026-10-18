@@ -2,6 +2,8 @@
 CS5.i18n.register('en-US',{
  "language.name": "English",
  "language.changed": "Language updated.",
+ "startup.continue": "CONTINUE →",
+ "startup.note": "You can change the language later in settings.",
  "common.items": {
   "one": "{count} item",
   "other": "{count} items"
