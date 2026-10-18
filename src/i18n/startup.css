@@ -1,0 +1,24 @@
+/* Bienvenida bilingüe: pantalla de entrada independiente de las reglas de juego. */
+html.language-startup-pending #languageWelcome[hidden]{display:grid!important}
+#languageWelcome{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;padding:calc(14px + env(safe-area-inset-top,0px)) calc(14px + env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) calc(14px + env(safe-area-inset-left,0px));background:linear-gradient(135deg,#0b1425eF,#132b41ec 45%,#121b30ef)}
+#languageWelcome[hidden]{display:none!important}
+#languageWelcome::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 18% 10%,#4bd5d225,transparent 43%),radial-gradient(circle at 86% 86%,#edb86925,transparent 42%)}
+#languageWelcome .lw-panel{width:min(100%,470px);margin:auto;padding:clamp(17px,3.3vw,32px);border:1px solid #a6caca5c;border-radius:20px;background:linear-gradient(145deg,#1c3346f5,#112236f5);box-shadow:0 28px 90px #030b16ba,0 0 0 1px #ffffff0d inset;text-align:center}
+#languageWelcome .lw-mark{display:grid;place-items:center;width:54px;height:54px;margin:0 auto 8px;border:1px solid #f6d5937a;border-radius:15px;background:#f4cb7b19;font-size:29px;line-height:1}
+#languageWelcome h1{margin:0;color:#f8e8bb;font-size:clamp(24px,4.3vw,35px);line-height:1.08;font-weight:900;letter-spacing:-.6px;text-shadow:0 3px 20px #050b19}
+#languageWelcome .lw-kicker{margin:8px 0 18px;color:#b8d8db;font-size:clamp(10px,1.7vw,12px);letter-spacing:1.7px;font-weight:760;text-transform:uppercase}
+#languageWelcome .lw-instruction{margin:0 0 4px;font-size:clamp(16px,2.9vw,20px);font-weight:800;color:#fff2cf}
+#languageWelcome .lw-translation{margin:0 0 18px;color:#b7c9d4;font-size:clamp(12px,2vw,14px)}
+#languageWelcome .lw-choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 16px}
+#languageWelcome .lw-choice{position:relative;min-height:78px;padding:14px 9px;border:1px solid #89a8b774;border-radius:12px;background:#1b344a;color:#f4f4e8;font-weight:850;font-size:clamp(13px,2.4vw,15px);line-height:1.32;touch-action:manipulation;white-space:normal}
+#languageWelcome .lw-choice small{display:block;margin-top:5px;font-weight:550;font-size:11px;color:#bdccd5}
+#languageWelcome .lw-choice[aria-pressed="true"]{border:2px solid #f8d68d;background:#3e483e;box-shadow:0 0 0 3px #f8d68d17,inset 0 0 23px #ffc86613;color:#fff8e9}
+#languageWelcome .lw-choice[aria-pressed="true"]::after{content:"✓";position:absolute;top:6px;right:9px;color:#ffe3a0;font-size:13px}
+#languageWelcome .lw-choice:focus-visible,#languageWelcome .lw-confirm:focus-visible{outline:3px solid #70e3e4;outline-offset:3px}
+#languageWelcome .lw-confirm{display:block;width:100%;min-height:51px;border:0;border-radius:11px;background:#ffdb92;color:#15273a;font-size:15px;font-weight:900;letter-spacing:1.1px;box-shadow:0 4px 0 #aa8851;touch-action:manipulation}
+#languageWelcome .lw-confirm:hover{background:#ffebbd}
+#languageWelcome .lw-confirm:active{transform:translateY(2px);box-shadow:0 2px 0 #aa8851}
+#languageWelcome .lw-note{margin:15px 0 0;color:#b7c9d4;font-size:11px;line-height:1.5}
+@media(max-height:500px){#languageWelcome .lw-panel{max-width:620px;padding:12px 17px}#languageWelcome .lw-mark{display:none}#languageWelcome h1{font-size:23px}#languageWelcome .lw-kicker{margin:3px 0 8px}#languageWelcome .lw-instruction{font-size:15px}#languageWelcome .lw-translation{margin-bottom:8px}#languageWelcome .lw-choices{margin-bottom:10px}#languageWelcome .lw-choice{min-height:52px;padding:6px 8px}#languageWelcome .lw-confirm{min-height:43px}#languageWelcome .lw-note{margin-top:7px}}
+@media(max-width:370px){#languageWelcome .lw-choices{grid-template-columns:1fr;gap:8px}#languageWelcome .lw-choice{min-height:54px}}
+@media(prefers-reduced-motion:reduce){#languageWelcome *,#languageWelcome *::before,#languageWelcome *::after{animation:none!important;transition:none!important}}
