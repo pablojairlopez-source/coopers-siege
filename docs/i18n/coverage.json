@@ -1,0 +1,18 @@
+{
+ "keys": 1620,
+ "esRevised": 119,
+ "enDifferent": 1520,
+ "manifestKeys": 1609,
+ "coverage": {
+  "Servicio y detalles adicionales": 57,
+  "Campaña y diálogos": 335,
+  "Juego y menús": 181,
+  "Mapas": 51,
+  "Armas": 84,
+  "HTML": 490,
+  "Música": 62,
+  "Controles": 16,
+  "Suministros": 7,
+  "Historia": 337
+ }
+}

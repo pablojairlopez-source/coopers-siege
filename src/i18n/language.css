@@ -1,0 +1,19 @@
+/* Selector compacto con área táctil; se integra sin reconstruir el juego. */
+.language-picker{position:fixed;right:calc(env(safe-area-inset-right,0px) + 8px);top:calc(env(safe-area-inset-top,0px) + 8px);z-index:1800;color:#f4eddb;font:700 12px system-ui}
+.language-picker summary{list-style:none;cursor:pointer;min-height:40px;min-width:54px;padding:8px 10px;display:flex;align-items:center;justify-content:center;gap:5px;border:1px solid #8ca3b7;border-radius:12px;background:#102035f2;box-shadow:0 2px 8px #0006}
+.language-picker summary::-webkit-details-marker{display:none}
+.edition{padding-right:62px}
+.cmp .cmp-tools{padding-inline-end:64px}
+#workshop .workshop-header{padding-inline-end:64px}
+#maps .map-card b{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+body #help,body #lanModal,body #lyriaModal{padding-top:56px;padding-bottom:8px}
+body #help .modal,body #lanModal .modal,body #lyriaModal .modal{max-height:calc(100dvh - 72px);overflow-y:auto}
+@media(orientation:portrait) and (max-width:800px){body #menu{padding-top:76px!important}body #gameHUD{top:34px!important}}
+.language-picker .i18n-control{position:absolute;right:0;top:46px;width:240px;display:grid;gap:8px;padding:12px;border:1px solid #8ca3b7;border-radius:12px;background:#102035;box-shadow:0 8px 25px #0008}
+.i18n-control select{min-height:44px;width:100%;font:600 14px system-ui;color:#fff;background:#213b50;border:1px solid #8ca3b7;border-radius:8px;padding:8px}
+.language-picker:focus-within{outline:2px solid #ffd36a;outline-offset:2px}
+body:has(#gameHUD:not([hidden])) .language-picker{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 4px);right:calc(50% - 28px)}
+body:has(#gameHUD:not([hidden])) .language-picker .i18n-control{top:auto;bottom:46px;right:-86px}
+body.dlg-open .language-picker,body:has(#campaign:not([hidden])) .language-picker,body:has(#campaignResult:not([hidden])) .language-picker{top:calc(env(safe-area-inset-top,0px) + 6px);bottom:auto;right:calc(env(safe-area-inset-right,0px) + 6px)}
+body.dlg-open .language-picker .i18n-control,body:has(#campaign:not([hidden])) .language-picker .i18n-control,body:has(#campaignResult:not([hidden])) .language-picker .i18n-control{top:46px;bottom:auto;right:0}
+@media(max-height:500px){.language-picker summary{min-height:36px;padding:5px 8px}.cmp-tools{padding-right:62px}.cmp-result .eyebrow{padding-right:45px}}

@@ -20,11 +20,11 @@ CS5.supplyConfig={
  pickupRadius:26,       // distancia de recogida (centro del pug ↔ huesito); se escala con los jefes
  // Categorías: probabilidad (suma 100) y armas con [mín, máx] de cargas por premio.
  categories:[
-  {id:'common',name:'Común',chance:75,color:'#9fe8ff',
+  {id:'common',get name(){return CS5.i18n.t("gameplay.supply-config.data.s001")},chance:75,color:'#9fe8ff',
    items:{shotgun:[1,3],mine:[1,3],ice:[1,3],sticky:[1,3],shield:[1,2],medkit:[1,2],teleport:[1,2]}},
-  {id:'power',name:'Potente',chance:20,color:'#ffb35c',
+  {id:'power',get name(){return CS5.i18n.t("gameplay.supply-config.data.s002")},chance:20,color:'#ffb35c',
    items:{dynamite:[1,2],homing:[1,2],cluster:[1,2],salvo:[1,2],sniper:[1,2],flame:[1,2],drill:[1,2],acid:[1,2],tesla:[1,2],saw:[1,2],vampire:[1,2]}},
-  {id:'legendary',name:'Legendaria',chance:5,color:'#ff6bd6',
+  {id:'legendary',get name(){return CS5.i18n.t("gameplay.supply-config.data.s003")},chance:5,color:'#ff6bd6',
    items:{super:[1,1],blackhole:[1,1],meteor:[1,1],orbital:[1,1],holy:[1,1],airstrike:[1,2],banana:[1,1]}}
  ],
  // Tope de cargas por equipo y arma: si un premio lo supera, se vuelve a sortear.

@@ -50,7 +50,7 @@ const campaign={
   let s=null;try{s=sanitize(JSON.parse(localStorage.getItem(KEY)||'null'));}catch{}
   this.save=s||defaultSave();return this.save;
  },
- store(){this.save.updated=Date.now();try{localStorage.setItem(KEY,JSON.stringify(this.save));this.saveWarningShown=false;return true;}catch{if(!this.saveWarningShown){toast('No se pudo guardar la campaña en este navegador. Exporta tu progreso desde Ajustes antes de salir.',6);this.saveWarningShown=true;}return false;}},
+ store(){this.save.updated=Date.now();try{localStorage.setItem(KEY,JSON.stringify(this.save));this.saveWarningShown=false;return true;}catch{if(!this.saveWarningShown){toastLocalized(()=>CS5.i18n.t("campaign.campaign.store.s001"),6);this.saveWarningShown=true;}return false;}},
  hasProgress(){const s=this.save||this.load();return s.victories+s.defeats>0||s.seen.length>0;},
  reset(){this.save=defaultSave();this.store();},
  markSeen(id){if(!id)return;if(!this.save)this.load();if(!this.save.seen.includes(id)){this.save.seen.push(id);this.store();}},
@@ -79,7 +79,7 @@ const campaign={
  setupMatch(){
   const a=this.active,ch=this.chapterDef(a.chapter),squad=this.squadFor(a.chapter,a.battle),foes=a.battle===1?5:1;
   app.teams=[
-   {id:0,name:'Cooper y compañía',human:true,cursor:0,ammo:CS5.arsenal.initial(weapons,'standard')},
+   {id:0,get name(){return CS5.i18n.t("campaign.campaign.setupMatch.s001")},human:true,cursor:0,ammo:CS5.arsenal.initial(weapons,'standard')},
    {id:1,name:a.battle===1?ch.team:ch.boss.name,human:false,cursor:0,ammo:CS5.arsenal.initial(weapons,'standard')}
   ];
   // Colocación: como en las partidas normales, los rivales quedan intercalados cerca de la escuadra
@@ -94,7 +94,7 @@ const campaign={
   }else{
    // Jefe cerca del centro, en un punto despejado para su tamaño; la escuadra a 300–900 px de él.
    const s=CS5.bosses.safePlace(W/2,spots[Math.floor(spots.length/2)].y);
-   if(!s)throw new Error('No hay una aparición segura para el jefe.');
+   if(!s)throw new Error(CS5.i18n.t("campaign.campaign.setupMatch.s002"));
    const others=spots.filter(q=>q!==s).sort((p,q)=>Math.abs(Math.abs(p.x-s.x)-550)-Math.abs(Math.abs(q.x-s.x)-550));
    squad.forEach((who,i)=>addSquad(who,others[i]||others[0]));
    const boss={id:id++,team:1,name:ch.boss.name,x:s.x,y:s.y,vx:0,vy:0,dir:-1,hp:100,grounded:true,hurt:0,fallStart:s.y,lastY:s.y};
@@ -155,14 +155,14 @@ const campaign={
   this.showBossCard(n,()=>this.sequence(['c'+n+'.bossIntro','c'+n+'.preBoss'],ctx,()=>this.startBattle(n,2)));
  },
  replay(n,battle){this.hideHub();if(battle===2)this.bossSequence(n);else this.sequence(['c'+n+'.pre1'],{chapter:n},()=>this.startBattle(n,1));},
- onBossPhase(c,ph){const lines=S().bossPhase?.[c.boss.id];if(lines&&lines[ph])CS5.dialogue.bark('cero',ph>=2?'angry':'focus',lines[ph],{chapter:17});},
+ onBossPhase(c,ph){const lines=S().bossPhase?.[c.boss.id];if(lines&&lines[ph])CS5.dialogue.bark('cero',ph>=2?'angry':'focus',()=>S().bossPhase[c.boss.id][ph],{chapter:17});},
  // ---------- Interfaz ----------
  ensureUI(){
   if(this.root)return;
   const root=document.createElement('div');root.id='campaign';root.className='cmp';root.hidden=true;
   root.innerHTML=`<div class="cmp-bg"></div><section class="cmp-shell">
-<header class="cmp-top"><div class="cmp-title"><small>CAMPAÑA</small><h2>El Torneo del Universo</h2></div><div class="cmp-stats"></div>
-<nav class="cmp-tools"><button type="button" data-act="map" class="selected">🗺 Recorrido</button><button type="button" data-act="gallery">👑 Jefes</button><button type="button" data-act="trophy">🏆 Trofeo</button><button type="button" data-act="settings">⚙ Ajustes</button><button type="button" data-act="back" class="cmp-back">← Menú</button></nav></header>
+<header class="cmp-top"><div class="cmp-title"><small data-i18n="campaign.campaign.ensureUI.s001">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s001")}</small><h2 data-i18n="campaign.campaign.ensureUI.s002">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s002")}</h2></div><div class="cmp-stats"></div>
+<nav class="cmp-tools"><button type="button" data-act="map" class="selected" data-i18n="campaign.campaign.ensureUI.s003">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s003")}</button><button type="button" data-act="gallery" data-i18n="campaign.campaign.ensureUI.s004">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s004")}</button><button type="button" data-act="trophy" data-i18n="campaign.campaign.ensureUI.s005">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s005")}</button><button type="button" data-act="settings" data-i18n="campaign.campaign.ensureUI.s006">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s006")}</button><button type="button" data-act="back" class="cmp-back" data-i18n="campaign.campaign.ensureUI.s007">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s007")}</button></nav></header>
 <main class="cmp-body"></main></section>
 <div class="cmp-modal" hidden></div>`;
   document.body.appendChild(root);this.root=root;this.body=root.querySelector('.cmp-body');this.modal=root.querySelector('.cmp-modal');
@@ -171,7 +171,7 @@ const campaign={
   this.modal.addEventListener('click',e=>{const b=e.target.closest('[data-do]');if(!b)return;audio.sound('menu');this.action(b.dataset.do,b.dataset);});
   // Fichas de estado en partida.
   const chip=document.createElement('div');chip.id='campaignChip';chip.hidden=true;document.body.appendChild(chip);
-  const bar=document.createElement('div');bar.id='bossBar';bar.hidden=true;bar.innerHTML='<div class="bb-name"><b></b><small></small></div><div class="bb-track"><i class="bb-fill"></i><i class="bb-mark" style="left:66%"></i><i class="bb-mark" style="left:33%"></i></div><div class="bb-meta"><span class="bb-hp"></span><span class="bb-ability"></span></div>';document.body.appendChild(bar);
+  const bar=document.createElement('div');bar.id='bossBar';bar.hidden=true;bar.innerHTML=`<div class="bb-name"><b></b><small></small></div><div class="bb-track"><i class="bb-fill"></i><i class="bb-mark" style="left:66%"></i><i class="bb-mark" style="left:33%"></i></div><div class="bb-meta"><span class="bb-hp"></span><span class="bb-ability"></span></div>`;document.body.appendChild(bar);
  },
  open(){
   this.load();this.ensureUI();
@@ -184,62 +184,62 @@ const campaign={
  renderHub(){
   const s=this.save;
   this.root.querySelectorAll('.cmp-tools button').forEach(b=>b.classList.toggle('selected',b.dataset.act===this.screen));
-  this.root.querySelector('.cmp-stats').innerHTML=`<span><b>${Math.min(17,s.bosses.length)}</b>/17 jefes</span><span><b>${this.stateIndex()}</b>/34 batallas</span><span>🏅 ${s.victories} · ✖ ${s.defeats}</span><span>${{easy:'Fácil',normal:'Normal',hard:'Difícil'}[s.difficulty]}</span>`;
+  this.root.querySelector('.cmp-stats').innerHTML=`<span><b>${Math.min(17,s.bosses.length)}</b>${CS5.i18n.textHTML("campaign.campaign.renderHub.s001")}</span><span><b>${this.stateIndex()}</b>${CS5.i18n.textHTML("campaign.campaign.renderHub.s002")}</span><span>🏅 ${s.victories} · ✖ ${s.defeats}</span><span>${{easy:CS5.i18n.t("campaign.campaign.renderHub.s003"),normal:CS5.i18n.t("campaign.campaign.renderHub.s004"),hard:CS5.i18n.t("campaign.campaign.renderHub.s005")}[s.difficulty]}</span>`;
   if(this.screen==='gallery')return this.renderGallery();
   if(this.screen==='trophy')return this.renderTrophy();
   if(this.screen==='settings')return this.renderSettings();
   this.renderMap();
  },
  renderMap(){
-  const s=this.save,acts=['I · La invitación','II · Los desaparecidos','III · La maquinaria','IV · El giro'],actOf=n=>n<=4?0:n<=11?1:n<=15?2:3;
+  const s=this.save,acts=[CS5.i18n.t("campaign.campaign.renderMap.s001"),CS5.i18n.t("campaign.campaign.renderMap.s002"),CS5.i18n.t("campaign.campaign.renderMap.s003"),CS5.i18n.t("campaign.campaign.renderMap.s004")],actOf=n=>n<=4?0:n<=11?1:n<=15?2:3;
   const nodes=D().chapters.map(c=>{
    const p=s.progress[c.n],open=this.unlocked(c.n),done=p.b2,m=maps[c.map];
    const st=done?'done':open?(p.b1?'half':'open'):'locked';
-   return `<button type="button" class="cmp-node ${st} ${this.selected===c.n?'selected':''}" data-do="select" data-n="${c.n}" ${open?'':'aria-disabled="true"'} title="${esc(m.name)}"><span class="cmp-num">${c.n}</span><span class="cmp-icon">${open?m.icon:'🔒'}</span><span class="cmp-map">${open?esc(m.name):'Bloqueado'}</span><span class="cmp-pips"><i class="${p.b1?'on':''}"></i><i class="${p.b2?'on':''}"></i></span></button>`;
+   return `<button type="button" class="cmp-node ${st} ${this.selected===c.n?'selected':''}" data-do="select" data-n="${c.n}" ${open?'':'aria-disabled="true"'} title="${esc(m.name)}"><span class="cmp-num">${c.n}</span><span class="cmp-icon">${open?m.icon:'🔒'}</span><span class="cmp-map">${open?esc(m.name):CS5.i18n.t("campaign.campaign.renderMap.s005")}</span><span class="cmp-pips"><i class="${p.b1?'on':''}"></i><i class="${p.b2?'on':''}"></i></span></button>`;
   });
-  let html='<div class="cmp-route">';let lastAct=-1;
-  D().chapters.forEach((c,i)=>{const a=actOf(c.n);if(a!==lastAct){html+=`<div class="cmp-act">ACTO ${acts[a]}</div>`;lastAct=a;}html+=nodes[i];});
-  html+='</div>'+this.chapterPanel(this.selected);
+  let html=`<div class="cmp-route">`;let lastAct=-1;
+  D().chapters.forEach((c,i)=>{const a=actOf(c.n);if(a!==lastAct){html+=`<div class="cmp-act">${CS5.i18n.textHTML("campaign.campaign.renderMap.s006",{p0:acts[a]})}</div>`;lastAct=a;}html+=nodes[i];});
+  html+=`</div>${this.chapterPanel(this.selected)}`;
   this.body.innerHTML=html;
   this.paintPortraits();
  },
  chapterPanel(n){
   const c=this.chapterDef(n),s=this.save,p=s.progress[n],open=this.unlocked(n),m=maps[c.map],nb=open?this.nextBattle(n):-1;
-  const variant={normal:'Normal',zombie:'Zombi',skeleton:'Esqueleto',cyber:'Cíborg',ghost:'Fantasma',alien:'Alienígena',demon:'Demonio'}[c.variant];
+  const variant={normal:CS5.i18n.t("campaign.campaign.chapterPanel.s001"),zombie:CS5.i18n.t("campaign.campaign.chapterPanel.s002"),skeleton:CS5.i18n.t("campaign.campaign.chapterPanel.s003"),cyber:CS5.i18n.t("campaign.campaign.chapterPanel.s004"),ghost:CS5.i18n.t("campaign.campaign.chapterPanel.s005"),alien:CS5.i18n.t("campaign.campaign.chapterPanel.s006"),demon:CS5.i18n.t("campaign.campaign.chapterPanel.s007")}[c.variant];
   const bossKnown=p.b1||p.b2;
   const abil=c.boss.abilities.map(id=>D().abilities[id]).map(a=>`<li>${a.icon} <b>${esc(a.name)}</b> <small>${esc(a.desc)}</small></li>`).join('');
   let actions='';
-  if(!open)actions='<p class="cmp-lock">🔒 Completa el capítulo anterior para desbloquearlo.</p>';
-  else if(nb===1)actions=`<button type="button" class="start" data-do="play" data-n="${n}">${s.last&&s.last.chapter===n?'CONTINUAR':'JUGAR'} · BATALLA 1 ↗</button>`;
-  else if(nb===2)actions=`<button type="button" class="start cmp-boss-btn" data-do="play" data-n="${n}">${p.b1&&s.last?.chapter===n?'CONTINUAR':'JUGAR'} · JEFE ↗</button><button type="button" class="text-button" data-do="replay" data-n="${n}" data-b="1">Repetir batalla 1</button>`;
-  else actions=`<p class="cmp-done">✔ Capítulo completado</p><button type="button" class="mini-button" data-do="replay" data-n="${n}" data-b="1">Repetir batalla 1</button><button type="button" class="mini-button" data-do="replay" data-n="${n}" data-b="2">Repetir jefe</button>`;
+  if(!open)actions=`<p class="cmp-lock" data-i18n="campaign.campaign.chapterPanel.s008">${CS5.i18n.textHTML("campaign.campaign.chapterPanel.s008")}</p>`;
+  else if(nb===1)actions=`<button type="button" class="start" data-do="play" data-n="${n}">${CS5.i18n.textHTML("campaign.campaign.chapterPanel.s009",{p0:s.last&&s.last.chapter===n?CS5.i18n.t("campaign.campaign.chapterPanel.s010"):CS5.i18n.t("campaign.campaign.chapterPanel.s011")})}</button>`;
+  else if(nb===2)actions=`<button type="button" class="start cmp-boss-btn" data-do="play" data-n="${n}">${CS5.i18n.textHTML("campaign.campaign.chapterPanel.s012",{p0:p.b1&&s.last?.chapter===n?CS5.i18n.t("campaign.campaign.chapterPanel.s013"):CS5.i18n.t("campaign.campaign.chapterPanel.s014")})}</button><button type="button" class="text-button" data-do="replay" data-n="${n}" data-b="1" data-i18n="campaign.campaign.chapterPanel.s015">${CS5.i18n.textHTML("campaign.campaign.chapterPanel.s015")}</button>`;
+  else actions=`<p class="cmp-done" data-i18n="campaign.campaign.chapterPanel.s016">${CS5.i18n.textHTML("campaign.campaign.chapterPanel.s016")}</p><button type="button" class="mini-button" data-do="replay" data-n="${n}" data-b="1" data-i18n="campaign.campaign.chapterPanel.s017">${CS5.i18n.textHTML("campaign.campaign.chapterPanel.s017")}</button><button type="button" class="mini-button" data-do="replay" data-n="${n}" data-b="2" data-i18n="campaign.campaign.chapterPanel.s018">${CS5.i18n.textHTML("campaign.campaign.chapterPanel.s018")}</button>`;
   return `<aside class="cmp-panel" style="--accent:${c.boss.color}">
-<div class="cmp-panel-head"><small>CAPÍTULO ${n} · ${esc(m.tag)}</small><h3>${m.icon} ${esc(m.name)}</h3></div>
-<div class="cmp-vs"><figure><canvas class="cmp-portrait" data-who="squad" width="140" height="140"></canvas><figcaption>Cooper, Pipa y Bongo</figcaption></figure><span class="cmp-vs-x">VS</span>
+<div class="cmp-panel-head"><small>${CS5.i18n.textHTML("campaign.campaign.chapterPanel.s019",{p0:n,p1:m.tag})}</small><h3>${m.icon} ${esc(m.name)}</h3></div>
+<div class="cmp-vs"><figure><canvas class="cmp-portrait" data-who="squad" width="140" height="140"></canvas><figcaption data-i18n="campaign.campaign.chapterPanel.s020">${CS5.i18n.textHTML("campaign.campaign.chapterPanel.s020")}</figcaption></figure><span class="cmp-vs-x" data-i18n="campaign.campaign.chapterPanel.s021">${CS5.i18n.textHTML("campaign.campaign.chapterPanel.s021")}</span>
 <figure><canvas class="cmp-portrait" data-who="${open&&bossKnown?'boss':open?'bot':'none'}" data-n="${n}" width="140" height="140"></canvas><figcaption>${open?(bossKnown?esc(c.boss.name):esc(c.team)):'???'}</figcaption></figure></div>
-<ol class="cmp-battles"><li class="${p.b1?'on':''}"><b>Batalla 1</b> 3 pugs contra 5 ${esc(variant.toLowerCase())}s · ${esc(c.team)}</li><li class="${p.b2?'on':''}"><b>Batalla 2</b> ${bossKnown?esc(c.boss.name)+' · '+c.boss.hp+' HP':'Jefe misterioso'}</li></ol>
+<ol class="cmp-battles"><li class="${p.b1?'on':''}"><b data-i18n="campaign.campaign.chapterPanel.s022">${CS5.i18n.textHTML("campaign.campaign.chapterPanel.s022")}</b> ${CS5.i18n.textHTML("campaign.campaign.chapterPanel.s023",{p0:variant.toLowerCase(),p1:c.team})}</li><li class="${p.b2?'on':''}"><b data-i18n="campaign.campaign.chapterPanel.s024">${CS5.i18n.textHTML("campaign.campaign.chapterPanel.s024")}</b> ${bossKnown?CS5.i18n.t("campaign.campaign.chapterPanel.s025",{p0:c.boss.name,p1:c.boss.hp}):CS5.i18n.t("campaign.campaign.chapterPanel.s026")}</li></ol>
 ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
 <div class="cmp-actions">${actions}</div></aside>`;
  },
  renderGallery(){
   const s=this.save;
-  this.body.innerHTML='<div class="cmp-gallery">'+D().chapters.map(c=>{const won=s.bosses.includes(c.boss.id);return `<figure class="cmp-card ${won?'won':'unknown'}" style="--accent:${c.boss.color}"><canvas class="cmp-portrait" data-who="${won?'boss':'shadow'}" data-n="${c.n}" width="150" height="150"></canvas><figcaption><b>${won?esc(c.boss.name):'???'}</b><small>${won?esc(c.boss.title):'Capítulo '+c.n}</small>${won?`<span>${c.boss.hp} HP · ${c.boss.abilities.map(a=>D().abilities[a].icon).join(' ')}</span>`:''}</figcaption></figure>`;}).join('')+'</div>';
+  this.body.innerHTML=`<div class="cmp-gallery">${D().chapters.map(c=>{const won=s.bosses.includes(c.boss.id);return `<figure class="cmp-card ${won?'won':'unknown'}" style="--accent:${c.boss.color}"><canvas class="cmp-portrait" data-who="${won?'boss':'shadow'}" data-n="${c.n}" width="150" height="150"></canvas><figcaption><b>${won?esc(c.boss.name):'???'}</b><small>${won?esc(c.boss.title):CS5.i18n.t("campaign.campaign.renderGallery.s001",{p0:c.n})}</small>${won?`<span>${CS5.i18n.textHTML("campaign.campaign.renderGallery.s002",{p0:c.boss.hp,p1:c.boss.abilities.map(a=>D().abilities[a].icon).join(' ')})}</span>`:''}</figcaption></figure>`;}).join('')}</div>`;
   this.paintPortraits();
  },
  renderTrophy(){
   const s=this.save;
-  this.body.innerHTML=`<div class="cmp-trophy"><canvas class="cmp-trophy-canvas" width="420" height="420"></canvas><div><h3>${s.trophy?'El Cooper\'s Trophy es vuestro':'El Cooper\'s Trophy'}</h3><p>${s.trophy?'Compartida con todos los campeones del universo. Las galletas siguen saliendo.':'Derrota a los 17 campeones y descubre la verdad del torneo para conseguirla.'}</p>${s.finished?'<button type="button" class="mini-button" data-do="finale">▶ Ver el final otra vez</button>':''}</div></div>`;
+  this.body.innerHTML=`<div class="cmp-trophy"><canvas class="cmp-trophy-canvas" width="420" height="420"></canvas><div><h3>${s.trophy?CS5.i18n.t("campaign.campaign.renderTrophy.s001"):CS5.i18n.t("campaign.campaign.renderTrophy.s002")}</h3><p>${s.trophy?CS5.i18n.t("campaign.campaign.renderTrophy.s003"):CS5.i18n.t("campaign.campaign.renderTrophy.s004")}</p>${s.finished?`<button type="button" class="mini-button" data-do="finale" data-i18n="campaign.campaign.renderTrophy.s005">${CS5.i18n.textHTML("campaign.campaign.renderTrophy.s005")}</button>`:''}</div></div>`;
   CS5.trophy.animate(this.body.querySelector('canvas'),s.trophy);
  },
  renderSettings(){
-  const s=this.save,opt=(list,cur)=>list.map(v=>`<option value="${v}" ${v===cur?'selected':''}>${v==='none'?'Ninguno':v}</option>`).join('');
-  const squad=['cooper','pipa','bongo','roco'].map(id=>`<div class="cmp-squad"><canvas class="cmp-portrait" data-who="${id}" width="96" height="96"></canvas><label>${esc(D().cast[id].name)}<select data-squad="${id}" data-k="accessory">${opt(ACCESSORIES,s.squad[id].accessory)}</select></label><label>Pelaje<select data-squad="${id}" data-k="fur">${FURS.map(f=>`<option value="${f}" ${f===s.squad[id].fur?'selected':''}>${f}</option>`).join('')}</select></label></div>`).join('');
-  this.body.innerHTML=`<div class="cmp-settings"><section><h3>Dificultad</h3><select id="cmpDifficulty"><option value="easy">Fácil</option><option value="normal">Normal</option><option value="hard">Difícil</option></select><p class="tiny-note">Afecta a la puntería y a las armas especiales de los bots y jefes. El arsenal es idéntico para todos.</p></section>
-<section><h3>Escuadra</h3><div class="cmp-squads">${squad}</div></section>
-<section><h3>Progreso</h3><div class="cmp-row"><button type="button" class="mini-button" data-do="export">⬇ Exportar progreso</button><button type="button" class="mini-button" data-do="import">⬆ Importar progreso</button><button type="button" class="mini-button danger" data-do="newgame">✦ Nueva campaña</button><button type="button" class="mini-button" data-do="history">☰ Historial de diálogos</button></div><input type="file" id="cmpImport" accept="application/json,.json" hidden></section></div>`;
+  const s=this.save,opt=(list,cur)=>list.map(v=>`<option value="${v}" ${v===cur?'selected':''}>${esc(CS5.i18n.accessory(v))}</option>`).join('');
+  const squad=['cooper','pipa','bongo','roco'].map(id=>`<div class="cmp-squad"><canvas class="cmp-portrait" data-who="${id}" width="96" height="96"></canvas><label>${esc(D().cast[id].name)}<select data-squad="${id}" data-k="accessory">${opt(ACCESSORIES,s.squad[id].accessory)}</select></label><label>${CS5.i18n.textHTML("campaign.campaign.renderSettings.s001")}<select data-squad="${id}" data-k="fur">${FURS.map(f=>`<option value="${f}" ${f===s.squad[id].fur?'selected':''}>${f}</option>`).join('')}</select></label></div>`).join('');
+  this.body.innerHTML=`<div class="cmp-settings"><section><h3 data-i18n="campaign.campaign.renderSettings.s002">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s002")}</h3><select id="cmpDifficulty"><option value="easy" data-i18n="campaign.campaign.renderSettings.s003">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s003")}</option><option value="normal" data-i18n="campaign.campaign.renderSettings.s004">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s004")}</option><option value="hard" data-i18n="campaign.campaign.renderSettings.s005">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s005")}</option></select><p class="tiny-note" data-i18n="campaign.campaign.renderSettings.s006">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s006")}</p></section>
+<section><h3 data-i18n="campaign.campaign.renderSettings.s007">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s007")}</h3><div class="cmp-squads">${squad}</div></section>
+<section><h3 data-i18n="campaign.campaign.renderSettings.s008">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s008")}</h3><div class="cmp-row"><button type="button" class="mini-button" data-do="export" data-i18n="campaign.campaign.renderSettings.s009">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s009")}</button><button type="button" class="mini-button" data-do="import" data-i18n="campaign.campaign.renderSettings.s010">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s010")}</button><button type="button" class="mini-button danger" data-do="newgame" data-i18n="campaign.campaign.renderSettings.s011">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s011")}</button><button type="button" class="mini-button" data-do="history" data-i18n="campaign.campaign.renderSettings.s012">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s012")}</button></div><input type="file" id="cmpImport" accept="application/json,.json" hidden></section></div>`;
   const d=this.body.querySelector('#cmpDifficulty');d.value=s.difficulty;d.addEventListener('change',()=>{this.save.difficulty=d.value;this.store();this.renderHub();});
   this.body.querySelectorAll('select[data-squad]').forEach(sel=>sel.addEventListener('change',()=>{this.save.squad[sel.dataset.squad][sel.dataset.k]=sel.value;this.store();this.paintPortraits();}));
-  this.body.querySelector('#cmpImport').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{if(this.importData(t)){toast('Progreso importado.',2.5);this.renderHub();}else toast('El archivo no es un progreso válido de la campaña.',3.5);});});
+  this.body.querySelector('#cmpImport').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{if(this.importData(t)){toastLocalized(()=>CS5.i18n.t("campaign.campaign.renderSettings.s013"),2.5);this.renderHub();}else toastLocalized(()=>CS5.i18n.t("campaign.campaign.renderSettings.s014"),3.5);});});
   this.paintPortraits();
  },
  // Pinta los retratos 3D de la interfaz (escuadra, jefe, bots, sombras de jefes por descubrir).
@@ -260,12 +260,12 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
  castLook(id){const c=D().cast[id],q=(this.save||this.load()).squad[id]||{};return {...c,accessory:q.accessory||c.accessory,fur:q.fur||c.fur};},
  action(act,data){
   const n=Number(data.n);
-  if(act==='select'){if(!this.unlocked(n)){toast('Capítulo bloqueado: completa el anterior.',2.4);return;}this.selected=n;this.renderMap();return;}
+  if(act==='select'){if(!this.unlocked(n)){toastLocalized(()=>CS5.i18n.t("campaign.campaign.action.s001"),2.4);return;}this.selected=n;this.renderMap();return;}
   if(act==='play'){this.play(n);return;}
   if(act==='replay'){this.replay(n,Number(data.b));return;}
-  if(act==='export'){const blob=new Blob([this.exportData()],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='coopers-siege-campana.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Progreso exportado.',2.4);return;}
+  if(act==='export'){const blob=new Blob([this.exportData()],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='coopers-siege-campana.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toastLocalized(()=>CS5.i18n.t("campaign.campaign.action.s002"),2.4);return;}
   if(act==='import'){this.body.querySelector('#cmpImport')?.click();return;}
-  if(act==='newgame'){this.confirm('¿Empezar una campaña nueva?','Se borrará el progreso guardado (capítulos, jefes y trofeo). Puedes exportarlo antes.','Sí, empezar de cero',()=>{this.reset();this.selected=1;this.screen='map';this.renderHub();toast('Campaña nueva. ¡Rumbo al Archipiélago Sol!',3);});return;}
+  if(act==='newgame'){this.confirm(CS5.i18n.t("campaign.campaign.action.s003"),CS5.i18n.t("campaign.campaign.action.s004"),CS5.i18n.t("campaign.campaign.action.s005"),()=>{this.reset();this.selected=1;this.screen='map';this.renderHub();toastLocalized(()=>CS5.i18n.t("campaign.campaign.action.s006"),3);});return;}
   if(act==='history'){CS5.dialogue.openArchive(this.save.seen);return;}
   if(act==='finale'){this.hideHub();this.finale();return;}
   if(act==='modal-close'){this.modal.hidden=true;return;}
@@ -276,20 +276,21 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
   if(act==='fight-boss'){this.closeResult();const k=this._bossNext;this._bossNext=null;k&&k();return;}
   if(act==='next-chapter'){this.closeResult();this.leaveBattle();const nx=Math.min(17,n);this.selected=nx;this.showHub('map');this.play(nx);return;}
  },
- confirm(title,text,yes,fn){this._confirm=fn;this.modal.innerHTML=`<section class="modal cmp-confirm"><h2>${esc(title)}</h2><p>${esc(text)}</p><button type="button" class="start danger" data-do="confirm-yes">${esc(yes)}</button><button type="button" class="text-button" data-do="modal-close">Cancelar</button></section>`;this.modal.hidden=false;},
+ confirm(title,text,yes,fn){this.modalView={kind:'confirm'};this._confirm=fn;this.modal.innerHTML=`<section class="modal cmp-confirm"><h2>${esc(title)}</h2><p>${esc(text)}</p><button type="button" class="start danger" data-do="confirm-yes">${esc(yes)}</button><button type="button" class="text-button" data-do="modal-close" data-i18n="campaign.campaign.confirm.s001">${CS5.i18n.textHTML("campaign.campaign.confirm.s001")}</button></section>`;this.modal.hidden=false;},
  // ---------- Pantallas de resultado ----------
  showResult(won){
+  this.resultView={kind:'result',won};
   this.ensureUI();const a=this.active,c=this.chapterDef(a.chapter),el=this.resultEl||(this.resultEl=document.createElement('div'));
-  el.id='campaignResult';el.className='overlay cmp-result '+(won?'win':'lose');document.body.appendChild(el);
+  el.id='campaignResult';el.className=`overlay cmp-result ${won?'win':'lose'}`;document.body.appendChild(el);
   el.onclick=e=>{const b=e.target.closest('[data-do]');if(b){audio.sound('menu');this.action(b.dataset.do,b.dataset);}};
   if(won){
    const boss=a.battle===2;
-   el.innerHTML=`<section class="modal"><p class="eyebrow">${boss?'¡JEFE DERROTADO!':'¡VICTORIA!'}</p><h2>${boss?esc(c.boss.name):esc(c.team)}</h2><canvas class="cmp-result-portrait" width="160" height="160"></canvas><p>${boss?(a.chapter<17?'Capítulo '+a.chapter+' completado. Se desbloquea el capítulo '+(a.chapter+1)+'.':'El Primer Campeón ha caído.'):'Primera batalla del capítulo '+a.chapter+' superada. Te espera su campeón.'}</p><div id="battleStats">${app.turn} turnos · ${app.totalShots} ataques · ${Math.round(app.damageDone)} de daño</div><button type="button" class="start" data-do="after-win">CONTINUAR ↗</button><button type="button" class="text-button" data-do="to-map">Volver al recorrido</button></section>`;
-   audio.sound('trophy',.6);
+   el.innerHTML=`<section class="modal"><p class="eyebrow">${boss?CS5.i18n.t("campaign.campaign.showResult.s005"):CS5.i18n.t("extra.campaign.victory")}</p><h2>${boss?esc(c.boss.name):esc(c.team)}</h2><canvas class="cmp-result-portrait" width="160" height="160"></canvas><p>${boss?(a.chapter<17?CS5.i18n.t("campaign.campaign.showResult.s006",{p0:a.chapter,p1:a.chapter+1}):CS5.i18n.t("campaign.campaign.showResult.s007")):CS5.i18n.t("campaign.campaign.showResult.s008",{p0:a.chapter})}</p><div id="battleStats">${CS5.i18n.textHTML("campaign.campaign.showResult.s002",{p0:CS5.i18n.t('stats.turns',{count:app.turn}),p1:CS5.i18n.t('stats.attacks',{count:app.totalShots}),p2:Math.round(app.damageDone)})}</div><button type="button" class="start" data-do="after-win" data-i18n="campaign.campaign.showResult.s003">${CS5.i18n.textHTML("campaign.campaign.showResult.s003")}</button><button type="button" class="text-button" data-do="to-map" data-i18n="campaign.campaign.showResult.s004">${CS5.i18n.textHTML("campaign.campaign.showResult.s004")}</button></section>`;
+   if(!this.refreshingLanguage)audio.sound('trophy',.6);
   }else{
    const line=S().defeat[(a.chapter+a.attempt)%S().defeat.length];
-   el.innerHTML=`<section class="modal"><p class="eyebrow">DERROTA</p><h2>${a.battle===2?esc(c.boss.name)+' resiste':'¡Os han superado!'}</h2><canvas class="cmp-result-portrait" width="160" height="160"></canvas><p><b>${esc(D().cast[line[0]].name)}:</b> ${esc(line[2])}</p><p class="tiny-note">No pierdes progreso: ${a.battle===2?'la batalla 1 de este capítulo sigue ganada.':'reintenta esta batalla cuando quieras.'}</p><button type="button" class="start" data-do="retry">REINTENTAR BATALLA ${a.battle} ↗</button><button type="button" class="text-button" data-do="to-map">Volver al recorrido</button></section>`;
-   audio.sound('defeat');
+   el.innerHTML=`<section class="modal"><p class="eyebrow" data-i18n="campaign.campaign.showResult.s009">${CS5.i18n.textHTML("campaign.campaign.showResult.s009")}</p><h2>${a.battle===2?CS5.i18n.t("campaign.campaign.showResult.s015",{p0:c.boss.name}):CS5.i18n.t("campaign.campaign.showResult.s016")}</h2><canvas class="cmp-result-portrait" width="160" height="160"></canvas><p><b>${esc(D().cast[line[0]].name)}:</b> ${esc(line[2])}</p><p class="tiny-note">${CS5.i18n.textHTML("campaign.campaign.showResult.s010",{p0:a.battle===2?CS5.i18n.t("campaign.campaign.showResult.s011"):CS5.i18n.t("campaign.campaign.showResult.s012")})}</p><button type="button" class="start" data-do="retry">${CS5.i18n.textHTML("campaign.campaign.showResult.s013",{p0:a.battle})}</button><button type="button" class="text-button" data-do="to-map" data-i18n="campaign.campaign.showResult.s014">${CS5.i18n.textHTML("campaign.campaign.showResult.s014")}</button></section>`;
+   if(!this.refreshingLanguage)audio.sound('defeat');
   }
   el.hidden=false;
   const cv=el.querySelector('canvas'),p=won?(a.battle===2?{variant:c.variant,fur:c.boss.fur,accessory:c.boss.accessory,backgear:c.boss.backgear,color:c.boss.color}:this.castLook('cooper')):this.castLook(S().defeat[(a.chapter+a.attempt)%S().defeat.length][0]);
@@ -310,23 +311,25 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
   });
  },
  chapterComplete(n){
+  this.modalView={kind:'chapter',n};
   const c=this.chapterDef(n),nx=D().chapters[n];
   this.ensureUI();this.root.hidden=false;this.renderHub();
-  this.modal.innerHTML=`<section class="modal cmp-complete" style="--accent:${c.boss.color}"><p class="eyebrow">CAPÍTULO ${n} COMPLETADO</p><h2>${esc(c.boss.name)} se une a la galería</h2><canvas width="150" height="150"></canvas><p>Desbloqueado: <b>Capítulo ${n+1} · ${esc(maps[nx.map].name)}</b>. Progreso guardado.</p><button type="button" class="start" data-do="next-chapter" data-n="${n+1}">SIGUIENTE CAPÍTULO ↗</button><button type="button" class="text-button" data-do="modal-close">Ver el recorrido</button></section>`;
+  this.modal.innerHTML=`<section class="modal cmp-complete" style="--accent:${c.boss.color}"><p class="eyebrow">${CS5.i18n.textHTML("campaign.campaign.chapterComplete.s001",{p0:n})}</p><h2>${CS5.i18n.textHTML("campaign.campaign.chapterComplete.s002",{p0:c.boss.name})}</h2><canvas width="150" height="150"></canvas><p>${CS5.i18n.textHTML("extra.campaign.unlocked")} <b>${CS5.i18n.textHTML("campaign.campaign.chapterComplete.s003",{p0:n+1,p1:maps[nx.map].name})}</b>${CS5.i18n.textHTML("campaign.campaign.chapterComplete.s004")}</p><button type="button" class="start" data-do="next-chapter" data-n="${n+1}" data-i18n="campaign.campaign.chapterComplete.s005">${CS5.i18n.textHTML("campaign.campaign.chapterComplete.s005")}</button><button type="button" class="text-button" data-do="modal-close" data-i18n="campaign.campaign.chapterComplete.s006">${CS5.i18n.textHTML("campaign.campaign.chapterComplete.s006")}</button></section>`;
   this.modal.hidden=false;
   this.modal.querySelector('canvas').getContext('2d').drawImage(CS5.portraits.get({variant:c.variant,fur:c.boss.fur,accessory:c.boss.accessory,backgear:c.boss.backgear,color:c.boss.color},'joy','right',300),0,0,150,150);
   this.selected=n+1;
  },
  // Presentación del jefe (tarjeta cinematográfica).
  showBossCard(n,next){
+  this.resultView={kind:'boss',n};
   const c=this.chapterDef(n),el=this.resultEl||(this.resultEl=document.createElement('div'));
   el.id='campaignResult';el.className='overlay cmp-result boss-card';document.body.appendChild(el);
   el.style.setProperty('--accent',c.boss.color);
-  el.innerHTML=`<section class="modal"><p class="eyebrow">CAPÍTULO ${n} · CAMPEÓN DE ${esc(maps[c.map].name.toUpperCase())}</p><canvas class="cmp-boss-portrait" width="260" height="260"></canvas><h2>${esc(c.boss.name)}</h2><p class="cmp-boss-title">${esc(c.boss.title)}</p><div class="cmp-boss-stats"><span>❤ ${c.boss.hp} HP</span><span>⬆ Tamaño 2×</span>${c.boss.final?'<span>✦ 3 fases</span>':''}</div><ul class="cmp-abil">${c.boss.abilities.map(id=>D().abilities[id]).map(a=>`<li>${a.icon} <b>${esc(a.name)}</b> <small>${esc(a.desc)}</small></li>`).join('')}</ul><button type="button" class="start" data-do="fight-boss">¡A LUCHAR! ↗</button><button type="button" class="text-button" data-do="to-map">Volver al recorrido</button></section>`;
+  el.innerHTML=`<section class="modal"><p class="eyebrow">${CS5.i18n.textHTML("campaign.campaign.showBossCard.s002",{p0:n,p1:maps[c.map].name.toUpperCase()})}</p><canvas class="cmp-boss-portrait" width="260" height="260"></canvas><h2>${esc(c.boss.name)}</h2><p class="cmp-boss-title">${esc(c.boss.title)}</p><div class="cmp-boss-stats"><span>${CS5.i18n.textHTML("campaign.campaign.showBossCard.s003",{p0:c.boss.hp})}</span><span data-i18n="campaign.campaign.showBossCard.s004">${CS5.i18n.textHTML("campaign.campaign.showBossCard.s004")}</span>${c.boss.final?`<span data-i18n="campaign.campaign.showBossCard.s007">${CS5.i18n.textHTML("campaign.campaign.showBossCard.s007")}</span>`:''}</div><ul class="cmp-abil">${c.boss.abilities.map(id=>D().abilities[id]).map(a=>`<li>${a.icon} <b>${esc(a.name)}</b> <small>${esc(a.desc)}</small></li>`).join('')}</ul><button type="button" class="start" data-do="fight-boss" data-i18n="campaign.campaign.showBossCard.s005">${CS5.i18n.textHTML("campaign.campaign.showBossCard.s005")}</button><button type="button" class="text-button" data-do="to-map" data-i18n="campaign.campaign.showBossCard.s006">${CS5.i18n.textHTML("campaign.campaign.showBossCard.s006")}</button></section>`;
   el.onclick=e=>{const b=e.target.closest('[data-do]');if(b){audio.sound('menu');this.action(b.dataset.do,b.dataset);}};
   this._bossNext=next;el.hidden=false;
   el.querySelector('canvas').getContext('2d').drawImage(CS5.portraits.get({variant:c.variant,fur:c.boss.fur,accessory:c.boss.accessory,backgear:c.boss.backgear,color:c.boss.color},'angry','right',520),0,0,260,260);
-  audio.sound('bossRoar',1);
+  if(!this.refreshingLanguage)audio.sound('bossRoar',1);
  },
  // ---------- Final ----------
  finale(){
@@ -337,7 +340,7 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
  },
  showTrophyCelebration(next){
   const el=document.createElement('div');el.id='trophyCelebration';el.className='overlay cmp-celebrate';
-  el.innerHTML=`<section class="modal"><p class="eyebrow">EL TORNEO DEL UNIVERSO</p><h2>COOPER'S TROPHY — CAMPEONES DEL UNIVERSO</h2><canvas width="420" height="420"></canvas><p>El primer trofeo auténtico del torneo, compartido por todos.</p><button type="button" class="start">CRÉDITOS ↗</button></section><div class="cmp-confetti"></div>`;
+  el.innerHTML=`<section class="modal"><p class="eyebrow" data-i18n="campaign.campaign.showTrophyCelebration.s002">${CS5.i18n.textHTML("campaign.campaign.showTrophyCelebration.s002")}</p><h2 data-i18n="campaign.campaign.showTrophyCelebration.s003">${CS5.i18n.textHTML("campaign.campaign.showTrophyCelebration.s003")}</h2><canvas width="420" height="420"></canvas><p data-i18n="campaign.campaign.showTrophyCelebration.s004">${CS5.i18n.textHTML("campaign.campaign.showTrophyCelebration.s004")}</p><button type="button" class="start" data-i18n="campaign.campaign.showTrophyCelebration.s005">${CS5.i18n.textHTML("campaign.campaign.showTrophyCelebration.s005")}</button></section><div class="cmp-confetti"></div>`;
   document.body.appendChild(el);
   const conf=el.querySelector('.cmp-confetti');for(let i=0;i<70;i++){const s=document.createElement('i');s.style.left=(i*137%100)+'%';s.style.animationDelay=(i%14)*.18+'s';s.style.background=['#ffd36a','#ff797d','#60e0dd','#c0a5ff','#9be37a'][i%5];conf.appendChild(s);}
   CS5.trophy.animate(el.querySelector('canvas'),true);audio.sound('trophy',1);
@@ -345,7 +348,7 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
  },
  credits(next){
   const el=document.createElement('div');el.id='campaignCredits';el.className='overlay cmp-credits';
-  el.innerHTML=`<div class="cmp-roll">${S().credits.map(([a,b])=>`<p><small>${esc(a)}</small><b>${esc(b)}</b></p>`).join('')}<p><small>Gracias por jugar</small><b>🐾</b></p></div><button type="button" class="mini-button cmp-credits-skip">Continuar ⏭</button>`;
+  el.innerHTML=`<div class="cmp-roll">${S().credits.map(([a,b])=>`<p><small>${esc(a)}</small><b>${esc(b)}</b></p>`).join('')}<p><small data-i18n="campaign.campaign.credits.s002">${CS5.i18n.textHTML("campaign.campaign.credits.s002")}</small><b>🐾</b></p></div><button type="button" class="mini-button cmp-credits-skip" data-i18n="campaign.campaign.credits.s003">${CS5.i18n.textHTML("campaign.campaign.credits.s003")}</button>`;
   document.body.appendChild(el);
   const done=()=>{if(!el.isConnected)return;el.remove();next&&next();};
   el.querySelector('button').addEventListener('click',done);setTimeout(done,26000);
@@ -353,7 +356,7 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
  // ---------- Fichas en partida ----------
  showChip(){
   this.ensureUI();const a=this.active,c=this.chapterDef(a.chapter),chip=document.getElementById('campaignChip');
-  chip.textContent=`CAPÍTULO ${a.chapter} · ${a.battle===1?'BATALLA 1/2':'JEFE · BATALLA 2/2'}`;chip.hidden=false;
+  chip.textContent=CS5.i18n.t("campaign.campaign.showChip.s001",{p0:a.chapter,p1:a.battle===1?CS5.i18n.t("campaign.campaign.showChip.s002"):CS5.i18n.t("campaign.campaign.showChip.s003")});chip.hidden=false;
  },
  hideChip(){const chip=document.getElementById('campaignChip');if(chip)chip.hidden=true;},
  updateBossBar(){
@@ -361,12 +364,13 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
   const boss=app.campaign&&app.phase!=='menu'?app.chars.find(c=>c.boss):null;
   if(!boss){bar.hidden=true;return;}
   bar.hidden=false;bar.style.setProperty('--accent',boss.cosmeticColor||'#ffd36a');
-  bar.querySelector('.bb-name b').textContent=boss.boss.name;bar.querySelector('.bb-name small').textContent=boss.boss.title+(boss.boss.final?' · Fase '+(boss.boss.phase+1)+'/3':'');
+  const def=this.chapterDef().boss;
+  bar.querySelector('.bb-name b').textContent=def.name;bar.querySelector('.bb-name small').textContent=def.title+(boss.boss.final?CS5.i18n.t("campaign.campaign.updateBossBar.s001",{p0:boss.boss.phase+1}):'');
   bar.querySelector('.bb-fill').style.width=(Math.max(0,boss.hp)/boss.maxHp*100)+'%';
   bar.querySelectorAll('.bb-mark').forEach(m=>m.hidden=!boss.boss.final);
-  bar.querySelector('.bb-hp').textContent=Math.max(0,Math.round(boss.hp))+' / '+boss.maxHp+' HP'+(boss.shield>0?' · 🛡 '+boss.shield:'');
+  bar.querySelector('.bb-hp').textContent=CS5.i18n.t("campaign.campaign.updateBossBar.s002",{p0:Math.max(0,Math.round(boss.hp)),p1:boss.maxHp,p2:boss.shield>0?' · 🛡 '+boss.shield:''});
   const p=boss.boss.pending,ab=p?D().abilities[p.id]:null;
-  bar.querySelector('.bb-ability').textContent=ab?`⚠ ${ab.icon} ${ab.name} ${p.ready?'· ¡AHORA!':'· próximo turno'}`:'';
+  bar.querySelector('.bb-ability').textContent=ab?`⚠ ${ab.icon} ${ab.name} ${p.ready?CS5.i18n.t("campaign.campaign.updateBossBar.s003"):CS5.i18n.t("campaign.campaign.updateBossBar.s004")}`:'';
   bar.classList.toggle('warn',!!p);
  }
 };

@@ -13,11 +13,13 @@ Juego de artillería por turnos con pugs (navegador, PC y móvil). Se publica co
 - No usar música ni melodías protegidas. Todo el audio es original y procedural (Web Audio).
 - No declarar una prueba como superada sin ejecutarla.
 - Textos de UI, comentarios y commits en español.
+- 5.2 fusionada en `origin/main` mediante PR #3 (`0f8cc74`). Trabajo actual: localización en `feature/coopers-siege-i18n-es419-en`, desde esa base; plan en `docs/LOCALIZACION.md`. No usar la rama histórica 5.2 para cambios nuevos.
+- Localización autorizada: la UI y narrativa tienen recursos completos `es-419` y `en-US`; comentarios, commits y continuidad permanecen en español. Los idiomas no cambian IDs, guardados, RNG, reglas ni paquetes LAN.
 
 ## Arquitectura
 
 - `index.html`: juego principal (≈ 9 300 líneas, script clásico). Expone `window.PocketSiege` (API de pruebas) y `window.CooperLAN`.
-- `src/**`: subsistemas 5.0 como *scripts* clásicos con rutas relativas, cargados **antes** del script principal. Comparten el ámbito global (`app`, `terrain`, `maps`, `W`…), así que solo pueden usarlos en tiempo de ejecución, no al cargar.
+- `src/**`: subsistemas como *scripts* clásicos con rutas relativas, cargados **antes** del script principal, salvo `src/i18n/presentation.js`, que conecta las vistas después. Comparten el ámbito global (`app`, `terrain`, `maps`, `W`…), así que los módulos anteriores al juego solo pueden usarlos en tiempo de ejecución, no al cargar.
   - `levels/art-direction.js`: dirección de arte por mapa (materiales, paleta, gradación, rayos).
   - `levels/terrain-gen.js`: trazado de los 16 mapas (mundo `W=3072`, `H=768`, `WATER=695`) y `CS5.safeSpawns`.
   - `rendering/terrain-materials.js`: pintor de materiales del terreno (incluye chamuscados).

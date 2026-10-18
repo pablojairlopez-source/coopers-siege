@@ -1,0 +1,44 @@
+✔ LAN 6v6 (original) (11 s)
+✔ LAN 5.1: controles nuevos y mapa 17 (7 s)
+✔ Escenarios ampliados (13 s)
+✔ Daño, gore y destrucción (5 s)
+✔ HUD responsivo (6 s)
+✔ Controles 5.1 (táctil y teclado) (8 s)
+✔ Arsenal 5.2 e igualdad humano/bot (7 s)
+✔ Huesitos 5.2 (suministros, IA y LAN) (16 s)
+✔ Campaña 5.2 (34 estados, jefes, guardado, final) (20 s)
+✔ Física 2× de jefes en 17 mapas (15 s)
+✔ IA campaña: trayectorias, rutas y equidad (16 s)
+✔ Auditoría campaña: historial, guardado y escopeta (3 s)
+✔ Narrativa y diálogo 5.2 (8 s)
+✔ Banda sonora y efectos (8 s)
+✔ Mezcla de audio 5.1 (32 s)
+✔ Servicio de idiomas (0 s)
+✔ Catálogos y estructura bilingüe (0 s)
+✔ Cambio en vivo y guardados bilingües (8 s)
+✔ LAN con idiomas distintos (6 s)
+✔ Guardados 5.2 y progresión bilingüe (19 s)
+
+✔ i18n central: detección, preferencia independiente, parámetros seguros, plurales, respaldo y cambio sin motor
+✔ Catálogos: 1617 claves por idioma, 106 escenas y 319 intervenciones; paridad, parámetros, es-419 y estructura 5.2
+{ failures: [], saves: 70, scenes: 106, warnings: [] }
+✔ Navegador bilingüe: detección, persistencia, 70 importaciones, 106 escenas y cambio sin alterar combate, terreno, audio ni guardado
+✔ LAN bilingüe: anfitrión/invitado con idiomas opuestos, cambio durante coop 6v6, autoridad, canje único, vida, arsenal y terreno sincronizados
+{ failures: [], complete: 68, warnings: [] }
+✔ Guardado real 5.2, 68 victorias/34 estados por idioma, historial y preferencia tras cerrar/reabrir Chromium
+{ reviewedInvariants: 19, residuals: [] }
+
+desktop es-419: 22 capturas
+desktop en-US: 22 capturas
+s23ultra es-419: 22 capturas
+s23ultra en-US: 22 capturas
+fold es-419: 22 capturas
+fold en-US: 22 capturas
+tablet es-419: 22 capturas
+tablet en-US: 22 capturas
+compact es-419: 22 capturas
+compact en-US: 22 capturas
+portrait es-419: 22 capturas
+portrait en-US: 22 capturas
+[]
+✔ 264 capturas bilingües: PC, S23 Ultra, plegable, tableta y Android compacto

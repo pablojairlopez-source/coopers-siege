@@ -1,0 +1,314 @@
+Capitán glotón|Food-loving captain
+Estratega sarcástica|Sarcastic strategist
+Entusiasta despistado|Scatterbrained enthusiast
+El rival|The rival
+Maestro Huesón|Master Bones
+Presentador del torneo|Tournament host
+Cooper Cero|Cooper Zero
+El primer campeón|The first champion
+Ráfaga de alisio|Trade Wind Gust
+Viento huracanado y empujón a todos los rivales cercanos a la zona.|Hurricane-force wind pushes all enemies near the area.
+Andanada|Broadside
+Tres balas de cañón caen sobre la zona marcada.|Three cannonballs fall on the marked area.
+Raíces eternas|Eternal Roots
+El jefe recupera 40 de vida.|The boss restores 40 health.
+Nube de esporas|Spore Cloud
+Envenena a quien esté en la zona.|Poisons anyone in the area.
+Corte de pétalos|Petal Slash
+Cinco cortes explosivos en línea hacia la zona.|Five explosive slashes in a line toward the area.
+Trampa de arena|Sand Trap
+Siembra dos minas junto a los rivales.|Plants two mines near enemies.
+Muro de costillas|Rib Wall
+Escudo de 70 puntos para el jefe.|Gives the boss a 70-point shield.
+Misiles calibrados|Calibrated Missiles
+Dos misiles teledirigidos a la zona marcada.|Two homing missiles target the marked area.
+Decreto real|Royal Decree
+Bombardeo de cinco cargas sobre la zona.|Five bombs strike the area.
+Aliento helado|Frost Breath
+Congela y daña a quien esté en la zona.|Freezes and damages anyone in the area.
+Paso espectral|Spectral Step
+El jefe se desvanece y reaparece lejos del peligro.|The boss vanishes and reappears away from danger.
+Caída del bajo|Bass Drop
+Onda expansiva alrededor del jefe.|A shockwave around the boss.
+Rayo tractor|Tractor Beam
+Atrae al rival marcado hacia el jefe y lo electrocuta.|Pulls the marked enemy toward the boss and electrocutes them.
+Lluvia de plasma|Plasma Rain
+Cinco descargas de plasma sobre la zona.|Five plasma blasts hit the area.
+Marea abisal|Abyssal Tide
+Una ola golpea a quien esté en la zona y lo arrastra.|A wave hits and sweeps away anyone in the area.
+Lluvia de fuego|Firestorm
+Seis meteoritos caen sobre la zona.|Six meteors fall on the area.
+Embestida ígnea|Blazing Charge
+El jefe embiste hasta la zona y estalla al llegar.|The boss charges into the area and explodes on arrival.
+Brote|Outbreak
+Envenena a quien esté en la zona y el jefe se cura 20.|Poisons anyone in the area and restores 20 boss health.
+Prensa hidráulica|Hydraulic Press
+Columna de impacto vertical sobre la zona.|A vertical impact column strikes the area.
+Glaseado explosivo|Explosive Icing
+Tres bombas adhesivas de azúcar sobre la zona.|Three sticky sugar bombs hit the area.
+Mordisco de luna|Moon Bite
+Drena vida de quien esté en la zona y cura al jefe.|Drains health from anyone in the area and heals the boss.
+Jaula de espinas|Thorn Cage
+Espinas que dañan e inmovilizan en la zona.|Thorns damage and immobilize anyone in the area.
+Orbe estelar|Star Orb
+Esfera de energía que estalla en la zona marcada.|An energy sphere explodes in the marked area.
+Latido supernova|Supernova Pulse
+Pulso estelar: columna de luz y onda expansiva en la zona.|A stellar pulse: a light column and shockwave strike the area.
+Grumetes del Arrecife|Reef Deckhands
+Sal|Salt
+Coral|Coral
+Ancla|Anchor
+Ostra|Oyster
+Remo|Oar
+Capitán Brisa|Captain Breeze
+El Viento de las Islas|Wind of the Islands
+Musgosos del Claro|Mossy Grove Crew
+Liquen|Lichen
+Raíz|Root
+Turba|Peat
+Seta|Mushroom
+Tocón|Stump
+Musgo el Inmortal|Moss the Undying
+El que siempre vuelve|The One Who Always Returns
+Escuela del Pétalo|Petal School
+Hoja|Leaf
+Kumo|Kumo
+Yuki|Yuki
+Taiko|Taiko
+Sora|Sora
+Shogun Pocky|Shogun Pocky
+Señor del Valle|Lord of the Vale
+Guardia de las Arenas|Sand Guard
+Escarabajo|Scarab
+Ankh|Ankh
+Papiro|Papyrus
+Obelisco|Obelisk
+Faraón Costilla|Pharaoh Rib
+Soberano de las Dunas|Ruler of the Dunes
+Estibadores de Hierro|Iron Dockworkers
+Grúa|Crane
+Perno|Bolt
+Muelle|Dock
+Boya|Buoy
+Cable|Cable
+Almirante Tuerca|Admiral Lugnut
+Comandante de la Tormenta|Storm Commander
+Caballería del Bastión|Bastion Cavalry
+Almena|Battlement
+Escudo|Shield
+Lanza|Lance
+Torreón|Keep
+Heraldo|Herald
+Rey Bigotín|King Whiskers
+Monarca del Bastión Dorado|Monarch of the Golden Bastion
+Ánimas de la Aurora|Aurora Spirits
+Bruma|Mist
+Vaho|Vapor
+Cierzo|Northwind
+Nevisca|Flurry
+Albor|Dawn
+Dama Escarcha|Lady Frost
+La Reina Sin Huella|The Queen Who Leaves No Trace
+Banda del Bajo Neón|Neon Bass Band
+Píxel|Pixel
+Láser|Laser
+Glitch|Glitch
+Sinte|Synth
+Bit|Bit
+DJ Circuito|DJ Circuit
+El Ritmo de la Ciudad|Rhythm of the City
+Exploradores de Zog|Zog Explorers
+Xib|Xib
+Nuu|Nuu
+Quark|Quark
+Zil|Zil
+Orbi|Orbi
+Zog-7|Zog-7
+Emisario de la Órbita|Envoy of the Orbit
+Ecos del Abismo|Echoes from the Abyss
+Perla|Pearl
+Nácar|Pearlshine
+Sirga|Towline
+Guardián Abisal|Abyssal Warden
+Vigía de Atlantis|Watcher of Atlantis
+Legión de la Caldera|Caldera Legion
+Ascua|Cinder
+Tizón|Firebrand
+Magma|Magma
+Cenizo|Ash
+Hollín|Soot
+General Brasa|General Ember
+Comandante del Volcán|Volcano Commander
+Supervivientes del Kilómetro|Mile Zero Survivors
+Chatarra|Scrap
+Óxido|Rust
+Bache|Pothole
+Cráter|Crater
+Tuerto|One-Eye
+Doctor Zarpazo|Doctor Claw
+El Cirujano del Apocalipsis|Surgeon of the Apocalypse
+Cadena de Montaje Omega|Omega Assembly Line
+Remache|Rivet
+Biela|Conrod
+Pistón|Piston
+Forja|Forge
+Tornillo|Screw
+PROTO-PUG 9000|PROTO-PUG 9000
+El Prototipo Perfecto|The Perfect Prototype
+Pasteleros Rebeldes|Rebel Bakers
+Merengue|Meringue
+Grajea|Sprinkle
+Bizcocho|Spongecake
+Chicle|Bubblegum
+Praliné|Praline
+Chef Glaseado|Chef Frosting
+Maestro Repostero|Master Baker
+Coro de la Catedral|Cathedral Choir
+Gárgola|Gargoyle
+Vitral|Stained Glass
+Cripta|Crypt
+Campana|Bell
+Cirio|Candle
+Obispo Mordisco|Bishop Bite
+Pastor de la Luna Roja|Shepherd of the Red Moon
+Espectros del Jardín|Garden Specters
+Zarza|Bramble
+Espino|Thorn
+Rocío|Dew
+Ortiga|Nettle
+Pétalo|Petal
+Guardián Zarza|Bramble Warden
+Custodio del Jardín|Keeper of the Garden
+Ecos del Trofeo|Trophy Echoes
+Eco I|Echo I
+Eco II|Echo II
+Eco III|Echo III
+Eco IV|Echo IV
+Eco V|Echo V
+El Primer Campeón|The First Champion
+No se pudo guardar la campaña en este navegador. Exporta tu progreso desde Ajustes antes de salir.|Could not save the campaign in this browser. Export your progress from Settings before leaving.
+Cooper y compañía|Cooper and Company
+No hay una aparición segura para el jefe.|There is no safe spawn point for the boss.
+CAMPAÑA|CAMPAIGN
+El Torneo del Universo|The Tournament of the Universe
+🗺 Recorrido|🗺 Journey
+👑 Jefes|👑 Bosses
+🏆 Trofeo|🏆 Trophy
+⚙ Ajustes|⚙ Settings
+← Menú|← Menu
+/17 jefes|/17 bosses
+/34 batallas|/34 battles
+I · La invitación|I · The Invitation
+II · Los desaparecidos|II · The Missing
+III · La maquinaria|III · The Machinery
+IV · El giro|IV · The Twist
+Bloqueado|Locked
+ACTO {p0}|ACT {p0}
+Zombi|Zombie
+Esqueleto|Skeleton
+Cíborg|Cyborg
+Fantasma|Ghost
+Alienígena|Alien
+Demonio|Demon
+🔒 Completa el capítulo anterior para desbloquearlo.|🔒 Complete the previous chapter to unlock this one.
+{p0} · BATALLA 1 ↗|{p0} · BATTLE 1 ↗
+CONTINUAR|CONTINUE
+JUGAR|PLAY
+{p0} · JEFE ↗|{p0} · BOSS ↗
+Repetir batalla 1|Replay battle 1
+✔ Capítulo completado|✔ Chapter complete
+Repetir jefe|Replay boss
+CAPÍTULO {p0} · {p1}|CHAPTER {p0} · {p1}
+Cooper, Pipa y Bongo|Cooper, Pipa, and Bongo
+VS|VS
+Batalla 1|Battle 1
+3 pugs contra 5 {p0}s · {p1}|3 pugs vs. 5 enemies ({p0}) · {p1}
+Batalla 2|Battle 2
+{p0} · {p1} HP|{p0} · {p1} HP
+Jefe misterioso|Mystery boss
+Capítulo {p0}|Chapter {p0}
+{p0} HP · {p1}|{p0} HP · {p1}
+El Cooper's Trophy es vuestro|The Cooper's Trophy Is Yours
+El Cooper's Trophy|The Cooper's Trophy
+Compartida con todos los campeones del universo. Las galletas siguen saliendo.|Shared with every champion in the universe. The cookies keep coming.
+Derrota a los 17 campeones y descubre la verdad del torneo para conseguirla.|Defeat all 17 champions and uncover the truth behind the tournament to earn it.
+▶ Ver el final otra vez|▶ Watch the ending again
+Afecta a la puntería y a las armas especiales de los bots y jefes. El arsenal es idéntico para todos.|Affects bot and boss aim and special weapon use. Everyone has the same arsenal.
+Escuadra|Squad
+Progreso|Progress
+⬇ Exportar progreso|⬇ Export progress
+⬆ Importar progreso|⬆ Import progress
+✦ Nueva campaña|✦ New campaign
+☰ Historial de diálogos|☰ Dialogue archive
+Progreso importado.|Progress imported.
+El archivo no es un progreso válido de la campaña.|The file is not valid campaign progress.
+Capítulo bloqueado: completa el anterior.|Chapter locked: complete the previous one.
+Progreso exportado.|Progress exported.
+¿Empezar una campaña nueva?|Start a new campaign?
+Se borrará el progreso guardado (capítulos, jefes y trofeo). Puedes exportarlo antes.|Saved progress will be erased (chapters, bosses, and trophy). You can export it first.
+Sí, empezar de cero|Yes, start over
+Campaña nueva. ¡Rumbo al Archipiélago Sol!|New campaign. Onward to the Sunlit Archipelago!
+Cancelar|Cancel
+CONTINUAR ↗|CONTINUE ↗
+Volver al recorrido|Back to journey
+¡JEFE DERROTADO!|BOSS DEFEATED!
+Capítulo {p0} completado. Se desbloquea el capítulo {p1}.|Chapter {p0} complete. Chapter {p1} unlocked.
+El Primer Campeón ha caído.|The First Champion has fallen.
+Primera batalla del capítulo {p0} superada. Te espera su campeón.|Chapter {p0}'s first battle is won. Its champion awaits.
+DERROTA|DEFEAT
+No pierdes progreso: {p0}|No progress lost: {p0}
+la batalla 1 de este capítulo sigue ganada.|this chapter's first battle remains complete.
+reintenta esta batalla cuando quieras.|retry this battle whenever you like.
+REINTENTAR BATALLA {p0} ↗|RETRY BATTLE {p0} ↗
+{p0} resiste|{p0} Holds On
+¡Os han superado!|They Got the Better of You!
+CAPÍTULO {p0} COMPLETADO|CHAPTER {p0} COMPLETE
+{p0} se une a la galería|{p0} joins the gallery
+Capítulo {p0} · {p1}|Chapter {p0} · {p1}
+. Progreso guardado.|. Progress saved.
+SIGUIENTE CAPÍTULO ↗|NEXT CHAPTER ↗
+Ver el recorrido|View journey
+CAPÍTULO {p0} · CAMPEÓN DE {p1}|CHAPTER {p0} · CHAMPION OF {p1}
+❤ {p0} HP|❤ {p0} HP
+⬆ Tamaño 2×|⬆ 2× size
+¡A LUCHAR! ↗|LET'S FIGHT! ↗
+✦ 3 fases|✦ 3 phases
+EL TORNEO DEL UNIVERSO|THE TOURNAMENT OF THE UNIVERSE
+COOPER'S TROPHY — CAMPEONES DEL UNIVERSO|COOPER'S TROPHY — CHAMPIONS OF THE UNIVERSE
+El primer trofeo auténtico del torneo, compartido por todos.|The tournament's first real trophy, shared by everyone.
+CRÉDITOS ↗|CREDITS ↗
+Gracias por jugar|Thanks for playing
+Continuar ⏭|Continue ⏭
+BATALLA 1/2|BATTLE 1/2
+JEFE · BATALLA 2/2|BOSS · BATTLE 2/2
+ · Fase {p0}/3| · Phase {p0}/3
+{p0} / {p1} HP{p2}|{p0} / {p1} HP{p2}
+· ¡AHORA!|· NOW!
+· próximo turno|· next turn
+Diálogo de la campaña|Campaign dialogue
+Historial de diálogos|Dialogue history
+☰ Historial|☰ History
+Omitir escena (Esc)|Skip scene (Esc)
+Omitir ⏭|Skip ⏭
+Siguiente (Espacio / Enter)|Next (Space / Enter)
+Siguiente ▸|Next ▸
+Cerrar historial|Close history
+Equipo rival|Enemy team
+Carta|Letter
+⚠ {p0} prepara «{p1}»: {p2} Sal de la zona o causa {p3} de daño para interrumpirla.|⚠ {p0} prepares “{p1}”: {p2} Leave the area or deal {p3} damage to interrupt.
+✋ ¡INTERRUMPIDA!|✋ INTERRUPTED!
+✋ ¡Habilidad interrumpida! {p0} pierde la concentración.|✋ Ability interrupted! {p0} loses focus.
+✦ FASE {p0}|✦ PHASE {p0}
+{p0} trepa de vuelta a su plataforma (−{p1} de vida).|{p0} climbs back onto the platform (−{p1} health).
+ · ¡AHORA!| · NOW!
+ · próximo turno| · next turn
+✋ interrumpe con {p0} de daño|✋ interrupt with {p0} damage
+🍄 ESPORAS|🍄 SPORES
+🦴 ESCUDO 70|🦴 SHIELD 70
+🥀 ENREDADO|🥀 ENTANGLED
+Común|Common
+Potente|Powerful
+Legendaria|Legendary
+🦴 ¡Un huesito cae del cielo! Recógelo con cualquier pug.|🦴 A supply bone is falling! Collect it with any pug.
+🦴 {p0} abre un huesito {p1}: {p2} {p3} ×{p4}.|🦴 {p0} opens a {p1} supply bone: {p2} {p3} ×{p4}.
+🦴 +{p0} HP|🦴 +{p0} HP

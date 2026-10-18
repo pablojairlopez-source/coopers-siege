@@ -6,6 +6,14 @@ Juego de artillería por turnos protagonizado por pugs, para navegador en PC y c
 
 https://pablojairlopez-source.github.io/coopers-siege/
 
+## Localización bilingüe (rama de revisión)
+
+Interfaz y campaña completas en **Español (Latinoamérica)** y **English**. Abre **🌐 ES / EN** para cambiar de idioma en cualquier pantalla o durante una batalla. La preferencia se conserva en este navegador; la primera visita usa su idioma (otros idiomas utilizan español).
+
+Los guardados de 5.2 conservan su formato y pueden exportarse/importarse entre idiomas. El cambio no reinicia el combate ni el diálogo. Glosario: [docs/GLOSARIO.md](docs/GLOSARIO.md); arquitectura y QA: [docs/LOCALIZACION.md](docs/LOCALIZACION.md).
+
+[PR #4](https://github.com/pablojairlopez-source/coopers-siege/pull/4) · [Vista previa bilingüe verificada](https://raw.githack.com/pablojairlopez-source/coopers-siege/2f7aa2e4f727fac8d55914fadd1d2409df998721/index.html). Si aparece el aviso del proveedor, pulsa **Open the page**. La vista previa usa almacenamiento separado del sitio publicado; puedes importar tu progreso exportado de 5.2.
+
 ## Controles (5.1)
 
 **Smartphone** (horizontal): a la izquierda, el **arsenal** en la esquina inferior y las flechas **‹ ›** encima; a la derecha, **ATACAR** en la esquina inferior y **SALTAR** encima.
@@ -25,7 +33,8 @@ Dentro del apuntado `Espacio` nunca salta: solo carga y dispara (una vez por pul
 - **Campaña** de 17 capítulos × 2 batallas: tu escuadra (Cooper, Pipa y Bongo) contra cinco rivales y después contra el **jefe gigante** de cada mundo, con habilidades anunciadas que se pueden esquivar o interrumpir. Historia en cuatro actos con diálogos y **retratos 3D**, guardado automático, galería de jefes y el **Cooper's Trophy** en 3D.
 - **Bazuca y granada común infinitas** para todos; arsenal inicial estándar (escopeta 2, mina 2, bate) e igualdad total entre humanos y bots.
 - **Huesitos**: suministros que caen del cielo con armas comunes, potentes o legendarias, también en LAN.
- técnicas: [`docs/NOTAS-5.2.md`](docs/NOTAS-5.2.md).
+
+Notas técnicas: [`docs/NOTAS-5.2.md`](docs/NOTAS-5.2.md).
 
 ## Novedades de 5.1
 

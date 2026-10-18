@@ -19,13 +19,13 @@ const LAYERS=['pad','bass','drums','perc','arp','chords','lead','counter'];
 // Mezcla por estado (ganancia relativa por capa) y ajuste de tempo.
 const STATE_MIX={
  MENU:{mix:{pad:1,bass:1,drums:1,perc:1,arp:1,chords:1,lead:1,counter:1},tempo:1},
- A:{mix:{pad:1,bass:.75,drums:.25,perc:.8,arp:1,chords:.75,lead:.85,counter:.35},tempo:1,label:'Exploración'},
- B:{mix:{pad:.9,bass:1,drums:1,perc:1,arp:.9,chords:1,lead:1,counter:.75},tempo:1,label:'Combate'},
- C:{mix:{pad:.9,bass:1.1,drums:1.05,perc:1.15,arp:1,chords:1,lead:1,counter:1},tempo:1.02,label:'Peligro'},
- D:{mix:{pad:1,bass:1.15,drums:1.15,perc:1.2,arp:1.05,chords:1.05,lead:1.1,counter:1.1},tempo:1.04,label:'Clímax'},
- E:{mix:{pad:1.1,bass:.7,drums:.2,perc:.45,arp:.55,chords:.4,lead:.8,counter:.4},tempo:.97,label:'Último aliento'},
- F:{mix:{pad:1,bass:1,drums:1,perc:1,arp:1,chords:1,lead:1.1,counter:1},tempo:1,label:'Victoria'},
- G:{mix:{pad:1.1,bass:.5,drums:0,perc:.2,arp:.4,chords:.5,lead:.75,counter:.4},tempo:.86,label:'Derrota'}
+ A:{mix:{pad:1,bass:.75,drums:.25,perc:.8,arp:1,chords:.75,lead:.85,counter:.35},tempo:1,get label(){return CS5.i18n.t("audio.composer.data.s001")}},
+ B:{mix:{pad:.9,bass:1,drums:1,perc:1,arp:.9,chords:1,lead:1,counter:.75},tempo:1,get label(){return CS5.i18n.t("audio.composer.data.s002")}},
+ C:{mix:{pad:.9,bass:1.1,drums:1.05,perc:1.15,arp:1,chords:1,lead:1,counter:1},tempo:1.02,get label(){return CS5.i18n.t("audio.composer.data.s003")}},
+ D:{mix:{pad:1,bass:1.15,drums:1.15,perc:1.2,arp:1.05,chords:1.05,lead:1.1,counter:1.1},tempo:1.04,get label(){return CS5.i18n.t("audio.composer.data.s004")}},
+ E:{mix:{pad:1.1,bass:.7,drums:.2,perc:.45,arp:.55,chords:.4,lead:.8,counter:.4},tempo:.97,get label(){return CS5.i18n.t("audio.composer.data.s005")}},
+ F:{mix:{pad:1,bass:1,drums:1,perc:1,arp:1,chords:1,lead:1.1,counter:1},tempo:1,get label(){return CS5.i18n.t("audio.composer.data.s006")}},
+ G:{mix:{pad:1.1,bass:.5,drums:0,perc:.2,arp:.4,chords:.5,lead:.75,counter:.4},tempo:.86,get label(){return CS5.i18n.t("audio.composer.data.s007")}}
 };
 const STATE_SECTION={D:'climax',E:'breakdown',F:'victory',G:'defeat'};
 
@@ -207,7 +207,7 @@ const composer={
    if(this.step>=spb){this.step=0;this.bar++;this.advanceBar();}
   }
  },
- describe(){if(!this.song)return '';const sec=this.sectionName,names={intro:'Introducción',A:'Tema A',A2:'Tema A′',A3:'Tema A″',B:'Tema B',B2:'Tema B′',C:'Desarrollo',C2:'Desarrollo II',D:'Segunda melodía',D2:'Segunda melodía II',dev:'Modulación',stop:'Sorpresa',bridge:'Puente',breakdown:'Respiro',climax:'Clímax',climax2:'Gran clímax',victory:'Victoria',defeat:'Derrota',outro:'Coda'};return names[sec]||sec;},
+ describe(){if(!this.song)return '';const sec=this.sectionName,names={intro:CS5.i18n.t("audio.composer.describe.s001"),A:CS5.i18n.t("audio.composer.describe.s002"),A2:CS5.i18n.t("audio.composer.describe.s003"),A3:CS5.i18n.t("audio.composer.describe.s004"),B:CS5.i18n.t("audio.composer.describe.s005"),B2:CS5.i18n.t("audio.composer.describe.s006"),C:CS5.i18n.t("audio.composer.describe.s007"),C2:CS5.i18n.t("audio.composer.describe.s008"),D:CS5.i18n.t("audio.composer.describe.s009"),D2:CS5.i18n.t("audio.composer.describe.s010"),dev:CS5.i18n.t("audio.composer.describe.s011"),stop:CS5.i18n.t("audio.composer.describe.s012"),bridge:CS5.i18n.t("audio.composer.describe.s013"),breakdown:CS5.i18n.t("audio.composer.describe.s014"),climax:CS5.i18n.t("audio.composer.describe.s015"),climax2:CS5.i18n.t("audio.composer.describe.s016"),victory:CS5.i18n.t("audio.composer.describe.s017"),defeat:CS5.i18n.t("audio.composer.describe.s018"),outro:CS5.i18n.t("audio.composer.describe.s019")};return names[sec]||sec;},
  STATE_MIX,LAYERS
 };
 CS5.composer=composer;

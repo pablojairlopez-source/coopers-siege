@@ -1,0 +1,245 @@
+Cooper's Siege 5.2 · Next Gen|Cooper's Siege 5.2 · Next Gen
+Escenario de batalla. Toca para apuntar o marcar un objetivo.|Battlefield. Tap to aim or mark a target.
+↻ Gira tu teléfono para jugar con más espacio.|↻ Rotate your phone for more room to play.
+ARTILLERÍA · ESTRATEGIA · CAOS|ARTILLERY · STRATEGY · CHAOS
+Campaña: El Torneo del Universo|Campaign: The Tournament of the Universe
+🏆 CAMPAÑA|🏆 CAMPAIGN
+Activar la banda sonora original|Enable the original soundtrack
+Descargar archivo HTML completo|Download the full HTML file
+⬇ DESCARGAR HTML|⬇ DOWNLOAD HTML
+NEXT GEN 5.2|NEXT GEN 5.2
+Pequeños pugs. Grandes explosiones.|Little pugs. Big explosions.
+Una batalla de bolsillo, un mundo por destruir.|A pocket-sized battle. A world to blow apart.
+PREPARA TU ESCUADRA|PREPARE YOUR SQUAD
+⚡ Contra CPU|⚡ Vs. CPU
+♟ Local|♟ Local
+🌐 Red LAN|🌐 LAN
+Tipo de partida LAN|LAN match type
+⚔ Jugador contra jugador|⚔ Player vs. player
+🤝 Cooperativo contra CPU · 6 vs 6|🤝 Co-op vs. CPU · 6 vs 6
+Un equipo aliado: 3 pugs del anfitrión + 3 del invitado contra 6 bots. Los jugadores alternan turnos y cada uno controla sus propios pugs. El anfitrión elige la dificultad.|One allied team: 3 host pugs + 3 guest pugs against 6 bots. Players alternate turns and control their own pugs. The host chooses the difficulty.
+⚪ LAN integrada lista (Sin .bat)|⚪ Built-in LAN ready (no .bat)
+Crea o únete con código de 4 dígitos|Create or join with a 4-digit code
+👑 Crear Sala|👑 Create room
+Código de sala LAN de 4 dígitos|4-digit LAN room code
+Código de sala (4 dígitos)|Room code (4 digits)
+🎮 Unirse|🎮 Join
+Abre|Open
+en ambos dispositivos, pulsa|on both devices, select
+Crear Sala|Create room
+y únete con el código de 4 dígitos.|and join using the 4-digit code.
+📋 Copiar Link Web|📋 Copy web link
+📡 Opciones P2P / Modo Offline Sin Internet ↗|📡 P2P options / Offline mode ↗
+Escuadras|Squads
+2 equipos|2 teams
+3 equipos|3 teams
+4 equipos|4 teams
+1 pug|1 pug
+2 pugs|2 pugs
+3 pugs|3 pugs
+4 pugs|4 pugs
+Dificultad CPU|CPU difficulty
+Fácil|Easy
+Normal|Normal
+Difícil|Hard
+Tiempo por turno|Turn time
+30 segundos|30 seconds
+45 segundos|45 seconds
+60 segundos|60 seconds
+90 segundos|90 seconds
+Personalizar nombres y arsenal|Customize names and arsenal
+Tu equipo|Your team
+Munición|Ammo
+Estándar · bazuca y granada ∞, el resto llega en huesitos|Standard · bazooka and grenade ∞, other weapons arrive in supply bones
+Abundante · arsenal clásico ×2|Abundant · classic arsenal ×2
+Infinita · caos total|Infinite · total chaos
+Huesitos (suministros del cielo)|Supply Bones (airdropped supplies)
+Normales · cada 2–4 rondas|Normal · every 2–4 rounds
+Frecuentes · cada 1–2 rondas|Frequent · every 1–2 rounds
+Escasos · cada 4–6 rondas|Scarce · every 4–6 rounds
+Desactivados|Disabled
+Gráficos, resolución y pantalla completa|Graphics, resolution, and fullscreen
+Calidad gráfica|Graphics quality
+Automática|Auto
+Fluidez|Frame rate
+Según el perfil|Use quality preset
+30 FPS · ahorro|30 FPS · power saving
+60 FPS · fluido|60 FPS · smooth
+Resolución|Resolution
+Nativa / QHD+ (Máxima nitidez)|Native / QHD+ (maximum clarity)
+4K / Super-Res (3840p · SSAA)|4K / Super-Res (3840p · SSAA)
+2K / QHD+ (2560×1440)|2K / QHD+ (2560×1440)
+Full HD (1920×1080)|Full HD (1920×1080)
+HD (1280×720 · Ahorro)|HD (1280×720 · power saving)
+Automática según calidad|Auto based on quality
+Gore|Gore
+Ninguno · sin gore|None · no gore
+Tamaño de fragmentos|Fragment size
+Chicos|Small
+Medianos|Medium
+Grandes|Large
+Gigantescos|Huge
+Intensidad del clima|Weather intensity
+Desactivado|Off
+Suave|Light
+Intenso|Heavy
+Tormenta|Storm
+Pantalla completa al comenzar|Fullscreen on start
+Mostrar FPS|Show FPS
+Música adaptativa y volúmenes|Adaptive music and volume
+Modo musical|Music mode
+🎵 Dinámico (cambia con el combate)|🎵 Dynamic (reacts to combat)
+🎹 Combate constante|🎹 Constant combat
+🌙 Exploración tranquila|🌙 Peaceful exploration
+⚡ Clímax permanente|⚡ Constant climax
+Maestro|Master
+Música|Music
+Efectos|Effects
+Música activa|Music enabled
+🎼 Banda sonora original (18 piezas)|🎼 Original soundtrack (18 pieces)
+✎ Editor de escenario|✎ Map editor
+🐾 Editor de pugs|🐾 Pug editor
+CAMPAÑA — EL TORNEO DEL UNIVERSO|CAMPAIGN — THE TOURNAMENT OF THE UNIVERSE
+Abrir versión web en GitHub Pages|Open web version on GitHub Pages
+🌐 GitHub Pages ↗|🌐 GitHub Pages ↗
+Repositorio oficial en GitHub|Official GitHub repository
+📦 Repo GitHub ↗|📦 GitHub repo ↗
+Pantalla completa|Fullscreen
+⛶ Pantalla completa|⛶ Fullscreen
+Cómo jugar ↗|How to play ↗
+PUG PARTY · HUMOR NEGRO|PUG PARTY · DARK HUMOR
+CAMPAÑA DE 17 CAPÍTULOS · 28 ARMAS · 17 MUNDOS 2× MÁS GRANDES · PUGS EXPRESIVOS|17-CHAPTER CAMPAIGN · 28 WEAPONS · 17 WORLDS AT 2× SCALE · EXPRESSIVE PUGS
+18 PIEZAS MUSICALES ORIGINALES · DESTRUCCIÓN 2.0 · WEBGL 2|18 ORIGINAL MUSIC PIECES · DESTRUCTION 2.0 · WEBGL 2
+Melodía de etapa:|Stage music:
+Brisa de Manglar|Mangrove Breeze
+Alternar entre vista previa de la melodía del mapa y música del menú|Switch between map music preview and menu music
+🔊 Escuchar etapa|🔊 Preview stage
+ELIGE TU CAMPO DE BATALLA|CHOOSE YOUR BATTLEFIELD
+Cada cráter cambia la siguiente jugada.|Every crater changes your next move.
+SEG|SEC
+Marea / Milo|Tide / Milo
+MOVER · APUNTAR · DISPARAR|MOVE · AIM · FIRE
+Estado del motor de música adaptativa|Adaptive music engine state
+MÚSICA ADAPTATIVA|ADAPTIVE MUSIC
+Exploración|Exploration
+VIENTO|WIND
+→ 0 m/s|→ 0 m/s
+Activar o desactivar música|Toggle music
+Pausa (Esc)|Pause (Esc)
+Pausar|Pause
+Minimapa. Toca para marcar objetivos.|Minimap. Tap to mark targets.
+MINIMAPA · RUEDA O PELLIZCA PARA ZOOM|MINIMAP · SCROLL OR PINCH TO ZOOM
+Alejar cámara (Rueda abajo / Pellizcar)|Zoom out (scroll down / pinch)
+Restablecer zoom de cámara|Reset camera zoom
+Acercar cámara (Rueda arriba / Pellizcar)|Zoom in (scroll up / pinch)
+↔ Vista|↔ View
+Cambiar criatura (Tab)|Switch pug (Tab)
+↻ Pug|↻ Pug
+Pasar turno|Skip turn
+⏭ Pasar|⏭ Skip
+Toca el mapa para marcar el objetivo.|Tap the map to mark a target.
+Mover a la izquierda|Move left
+A / ←|A / ←
+Mover a la derecha|Move right
+D / →|D / →
+Saltar|Jump
+ESPACIO|SPACE
+↻ Criatura|↻ Pug
+ARSENAL · Q|ARSENAL · Q
+∞ cargas|∞ uses
+Aumentar ángulo|Increase angle
+Reducir ángulo|Decrease angle
+ÁNGULO|ANGLE
+Ángulo de disparo 360 grados|360-degree firing angle
+Potencia del disparo anterior|Previous shot power
+PULSA O MANTÉN · POTENCIA|TAP OR HOLD · POWER
+SALTAR|JUMP
+Ángulo de disparo: arrastra arriba o abajo|Firing angle: drag up or down
+Cancelar ataque sin gastar munición|Cancel attack without using ammo
+CANCELAR|CANCEL
+Toca y arrastra en el escenario para apuntar.|Tap and drag on the battlefield to aim.
+A / D · mover   ESPACIO · saltar   F / ENTER / ATACAR · apuntar   W / S · ángulo   mantén ESPACIO · cargar, suelta · disparar   ESC · cancelar|A / D · move   SPACE · jump   F / ENTER / ATTACK · aim   W / S · angle   hold SPACE · charge, release · fire   ESC · cancel
+Elige tu próxima travesura.|Choose your next mischief.
+Munición compartida por equipo · daño a aliados activado|Team-shared ammo · friendly fire enabled
+Cerrar arsenal|Close arsenal
+Todas (28)|All (28)
+Artillería|Artillery
+Racimo / Área|Cluster / Area
+Directas|Direct
+Tácticas|Tactical
+Misil balístico afectado por el viento y la gravedad.|A ballistic missile affected by wind and gravity.
+UN RESPIRO ANTES DEL CAOS|A BREATHER BEFORE THE CHAOS
+Batalla en pausa.|Battle paused.
+El tiempo y la física están detenidos.|Time and physics are paused.
+Ambiente musical|Music mood
+🎵 Dinámico por Escenario|🎵 Dynamic by stage
+🎹 Aventura por Bioma|🎹 Adventure by biome
+🌙 Ambiental por Mapa|🌙 Ambient by map
+⚡ Clímax Intenso por Mapa|⚡ Intense climax by map
+Gráficos|Graphics
+CONTINUAR BATALLA|RESUME BATTLE
+Cómo jugar|How to play
+Volver al menú|Back to menu
+¡La última escuadra en pie!|The last squad standing!
+JUGAR LA REVANCHA ↗|PLAY A REMATCH ↗
+Cambiar escenario o equipos|Change map or teams
+Cerrar instrucciones|Close instructions
+MANUAL DE TRAVESURAS|THE MISCHIEF MANUAL
+Apunta. Dispara. Sobrevive.|Aim. Fire. Survive.
+Cada criatura tiene|Every pug has
+100 de vida|100 health
+. Los equipos alternan turnos. Gana el último equipo que conserve pugs vivas; caer al agua o a la lava elimina al instante.|. Teams alternate turns. The last team with living pugs wins; falling into water or lava is instantly fatal.
+1. Encuentra tu posición|1. Find your position
+o flechas para caminar.|or arrow keys to walk.
+Espacio|Space
+para saltar.|to jump.
+Tab|Tab
+cambia de criatura antes del ataque.|switches pugs before attacking.
+2. Elige un arma|2. Choose a weapon
+Toca el arsenal o pulsa|Tap the arsenal or press
+. La munición pertenece al equipo. La escopeta permite dos tiros.|. Ammo belongs to the team. The shotgun allows two shots.
+3. Ajusta el disparo|3. Line up your shot
+Pulsa ATACAR (o|Press ATTACK (or
+) para apuntar, ajusta con|) to aim, adjust with
+o el pad ÁNGULO, mantén|or the ANGLE pad, hold
+o ATACAR para cargar y suelta para lanzar.|or ATTACK to charge, then release to fire.
+4. Escapa del impacto|4. Escape the blast
+Después de disparar puedes moverte durante 2,5 segundos. El turno cambia cuando proyectiles y pugs se estabilizan.|After firing, you can move for 2.5 seconds. The turn changes once projectiles and pugs settle.
+CONTROLES 5.1|CONTROLS 5.1
+a la izquierda, el arsenal (esquina inferior) y las flechas ‹ › para caminar; a la derecha,|on the left, the arsenal (bottom corner) and ‹ › arrows to walk; on the right,
+(esquina inferior) y|(bottom corner) and
+encima. El salto solo se hace con el botón SALTAR. Toca|above it. Only the JUMP button makes you jump. Tap
+una vez para apuntar: aparecen la trayectoria, el ángulo y el pad|once to aim: the trajectory, angle, and
+(arrástralo arriba o abajo con el pulgar izquierdo). Después|pad appear (drag it up or down with your left thumb). Then
+mantén ATACAR|hold ATTACK
+para cargar la potencia y|to charge your shot and
+para disparar; mientras cargas también puedes deslizar el dedo sobre ATACAR para afinar el ángulo.|to fire; while charging, you can slide your finger over ATTACK to fine-tune your angle.
+✕ CANCELAR|✕ CANCEL
+sale del apuntado sin gastar munición ni turno.|leaves aiming mode without using ammo or ending your turn.
+PC:|PC:
+o el botón ATACAR entran en el apuntado; ahí|or the ATTACK button enters aiming mode; then
+ajustan el ángulo (con|adjust the angle (hold
+Mayús|Shift
+, más fino) y|for finer control) and
+carga la potencia; al soltarlo se dispara una sola vez. Dentro del apuntado|charges your shot; release it to fire once. While aiming,
+nunca salta.|never makes you jump.
+Esc|Esc
+o clic derecho cancelan sin gastar munición. Caminar por los bordes del escenario y apuntar arrastrando sobre él siguen disponibles.|or right-click cancels without using ammo. You can still walk along the battlefield edges and drag on it to aim.
+NIVELES DE GORE|GORE LEVELS
+Ninguno elimina sangre y fragmentos. Bajo muestra unas gotas al recibir daño. Medio añade fragmentos temporales al morir. Alto aumenta sangre y restos. Demencial añade sangre abundante que escurre por las paredes y deja fragmentos ensangrentados durante la partida; se limpian al empezar otra batalla. Si destruyes el suelo, los restos caen y las manchas de esa zona se eliminan.|None removes blood and fragments. Low shows a few drops when hit. Medium adds temporary fragments on death. High increases blood and debris. Extreme adds abundant blood flowing down walls and bloody fragments that remain until the next battle. Destroying the ground makes debris fall and clears stains in that area.
+RENDIMIENTO Y LUCES|PERFORMANCE AND LIGHTING
+En Gráficos, elige Automática, Económico, Equilibrado, Alto o Ultra. Económico reduce la resolución, el detalle y las partículas. Alto y Ultra añaden rayos de luz, hasta cuatro luces de explosión simultáneas, sombras dinámicas y mayor nitidez. Tormenta produce relámpagos y truenos; Puerto Tempestad los incluye de forma natural. El fondo tiene varias capas de pixel art con paralaje. Elige el clima: Suave, Intenso o Tormenta; Económico desactiva el clima para reducir la carga. Puedes limitar el dibujo a 30 o 60 FPS desde el menú o la pausa.|Under Graphics, choose Auto, Low, Balanced, High, or Ultra. Low reduces resolution, detail, and particles. High and Ultra add light shafts, up to four simultaneous explosion lights, dynamic shadows, and greater clarity. Storm adds lightning and thunder; Storm Harbor includes them naturally. The background uses several parallax pixel-art layers. Choose Light, Heavy, or Storm weather; Low disables weather to reduce load. You can cap rendering at 30 or 60 FPS from the menu or pause screen.
+NOVEDADES 5.2 · EL TORNEO DEL UNIVERSO|WHAT'S NEW IN 5.2 · THE TOURNAMENT OF THE UNIVERSE
+la bazuca y la granada común son infinitas para todos (también para los bots y los jefes). En el arsenal estándar empiezas además con 2 escopetas, 2 minas y el bate; el resto de armas llega en los|bazookas and regular grenades are unlimited for everyone, including bots and bosses. The standard arsenal also starts with 2 shotgun uses, 2 mines, and the bat; other weapons arrive in
+. Humanos y bots tienen exactamente el mismo inventario y el mismo consumo.|. Humans and bots have exactly the same inventory and ammo costs.
+cada pocas rondas cae un hueso con paracaídas. Tócalo con cualquier pug (en el aire o en el suelo) para abrirlo: puede ser común, potente o legendario, y va al inventario de tu equipo. Caducan tras unas rondas y vuelven a caer si destruyes el suelo bajo ellos.|every few rounds, a bone parachutes down. Touch it with any pug, in the air or on the ground, to open it. Common, powerful, or legendary supplies go into your team's inventory. They expire after a few rounds and fall again if the ground beneath them is destroyed.
+Campaña:|Campaign:
+17 capítulos con dos batallas cada uno: tu escuadra contra cinco rivales y después contra el campeón gigante del mundo. Los jefes anuncian sus habilidades un turno antes con una zona roja: sal de ella o causa 40 de daño al jefe para interrumpirla. Si pierdes, reintentas la misma batalla sin perder progreso; todo se guarda automáticamente.|17 chapters with two battles each: your squad faces five rivals, then the world's giant champion. Bosses telegraph abilities one turn ahead with a red area: leave it or deal 40 damage to the boss to interrupt. If you lose, retry the same battle without losing progress; everything saves automatically.
+ARMAS CON OBJETIVO|TARGETED WEAPONS
+Teledirigido, ataque aéreo y teletransporte: toca el escenario o el minimapa para marcar el punto y después pulsa ATACAR. Para teletransportarte necesitas una superficie libre. El minimapa permite apuntar lejos.|Homing Missile, Airstrike, and Teleport: tap the battlefield or minimap to mark a point, then press ATTACK. Teleport requires a clear surface. Use the minimap to target distant areas.
+PEQUEÑOS DETALLES, GRANDES EXPLOSIONES|SMALL DETAILS, BIG EXPLOSIONS
+La bazuca y las granadas reciben viento. Las granadas rebotan; banana y racimo liberan cargas. Las minas detectan a ambos equipos y pueden explotar en cadena. El bate requiere estar cerca. La supernova destruye una zona enorme.|Wind affects bazookas and grenades. Grenades bounce; Banana Bombs and Cluster Bombs release bomblets. Mines detect both teams and can trigger chain reactions. The bat requires close range. The Supernova destroys a huge area.
+Al perder vida, los pugs sueltan salpicones de sangre. Al morir, dejan una mini nube nuclear y fragmentos caricaturescos. La explosión de despedida es un efecto visual. Tras la victoria, cae una bomba nuclear que elimina a los supervivientes como celebración; el ganador y las estadísticas ya están fijados.|Pugs spray blood when hurt. When they die, they leave a tiny mushroom cloud and cartoon fragments. The farewell explosion is a visual effect. After victory, a celebration nuke drops and eliminates the survivors; the winner and stats have already been recorded.
+Hay daño a aliados y por caídas fuertes. Usa cuevas como cobertura, vigila el viento y no pongas una mina donde tendrás que pasar después.|Friendly fire and heavy falls cause damage. Use caves for cover, watch the wind, and do not place mines where you will need to walk later.
+El Taller de pugs muestra un modelo 3D girable con el dedo, variantes clásico/zombi/esqueleto, accesorios y equipo para la espalda. La música original cambia de tema por escenario y evoluciona según la batalla; puedes elegir su ambiente en el menú o la pausa. La música y los efectos se activan al comenzar o tocar sus controles.|The Pug Workshop shows a 3D model you can rotate with your finger, classic/zombie/skeleton variants, accessories, and back gear. Original music changes by map and evolves with the battle; choose its mood from the menu or pause screen. Music and effects activate when you start or touch their controls.
+pausa la batalla. Todo el juego está incorporado en este archivo.|pauses the battle. The game uses this HTML file and its companion src folder.

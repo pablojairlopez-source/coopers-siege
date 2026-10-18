@@ -4,6 +4,8 @@
   "scripts": {
     "test": "node tests/run-all.cjs",
     "test:lan": "node tests/lan-coop.cjs",
+    "test:i18n": "node tests/i18n.cjs",
+    "test:i18n:visual": "node tests/i18n-visual.cjs",
     "test:smoke": "node tests/smoke.cjs",
     "test:effects": "node tests/effects.cjs",
     "test:ui": "node tests/ui.cjs",
@@ -12,5 +14,9 @@
     "test:perf": "node tests/perf.cjs test-results/perf.json",
     "music:export": "node tests/export-music.cjs 60"
   },
-  "devDependencies": { "playwright": "1.62.1" }
+  "devDependencies": {
+    "acorn": "8.15.0",
+    "parse5": "7.3.0",
+    "playwright": "1.62.1"
+  }
 }
