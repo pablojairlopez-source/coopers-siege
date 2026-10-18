@@ -1,5 +1,12 @@
 # Changelog
 
+## Pantalla inicial de selección de idioma (pendiente de revisión)
+
+- Al abrir o recargar el juego aparece una bienvenida a pantalla completa con Español (Latinoamérica) y English; se requiere pulsar CONTINUAR / CONTINUE antes de entrar al menú.
+- La selección anterior aparece marcada, o se sugiere el idioma del navegador en la primera visita. La elección se guarda al confirmar, sin saltar la bienvenida en cargas posteriores.
+- Se conserva el sistema i18n y el selector 🌐 ES / EN dentro del juego; no cambia el formato de guardado, IDs, mecánicas, IA, inventario, audio ni protocolo LAN.
+- Nueva suite `tests/startup-language.cjs` y adaptación exclusiva del entorno de pruebas para confirmar automáticamente la bienvenida en suites históricas; se requiere validación ejecutando `npm test` y probando en S23 Ultra físico.
+
 ## Localización es-419 / en-US (en revisión)
 
 - 1620 recursos por idioma: menús, HUD, 28 armas, 17 mapas, editores, LAN, música y campaña. Revisión de español neutro y adaptación inglesa de 106 escenas/319 intervenciones, créditos y frases de fase.
