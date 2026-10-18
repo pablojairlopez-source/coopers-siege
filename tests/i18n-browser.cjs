@@ -25,13 +25,16 @@ const {serve,launch,VIEWPORTS}=require('./lib/harness.cjs');
    check(D.i===count&&D.ui.text.textContent===CS5.campaignStory[id][count][2],'diálogo '+id);check(D.history.length===history&&JSON.stringify(C.save.seen)===seen,'efectos diálogo '+id);D.finish(false);scenes++;
   }
   C.closeResult();C.hideHub();C.startBattle(4,2);for(let i=0;i<90;i++)PocketSiege.step(1/60);app.paused=true;
+  I.setLanguage('es-419');check(resolutionLabels.native==='Nativa / QHD+','resolución ES');I.setLanguage('en-US');check(resolutionLabels.native==='Native / QHD+','resolución EN');
   const snapshot=()=>JSON.stringify({phase:app.phase,paused:app.paused,timer:app.timer,turn:app.turn,round:app.round,seed,chars:app.chars,teams:app.teams,projectiles:app.projectiles,supplies:app.supplies,campaign:C.save,active:C.active,attack:CS5.attack.state,angle:app.angle,power:app.power,target:app.target});
   const before=snapshot(),mask=terrain.mask.slice(),song=CS5.composer.song,step=audio.step;
   for(let i=0;i<20;i++)I.setLanguage(i%2?'en-US':'es-419');
   check(snapshot()===before,'estado combate idéntico');check(terrain.mask.every((v,i)=>v===mask[i]),'terreno idéntico');check(CS5.composer.song===song&&audio.step===step,'música sin reinicio');
   check(document.getElementById('weaponName').textContent==='Bazooka','HUD');check(document.querySelector('.bb-name b').textContent==='Pharaoh Rib','jefe en vivo');
+  check(I.t('extra.combat.uses',{count:1})==='use'&&I.t('extra.combat.uses',{count:2})==='uses','plural munición EN');I.setLanguage('es-419');check(I.t('extra.combat.uses',{count:1})==='carga'&&I.t('extra.combat.uses',{count:2})==='cargas','plural munición ES');I.setLanguage('en-US');
   C.showBossCard(17,()=>{});I.setLanguage('es-419');check(C.resultEl.textContent.includes('Cooper Cero'),'tarjeta ES');I.setLanguage('en-US');check(C.resultEl.textContent.includes('Cooper Zero'),'tarjeta EN');
   C.showResult(false);I.setLanguage('es-419');check(C.resultEl.textContent.includes('DERROTA'),'resultado ES');I.setLanguage('en-US');check(C.resultEl.textContent.includes('DEFEAT'),'resultado EN');
+  app.turn=1;app.totalShots=1;C.showResult(true);check(C.resultEl.querySelector('#battleStats').textContent.startsWith('1 turn · 1 attack'),'resultado singular EN');I.setLanguage('es-419');check(C.resultEl.querySelector('#battleStats').textContent.startsWith('1 turno · 1 ataque'),'resultado singular ES');I.setLanguage('en-US');
   C.closeResult();C.showHub('settings');I.setLanguage('es-419');check(C.body.textContent.includes('Gorra'),'accesorios ES');I.setLanguage('en-US');check(C.body.textContent.includes('Cap'),'accesorios EN');
   return {failures,saves,scenes,warnings:[...I.warnings]};
  });

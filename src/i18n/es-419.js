@@ -217,7 +217,7 @@ CS5.i18n.register('es-419',{
  "ui.main.showMatchResult.s005": "Otra batalla, otra oportunidad. Ajusta el viento y busca cobertura.",
  "ui.main.showMatchResult.s006": "¡Victoria! La bomba de celebración elimina a todos, pero el triunfo es tuyo.",
  "ui.main.showMatchResult.s007": "Dos escuadras eliminadas al mismo tiempo.",
- "ui.main.showMatchResult.s008": "{p0} turnos · {p1} ataques · {p2} de daño",
+ "ui.main.showMatchResult.s008": "{p0} · {p1} · {p2} de daño",
  "ui.main.shoot.s001": "Sin munición. Elige otra arma.",
  "ui.main.shoot.s002": "Este pug ya está lleno de energía.",
  "ui.main.shoot.s003": "El escudo ya está completo.",
@@ -233,7 +233,7 @@ CS5.i18n.register('es-419',{
  "ui.main.step.s001": "Escopeta: te queda el segundo disparo.",
  "ui.main.render.s001": "Canvas 2D",
  "ui.main.render.s002": "{p0} FPS · {p1} ms CPU · {p2} · {p3} draws ({p4}k tris) · Fluido PBF: {p5} gotas · {p6}",
- "ui.main.updateHUD.s001": "{p0}: {p1} HP ({p2} pugs vivos)",
+ "ui.main.updateHUD.s001": "{p0}: {p1} HP ({p2})",
  "ui.main.updateHUD.s002": " · TÚ",
  "ui.main.updateHUD.s003": " · ALIADO",
  "ui.main.updateHUD.s004": "{p0} {p1} m/s",
@@ -1160,7 +1160,7 @@ CS5.i18n.register('es-419',{
  "campaign.campaign.action.s005": "Sí, empezar de cero",
  "campaign.campaign.action.s006": "Campaña nueva. ¡Rumbo al Archipiélago Sol!",
  "campaign.campaign.confirm.s001": "Cancelar",
- "campaign.campaign.showResult.s002": "{p0} turnos · {p1} ataques · {p2} de daño",
+ "campaign.campaign.showResult.s002": "{p0} · {p1} · {p2} de daño",
  "campaign.campaign.showResult.s003": "CONTINUAR ↗",
  "campaign.campaign.showResult.s004": "Volver al recorrido",
  "campaign.campaign.showResult.s005": "¡JEFE DERROTADO!",
@@ -1282,5 +1282,8 @@ CS5.i18n.register('es-419',{
  "extra.damage.75": "75% · Moretones y rasguños",
  "extra.damage.50": "50% · Heridas abiertas y oreja mordida",
  "extra.damage.20": "20% · Cráneo y costillas expuestas",
- "extra.lan.guest": "invitado"
+ "extra.lan.guest": "invitado",
+ "stats.turns":{"one":"{count} turno","other":"{count} turnos"},
+ "stats.attacks":{"one":"{count} ataque","other":"{count} ataques"},
+ "stats.pugsAlive":{"one":"{count} pug vivo","other":"{count} pugs vivos"}
 });

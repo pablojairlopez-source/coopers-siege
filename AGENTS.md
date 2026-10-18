@@ -29,7 +29,7 @@ Los archivos de continuidad están subordinados al estado real del código y de 
 
 Ver `CLAUDE.md` (secciones «Arquitectura» y «Entorno y pruebas»); es la referencia común. Resumen:
 
-- `index.html` (script clásico, CRLF) + `src/**` (scripts clásicos que comparten el ámbito global; se cargan antes del script principal).
+- `index.html` (script clásico, CRLF) + `src/**` (scripts clásicos que comparten el ámbito global; se cargan antes del script principal, salvo `src/i18n/presentation.js`, que conecta las vistas después).
 - Node portátil: `$env:PATH="$env:LOCALAPPDATA\coopers-tools\node-v24.22.0-win-x64;$env:PATH"`.
 - `npm test` ejecuta todas las suites (`tests/run-all.cjs`). La prueba original `tests/lan-coop.cjs` no cambia sus aserciones.
 - Ahorro de tokens: buscar funciones concretas en `index.html` (≈ 9 300 líneas) en vez de leerlo entero.

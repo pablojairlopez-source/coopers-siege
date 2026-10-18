@@ -2,7 +2,7 @@
 (function(){
 'use strict';
 const CS5=window.CS5=window.CS5||{},KEY='coopers-siege-language-v1',SUPPORTED=['es-419','en-US'];
- const catalogs={},warnings=new Set(),cache=new Map(),listeners=new Set(),texts=new Map();
+ const catalogs={},warnings=new Set(),cache=new Map(),listeners=new Set(),texts=new Map(),pluralRules=new Map();
 const normalize=lang=>/^en(?:-|$)/i.test(lang||'')?'en-US':'es-419';
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let preferred=null;try{preferred=localStorage.getItem(KEY);}catch{}
@@ -16,8 +16,9 @@ function resolve(key,fallback){
 }
 function format(key,params={},fallback,html=false){
  let value=resolve(key,fallback);
- if(value&&typeof value==='object')value=value[new Intl.PluralRules(locale).select(Number(params.count)||0)]??value.other;
- return String(value??fallback??'').replace(/\{([\w]+)\}/g,(_,name)=>{
+ if(value&&typeof value==='object'){if(!pluralRules.has(locale))pluralRules.set(locale,new Intl.PluralRules(locale));value=value[pluralRules.get(locale).select(Number(params.count)||0)]??value.other;}
+ const text=String(value??fallback??'');if(!text.includes('{'))return text;
+ return text.replace(/\{([\w]+)\}/g,(_,name)=>{
   let v=params[name];if(typeof v==='function')v=v();
   if(v==null){warn(key,'falta parámetro '+name);v='—';}
   return html?escape(v):String(v);

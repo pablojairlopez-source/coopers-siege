@@ -19,7 +19,7 @@ Juego de artillería por turnos con pugs (navegador, PC y móvil). Se publica co
 ## Arquitectura
 
 - `index.html`: juego principal (≈ 9 300 líneas, script clásico). Expone `window.PocketSiege` (API de pruebas) y `window.CooperLAN`.
-- `src/**`: subsistemas 5.0 como *scripts* clásicos con rutas relativas, cargados **antes** del script principal. Comparten el ámbito global (`app`, `terrain`, `maps`, `W`…), así que solo pueden usarlos en tiempo de ejecución, no al cargar.
+- `src/**`: subsistemas como *scripts* clásicos con rutas relativas, cargados **antes** del script principal, salvo `src/i18n/presentation.js`, que conecta las vistas después. Comparten el ámbito global (`app`, `terrain`, `maps`, `W`…), así que los módulos anteriores al juego solo pueden usarlos en tiempo de ejecución, no al cargar.
   - `levels/art-direction.js`: dirección de arte por mapa (materiales, paleta, gradación, rayos).
   - `levels/terrain-gen.js`: trazado de los 16 mapas (mundo `W=3072`, `H=768`, `WATER=695`) y `CS5.safeSpawns`.
   - `rendering/terrain-materials.js`: pintor de materiales del terreno (incluye chamuscados).

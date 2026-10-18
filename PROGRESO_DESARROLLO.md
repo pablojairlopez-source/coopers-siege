@@ -2,14 +2,19 @@
 
 ## Actualización bilingüe es-419 / en-US
 
-Base confirmada: `origin/main` `0f8cc74`, PR #3 fusionada. Rama `feature/coopers-siege-i18n-es419-en`, creada con árbol limpio tras `git fetch origin`. Encargo completo leído. Plan A–H y glosario: `docs/LOCALIZACION.md`.
+Base publicada de 5.2: origin/main `0f8cc74`, PR #3 fusionada. Rama `feature/coopers-siege-i18n-es419-en`, creada desde esa base con árbol limpio y referencias actualizadas. Codex trabajó solo en este árbol. No hacer merge ni desplegar sin autorización.
 
-- A–D: inventario AST/HTML y extracción por claves; 1602 recursos por idioma con 106 escenas y 319 intervenciones (conteo completo, incluidas escenas auxiliares), créditos y frases de fase. Catálogos es-419 revisados y en-US adaptados; nombres de armas, mundos, equipos, jefes, habilidades y música localizados. Código técnico excluido.
-- Línea base completa ejecutada: 15/15 suites aprobadas con `node tests/run-all.cjs`, Chrome local y `TEST_BROWSER_PATH`.
-- E–F en validación: selector disponible en pantallas y combate, persistencia separada, actualización en vivo de HUD, campaña, resultados, tarjetas, créditos, diálogos e historial. El diálogo conserva índice y avance proporcional; no repite callbacks ni marca escenas al cambiar idioma.
-- Ejecutadas y aprobadas: `tests/i18n-core.cjs`, `tests/i18n-catalogs.cjs` y `tests/i18n-browser.cjs`: paridad de claves/parámetros, estructura narrativa 5.2 idéntica, 70 importaciones de 35 estados en dos idiomas, 106 escenas y 20 cambios en combate sin mutar estado/terreno/audio/guardado. Pendientes: auditoría final de cobertura, LAN con idiomas distintos, capturas móviles, rendimiento y regresión completa.
-- Sin cambios de mecánicas, guardados, IA, probabilidades, física ni protocolo LAN.
-- G en curso: auditoría residual sin texto visible pendiente (19 invariantes revisadas); 1617 claves por idioma. LAN con anfitrión/invitado en idiomas opuestos aprobada. Guardado generado con el código real de 5.2 importado; 68 victorias (34 por idioma), historial y cierre/reapertura de Chromium aprobados. Primeras 190 capturas verificadas; se reserva espacio para el selector en campaña/editor y se amplía QA a orientación vertical, ayuda, LAN y música. Las aserciones históricas se conservan; locale español explícito para sus textos. Regresión final y medición comparativa en curso.
+Localización terminada: **1620 claves por idioma**, **119 recursos originales corregidos en español**, **1520 valores ingleses adaptados distintos** y 100 compartidos. Historia completa: 17 capítulos, 106 escenas, 319 intervenciones, créditos y frases de fase. Guardado de campaña v1, mecánicas, IDs, semillas, IA, inventario, terreno y protocolo LAN conservados.
+
+Servicio/catálogos en `src/i18n/`; esquema narrativo estable en `src/campaign/story.js`. Selector 🌐 ES / EN disponible en todas las pantallas; preferencia independiente, cambio sin reiniciar combate, audio ni diálogo. Se conservan índice/avance, historial y callbacks. Los textos flotantes y avisos se actualizan sin reiniciar su duración.
+
+QA: **20/20 suites** originales y nuevas, más repetición de las suites afectadas. **70 importaciones**, guardado generado con código real 5.2, **68 victorias/34 estados por idioma**, reinicio de Chromium e idiomas opuestos en LAN aprobados. **264 capturas** (22 pantallas × dos idiomas × seis perfiles) y auditoría residual sin pendientes. Pruebas/mediciones y límites: [QA-LOCALIZACION.md](docs/QA-LOCALIZACION.md); arquitectura/cobertura: [LOCALIZACION.md](docs/LOCALIZACION.md); nomenclatura completa: [GLOSARIO.md](docs/GLOSARIO.md).
+
+Rendimiento final, tres rondas alternadas: frame medio Android emulado 13,012 ms (5.2), 12,959 ms (es-419) y 13,150 ms (en-US). HUD adicional ≈0,010 ms, memoria retenida adicional ≈0,53 MB y peor p95 del cambio puntual 38,2 ms. GPU RTX 5080 Laptop, CPU 4× y DPR 3.5; no es una medición del teléfono físico ni prueba causal de cada diferencia.
+
+Pendiente humano: Galaxy S23 Ultra físico (Chrome/Samsung Internet, selector nativo, barras/áreas seguras, multitáctil y sesiones largas), LAN entre aparatos/red real y lectura editorial externa. No se conocen defectos funcionales abiertos de localización en los recorridos probados. Capturas representativas y métricas versionadas en `docs/i18n/`; originales/logs en `test-results/i18n/`.
+
+Fases A–G completas. Entrega H: se abrirá PR de revisión después de subir este cierre; el commit final de continuidad añadirá sus enlaces y la vista previa verificada. No repetir extracción ni implementar otra campaña. Para nuevos textos, editar catálogos/esquema y ejecutar la suite específica y las pruebas de la vista afectada.
 
 Lo que sigue conserva el registro histórico de 5.2; su estado de publicación queda supersedido por la base confirmada de esta actualización.
 

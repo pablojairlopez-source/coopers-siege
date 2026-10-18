@@ -2,19 +2,21 @@
 
 ## Trabajo actual · Localización bilingüe
 
-El usuario confirma y Git verifica la fusión de PR #3: `origin/main` `0f8cc74`. Árbol inicialmente limpio; referencias actualizadas sin descartar trabajo. Rama nueva `feature/coopers-siege-i18n-es419-en` creada desde esa base. Claude está sin disponibilidad; Codex trabaja solo en este árbol.
+Base publicada de 5.2: origin/main `0f8cc74`, PR #3 fusionada. Rama `feature/coopers-siege-i18n-es419-en`, creada desde esa base con árbol limpio y referencias actualizadas. Codex trabajó solo en este árbol. No hacer merge ni desplegar sin autorización.
 
-Encargo completo leído del adjunto del usuario. Plan A–H, decisiones y glosario en `docs/LOCALIZACION.md`. A–D implementadas: 1602 recursos por idioma, 106 escenas/319 intervenciones, créditos y frases de fase; estructura de story.js conserva IDs, expresiones y hablantes de 5.2. Servicio, catálogos y adaptador en `src/i18n/`; extractor/manifiesto y fuentes editoriales en `tools/`. Acorn/parse5 son dependencias de desarrollo, no del navegador.
+Localización terminada: **1620 claves por idioma**, **119 recursos originales corregidos en español**, **1520 valores ingleses adaptados distintos** y 100 compartidos. Historia completa: 17 capítulos, 106 escenas, 319 intervenciones, créditos y frases de fase. Guardado de campaña v1, mecánicas, IDs, semillas, IA, inventario, terreno y protocolo LAN conservados.
 
-E–F integradas, pendientes de auditoría final: selector global accesible, preferencia `coopers-siege-language-v1` independiente de campaña v1; datos de presentación con getters, HUD, pantallas de campaña, tarjetas/resultados, créditos, diálogos e historial actualizables. Los avisos conservan su duración y los diálogos conservan índice/avance sin callback ni escena extra. No ejecutar selectMap/newMatch/pausa/audio al traducir. El adaptador no debe alterar física, inventario ni protocolo.
+Servicio/catálogos en `src/i18n/`; esquema narrativo estable en `src/campaign/story.js`. Selector 🌐 ES / EN disponible en todas las pantallas; preferencia independiente, cambio sin reiniciar combate, audio ni diálogo. Se conservan índice/avance, historial y callbacks. Los textos flotantes y avisos se actualizan sin reiniciar su duración.
 
-Pruebas ya ejecutadas: línea base 15/15 antes de cambios; nuevas `i18n-core`, `i18n-catalogs`, `i18n-browser` aprobadas (70 importaciones, todos los estados de progreso, 106 escenas y cambios en combate sin mutaciones). Próximo paso: buscar texto visible residual, probar LAN con idiomas distintos, revisar capturas en PC/S23/Fold/tableta/teléfono compacto, medir rendimiento, ejecutar todas las suites, documentar cobertura/glosario/limitaciones y abrir PR. Aún no declarar terminado ni publicar.
+QA: **20/20 suites** originales y nuevas, más repetición de las suites afectadas. **70 importaciones**, guardado generado con código real 5.2, **68 victorias/34 estados por idioma**, reinicio de Chromium e idiomas opuestos en LAN aprobados. **264 capturas** (22 pantallas × dos idiomas × seis perfiles) y auditoría residual sin pendientes. Pruebas/mediciones y límites: [QA-LOCALIZACION.md](QA-LOCALIZACION.md); arquitectura/cobertura: [LOCALIZACION.md](LOCALIZACION.md); nomenclatura completa: [GLOSARIO.md](GLOSARIO.md).
 
-No hacer merge ni publicar. El traspaso histórico que sigue describe la auditoría ya integrada en 5.2, no el estado actual de la PR #3.
+Rendimiento final, tres rondas alternadas: frame medio Android emulado 13,012 ms (5.2), 12,959 ms (es-419) y 13,150 ms (en-US). HUD adicional ≈0,010 ms, memoria retenida adicional ≈0,53 MB y peor p95 del cambio puntual 38,2 ms. GPU RTX 5080 Laptop, CPU 4× y DPR 3.5; no es una medición del teléfono físico ni prueba causal de cada diferencia.
 
-Avance de QA (fase G): 1617 claves; `i18n-audit --check` sin residuales, 19 invariantes técnicas/de marca. `i18n-lan` e `i18n-saves` aprobadas: idiomas opuestos en coop 6v6, importación generada por campaña 5.2 real, 68 victorias, historial y preferencia tras reiniciar Chromium. `campaign-audit` y `narrative` originales aprobadas tras mantener la API string de toast y aceptar eventos de teclado enviados a window. Primeras 190 capturas pasan; ampliación a seis perfiles/22 escenas en curso. Pruebas finales y rendimiento en ejecución; no atribuir un resultado definitivo hasta leer sus logs. Glosario completo: `docs/GLOSARIO.md`; informe reproducible: `tools/i18n-report.cjs`.
+Pendiente humano: Galaxy S23 Ultra físico (Chrome/Samsung Internet, selector nativo, barras/áreas seguras, multitáctil y sesiones largas), LAN entre aparatos/red real y lectura editorial externa. No se conocen defectos funcionales abiertos de localización en los recorridos probados. Capturas representativas y métricas versionadas en `docs/i18n/`; originales/logs en `test-results/i18n/`.
 
-> Continuidad subordinada a Git. Antes de continuar: estado, rama, últimos diez commits y lectura de AGENTS/CLAUDE/PROGRESO/CAMPANA/NOTAS.
+Fases A–G completas. Entrega H: se abrirá PR de revisión después de subir este cierre; el commit final de continuidad añadirá sus enlaces y la vista previa verificada. No repetir extracción ni implementar otra campaña. Para nuevos textos, editar catálogos/esquema y ejecutar la suite específica y las pruebas de la vista afectada.
+
+El registro que sigue corresponde a la auditoría histórica de 5.2 ya integrada mediante PR #3; no describe una PR pendiente.
 
 ## Último traspaso · 17-10-2026 · Codex
 

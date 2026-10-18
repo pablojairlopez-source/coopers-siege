@@ -1,10 +1,10 @@
-// Capturas comparables y controles de límites en dos idiomas y cinco perfiles.
+// Capturas comparables y controles de límites en dos idiomas y seis perfiles.
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {serve,launch,VIEWPORTS}=require('./lib/harness.cjs');
 const profiles={desktop:VIEWPORTS.desktop,s23ultra:{...VIEWPORTS.s23ultra,deviceScaleFactor:1},fold:{...VIEWPORTS.fold,deviceScaleFactor:1},tablet:{viewport:{width:1180,height:820},deviceScaleFactor:1,isMobile:true,hasTouch:true},compact:{viewport:{width:640,height:360},deviceScaleFactor:1,isMobile:true,hasTouch:true},portrait:{viewport:{width:412,height:915},deviceScaleFactor:1,isMobile:true,hasTouch:true}};
 const scenes=['menu','language','map','setup','combat','arsenal','supply','journey','dialogue','bosscard','victory','defeat','gallery','trophy','finale','credits','settings','editor','error','help','lan','music'];
 (async()=>{const srv=await serve(),browser=await launch(),errors=[],checks=[],out=path.resolve('test-results/i18n/shots');fs.mkdirSync(out,{recursive:true});try{
- for(const [profile,vp]of Object.entries(profiles))for(const lang of ['es-419','en-US']){
+ for(const [profile,vp]of Object.entries(profiles).filter(([name])=>!process.env.I18N_PROFILES||process.env.I18N_PROFILES.split(',').includes(name)))for(const lang of ['es-419','en-US']){
   const context=await browser.newContext({...vp,locale:lang});await context.addInitScript(()=>{const raf=requestAnimationFrame;window.requestAnimationFrame=cb=>cb.name==='frame'?0:raf(cb);});const page=await context.newPage();page.on('pageerror',e=>errors.push(profile+':'+e.message));await page.goto(srv.url);await page.waitForFunction(()=>window.PocketSiege);
   for(const scene of scenes){
    await page.evaluate(({scene,lang})=>{
@@ -50,6 +50,7 @@ const scenes=['menu','language','map','setup','combat','arsenal','supply','journ
   }
   await context.close();console.log(profile+' '+lang+': '+scenes.length+' capturas');
  }
- fs.writeFileSync('test-results/i18n/visual.json',JSON.stringify({errors,checks},null,1));console.log(checks.filter(c=>c.bad.length||c.warnings.length));assert.deepEqual(errors,[]);assert.ok(checks.every(c=>!c.bad.length&&!c.warnings.length),'límites/selector/errores de texto');
+ const reportFile='test-results/i18n/visual.json';let merged=checks;if(process.env.I18N_PROFILES&&fs.existsSync(reportFile)){const previous=JSON.parse(fs.readFileSync(reportFile));const key=c=>c.profile+':'+c.lang+':'+c.scene,updated=new Set(checks.map(key));merged=[...previous.checks.filter(c=>!updated.has(key(c))),...checks];}
+ fs.writeFileSync(reportFile,JSON.stringify({errors,checks:merged},null,1));console.log(checks.filter(c=>c.bad.length||c.warnings.length));assert.deepEqual(errors,[]);assert.ok(checks.every(c=>!c.bad.length&&!c.warnings.length),'límites/selector/errores de texto');
  console.log(`✔ ${checks.length} capturas bilingües: PC, S23 Ultra, plegable, tableta y Android compacto`);
  }finally{await browser.close();await srv.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

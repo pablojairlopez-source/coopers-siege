@@ -6,6 +6,9 @@
 .cmp .cmp-tools{padding-inline-end:64px}
 #workshop .workshop-header{padding-inline-end:64px}
 #maps .map-card b{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+body #help,body #lanModal,body #lyriaModal{padding-top:56px;padding-bottom:8px}
+body #help .modal,body #lanModal .modal,body #lyriaModal .modal{max-height:calc(100dvh - 72px);overflow-y:auto}
+@media(orientation:portrait) and (max-width:800px){body #menu{padding-top:76px!important}body #gameHUD{top:34px!important}}
 .language-picker .i18n-control{position:absolute;right:0;top:46px;width:240px;display:grid;gap:8px;padding:12px;border:1px solid #8ca3b7;border-radius:12px;background:#102035;box-shadow:0 8px 25px #0008}
 .i18n-control select{min-height:44px;width:100%;font:600 14px system-ui;color:#fff;background:#213b50;border:1px solid #8ca3b7;border-radius:8px;padding:8px}
 .language-picker:focus-within{outline:2px solid #ffd36a;outline-offset:2px}
