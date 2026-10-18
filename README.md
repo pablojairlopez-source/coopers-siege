@@ -12,6 +12,8 @@ Interfaz y campaña completas en **Español (Latinoamérica)** y **English**. Ab
 
 Los guardados de 5.2 conservan su formato y pueden exportarse/importarse entre idiomas. El cambio no reinicia el combate ni el diálogo. Glosario: [docs/GLOSARIO.md](docs/GLOSARIO.md); arquitectura y QA: [docs/LOCALIZACION.md](docs/LOCALIZACION.md).
 
+[PR #4](https://github.com/pablojairlopez-source/coopers-siege/pull/4) · [Vista previa bilingüe verificada](https://raw.githack.com/pablojairlopez-source/coopers-siege/2f7aa2e4f727fac8d55914fadd1d2409df998721/index.html). Si aparece el aviso del proveedor, pulsa **Open the page**. La vista previa usa almacenamiento separado del sitio publicado; puedes importar tu progreso exportado de 5.2.
+
 ## Controles (5.1)
 
 **Smartphone** (horizontal): a la izquierda, el **arsenal** en la esquina inferior y las flechas **‹ ›** encima; a la derecha, **ATACAR** en la esquina inferior y **SALTAR** encima.

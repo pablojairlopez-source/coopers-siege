@@ -14,7 +14,9 @@ Rendimiento final, tres rondas alternadas: frame medio Android emulado 13,012 ms
 
 Pendiente humano: Galaxy S23 Ultra físico (Chrome/Samsung Internet, selector nativo, barras/áreas seguras, multitáctil y sesiones largas), LAN entre aparatos/red real y lectura editorial externa. No se conocen defectos funcionales abiertos de localización en los recorridos probados. Capturas representativas y métricas versionadas en `docs/i18n/`; originales/logs en `test-results/i18n/`.
 
-Fases A–G completas. Entrega H: se abrirá PR de revisión después de subir este cierre; el commit final de continuidad añadirá sus enlaces y la vista previa verificada. No repetir extracción ni implementar otra campaña. Para nuevos textos, editar catálogos/esquema y ejecutar la suite específica y las pruebas de la vista afectada.
+Fases A–H completas. [PR #4](https://github.com/pablojairlopez-source/coopers-siege/pull/4) abierta hacia main, sin merge. [Vista previa bilingüe verificada](https://raw.githack.com/pablojairlopez-source/coopers-siege/2f7aa2e4f727fac8d55914fadd1d2409df998721/index.html), fijada al commit de código/QA `2f7aa2e`; el cierre H posterior solo documenta la entrega. Carga HTTP 200, cambio por selector ES/EN y persistencia tras recargar aprobados en Chromium con perfil S23, sin errores JS ni recursos del juego fallidos. Si aparece el aviso del proveedor, pulsar **Open the page**. El dominio tiene almacenamiento separado; importar el progreso exportado de 5.2 para probarlo allí.
+
+Commits publicados de implementación: `b6d3920` (A/B), `bb4464f` (C/F), `9237488` (G: guardados/LAN) y `2f7aa2e` (G: QA visual/rendimiento); consultar `git log` para el cierre H. Main permanece en `0f8cc74`; no se publicó GitHub Pages. No repetir extracción ni implementar otra campaña. Para nuevos textos, editar catálogos/esquema y ejecutar la suite específica y las pruebas de la vista afectada. Se conservan las limitaciones históricas de balance de 5.2 descritas más abajo.
 
 El registro que sigue corresponde a la auditoría histórica de 5.2 ya integrada mediante PR #3; no describe una PR pendiente.
 

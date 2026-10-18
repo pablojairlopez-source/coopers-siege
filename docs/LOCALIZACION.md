@@ -2,6 +2,8 @@
 
 Base: versión 5.2 publicada, `origin/main` `0f8cc74` (PR #3). Rama: `feature/coopers-siege-i18n-es419-en`. Se conservan los 17 mundos, 28 armas, 34 combates, IA, terreno, gore, audio procedural y modos CPU/local/LAN. No fusionar ni publicar sin autorización.
 
+Entrega: [PR #4 abierta hacia main](https://github.com/pablojairlopez-source/coopers-siege/pull/4), sin merge. [Vista previa bilingüe del código validado `2f7aa2e`](https://raw.githack.com/pablojairlopez-source/coopers-siege/2f7aa2e4f727fac8d55914fadd1d2409df998721/index.html): carga HTTP 200, cambio ES/EN y persistencia tras recargar comprobados en Chromium con perfil S23. Si el proveedor muestra su aviso, pulsar **Open the page**. Este dominio tiene almacenamiento separado: importar un guardado exportado de 5.2 para probar progreso existente. No se desplegó GitHub Pages.
+
 ## Uso
 
 Abrir **🌐 ES / EN** y elegir **Español (Latinoamérica)** o **English**. Disponible en menú, combate, pausa, arsenal, campaña, diálogos, historial, jefes, resultados, final y editores. En combate ocupa el espacio central inferior entre controles; cabeceras y modales reservan espacio. En vertical se conserva la recomendación de girar el teléfono.
