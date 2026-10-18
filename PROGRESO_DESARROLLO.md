@@ -1,5 +1,14 @@
 # Progreso de Cooper's Siege
 
+## Pantalla de bienvenida por idioma — PR pendiente
+
+- Rama: `feature/coopers-siege-language-startup`, base `main` tras PR #4 (`09c3260`).
+- Implementación: `index.html`, `src/i18n/startup.css`, `src/i18n/startup.js`; dos opciones es-419/en-US, confirmación explícita en cada carga, idioma anterior preseleccionado, teclado y táctil.
+- Los hijos principales del documento permanecen temporalmente `inert`, por lo que el menú bajo la bienvenida no recibe interacción. La selección solo se persiste al confirmar; los guardados de campaña se mantienen independientes.
+- Test nuevo `tests/startup-language.cjs` (navegador inglés, preferencia, recarga, guardado, teclado y S23 Ultra emulado). Harness de QA confirma la bienvenida en suites heredadas; test nuevo ejecuta el flujo real.
+- Revisión de sintaxis JavaScript de los archivos alterados y del script inline del HTML realizada. **Pruebas de navegador y npm test pendientes de ejecutar en entorno con Node/Playwright; no declarar resultados verdes sin ejecutarlas.**
+- Entrega por PR a `main`, sin merge ni despliegue hasta autorización.
+
 ## Actualización bilingüe es-419 / en-US
 
 Base publicada de 5.2: origin/main `0f8cc74`, PR #3 fusionada. Rama `feature/coopers-siege-i18n-es419-en`, creada desde esa base con árbol limpio y referencias actualizadas. Codex trabajó solo en este árbol. No hacer merge ni desplegar sin autorización.
