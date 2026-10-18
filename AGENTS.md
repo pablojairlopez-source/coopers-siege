@@ -15,7 +15,7 @@ Los archivos de continuidad están subordinados al estado real del código y de 
 
 - `main` publica la versión actual en GitHub Pages (carpeta raíz, sin build). **Nunca merge, push ni despliegue a `main`** sin autorización explícita del usuario.
 - Rama de trabajo 5.2: `feature/coopers-siege-5-2-torneo` (la misma para Claude Code y Codex). Diseño y seguimiento: `docs/CAMPANA-5.2.md`.
-- 5.2 fusionada en `origin/main` mediante PR #3 (`0f8cc74`). Trabajo actual: localización en `feature/coopers-siege-i18n-es419-en`, desde esa base; plan en `docs/LOCALIZACION.md`. No usar la rama histórica 5.2 para cambios nuevos.
+- Localización es-419/en-US fusionada en `main` mediante PR #4 (`09c3260`). Trabajo actual: bienvenida obligatoria de idioma en `feature/coopers-siege-language-startup`; leer el primer apartado de `docs/HANDOFF.md` y `docs/LOCALIZACION.md`. No editar directamente `main`.
 - Prohibido sin autorización: `git reset --hard`, `git clean -fd`, `git push --force`.
 - Commits pequeños con prefijo de fase («Fase i18n-X: …» en la actualización actual; históricamente «Fase 5.2-X: …»). Al cerrar cada subfase: tests pertinentes, actualizar `PROGRESO_DESARROLLO.md` y `docs/HANDOFF.md`, commit y push de la rama.
 - No eliminar funcionalidades: 28 armas, terreno destructible, IA, editor de escenarios y de pugs, CPU, local, LAN versus y cooperativo LAN 6v6.

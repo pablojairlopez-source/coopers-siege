@@ -1,5 +1,13 @@
 # Localización bilingüe es-419 / en-US
 
+## Ampliación: bienvenida de idioma al inicio
+
+La rama `feature/coopers-siege-language-startup` añade una pantalla de bienvenida antes del menú, **en cada carga de página**. La elección anterior queda preseleccionada, pero nunca se omite el paso de confirmación. Las tarjetas de idioma no escriben preferencias hasta pulsar CONTINUAR / CONTINUE; entonces se utiliza `CS5.i18n.setLanguage` y se habilita la interfaz. La campaña y los guardados no se alteran.
+
+Archivos: `src/i18n/startup.js`, `src/i18n/startup.css` y estructura estática en `index.html`. Se agregan **10 claves bilingües** (incluidas etiquetas fijas y mensajes de confirmación), para **1630 claves por idioma** en esta rama. Los 1620 recursos y la tabla posterior documentan la línea base de la PR #4.
+
+QA nuevo: `node tests/startup-language.cjs` y `npm test`. El harness confirma automáticamente la bienvenida **solo en suites previas**; la prueba nueva recorre la pantalla real, incluidos teclado, móvil, guardado y recarga. Hasta ejecutar estas pruebas en Node/Playwright, su resultado está pendiente de validación; no publicar sin aprobación.
+
 Base: versión 5.2 publicada, `origin/main` `0f8cc74` (PR #3). Rama: `feature/coopers-siege-i18n-es419-en`. Se conservan los 17 mundos, 28 armas, 34 combates, IA, terreno, gore, audio procedural y modos CPU/local/LAN. No fusionar ni publicar sin autorización.
 
 Entrega: [PR #4 abierta hacia main](https://github.com/pablojairlopez-source/coopers-siege/pull/4), sin merge. [Vista previa bilingüe del código validado `2f7aa2e`](https://raw.githack.com/pablojairlopez-source/coopers-siege/2f7aa2e4f727fac8d55914fadd1d2409df998721/index.html): carga HTTP 200, cambio ES/EN y persistencia tras recargar comprobados en Chromium con perfil S23. Si el proveedor muestra su aviso, pulsar **Open the page**. Este dominio tiene almacenamiento separado: importar un guardado exportado de 5.2 para probar progreso existente. No se desplegó GitHub Pages.
