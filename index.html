@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es-419">
+<html lang="es-419" class="language-startup-pending">
 <head>
 
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><link rel="canonical" href="https://pablojairlopez-source.github.io/coopers-siege/"><meta property="og:url" content="https://pablojairlopez-source.github.io/coopers-siege/"><meta property="og:title" content="Cooper's Siege 5.2 · The Tournament of the Universe"><meta property="og:description" content="Artillería por turnos: 28 armas, 17 mundos y una campaña de 17 capítulos." data-i18n-content="extra.metadata"><meta name="theme-color" content="#17233b"><meta name="description" content="Artillería por turnos: 28 armas, 17 mundos y una campaña de 17 capítulos." data-i18n-content="extra.metadata"><title data-i18n="ui.html.title.s001">Cooper's Siege 5.2 · Next Gen</title>
@@ -1163,8 +1163,25 @@ body[data-phase="menu"] #turnBanner{display:none!important}
 }</style>
 <link rel="stylesheet" href="src/ui/controls.css"><link rel="stylesheet" href="src/ui/campaign.css"><link rel="stylesheet" href="src/ui/dialogue.css">
 <link rel="stylesheet" href="src/i18n/language.css">
+<link rel="stylesheet" href="src/i18n/startup.css">
 </head>
 <body data-phase="menu">
+<!-- Acceso bilingüe: aparece en cada carga; no modifica el progreso de campaña. -->
+<section id="languageWelcome" role="dialog" aria-modal="true" aria-labelledby="languageWelcomeTitle" aria-describedby="languageWelcomeSubtitle">
+ <div class="lw-panel">
+  <div class="lw-mark" aria-hidden="true">🐶</div>
+  <h1>COOPER'S SIEGE</h1>
+  <p class="lw-kicker">THE TOURNAMENT OF THE UNIVERSE · EL TORNEO DEL UNIVERSO</p>
+  <h2 id="languageWelcomeTitle" class="lw-instruction">SELECCIONA TU IDIOMA</h2>
+  <p id="languageWelcomeSubtitle" class="lw-translation">SELECT YOUR LANGUAGE</p>
+  <div class="lw-choices" role="group" aria-label="Idioma / Language">
+   <button class="lw-choice" type="button" data-welcome-language="es-419" aria-pressed="true">Español (Latinoamérica)<small>Spanish · Latin America</small></button>
+   <button class="lw-choice" type="button" data-welcome-language="en-US" aria-pressed="false">English<small>Inglés · English</small></button>
+  </div>
+  <button id="languageWelcomeContinue" class="lw-confirm" type="button">CONTINUAR →</button>
+  <p id="languageWelcomeNote" class="lw-note">Puedes cambiar el idioma más adelante en las opciones.</p>
+ </div>
+</section>
 <canvas id="background" aria-hidden="true"></canvas><canvas id="depth" aria-hidden="true"></canvas><canvas id="effects" aria-label="Escenario de batalla. Toca para apuntar o marcar un objetivo." data-i18n-aria-label="ui.html.effects.aria-label.s002"></canvas><div class="vignette"></div>
 <div id="rotateHint" hidden data-i18n="ui.html.rotateHint.s003">↻ Gira tu teléfono para jugar con más espacio.</div>
 <main id="menu">
@@ -8840,4 +8857,5 @@ function drawCharacterLabels(c){
 
 </script>
 <script src="src/i18n/presentation.js"></script>
+<script src="src/i18n/startup.js"></script>
 </body></html>
