@@ -50,11 +50,11 @@ function interceptKey(e){
    }
   }
  }
- e.stopImmediatePropagation();
 }
 document.addEventListener('keydown',interceptKey,true);
-document.addEventListener('keyup',interceptKey,true);
-for(const type of ['pointerdown','pointerup','click','touchstart','touchend'])gate.addEventListener(type,e=>e.stopPropagation());
+// Detener la propagación desde el propio diálogo conserva la activación nativa
+// con Enter y Espacio, sin entregar esas teclas a los controles del combate.
+for(const type of ['keydown','keyup','pointerdown','pointerup','click','touchstart','touchend'])gate.addEventListener(type,e=>e.stopPropagation());
 // Evita que un clic muy rápido en Continuar pueda pasar al menú que queda debajo.
 gate.addEventListener('click',e=>e.stopPropagation());
 label();
