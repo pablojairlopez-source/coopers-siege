@@ -4,6 +4,14 @@ CS5.i18n.register('en-US',{
  "language.changed": "Language updated.",
  "startup.continue": "CONTINUE →",
  "startup.note": "You can change the language later in settings.",
+ "startup.brand": "COOPER'S SIEGE",
+ "startup.kicker": "THE TOURNAMENT OF THE UNIVERSE · EL TORNEO DEL UNIVERSO",
+ "startup.titleEs": "SELECCIONA TU IDIOMA",
+ "startup.titleEn": "SELECT YOUR LANGUAGE",
+ "startup.esLabel": "Español (Latinoamérica)",
+ "startup.esHint": "Spanish · Latin America",
+ "startup.enLabel": "English",
+ "startup.enHint": "Inglés · English",
  "common.items": {
   "one": "{count} item",
   "other": "{count} items"
