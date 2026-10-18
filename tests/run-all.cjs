@@ -18,6 +18,7 @@ const suites=[
  ['Narrativa y diálogo 5.2','narrative.cjs'],
  ['Banda sonora y efectos','music.cjs',['10']],
  ['Mezcla de audio 5.1','audio-mix.cjs'],
+ ['Bienvenida de idioma obligatoria','startup-language.cjs'],
  ['Servicio de idiomas','i18n-core.cjs'],
  ['Catálogos y estructura bilingüe','i18n-catalogs.cjs'],
  ['Cambio en vivo y guardados bilingües','i18n-browser.cjs'],
