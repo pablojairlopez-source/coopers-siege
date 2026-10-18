@@ -1,5 +1,15 @@
 # Traspaso entre agentes (Claude Code ⇄ Codex)
 
+## Traspaso actual · Bienvenida obligatoria de idioma
+
+- Base `main` `09c3260` (PR #4 bilingüe fusionada). Rama activa propuesta: `feature/coopers-siege-language-startup`, no publicar ni fusionar sin autorización.
+- Primer elemento interactivo en cada carga: `#languageWelcome` definido al inicio del body. `startup.css` da estilo responsivo (PC, S23 apaisado/vertical, plegables, compactos) y `startup.js` aplica `inert` al resto de la interfaz hasta pulsar CONTINUAR/CONTINUE.
+- La preferencia previa de `CS5.i18n.locale` se usa como preselección. Cambiar la tarjeta solo modifica la preselección; al confirmar se llama `CS5.i18n.setLanguage`, se libera el menú y se mantiene `coopers-siege-campaign-v1` sin modificaciones.
+- El selector permanente 🌐 ES / EN continúa funcionando dentro de la partida. Se incorporan claves `startup.continue` y `startup.note` en ambos catálogos.
+- La suite `tests/startup-language.cjs` comprueba el comportamiento explícito. Las suites históricas usan una aceptación exclusiva del harness `tests/lib/harness.cjs` y la suite nueva solicita `manualLanguageWelcome:true`.
+- Sintaxis JS verificada para módulos nuevos/modificados e inline del HTML. **Sin ejecución real de Node/Playwright disponible en esta sesión**: ejecutar `npm test`, `node tests/startup-language.cjs`, comprobar navegación por teclado, y probar en S23 Ultra físico. Si aparecen fallos, corregirlos sin afectar el guardado.
+- Al cerrar QA, actualizar esta sección con resultados reales. No eliminar el trabajo ni volver a implementar el sistema i18n de la PR #4.
+
 ## Trabajo actual · Localización bilingüe
 
 Base publicada de 5.2: origin/main `0f8cc74`, PR #3 fusionada. Rama `feature/coopers-siege-i18n-es419-en`, creada desde esa base con árbol limpio y referencias actualizadas. Codex trabajó solo en este árbol. No hacer merge ni desplegar sin autorización.
