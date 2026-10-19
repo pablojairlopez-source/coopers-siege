@@ -1,5 +1,15 @@
 # Progreso de Cooper's Siege
 
+## Trabajo actual — Guardado local y transferencias entre dispositivos
+
+Rama: `feature/coopers-siege-save-transfer` desde `main` con bienvenida bilingüe (PR #5). **No publicar, hacer merge ni modificar main sin autorización.**
+
+- `src/campaign/campaign.js`: mantiene esquema `coopers-siege-campaign-v1`; lectura con recuperación de clave secundaria `-backup`; bloqueo de sobrescritura de JSON corrupto; importación solo exitosa si el guardado se escribe y verifica por lectura; advertencias visibles.
+- `src/campaign/save-transfer.js` y `src/ui/campaign.css`: gestor accesible desde menú y mapa de campaña, exportación con fecha/capítulo, compartir archivo cuando el navegador lo permita, importación con comparación y confirmación obligatoria y restauración de respaldo.
+- Catálogos es-419/en-US: 33 claves nuevas en cada idioma. `index.html` carga el subsistema junto a campaña. No hay backend, logins ni nube.
+- `tests/save-transfer.cjs` integrado al runner. Prueba aislada de lógica de guardado: 9 escenarios superados. Pruebas Playwright/Node y casos itch.io en dispositivos reales **aún por ejecutar**.
+- Detalles para usuarios/agentes y límites de almacenamiento en [docs/GUARDADOS.md](docs/GUARDADOS.md). No se puede recuperar un guardado que se perdió antes de esta versión sin exportación.
+
 ## Pantalla de bienvenida por idioma — PR pendiente
 
 - Rama: `feature/coopers-siege-language-startup`, base `main` tras PR #4 (`09c3260`).
