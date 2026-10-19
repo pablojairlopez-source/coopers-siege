@@ -10,7 +10,7 @@
 (function(){
 'use strict';
 const CS5=window.CS5=window.CS5||{};
-const KEY='coopers-siege-campaign-v1',VERSION=1;
+const KEY='coopers-siege-campaign-v1',BACKUP_KEY='coopers-siege-campaign-v1-backup',VERSION=1;
 const D=()=>CS5.campaignData,S=()=>CS5.campaignStory;
 const esc=s=>escapeHTML(String(s??''));
 const ACCESSORIES=['none','cap','crown','halo','horns','samurai','astronaut','mohawk','chef','vr','bandana','glasses','pirate','helmet','viking','wizard','sombrero','headphones','gasmask','monocle','bowtie'];
@@ -39,7 +39,7 @@ function sanitize(raw){
  s.seen=Array.isArray(raw.seen)?raw.seen.filter(x=>typeof x==='string'&&x.length<40).slice(0,400):[];
  s.finished=!!raw.finished&&s.progress[17].b2;s.trophy=!!raw.trophy&&s.finished;
  if(raw.last&&Number.isInteger(raw.last.chapter)&&[1,2].includes(raw.last.battle))s.last={chapter:Math.min(17,Math.max(1,raw.last.chapter)),battle:raw.last.battle,won:!!raw.last.won};
- s.updated=Date.now();
+ s.updated=Number.isFinite(Number(raw.updated))&&Number(raw.updated)>0?Number(raw.updated):Date.now();
  return s;
 }
 
@@ -47,15 +47,49 @@ const campaign={
  save:null,active:null,screen:'map',selected:1,
  // ---------- Guardado ----------
  load(){
-  let s=null;try{s=sanitize(JSON.parse(localStorage.getItem(KEY)||'null'));}catch{}
-  this.save=s||defaultSave();return this.save;
+  let raw=null,backup=null,readError=false;
+  try{raw=localStorage.getItem(KEY);backup=localStorage.getItem(BACKUP_KEY);}catch{readError=true;}
+  const parse=v=>{if(!v)return null;try{return sanitize(JSON.parse(v));}catch{return null;}};
+  const primary=parse(raw),previous=parse(backup);
+  this.storageState=readError?'unavailable':primary?'ok':previous?'recovered':raw?'corrupt':'empty';
+  this.storageReadOnly=!readError&&!primary&&!previous&&!!raw;
+  this.save=primary||previous||defaultSave();
+  return this.save;
  },
- store(){this.save.updated=Date.now();try{localStorage.setItem(KEY,JSON.stringify(this.save));this.saveWarningShown=false;return true;}catch{if(!this.saveWarningShown){toastLocalized(()=>CS5.i18n.t("campaign.campaign.store.s001"),6);this.saveWarningShown=true;}return false;}},
+ store(){
+  if(this.storageReadOnly){this.warnSaveFailure();return false;}
+  const previousUpdated=this.save.updated;
+  this.save.updated=Date.now();
+  try{
+   const before=localStorage.getItem(KEY),payload=JSON.stringify(this.save);
+   localStorage.setItem(KEY,payload);
+   if(localStorage.getItem(KEY)!==payload)throw new Error('Verificación de escritura fallida');
+   // Conservar la última versión anterior válida, incluso si la actual se corrompe.
+   try{if(before&&sanitize(JSON.parse(before)))localStorage.setItem(BACKUP_KEY,before);}catch{}
+   this.storageState='ok';this.saveWarningShown=false;
+   return true;
+  }catch{
+   this.save.updated=previousUpdated;this.storageState='unavailable';this.warnSaveFailure();return false;
+  }
+ },
+ warnSaveFailure(){
+  if(this.saveWarningShown)return;
+  this.saveWarningShown=true;
+  if(typeof toastLocalized==='function')toastLocalized(()=>CS5.i18n.t("campaign.campaign.store.s001"),6);
+ },
+ backupData(){try{const raw=localStorage.getItem(BACKUP_KEY);return raw&&sanitize(JSON.parse(raw))?raw:null;}catch{return null;}},
  hasProgress(){const s=this.save||this.load();return s.victories+s.defeats>0||s.seen.length>0;},
- reset(){this.save=defaultSave();this.store();},
+ reset(){this.storageReadOnly=false;this.save=defaultSave();return this.store();},
  markSeen(id){if(!id)return;if(!this.save)this.load();if(!this.save.seen.includes(id)){this.save.seen.push(id);this.store();}},
  exportData(){return JSON.stringify(this.save,null,1);},
- importData(text){let raw;try{raw=JSON.parse(text);}catch{return false;}const s=sanitize(raw);if(!s)return false;this.save=s;this.store();return true;},
+ importData(text){
+  let raw;try{raw=JSON.parse(text);}catch{return false;}
+  const s=sanitize(raw);if(!s)return false;
+  const current=this.save,wasLocked=this.storageReadOnly;
+  this.storageReadOnly=false;this.save=s;
+  if(!this.store()){this.save=current;this.storageReadOnly=wasLocked;return false;}
+  return true;
+ },
  // Estado 0..34 (34 = campaña completa): 2 × capítulos completos + batalla 1 del actual.
  stateIndex(){const s=this.save;let k=0;for(const c of D().chapters){if(s.progress[c.n].b1)k++;if(s.progress[c.n].b2)k++;}return k;},
  unlocked(n){return n===1||!!this.save.progress[n-1]?.b2;},
@@ -162,7 +196,7 @@ const campaign={
   const root=document.createElement('div');root.id='campaign';root.className='cmp';root.hidden=true;
   root.innerHTML=`<div class="cmp-bg"></div><section class="cmp-shell">
 <header class="cmp-top"><div class="cmp-title"><small data-i18n="campaign.campaign.ensureUI.s001">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s001")}</small><h2 data-i18n="campaign.campaign.ensureUI.s002">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s002")}</h2></div><div class="cmp-stats"></div>
-<nav class="cmp-tools"><button type="button" data-act="map" class="selected" data-i18n="campaign.campaign.ensureUI.s003">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s003")}</button><button type="button" data-act="gallery" data-i18n="campaign.campaign.ensureUI.s004">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s004")}</button><button type="button" data-act="trophy" data-i18n="campaign.campaign.ensureUI.s005">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s005")}</button><button type="button" data-act="settings" data-i18n="campaign.campaign.ensureUI.s006">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s006")}</button><button type="button" data-act="back" class="cmp-back" data-i18n="campaign.campaign.ensureUI.s007">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s007")}</button></nav></header>
+<nav class="cmp-tools"><button type="button" data-act="map" class="selected" data-i18n="campaign.campaign.ensureUI.s003">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s003")}</button><button type="button" data-act="gallery" data-i18n="campaign.campaign.ensureUI.s004">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s004")}</button><button type="button" data-act="trophy" data-i18n="campaign.campaign.ensureUI.s005">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s005")}</button><button type="button" data-act="settings" data-i18n="campaign.campaign.ensureUI.s006">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s006")}</button><button type="button" data-act="saves" data-i18n="saveTransfer.tab">${CS5.i18n.textHTML("saveTransfer.tab")}</button><button type="button" data-act="back" class="cmp-back" data-i18n="campaign.campaign.ensureUI.s007">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s007")}</button></nav></header>
 <main class="cmp-body"></main></section>
 <div class="cmp-modal" hidden></div>`;
   document.body.appendChild(root);this.root=root;this.body=root.querySelector('.cmp-body');this.modal=root.querySelector('.cmp-modal');
@@ -188,6 +222,7 @@ const campaign={
   if(this.screen==='gallery')return this.renderGallery();
   if(this.screen==='trophy')return this.renderTrophy();
   if(this.screen==='settings')return this.renderSettings();
+  if(this.screen==='saves'&&this.renderSaves)return this.renderSaves();
   this.renderMap();
  },
  renderMap(){
@@ -236,7 +271,7 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
   const squad=['cooper','pipa','bongo','roco'].map(id=>`<div class="cmp-squad"><canvas class="cmp-portrait" data-who="${id}" width="96" height="96"></canvas><label>${esc(D().cast[id].name)}<select data-squad="${id}" data-k="accessory">${opt(ACCESSORIES,s.squad[id].accessory)}</select></label><label>${CS5.i18n.textHTML("campaign.campaign.renderSettings.s001")}<select data-squad="${id}" data-k="fur">${FURS.map(f=>`<option value="${f}" ${f===s.squad[id].fur?'selected':''}>${f}</option>`).join('')}</select></label></div>`).join('');
   this.body.innerHTML=`<div class="cmp-settings"><section><h3 data-i18n="campaign.campaign.renderSettings.s002">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s002")}</h3><select id="cmpDifficulty"><option value="easy" data-i18n="campaign.campaign.renderSettings.s003">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s003")}</option><option value="normal" data-i18n="campaign.campaign.renderSettings.s004">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s004")}</option><option value="hard" data-i18n="campaign.campaign.renderSettings.s005">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s005")}</option></select><p class="tiny-note" data-i18n="campaign.campaign.renderSettings.s006">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s006")}</p></section>
 <section><h3 data-i18n="campaign.campaign.renderSettings.s007">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s007")}</h3><div class="cmp-squads">${squad}</div></section>
-<section><h3 data-i18n="campaign.campaign.renderSettings.s008">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s008")}</h3><div class="cmp-row"><button type="button" class="mini-button" data-do="export" data-i18n="campaign.campaign.renderSettings.s009">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s009")}</button><button type="button" class="mini-button" data-do="import" data-i18n="campaign.campaign.renderSettings.s010">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s010")}</button><button type="button" class="mini-button danger" data-do="newgame" data-i18n="campaign.campaign.renderSettings.s011">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s011")}</button><button type="button" class="mini-button" data-do="history" data-i18n="campaign.campaign.renderSettings.s012">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s012")}</button></div><input type="file" id="cmpImport" accept="application/json,.json" hidden></section></div>`;
+<section><h3 data-i18n="campaign.campaign.renderSettings.s008">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s008")}</h3><div class="cmp-row"><button type="button" class="mini-button" data-do="export" data-i18n="campaign.campaign.renderSettings.s009">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s009")}</button><button type="button" class="mini-button" data-do="import" data-i18n="campaign.campaign.renderSettings.s010">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s010")}</button><button type="button" class="mini-button" data-do="save-manager" data-i18n="saveTransfer.manage">${CS5.i18n.textHTML("saveTransfer.manage")}</button><button type="button" class="mini-button danger" data-do="newgame" data-i18n="campaign.campaign.renderSettings.s011">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s011")}</button><button type="button" class="mini-button" data-do="history" data-i18n="campaign.campaign.renderSettings.s012">${CS5.i18n.textHTML("campaign.campaign.renderSettings.s012")}</button></div><input type="file" id="cmpImport" accept="application/json,.json" hidden></section></div>`;
   const d=this.body.querySelector('#cmpDifficulty');d.value=s.difficulty;d.addEventListener('change',()=>{this.save.difficulty=d.value;this.store();this.renderHub();});
   this.body.querySelectorAll('select[data-squad]').forEach(sel=>sel.addEventListener('change',()=>{this.save.squad[sel.dataset.squad][sel.dataset.k]=sel.value;this.store();this.paintPortraits();}));
   this.body.querySelector('#cmpImport').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{if(this.importData(t)){toastLocalized(()=>CS5.i18n.t("campaign.campaign.renderSettings.s013"),2.5);this.renderHub();}else toastLocalized(()=>CS5.i18n.t("campaign.campaign.renderSettings.s014"),3.5);});});
@@ -264,7 +299,8 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
   if(act==='play'){this.play(n);return;}
   if(act==='replay'){this.replay(n,Number(data.b));return;}
   if(act==='export'){const blob=new Blob([this.exportData()],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='coopers-siege-campana.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toastLocalized(()=>CS5.i18n.t("campaign.campaign.action.s002"),2.4);return;}
-  if(act==='import'){this.body.querySelector('#cmpImport')?.click();return;}
+  if(act==='import'){this.screen='saves';this.renderHub();this.body.querySelector('#saveTransferInput')?.click();return;}
+  if(act==='save-manager'){this.screen='saves';this.renderHub();return;}
   if(act==='newgame'){this.confirm(CS5.i18n.t("campaign.campaign.action.s003"),CS5.i18n.t("campaign.campaign.action.s004"),CS5.i18n.t("campaign.campaign.action.s005"),()=>{this.reset();this.selected=1;this.screen='map';this.renderHub();toastLocalized(()=>CS5.i18n.t("campaign.campaign.action.s006"),3);});return;}
   if(act==='history'){CS5.dialogue.openArchive(this.save.seen);return;}
   if(act==='finale'){this.hideHub();this.finale();return;}
