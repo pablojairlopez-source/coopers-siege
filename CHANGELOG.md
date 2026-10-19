@@ -1,5 +1,12 @@
 # Changelog
 
+## Transferencia manual de guardados PC / itch.io / Android (en revisión)
+
+- Gestor bilingüe de partidas visible desde el menú y campaña: exportar, importar con comparación y confirmación, compartir JSON en móvil y recuperar copia anterior.
+- El guardado local v1 se conserva. Copia secundaria de la última versión válida, diagnóstico de almacenamiento inaccesible/corrupto y verificación de escritura tras importar.
+- Archivos exportados con capítulo y fecha; instrucciones claras para transferir entre itch.io y GitHub Pages sin cuenta ni nube. La transferencia es manual, no cross-save automático.
+- Nueva prueba `tests/save-transfer.cjs`; simulación aislada de la lógica de guardado aprobada. Suite Node/Playwright completa pendiente.
+
 ## Pantalla inicial de selección de idioma (pendiente de revisión)
 
 - Al abrir o recargar el juego aparece una bienvenida a pantalla completa con Español (Latinoamérica) y English; se requiere pulsar CONTINUAR / CONTINUE antes de entrar al menú.
