@@ -135,7 +135,7 @@ body[data-phase="menu"] #campaignChip,body[data-phase="menu"] #bossBar{display:n
 /* Transferencia manual de partidas, sin servicios externos. */
 #saveManagerButton.save-manager-start{display:block;width:100%;padding:10px 14px;background:#173e4c;border:1px solid #65e2d0a6;border-radius:12px;color:#ddfff8;font-weight:900;min-height:42px;margin-bottom:6px}
 #saveManagerButton.save-manager-start:focus-visible{outline:3px solid #ffd36a}
-.cmp-body.save-view{display:block;overflow-y:auto;overflow-x:hidden}
+.cmp-body.save-view{display:block;overflow-y:auto;overflow-x:hidden;touch-action:pan-y}
 .save-transfer{max-width:920px;margin:auto;color:#ecf6f6;padding:clamp(10px,3vw,24px);border:1px solid #ffffff2b;border-radius:20px;background:#111f36dd;box-shadow:0 12px 45px #050c1677}
 .save-transfer h3{font-size:clamp(20px,3vw,30px);margin:0 0 8px}
 .save-transfer p{font-size:clamp(12px,1.7vw,15px);line-height:1.5;margin:8px 0 16px;color:#c7d7e5}
@@ -151,7 +151,7 @@ body[data-phase="menu"] #campaignChip,body[data-phase="menu"] #bossBar{display:n
 .st-actions button:hover{background:#31617d}
 .save-transfer .st-feedback{color:#ffe5ab;font-weight:750}
 .st-modal{position:fixed;inset:0;background:#071024dc;z-index:110;display:grid;place-items:center;padding:18px;overflow:auto}
-.st-dialog{width:min(100%,660px);max-height:96vh;overflow:auto;border:1px solid #badbe087;border-radius:18px;padding:clamp(16px,4vw,28px);background:#172940;box-shadow:0 20px 90px #000b;color:#f4f1e9}
+.st-dialog{width:min(100%,660px);max-height:96vh;overflow:auto;touch-action:pan-y;border:1px solid #badbe087;border-radius:18px;padding:clamp(16px,4vw,28px);background:#172940;box-shadow:0 20px 90px #000b;color:#f4f1e9}
 .st-dialog h3{margin:0 0 12px;font-size:22px}
 .st-dialog p{color:#c5d5e7;font-size:14px;line-height:1.5}
 .st-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
