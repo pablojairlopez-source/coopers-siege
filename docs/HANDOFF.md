@@ -1,5 +1,14 @@
 # Traspaso entre agentes (Claude Code ⇄ Codex)
 
+## Trabajo actual · Guardado local y transferencia manual
+
+- Rama `feature/coopers-siege-save-transfer`, base `main` luego de fusionar PR #5; sin cambios en el esquema v1 ni en protocolos LAN.
+- No implementar todavía Cloud Save. `campaign.js` respalda la versión primaria anterior válida bajo `coopers-siege-campaign-v1-backup`, señala cuando no puede acceder al almacenamiento, recupera un respaldo válido y comprueba la escritura tras importar.
+- `src/campaign/save-transfer.js`: menú 💾, vista previa de diferencias capítulo/batallas/fecha, confirmación antes de reemplazar, exportación JSON y uso opcional de Web Share con descarga alternativa; CSS responsivo en `src/ui/campaign.css`.
+- 33 recursos bilingües nuevos por idioma. `tests/save-transfer.cjs` se añadió al runner; simulación aislada de 9 casos lógicos ejecutada y aprobada, pero suite completa Node/Playwright pendiente. Validación humana itch.io real y teléfonos pendiente.
+- Reglas y guía de transferencia en [GUARDADOS.md](GUARDADOS.md).
+- **No hacer merge ni desplegar hasta ejecutar regresión y recibir aprobación del propietario**. Si un archivo de progreso se perdió antes de esta versión y no hay copia JSON, no prometer recuperarlo.
+
 ## Traspaso actual · Bienvenida obligatoria de idioma
 
 - Base `main` `09c3260` (PR #4 bilingüe fusionada). Rama activa propuesta: `feature/coopers-siege-language-startup`, no publicar ni fusionar sin autorización.
