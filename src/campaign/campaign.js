@@ -302,7 +302,7 @@ ${bossKnown?`<ul class="cmp-abil">${abil}</ul>`:''}
   if(act==='select'){if(!this.unlocked(n)){toastLocalized(()=>CS5.i18n.t("campaign.campaign.action.s001"),2.4);return;}this.selected=n;this.renderMap();return;}
   if(act==='play'){this.play(n);return;}
   if(act==='replay'){this.replay(n,Number(data.b));return;}
-  if(act==='export'){const blob=new Blob([this.exportData()],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='coopers-siege-campana.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toastLocalized(()=>CS5.i18n.t("campaign.campaign.action.s002"),2.4);return;}
+  if(act==='export'){this.downloadSave?.();return;}
   if(act==='import'){this.screen='saves';this.renderHub();this.body.querySelector('#saveTransferInput')?.click();return;}
   if(act==='save-manager'){this.screen='saves';this.renderHub();return;}
   if(act==='newgame'){this.confirm(CS5.i18n.t("campaign.campaign.action.s003"),CS5.i18n.t("campaign.campaign.action.s004"),CS5.i18n.t("campaign.campaign.action.s005"),()=>{this.reset();this.selected=1;this.screen='map';this.renderHub();toastLocalized(()=>CS5.i18n.t("campaign.campaign.action.s006"),3);});return;}
