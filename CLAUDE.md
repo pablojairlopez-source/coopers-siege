@@ -13,7 +13,7 @@ Juego de artillería por turnos con pugs (navegador, PC y móvil). Se publica co
 - No usar música ni melodías protegidas. Todo el audio es original y procedural (Web Audio).
 - No declarar una prueba como superada sin ejecutarla.
 - Textos de UI, comentarios y commits en español.
-- Localización es-419/en-US fusionada en `main` mediante PR #4 (`09c3260`). Trabajo actual: bienvenida obligatoria de idioma en `feature/coopers-siege-language-startup`; leer el primer apartado de `docs/HANDOFF.md` y `docs/LOCALIZACION.md`. No editar directamente `main`.
+- Localización y bienvenida bilingüe ya fusionadas en `main` mediante PR #4 y PR #5 (`385275d`). Trabajo actual: guardado local y transferencia manual en `feature/coopers-siege-save-transfer`; leer `docs/GUARDADOS.md` y el primer apartado de `docs/HANDOFF.md`. No editar directamente `main`. No introducir sincronización en la nube en esta fase.
 - Localización autorizada: la UI y narrativa tienen recursos completos `es-419` y `en-US`; comentarios, commits y continuidad permanecen en español. Los idiomas no cambian IDs, guardados, RNG, reglas ni paquetes LAN.
 
 ## Arquitectura
