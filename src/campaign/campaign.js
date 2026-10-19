@@ -217,6 +217,7 @@ const campaign={
  showHub(screen){this.ensureUI();$('menu').hidden=true;this.root.hidden=false;if(screen)this.screen=screen;this.renderHub();},
  renderHub(){
   const s=this.save;
+  this.body.classList.toggle('save-view',this.screen==='saves');
   this.root.querySelectorAll('.cmp-tools button').forEach(b=>b.classList.toggle('selected',b.dataset.act===this.screen));
   this.root.querySelector('.cmp-stats').innerHTML=`<span><b>${Math.min(17,s.bosses.length)}</b>${CS5.i18n.textHTML("campaign.campaign.renderHub.s001")}</span><span><b>${this.stateIndex()}</b>${CS5.i18n.textHTML("campaign.campaign.renderHub.s002")}</span><span>🏅 ${s.victories} · ✖ ${s.defeats}</span><span>${{easy:CS5.i18n.t("campaign.campaign.renderHub.s003"),normal:CS5.i18n.t("campaign.campaign.renderHub.s004"),hard:CS5.i18n.t("campaign.campaign.renderHub.s005")}[s.difficulty]}</span>`;
   if(this.screen==='gallery')return this.renderGallery();
