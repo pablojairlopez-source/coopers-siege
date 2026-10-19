@@ -165,3 +165,6 @@ body[data-phase="menu"] #campaignChip,body[data-phase="menu"] #bossBar{display:n
 .st-dialog-actions .st-confirm{background:#ffd389;color:#182638}
 @media(max-width:540px){.st-actions{grid-template-columns:1fr}.st-compare{grid-template-columns:1fr}.st-dialog-actions button{flex:1}}
 @media(max-height:420px) and (orientation:landscape){.save-transfer{padding:12px}.st-actions{grid-template-columns:repeat(2,minmax(0,1fr))}.st-actions button{min-height:37px;padding:7px}.st-dialog{padding:12px}.st-compare{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.cmp-save-warning{flex:none;margin:0;border:1px solid #ffd38980;background:#503c2566;padding:7px 12px;color:#ffe6ab;border-radius:10px;font-size:12px;line-height:1.4}
+@media(max-height:500px){#saveManagerButton.save-manager-start{min-height:30px;padding:5px 8px;font-size:12px;margin-bottom:0}}
