@@ -197,6 +197,7 @@ const campaign={
   root.innerHTML=`<div class="cmp-bg"></div><section class="cmp-shell">
 <header class="cmp-top"><div class="cmp-title"><small data-i18n="campaign.campaign.ensureUI.s001">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s001")}</small><h2 data-i18n="campaign.campaign.ensureUI.s002">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s002")}</h2></div><div class="cmp-stats"></div>
 <nav class="cmp-tools"><button type="button" data-act="map" class="selected" data-i18n="campaign.campaign.ensureUI.s003">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s003")}</button><button type="button" data-act="gallery" data-i18n="campaign.campaign.ensureUI.s004">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s004")}</button><button type="button" data-act="trophy" data-i18n="campaign.campaign.ensureUI.s005">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s005")}</button><button type="button" data-act="settings" data-i18n="campaign.campaign.ensureUI.s006">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s006")}</button><button type="button" data-act="saves" data-i18n="saveTransfer.tab">${CS5.i18n.textHTML("saveTransfer.tab")}</button><button type="button" data-act="back" class="cmp-back" data-i18n="campaign.campaign.ensureUI.s007">${CS5.i18n.textHTML("campaign.campaign.ensureUI.s007")}</button></nav></header>
+<p id="campaignStorageWarning" class="cmp-save-warning" role="status" hidden></p>
 <main class="cmp-body"></main></section>
 <div class="cmp-modal" hidden></div>`;
   document.body.appendChild(root);this.root=root;this.body=root.querySelector('.cmp-body');this.modal=root.querySelector('.cmp-modal');
@@ -217,6 +218,8 @@ const campaign={
  showHub(screen){this.ensureUI();$('menu').hidden=true;this.root.hidden=false;if(screen)this.screen=screen;this.renderHub();},
  renderHub(){
   const s=this.save;
+  const warning=this.root.querySelector('#campaignStorageWarning');
+  if(warning){const bad=['recovered','corrupt','unavailable'].includes(this.storageState);warning.hidden=!bad;warning.textContent=bad?CS5.i18n.t('saveTransfer.state.'+this.storageState):'';}
   this.body.classList.toggle('save-view',this.screen==='saves');
   this.root.querySelectorAll('.cmp-tools button').forEach(b=>b.classList.toggle('selected',b.dataset.act===this.screen));
   this.root.querySelector('.cmp-stats').innerHTML=`<span><b>${Math.min(17,s.bosses.length)}</b>${CS5.i18n.textHTML("campaign.campaign.renderHub.s001")}</span><span><b>${this.stateIndex()}</b>${CS5.i18n.textHTML("campaign.campaign.renderHub.s002")}</span><span>🏅 ${s.victories} · ✖ ${s.defeats}</span><span>${{easy:CS5.i18n.t("campaign.campaign.renderHub.s003"),normal:CS5.i18n.t("campaign.campaign.renderHub.s004"),hard:CS5.i18n.t("campaign.campaign.renderHub.s005")}[s.difficulty]}</span>`;
